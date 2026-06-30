@@ -1,0 +1,75 @@
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, HTTPException
+from sqlalchemy import create_engine, text
+import redis
+
+from .config import settings
+from .crawler import ListingRepo, build_scheduler, run_source
+from .listings import init_listings, listings_router
+
+# psycopg3 sync engine; pre_ping avoids stale conns after db restart
+engine = create_engine(settings.database_url, pool_pre_ping=True)
+redis_client = redis.from_url(settings.redis_url, decode_responses=True)
+init_listings(engine)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    scheduler = None
+    if settings.crawler_enabled:
+        scheduler = build_scheduler(engine)
+        scheduler.start()
+    yield
+    if scheduler:
+        scheduler.shutdown(wait=False)
+    engine.dispose()
+    redis_client.close()
+
+
+app = FastAPI(title="NCKH API", version="0.1.0", lifespan=lifespan)
+app.include_router(listings_router)
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+@app.get("/health/deps")
+def health_deps():
+    checks: dict[str, str] = {}
+
+    try:
+        with engine.connect() as conn:
+            postgis = conn.execute(text("SELECT PostGIS_Version()")).scalar()
+            has_vector = conn.execute(
+                text("SELECT 1 FROM pg_extension WHERE extname = 'vector'")
+            ).scalar()
+        checks["postgres"] = "ok"
+        checks["postgis"] = postgis or "missing"
+        checks["pgvector"] = "ok" if has_vector else "missing"
+    except Exception as exc:  # surface the failing dep instead of 500
+        checks["postgres"] = f"error: {exc}"
+
+    try:
+        checks["redis"] = "ok" if redis_client.ping() else "down"
+    except Exception as exc:
+        checks["redis"] = f"error: {exc}"
+
+    return checks
+
+
+@app.get("/crawler/status")
+def crawler_status(limit: int = 10):
+    """Lần crawl gần nhất mỗi nguồn — health check cho Admin Dashboard (C2.1/C2.3)."""
+    return {"enabled": settings.crawler_enabled, "runs": ListingRepo(engine).latest_runs(limit)}
+
+
+@app.post("/crawler/run")
+async def crawler_run(source: str = "phongtro123", mode: str = "incremental"):
+    """Trigger thủ công 1 nguồn (Admin/test). mode: 'incremental' | 'full'."""
+    if mode not in ("incremental", "full"):
+        raise HTTPException(400, "mode phải là 'incremental' hoặc 'full'")
+    counts = await run_source(source, mode, ListingRepo(engine))
+    return {"source": source, "mode": mode, **counts}

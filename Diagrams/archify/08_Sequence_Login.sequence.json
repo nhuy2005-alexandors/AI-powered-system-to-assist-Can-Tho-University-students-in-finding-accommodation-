@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Sequence — Đăng nhập & cấp JWT",
+    "subtitle": "Login email/password → access (15p) + refresh (7 ngày)",
+    "output": "08_Sequence_Login.html",
+    "viewBox": [820, 720]
+  },
+  "participants": [
+    { "id": "user", "type": "external", "label": "Sinh viên", "sublabel": "browser" },
+    { "id": "web", "type": "frontend", "label": "Next.js", "sublabel": "LoginForm" },
+    { "id": "api", "type": "backend", "label": "FastAPI", "sublabel": "/auth/login" },
+    { "id": "db", "type": "database", "label": "Postgres", "sublabel": "users" },
+    { "id": "redis", "type": "database", "label": "Redis", "sublabel": "refresh store" }
+  ],
+  "segments": [
+    { "from": 150, "to": 250, "label": "Submit" },
+    { "from": 270, "to": 470, "label": "Verify" },
+    { "from": 490, "to": 650, "label": "Cấp token" }
+  ],
+  "messages": [
+    { "from": "user", "to": "web", "y": 185, "label": "nhập email/password", "variant": "default" },
+    { "from": "web", "to": "api", "y": 240, "label": "POST /auth/login (đã validate zod)", "variant": "emphasis" },
+    { "from": "api", "to": "db", "y": 295, "label": "SELECT user by email", "variant": "default" },
+    { "from": "db", "to": "api", "y": 340, "label": "user row", "variant": "return" },
+    { "from": "api", "to": "web", "y": 400, "label": "401 nếu bcrypt sai", "variant": "security" },
+    { "from": "api", "to": "redis", "y": 470, "label": "lưu refresh token", "variant": "dashed" },
+    { "from": "api", "to": "web", "y": 525, "label": "200 access+refresh (cookie HTTP-only)", "variant": "return" },
+    { "from": "web", "to": "user", "y": 590, "label": "redirect trang chủ", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "web", "from": 230, "to": 595, "type": "frontend" },
+    { "participant": "api", "from": 240, "to": 528, "type": "backend" },
+    { "participant": "db", "from": 290, "to": 344, "type": "database" },
+    { "participant": "redis", "from": 465, "to": 510, "type": "database" }
+  ],
+  "cards": [
+    { "dot": "rose", "title": "Bảo mật (NFR-2)", "items": ["Password hash bcrypt, không lưu plaintext", "Sai → 401 'Invalid email or password'", "Access 15p + refresh 7 ngày (rotation)"] },
+    { "dot": "emerald", "title": "Happy path", "items": ["Validate client-side (zod) trước khi gọi API", "Cookie HTTP-only chống XSS đánh cắp token", "Refresh token lưu Redis để revoke được"] }
+  ]
+}

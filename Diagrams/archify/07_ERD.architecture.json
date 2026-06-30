@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Trọ CTU — ERD (Entity Relationship)",
+    "subtitle": "PostgreSQL 16 + PostGIS + pgvector (THS2026-66)",
+    "output": "07_ERD.html"
+  },
+  "components": [
+    { "id": "users", "type": "security", "label": "users", "sublabel": "PK id · email · role · preference_vector", "pos": [340, 300], "size": [200, 70] },
+    { "id": "listings", "type": "database", "label": "aggregated_listings", "sublabel": "PK id · geom · status · freshness", "pos": [40, 300], "size": [220, 80], "tag": "lõi" },
+    { "id": "crawl_runs", "type": "backend", "label": "crawl_runs", "sublabel": "source · mode · counts", "pos": [40, 110], "size": [200, 60] },
+    { "id": "roommate", "type": "frontend", "label": "roommate_profiles", "sublabel": "PK user_id · matching_vector", "pos": [640, 110], "size": [200, 64] },
+    { "id": "interactions", "type": "messagebus", "label": "user_interactions", "sublabel": "user_id · listing_id · type", "pos": [340, 480], "size": [200, 64] },
+    { "id": "reports", "type": "cloud", "label": "reports", "sublabel": "listing_id · reporter_id · status", "pos": [40, 480], "size": [200, 64] },
+    { "id": "matches", "type": "external", "label": "match_requests", "sublabel": "from_user · to_user · score", "pos": [640, 300], "size": [200, 64] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Đã có migration (20_listings.sql)", "wraps": ["listings", "crawl_runs"] }
+  ],
+  "connections": [
+    { "from": "interactions", "to": "users", "label": "N:1", "variant": "emphasis", "fromSide": "top", "toSide": "bottom" },
+    { "from": "interactions", "to": "listings", "label": "N:1", "variant": "emphasis", "fromSide": "left", "toSide": "bottom" },
+    { "from": "reports", "to": "listings", "label": "N:1", "variant": "default", "fromSide": "top", "toSide": "bottom" },
+    { "from": "reports", "to": "users", "label": "N:1", "variant": "dashed", "fromSide": "right", "toSide": "left" },
+    { "from": "roommate", "to": "users", "label": "1:1", "variant": "emphasis", "fromSide": "bottom", "toSide": "top" },
+    { "from": "matches", "to": "users", "label": "N:1 from/to", "variant": "default", "fromSide": "left", "toSide": "right" },
+    { "from": "crawl_runs", "to": "listings", "label": "ghi (source)", "variant": "dashed", "fromSide": "bottom", "toSide": "top" }
+  ],
+  "cards": [
+    { "dot": "violet", "title": "Bảng lõi", "items": ["aggregated_listings: tin trọ + geom + vector", "crawl_runs: nhật ký crawl (health/cursor)", "P2: status=expired, không DELETE"] },
+    { "dot": "rose", "title": "Người dùng & AI", "items": ["users.preference_vector → recommend (T5)", "roommate_profiles.matching_vector → ghép (T7)", "embedding_vector → RAG chatbot (T8)"] },
+    { "dot": "emerald", "title": "Trạng thái migration", "items": ["✅ listings + crawl_runs đã có", "⬜ users/roommate/interactions/reports/matches", "Tạo 30_*.sql khi làm auth/matching"] }
+  ]
+}

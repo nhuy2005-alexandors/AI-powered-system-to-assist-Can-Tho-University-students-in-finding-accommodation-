@@ -1,0 +1,22 @@
+{
+  "id": "ui-ux-pro-max",
+  "description": "Auto-generated sidecar for ui-ux-pro-max",
+  "risk": "low",
+  "required_agents": [
+    "orchestrator"
+  ],
+  "optional_agents": [],
+  "required_skills": [],
+  "preconditions": [],
+  "steps": [
+    {
+      "id": "init",
+      "agent": "orchestrator",
+      "action": "log_init"
+    }
+  ],
+  "completion_gates": [
+    "all_steps_completed"
+  ],
+  "memory_policy": "none"
+}

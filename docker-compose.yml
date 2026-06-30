@@ -1,0 +1,58 @@
+name: nckh
+
+services:
+  db:
+    build: ./infra/db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-nckh}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nckh}
+      POSTGRES_DB: ${POSTGRES_DB:-nckh}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-nckh} -d ${POSTGRES_DB:-nckh}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: ./apps/api
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-nckh}:${POSTGRES_PASSWORD:-nckh}@db:5432/${POSTGRES_DB:-nckh}
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./apps/api/app
+          target: /app/app
+
+  web:
+    build: ./apps/web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

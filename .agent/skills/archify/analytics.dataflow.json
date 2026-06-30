@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "Data Flow: Product Analytics",
+    "subtitle": "From Raw Events to Machine Learning & BI",
+    "output": "analytics-dataflow.html",
+    "viewBox": [1080, 720]
+  },
+  "stages": [
+    { "label": "Sources" },
+    { "label": "Ingestion" },
+    { "label": "Processing" },
+    { "label": "Storage" },
+    { "label": "Consumption" }
+  ],
+  "nodes": [
+    { "id": "mobile", "type": "frontend", "label": "Mobile App", "stage": 0, "row": 0, "sublabel": "telemetry" },
+    { "id": "web", "type": "frontend", "label": "Web App", "stage": 0, "row": 1, "sublabel": "clickstream" },
+
+    { "id": "api", "type": "backend", "label": "Edge API", "stage": 1, "row": 0, "sublabel": "event collector" },
+    { "id": "kafka", "type": "messagebus", "label": "Kafka", "stage": 1, "row": 1, "sublabel": "raw buffer" },
+
+    { "id": "scrubber", "type": "security", "label": "Consent Gate", "stage": 2, "row": 0, "tag": "PII Filter" },
+    { "id": "spark", "type": "backend", "label": "Spark ETL", "stage": 2, "row": 1, "sublabel": "batch processing" },
+
+    { "id": "s3", "type": "cloud", "label": "S3 Data Lake", "stage": 3, "row": 0, "sublabel": "cold storage" },
+    { "id": "warehouse", "type": "database", "label": "Snowflake", "stage": 3, "row": 1, "sublabel": "analytics db" },
+
+    { "id": "ml", "type": "backend", "label": "ML Models", "stage": 4, "row": 0, "sublabel": "training" },
+    { "id": "bi", "type": "external", "label": "Dashboards", "stage": 4, "row": 1, "sublabel": "Metabase" }
+  ],
+  "flows": [
+    { "from": "mobile", "to": "api", "label": "HTTPS", "variant": "emphasis" },
+    { "from": "web", "to": "api", "label": "HTTPS", "variant": "emphasis" },
+
+    { "from": "api", "to": "kafka", "label": "raw events", "variant": "emphasis" },
+
+    { "from": "kafka", "to": "scrubber", "label": "stream", "classification": "PII rules applied", "variant": "security" },
+    { "from": "kafka", "to": "spark", "label": "hourly batch", "variant": "dashed" },
+
+    { "from": "scrubber", "to": "s3", "label": "anonymized", "variant": "emphasis" },
+    { "from": "spark", "to": "warehouse", "label": "clean tables", "variant": "emphasis" },
+
+    { "from": "s3", "to": "ml", "label": "features", "variant": "dashed" },
+    { "from": "warehouse", "to": "bi", "label": "SQL views", "variant": "emphasis" }
+  ],
+  "cards": []
+}

@@ -1,0 +1,21 @@
+{
+  "mode": "ide",
+  "executor": {
+    "type": "antigravity",
+    "model": "gemini-3.1-pro",
+    "auth": "google-ai-pro",
+    "trigger": "manual-paste"
+  },
+  "claude_role": "planner",
+  "token_budgets": {
+    "scope_max": 1000,
+    "decide_max": 2000,
+    "review_max": 1000,
+    "total_max": 5000
+  },
+  "compression": {
+    "findings_max_chars": 1500,
+    "evidence_max_chars": 800
+  },
+  "notes": "Switch to 'cli' mode when GEMINI_API_KEY set + gemini binary works headless. Per-limb config; safe to override locally."
+}

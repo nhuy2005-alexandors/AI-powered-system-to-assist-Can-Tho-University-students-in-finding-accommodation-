@@ -1,0 +1,8 @@
+numpy>=1.26
+pandas>=2.2
+scikit-learn>=1.4
+datasketch>=1.6
+sentence-transformers>=3.0
+ragas>=0.2
+jupyterlab>=4.0
+matplotlib>=3.8

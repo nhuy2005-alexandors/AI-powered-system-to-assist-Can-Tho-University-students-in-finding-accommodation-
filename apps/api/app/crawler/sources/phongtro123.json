@@ -1,0 +1,25 @@
+{
+  "source": "phongtro123",
+  "base_url": "https://phongtro123.com",
+  "list_url": "https://phongtro123.com/tinh-thanh/can-tho",
+  "list_page_param": "?page={page}",
+  "incremental_pages": 2,
+  "full_pages": 15,
+  "max_detail_incremental": 20,
+  "use_jsonld": true,
+  "selectors": {
+    "item": ".post__listing .post__thumb",
+    "item_anchor": "a.line-clamp-2",
+    "item_url_attr": "href",
+    "title": "a.line-clamp-2",
+    "price": "span.text-green.fw-semibold",
+    "district": "a.text-body",
+    "thumb": "img"
+  },
+  "detail": {
+    "title": "h1",
+    "price": "span.text-green.fs-5",
+    "images_attr": "data-src",
+    "images": "img"
+  }
+}

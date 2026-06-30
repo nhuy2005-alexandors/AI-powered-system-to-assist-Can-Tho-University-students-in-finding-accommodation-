@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Luồng Chatbot RAG (Hỏi Đáp AI)",
+    "subtitle": "Confidence thresholding chống hallucination + multi-turn",
+    "output": "04_Workflow_Chatbot.html",
+    "viewBox": [780, 640]
+  },
+  "lanes": [
+    { "id": "sv", "label": "Sinh viên" },
+    { "id": "rag", "label": "RAG Pipeline" },
+    { "id": "vdb", "label": "Vector DB (pgvector)" },
+    { "id": "llm", "label": "LLM (Gemini 2.0)" }
+  ],
+  "nodes": [
+    { "id": "ask", "lane": "sv", "col": 0, "type": "frontend", "label": "Nhập câu hỏi", "sublabel": "ngôn ngữ tự nhiên" },
+    { "id": "embed", "lane": "rag", "col": 0, "type": "backend", "label": "Embed query", "sublabel": "e5-small" },
+    { "id": "search", "lane": "vdb", "col": 2, "type": "database", "label": "Search Top-5", "sublabel": "+ score", "width": 100 },
+    { "id": "gate", "lane": "rag", "col": 2, "type": "security", "label": "Gate score", "sublabel": "≥ 0.65 ?", "tag": "T8" },
+    { "id": "prompt", "lane": "rag", "col": 5, "type": "backend", "label": "Build prompt", "sublabel": "context + POI" },
+    { "id": "gen", "lane": "llm", "col": 5, "type": "cloud", "label": "Gemini 2.0", "sublabel": "tổng hợp answer" },
+    { "id": "cite", "lane": "rag", "col": 4, "type": "backend", "label": "Trích dẫn", "sublabel": "+ memory 5 lượt", "tag": "T9" },
+    { "id": "answer", "lane": "sv", "col": 5, "type": "frontend", "label": "Answer", "sublabel": "+ link + nguồn" },
+    { "id": "fallback", "lane": "sv", "col": 3, "type": "external", "label": "Fallback", "sublabel": "không tìm thấy" }
+  ],
+  "edges": [
+    { "from": "ask", "to": "embed", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "embed", "to": "search", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "search", "to": "gate", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "gate", "to": "prompt", "variant": "emphasis" },
+    { "from": "gate", "to": "fallback", "label": "score thấp", "variant": "security", "fromSide": "bottom", "toSide": "top", "route": "drop", "labelSegment": 1 },
+    { "from": "prompt", "to": "gen", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "gen", "to": "cite", "variant": "emphasis" },
+    { "from": "cite", "to": "answer", "variant": "emphasis", "fromSide": "top", "toSide": "bottom", "route": "up-channel" },
+    { "from": "answer", "to": "ask", "label": "hỏi tiếp", "variant": "dashed", "fromSide": "top", "toSide": "right", "route": "outside-right", "labelAt": [430, 470] }
+  ],
+  "cards": [
+    { "dot": "rose", "title": "T8 — Chống bịa đặt", "items": ["Best score < 0.65 → KHÔNG gọi LLM", "Trả fallback có link tìm kiếm", "LLM chỉ chạy khi context đủ liên quan"] },
+    { "dot": "emerald", "title": "RAG Pipeline", "items": ["Embed e5-small multilingual", "Top-5 chunks từ pgvector", "Gắn nguồn trích dẫn vào answer"] },
+    { "dot": "cyan", "title": "T9 — Multi-turn", "items": ["Conversation Memory nhớ 5 lượt", "Kết hợp câu hỏi mới + ngữ cảnh cũ", "Faithfulness ≥0.7, AnsRel ≥0.75"] }
+  ]
+}

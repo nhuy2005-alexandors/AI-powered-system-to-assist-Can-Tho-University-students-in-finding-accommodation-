@@ -1,0 +1,60 @@
+{
+  "id": "refactor-system",
+  "description": "Restructure Omni Assistant runtime into a validated agent platform.",
+  "risk": "high",
+  "required_agents": ["orchestrator", "quality-inspector"],
+  "optional_agents": ["backend-specialist", "frontend-specialist", "security-auditor"],
+  "required_skills": ["system-architect", "clean-code", "documentation-templates"],
+  "preconditions": [
+    "registry_exists",
+    "policies_loaded",
+    "schemas_valid"
+  ],
+  "steps": [
+    {
+      "id": "inventory",
+      "agent": "orchestrator",
+      "action": "scan_runtime",
+      "outputs": ["runtime_inventory.json"]
+    },
+    {
+      "id": "design",
+      "agent": "orchestrator",
+      "action": "generate_refactor_plan",
+      "outputs": ["plan.json"]
+    },
+    {
+      "id": "policy-check",
+      "agent": "quality-inspector",
+      "action": "enforce_policy",
+      "inputs": ["plan.json"]
+    },
+    {
+      "id": "execute",
+      "agent": "orchestrator",
+      "action": "apply_changes",
+      "requires_approval": true
+    },
+    {
+      "id": "validate",
+      "agent": "quality-inspector",
+      "action": "run_validation",
+      "commands": [
+        "node .agent/scripts/validate-registry.js",
+        "npm run validate"
+      ]
+    },
+    {
+      "id": "document",
+      "agent": "orchestrator",
+      "action": "update_docs",
+      "outputs": ["walkthrough.md"]
+    }
+  ],
+  "completion_gates": [
+    "all_steps_completed",
+    "validation_passed",
+    "report_written"
+  ],
+  "memory_policy": "sync_after_validation"
+}

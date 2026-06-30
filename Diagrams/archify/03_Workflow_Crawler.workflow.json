@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Luồng Crawler & Data Pipeline",
+    "subtitle": "Near-fresh batch: incremental 5h · full sweep 3h sáng (KHÔNG real-time)",
+    "output": "03_Workflow_Crawler.html",
+    "viewBox": [820, 760]
+  },
+  "lanes": [
+    { "id": "cron", "label": "Scheduler (Cron)" },
+    { "id": "crawler", "label": "Crawler (httpx)" },
+    { "id": "nlp", "label": "NLP Engine" },
+    { "id": "db", "label": "Database (PostgreSQL)" },
+    { "id": "risk", "label": "AI Risk Engine" }
+  ],
+  "nodes": [
+    { "id": "trigger", "lane": "cron", "col": 0, "type": "external", "label": "Trigger", "sublabel": "incremental 5h / full 3h", "tag": "2 mode" },
+    { "id": "crawl", "lane": "crawler", "col": 1, "type": "backend", "label": "Crawl+Parse", "sublabel": "rate 1req/5s", "tag": "loop nguồn" },
+    { "id": "extract", "lane": "nlp", "col": 2, "type": "backend", "label": "NLP chuẩn", "sublabel": "tiện ích text", "width": 88 },
+    { "id": "geo", "lane": "nlp", "col": 4, "type": "backend", "label": "Geocoding", "sublabel": "Nominatim", "width": 92 },
+    { "id": "dedup", "lane": "db", "col": 3, "type": "database", "label": "Dedup", "sublabel": "MinHash LSH" },
+    { "id": "insert", "lane": "db", "col": 5, "type": "database", "label": "Upsert+Fresh", "sublabel": "last_seen/expired", "tag": "P2 ẩn≠xóa" },
+    { "id": "score", "lane": "risk", "col": 5, "type": "security", "label": "Risk Engine", "sublabel": "IsolationForest" },
+    { "id": "embed", "lane": "nlp", "col": 5, "type": "backend", "label": "Embedding", "sublabel": "e5→pgvector" },
+    { "id": "health", "lane": "cron", "col": 5, "type": "external", "label": "Health", "sublabel": "<10 tin alert", "tag": "T11" }
+  ],
+  "edges": [
+    { "from": "trigger", "to": "crawl", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "crawl", "to": "extract", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "extract", "to": "geo", "label": "địa chỉ", "variant": "default", "labelSegment": 1, "labelDy": -16 },
+    { "from": "geo", "to": "dedup", "variant": "emphasis", "fromSide": "top", "toSide": "bottom", "route": "up-channel" },
+    { "from": "dedup", "to": "insert", "label": "tin mới", "variant": "emphasis", "labelSegment": 1, "labelDy": -16 },
+    { "from": "insert", "to": "score", "variant": "default", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "score", "to": "embed", "label": "đã chấm", "variant": "dashed", "fromSide": "top", "toSide": "bottom", "route": "up-channel", "labelSegment": 1 },
+    { "from": "embed", "to": "health", "label": "đếm tin", "variant": "dashed", "fromSide": "top", "toSide": "bottom", "route": "up-channel", "labelSegment": 1 }
+  ],
+  "cards": [
+    { "dot": "amber", "title": "Near-fresh batch (không real-time)", "items": ["Incremental 5h: trang 1-2 mỗi nguồn, ít request", "Full sweep 3h sáng: quét sâu + đánh dấu expired", "Listing đổi chậm → không cần streaming"] },
+    { "dot": "emerald", "title": "T1 — Chống chặn", "items": ["Rate limit 1req/5s + xoay User-Agent", "Parser plugin JSON từng nguồn", "Lỗi 403/429 → alert, bỏ nguồn"] },
+    { "dot": "violet", "title": "Freshness & lifecycle (T11)", "items": ["Thấy lại tin → last_seen=now, score=1.0", "Full miss ≥2 chu kỳ → status=expired", "P2: KHÔNG xóa, chỉ ẩn; content_hash đổi → update"] }
+  ]
+}
