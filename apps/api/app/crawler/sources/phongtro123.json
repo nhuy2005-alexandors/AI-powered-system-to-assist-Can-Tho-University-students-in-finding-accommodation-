@@ -4,7 +4,7 @@
   "list_url": "https://phongtro123.com/tinh-thanh/can-tho",
   "list_page_param": "?page={page}",
   "incremental_pages": 2,
-  "full_pages": 15,
+  "full_pages": 11,
   "max_detail_incremental": 20,
   "use_jsonld": true,
   "selectors": {
@@ -19,6 +19,7 @@
   "detail": {
     "title": "h1",
     "price": "span.text-green.fs-5",
+    "description_body": "div.border-bottom.pb-3.mb-4",
     "images_attr": "data-src",
     "images": "img"
   }

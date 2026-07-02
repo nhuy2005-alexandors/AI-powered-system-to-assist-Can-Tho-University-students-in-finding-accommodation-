@@ -28,7 +28,7 @@ async def main(source: str) -> None:
             if n.source_url:
                 try:
                     detail_html = await fetcher.get(n.source_url)
-                    merge_detail(n, parse_detail_page(detail_html, config))
+                    merge_detail(n, parse_detail_page(detail_html, config), config.get("base_url", ""))
                 except Exception as exc:  # noqa: BLE001
                     print(f"  (detail fail: {exc})")
             lat, lng, conf = await geocoder.geocode(n.address)

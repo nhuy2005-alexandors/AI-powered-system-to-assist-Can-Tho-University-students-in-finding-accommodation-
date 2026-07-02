@@ -58,6 +58,49 @@ def parse_area(text: str | None) -> float | None:
     return float(m.group(0).replace(",", "."))
 
 
+# diện tích trong mô tả tự do phongtro123 nhiều biến thể:
+#   "Diện tích: 30m2", "Diện tích sử dụng 30m2", "Diện tích sàn 12m vuông",
+#   "diện tích 20-25m vuông", "DT 45m2", "3,3m x 6,6m" (kích thước → tích)
+_AREA_LABEL = re.compile(
+    r"(?:di[eệ]n\s*t[ií]ch|dt|dtsd|dtsu)"
+    r"(?:\s*(?:s[ửu]\s*d[ụu]ng|s[àa]n|kho[ản]ng|t[ừu]))?"
+    r"\s*[:\-]?\s*(\d+[.,]?\d*)\s*m",
+    re.IGNORECASE,
+)
+_AREA_DIM = re.compile(r"(\d+[.,]?\d*)\s*m\s*x\s*(\d+[.,]?\d*)\s*m", re.IGNORECASE)
+_AREA_BARE = re.compile(r"\b(\d{1,3}[.,]?\d*)\s*m2\b|\b(\d{1,3}[.,]?\d*)\s*m²|\b(\d{1,3}[.,]?\d*)\s*m\s*vu[oô]ng", re.IGNORECASE)
+
+
+def _to_float(s: str) -> float:
+    return float(s.replace(",", "."))
+
+
+def extract_area_from_text(*texts: str | None) -> float | None:
+    """Trích diện tích (m²) từ text tự do, lọc giá trị hợp lý cho phòng trọ (5–500)."""
+    for txt in texts:
+        if not txt:
+            continue
+        # ưu tiên label "Diện tích: X" (rõ ràng nhất)
+        m = _AREA_LABEL.search(txt)
+        if m:
+            v = _to_float(m.group(1))
+            if 5 <= v <= 500:
+                return v
+        # kích thước "3.3m x 6.6m" → tích
+        m = _AREA_DIM.search(txt)
+        if m:
+            v = round(_to_float(m.group(1)) * _to_float(m.group(2)), 1)
+            if 5 <= v <= 500:
+                return v
+        # trần "45m2" / "20m vuông"
+        m = _AREA_BARE.search(txt)
+        if m:
+            v = _to_float(next(g for g in m.groups() if g))
+            if 5 <= v <= 500:
+                return v
+    return None
+
+
 def parse_amenities(*texts: str | None) -> dict[str, bool]:
     blob = _strip_accents(" ".join(t for t in texts if t).lower())
     result: dict[str, bool] = {}

@@ -148,3 +148,7 @@ aggregated_listings 1──N crawl_runs (theo source, không FK cứng)
 - ✅ Đã có migration: `aggregated_listings`, `crawl_runs` (`20_listings.sql`); `users`, `roommate_profiles`, `user_interactions`, `reports`, `match_requests`, `saved_searches` (`30_users.sql`).
 - `30_users.sql` cũng thêm cột `aggregated_listings.posted_by` (FK→users, cho tin UGC).
 - `saved_searches`: tiêu chí tìm kiếm đã lưu (JSONB) → thông báo tin mới khớp (FR-8.1).
+
+## Công cụ vận hành
+- `python -m app.crawler.backfill` — re-geocode + re-extract area cho listing đã có, KHÔNG fetch lại nguồn (nhanh, dùng khi cải tiến logic geocode/area). Cập nhật `geom`/`distance_to_ctu`/`geocode_confidence`/`area`.
+- `python -m app.crawler.smoke phongtro123` — smoke test net thật, in 3 listing đầu, không ghi DB.

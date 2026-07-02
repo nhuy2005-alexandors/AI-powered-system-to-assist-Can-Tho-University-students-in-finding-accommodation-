@@ -2,6 +2,7 @@ import json
 import re
 from pathlib import Path
 from urllib.parse import urljoin
+import hashlib
 
 from selectolax.parser import HTMLParser, Node
 
@@ -61,17 +62,19 @@ def _extract_all(node: Node, selector: str | None) -> list[str]:
 def parse_list_page(html: str, config: dict) -> list[RawListing]:
     """Trích danh sách RawListing từ HTML 1 trang list.
 
-    Item card = phần tử cha của `.post__thumb` (chứa cả thumb + anchor title).
+    item_mode:
+      - "thumb_parent" (mặc định): item selector trỏ thumb, card = thumb.parent (phongtro123)
+      - "self": item selector chính là card chứa đủ field (tromoi.com)
     """
     sel = config["selectors"]
     base = config.get("base_url", "")
     source = config["source"]
+    item_mode = config.get("item_mode", "thumb_parent")
     tree = HTMLParser(html)
 
-    # mỗi thumb → đi lên card cha chứa đủ field
     cards: list[Node] = []
-    for thumb in tree.css(sel["item"]):
-        card = thumb.parent
+    for node in tree.css(sel["item"]):
+        card = node.parent if item_mode == "thumb_parent" else node
         if card is not None:
             cards.append(card)
 
@@ -84,9 +87,14 @@ def parse_list_page(html: str, config: dict) -> list[RawListing]:
 
         source_id = None
         if url:
-            # id cuối path: /...-pr708173.html → 708173
-            m = re.search(r"pr(\d+)\.html", url) or re.search(r"(\d{5,})", url)
-            source_id = m.group(1) if m else url
+            pat = sel.get("source_id_pattern")
+            m = re.search(pat, url) if pat else (re.search(r"pr(\d+)\.html", url) or re.search(r"(\d{5,})", url))
+            if m:
+                source_id = m.group(1)
+            else:
+                # slug cuối path làm id ổn định (nguồn không có ID số, vd tromoi)
+                slug = url.rstrip("/").split("/")[-1].split(".")[0]
+                source_id = slug or hashlib.md5(url.encode("utf-8")).hexdigest()
 
         thumb_img = item.css_first(sel.get("thumb", "img"))
         images = []
@@ -155,6 +163,23 @@ def parse_detail_page(html: str, config: dict) -> dict:
         if ld.get("name"):
             result["title"] = ld["name"]
 
+    # address từ CSS (nguồn không có JSON-LD, vd tromoi dùng .box-address)
+    if not result.get("address"):
+        addr = _extract(tree.root, det.get("address"))
+        if addr:
+            result["address"] = addr
+
+    # title từ CSS h1 nếu JSON-LD không cho
+    if not result.get("title"):
+        title = _extract(tree.root, det.get("title"))
+        if title:
+            result["title"] = title
+
+    # description body đầy đủ (JSON-LD desc thường bị cắt, thiếu "Diện tích: X m²")
+    body = _extract(tree.root, det.get("description_body"))
+    if body and len(body) > len(result.get("description") or ""):
+        result["description"] = body
+
     # price chính trên detail (selector riêng, fs-5 lớn)
     price = _extract(tree.root, det.get("price"))
     if price:
@@ -162,10 +187,11 @@ def parse_detail_page(html: str, config: dict) -> dict:
 
     # images: gallery, ưu tiên data-src (lazy-load)
     img_attr = det.get("images_attr", "src")
+    img_filter = det.get("images_filter", "static123")  # substring CDN để lọc icon/logo
     imgs: list[str] = []
     for img in tree.css(det.get("images", "img")):
         src = img.attributes.get(img_attr) or img.attributes.get("src")
-        if src and "static123" in src and src not in imgs:
+        if src and img_filter in src and src not in imgs:
             imgs.append(src)
     if imgs:
         result["images"] = imgs

@@ -17,3 +17,13 @@ def phongtro_html() -> str:
 @pytest.fixture
 def phongtro_detail_html() -> str:
     return (FIXTURES / "phongtro123_detail.html").read_text(encoding="utf-8")
+
+
+@pytest.fixture
+def tromoi_html() -> str:
+    return (FIXTURES / "tromoi_list.html").read_text(encoding="utf-8")
+
+
+@pytest.fixture
+def tromoi_detail_html() -> str:
+    return (FIXTURES / "tromoi_detail.html").read_text(encoding="utf-8")

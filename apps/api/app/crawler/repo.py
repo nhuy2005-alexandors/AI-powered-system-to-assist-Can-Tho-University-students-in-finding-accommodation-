@@ -17,9 +17,9 @@ _UPSERT = text(
     VALUES
         (:title, :price, :area, :address, :district, :images, :description,
          :source, :source_url, :source_id, :content_hash, CAST(:amenities AS JSONB),
-         CASE WHEN :lat IS NULL THEN NULL
-              ELSE ST_SetSRID(ST_MakePoint(:lng, :lat), 4326) END,
-         :distance_to_ctu, :geocode_confidence,
+         CASE WHEN CAST(:lat AS DOUBLE PRECISION) IS NULL THEN NULL
+              ELSE ST_SetSRID(ST_MakePoint(CAST(:lng AS DOUBLE PRECISION), CAST(:lat AS DOUBLE PRECISION)), 4326) END,
+         CAST(:distance_to_ctu AS REAL), :geocode_confidence,
          'active', :now, :now, 0, 1.0, :now)
     ON CONFLICT (source, source_id) DO UPDATE SET
         last_seen = :now,
@@ -39,9 +39,9 @@ _UPSERT = text(
                        THEN :address ELSE aggregated_listings.address END,
         images = CASE WHEN aggregated_listings.content_hash <> :content_hash
                       THEN :images ELSE aggregated_listings.images END,
-        geom = CASE WHEN :lat IS NULL THEN aggregated_listings.geom
-                    ELSE ST_SetSRID(ST_MakePoint(:lng, :lat), 4326) END,
-        distance_to_ctu = COALESCE(:distance_to_ctu, aggregated_listings.distance_to_ctu),
+        geom = CASE WHEN CAST(:lat AS DOUBLE PRECISION) IS NULL THEN aggregated_listings.geom
+                    ELSE ST_SetSRID(ST_MakePoint(CAST(:lng AS DOUBLE PRECISION), CAST(:lat AS DOUBLE PRECISION)), 4326) END,
+        distance_to_ctu = COALESCE(CAST(:distance_to_ctu AS REAL), aggregated_listings.distance_to_ctu),
         geocode_confidence = :geocode_confidence,
         content_hash = :content_hash,
         updated_at = CASE WHEN aggregated_listings.content_hash <> :content_hash

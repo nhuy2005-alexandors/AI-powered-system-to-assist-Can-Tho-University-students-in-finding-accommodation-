@@ -1,0 +1,29 @@
+{
+  "source": "tromoi",
+  "base_url": "https://tromoi.com",
+  "list_url": "https://tromoi.com/tim-tro-tai-can-tho",
+  "list_page_param": "",
+  "incremental_pages": 1,
+  "full_pages": 1,
+  "max_detail_incremental": 20,
+  "use_jsonld": false,
+  "item_mode": "self",
+  "selectors": {
+    "item": ".hostel-item",
+    "item_anchor": ".hostel-item__link",
+    "item_url_attr": "href",
+    "title": ".hostel-item__title",
+    "price": ".hostel-item__price",
+    "district": ".hostel-item__address",
+    "thumb": ".hostel-item__img--link img, .hostel-item__img img"
+  },
+  "detail": {
+    "title": "h1",
+    "address": ".box-address",
+    "price": ".value-wrap",
+    "description_body": ".content-detail",
+    "images_filter": "/storage/uploads/",
+    "images_attr": "src",
+    "images": "img"
+  }
+}

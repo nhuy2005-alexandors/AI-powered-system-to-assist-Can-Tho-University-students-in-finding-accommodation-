@@ -10,7 +10,7 @@ from .repo import ListingRepo
 log = logging.getLogger("crawler.scheduler")
 
 # nguồn bật mặc định
-ENABLED_SOURCES = ["phongtro123"]
+ENABLED_SOURCES = ["phongtro123", "tromoi"]
 
 
 async def _job(engine: Engine, source: str, mode: str) -> None:

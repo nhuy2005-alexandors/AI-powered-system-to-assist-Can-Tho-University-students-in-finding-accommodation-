@@ -167,6 +167,6 @@
 ---
 
 ## Phụ lục: trạng thái hiện thực
-- ✅ Đã code: `/health`, `/health/deps`, `/crawler/*`.
-- ⬜ Chưa code (Sprint 1-4): auth, listings, recommend, matching, chat, risk, admin.
+- ✅ Đã code: `/health`, `/health/deps`, `/crawler/*`, `/listings` (search/filter/sort/nearby/detail).
+- ⬜ Chưa code (Sprint 1-4): auth, recommend, matching, chat, risk, admin.
 - Khi code, dùng FastAPI auto-docs tại `/docs` (OpenAPI) làm nguồn chính thức; file này là hợp đồng thiết kế.

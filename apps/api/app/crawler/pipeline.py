@@ -32,31 +32,26 @@ def process_html_pages(source: str, pages_html: list[str]) -> list[NormalizedLis
     return deduped
 
 
-def merge_detail(n: NormalizedListing, detail: dict) -> NormalizedListing:
+def merge_detail(n: NormalizedListing, detail: dict, base_url: str = "") -> NormalizedListing:
     """Gộp field từ detail page vào listing đã normalize (address/images/price ưu tiên detail)."""
-    import re
+    from urllib.parse import urljoin
 
-    from .normalize import compute_content_hash, parse_area, parse_price
+    from .normalize import compute_content_hash, extract_area_from_text, parse_price
 
     if detail.get("address"):
         n.address = detail["address"]
     if detail.get("description"):
         n.description = detail["description"]
     if detail.get("images"):
-        n.images = detail["images"]
+        # ảnh detail có thể là relative path (vd tromoi /storage/...) → urljoin base
+        n.images = [urljoin(base_url, u) if base_url else u for u in detail["images"]]
     if detail.get("price_text"):
         p = parse_price(detail["price_text"])
         if p:
             n.price = p
-    # diện tích: list page thường thiếu → trích "dt 52m2", "45 m2" từ title/description
+    # diện tích: trích đa biến thể từ description/title (label, kích thước, m vuông)
     if n.area is None:
-        for text in (n.title, n.description):
-            if not text:
-                continue
-            m = re.search(r"(\d+[.,]?\d*)\s*m2|(\d+[.,]?\d*)\s*m²", text, re.I)
-            if m:
-                n.area = parse_area(m.group(0))
-                break
+        n.area = extract_area_from_text(n.description, n.title)
     n.content_hash = compute_content_hash(n)
     return n
 
@@ -99,7 +94,7 @@ async def run_source(
                 continue
             try:
                 detail_html = await fetcher.get(n.source_url)
-                merge_detail(n, parse_detail_page(detail_html, config))
+                merge_detail(n, parse_detail_page(detail_html, config), config.get("base_url", ""))
             except BlockedError as exc:
                 counts["error"] = str(exc)
                 log.warning("BLOCKED detail source=%s: %s", source, exc)

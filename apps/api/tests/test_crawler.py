@@ -48,6 +48,37 @@ def test_parse_detail_page(phongtro_detail_html):
     assert len(d.get("images", [])) > 0
 
 
+# ── parser (HTML thật tromoi.com — item_mode="self", không có JSON-LD) ──
+def test_parse_list_page_tromoi(tromoi_html):
+    config = load_source_config("tromoi")
+    items = parse_list_page(tromoi_html, config)
+    assert len(items) == 21  # 21 tin/trang static (phân trang AJAX)
+    first = items[0]
+    assert first.source == "tromoi"
+    assert first.source_id  # slug cuối URL (nguồn không có ID số)
+    assert first.source_url.startswith("https://tromoi.com/")
+    assert first.title
+    assert first.price_text and "triệu" in first.price_text
+    assert first.district and "Cần Thơ" in first.district
+    # mọi tin đều có field cốt lõi
+    for it in items:
+        assert it.title and it.source_url and it.price_text
+
+
+def test_parse_detail_page_tromoi(tromoi_detail_html):
+    config = load_source_config("tromoi")
+    d = parse_detail_page(tromoi_detail_html, config)
+    # tromoi không có JSON-LD → address lấy từ .box-address
+    assert d.get("address")
+    assert "Cần Thơ" in d["address"]
+    assert "Cái Răng" in d["address"]
+    assert d.get("title")
+    assert d.get("price_text") and "triệu" in d["price_text"]
+    # ảnh gallery lọc theo /storage/uploads/ (loại icon/logo)
+    assert len(d.get("images", [])) > 0
+    assert all("/storage/uploads/" in u for u in d["images"])
+
+
 # ── normalize ──
 def test_parse_price_variants():
     assert parse_price("2,5 triệu/tháng") == 2_500_000
@@ -155,3 +186,59 @@ def test_geocode_failed():
 def test_haversine_ctu_zero():
     assert geocode.haversine_m(geocode.CTU_LAT, geocode.CTU_LNG,
                                geocode.CTU_LAT, geocode.CTU_LNG) == 0.0
+
+
+# ── geocode address normalize (root cause fix) ──
+def test_strip_admin_removes_prefixes():
+    s = geocode.strip_admin("192 Đường Nguyễn Thông, Phường An Thới, Quận Bình Thuỷ, Cần Thơ")
+    assert "Phường" not in s and "Quận" not in s and "Đường" not in s
+    assert "Nguyễn Thông" in s and "An Thới" in s
+
+
+def test_ward_district_city_extract():
+    wdc = geocode.ward_district_city("180A, khu vực Phú Thuận Đường Chí Sinh, Phường Tân Phú, Quận Cái Răng, Cần Thơ")
+    assert wdc == "Tân Phú, Cái Răng, Cần Thơ"
+
+
+def test_ward_district_city_none_when_no_admin():
+    assert geocode.ward_district_city("chỉ text tự do không có phường") is None
+
+
+def test_geocode_medium_via_ward_query(monkeypatch):
+    # tầng 1 (full) fail, tầng 2 (ward+district+city) trả tọa độ → medium
+    calls = []
+
+    async def _fake(client, q):
+        calls.append(q)
+        # chỉ match query cấp phường chính xác (tầng 2), full-address (tầng 1) fail
+        return (10.06, 105.76) if q == "An Thới, Bình Thuỷ, Cần Thơ" else None
+    monkeypatch.setattr(geocode, "_nominatim", _fake)
+
+    async def run():
+        g = geocode.Geocoder()
+        try:
+            return await g.geocode("192 Đường Nguyễn Thông, Phường An Thới, Quận Bình Thuỷ, Cần Thơ")
+        finally:
+            await g.__aexit__(None, None, None)
+    lat, lng, conf = asyncio.run(run())
+    assert conf == "medium"
+    assert lat == 10.06
+
+
+# ── area extraction (merge_detail) ──
+def test_area_extraction_from_description():
+    from app.crawler.pipeline import merge_detail
+    from app.crawler.schemas import NormalizedListing
+
+    n = NormalizedListing(source="s", title="Phòng trọ", area=None)
+    merge_detail(n, {"description": "Giá thuê: 750.000đ/tháng Diện tích: 26m² thoáng mát"})
+    assert n.area == 26.0
+
+
+def test_area_extraction_ignores_noise():
+    from app.crawler.pipeline import merge_detail
+    from app.crawler.schemas import NormalizedListing
+
+    n = NormalizedListing(source="s", title="MINI HOUSE rộng rãi", area=None)
+    merge_detail(n, {"description": "Nhà đẹp không ghi diện tích"})
+    assert n.area is None
