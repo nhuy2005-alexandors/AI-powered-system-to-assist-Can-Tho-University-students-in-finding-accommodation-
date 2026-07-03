@@ -1,8 +1,0 @@
-{
-    "id": "debug",
-    "description": "Tìm kiếm, phân tích và sửa lỗi",
-    "preconditions": [],
-    "required_agents": ["quality-inspector", "backend-specialist"],
-    "required_skills": ["clean-code"],
-    "memory_policy": "required"
-}

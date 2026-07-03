@@ -1,39 +1,31 @@
-# Trọ CTU — Hệ thống tổng hợp & gợi ý nhà trọ AI (THS2026-66)
+# Trọ CTU — Hệ thống tổng hợp & gợi ý nhà trọ AI
 
-Monorepo Sprint 0 scaffold. Stack theo `Document/Technical_Roadmap.md` (P1: chi phí 0đ, free-tier).
+Full-stack hệ thống tìm nhà trọ: **FastAPI + PostgreSQL/PostGIS/pgvector** backend, **Next.js 14 + Tailwind** frontend, **Docker Compose** orchestration.
 
-## Cấu trúc
+## Kiến trúc
 
 ```
-apps/
-  api/      FastAPI (nghiệp vụ + AI + crawler) — Python 3.12
-  web/      Next.js 14 + Tailwind (frontend)
-infra/
-  db/       PostgreSQL 16 + PostGIS + pgvector (Dockerfile + init.sql + migrations/)
-docker-compose.yml   db + redis + api + web
+├── apps/
+│   ├── api/             # FastAPI (nghiệp vụ + AI + crawler) — Python 3.12
+│   └── web/             # Next.js 14 + Tailwind (frontend)
+├── infra/
+│   └── db/              # PostgreSQL 16 + PostGIS + pgvector (Dockerfile + migrations)
+├── eval/                # Notebook + script đánh giá mô hình AI (metrics, NDCG, RAGAS)
+├── docs/                # Tài liệu kỹ thuật (SRS, API spec, ERD, use case, test plan)
+├── Diagrams/            # Sơ đồ kiến trúc, workflow, sequence (HTML interactive)
+├── docker-compose.yml   # db + redis + api + web
+└── .github/workflows/   # CI: build + test backend/frontend
 ```
 
-## Tài liệu (`Document/` + `Agent-Generated/`)
+## Chức năng
 
-| Tài liệu | Nội dung |
-|---|---|
-| `SRS.md` | Đặc tả yêu cầu (IEEE 830): FR + NFR + acceptance |
-| `API_Specification.md` | Đặc tả API: 9 nhóm endpoint |
-| `Data_Dictionary.md` | Từ điển dữ liệu 8 bảng + quan hệ |
-| `Test_Plan.md` | Kế hoạch kiểm thử + test case |
-| `Deployment_Guide.md` | Hướng dẫn triển khai (local/staging/prod) |
-| `Technical_Roadmap.md` | Giải pháp kỹ thuật T1-T11 + DoD |
-| `Sprint_Plan.md` | Kế hoạch 6 sprint |
-| `Agent-Generated/02..05` | Nghiệp vụ, thiết kế AI, bài toán khó, use case |
+Crawler tự động (4 nguồn: phongtro123, tromoi, mogi, bds123) · Geocoding tự động (tọa độ + khoảng cách tới ĐH Cần Thơ) · UGC đăng tin (CRUD + soft-delete) · Auth multi-provider (local/Google/CTU SSO) · JWT + httpOnly cookie · RBAC (guest/user/admin) · AI gợi ý nhà trọ · RAG Chatbot.
 
-## Sơ đồ (`Diagrams/archify/`, HTML mở browser)
+## Yêu cầu
 
-`01_Architecture` · `02_UseCase` · `03..06` workflow (Crawler/Chatbot/Matching/TìmKiếm) · `07_ERD` · `08_Sequence_Login` · `09_Sequence_RAG`.
-Sửa: edit `.json` nguồn → `node ~/.claude/skills/archify/renderers/<mode>/render-<mode>.mjs <in>.json <out>.html`.
+- Docker Desktop (có `docker compose`)
 
-## Chạy local
-
-Yêu cầu: Docker Desktop (có `docker compose`).
+## Chạy
 
 ```bash
 cp .env.example .env
@@ -42,20 +34,22 @@ docker compose up --build
 
 Sau khi 4 service healthy:
 
-- Web:  http://localhost:3000
-- API:  http://localhost:8000/health  ·  /health/deps  ·  /docs
-- DB:   localhost:5432 (nckh/nckh)
-- Redis: localhost:6379
+- **Frontend:** http://localhost:3000
+- **API Swagger:** http://localhost:8000/docs
+- **Health check:** http://localhost:8000/health/deps (PostGIS + pgvector + Redis)
+- **DB:** localhost:5432 (nckh/nckh)
 
-`GET /health/deps` xác minh PostGIS + pgvector + Redis hoạt động.
+## Test
 
-## DoD Sprint 0.4
+```bash
+# Copy tests vào container và chạy pytest
+docker compose exec -T api python -m pytest -v
+```
 
-- [ ] `docker compose up` khởi động cả 4 service không lỗi
-- [ ] `/health/deps` trả `postgis` + `pgvector` = ok
-- [ ] Web render trạng thái backend health
+## CI/CD
 
-## Ghi chú
+`.github/workflows/ci.yml` chạy khi push/PR vào `main`: build + test backend (Docker + pytest), build frontend (tsc + next build).
 
-- Hot-reload API: `docker compose watch` (sync `apps/api/app`).
-- Chưa cài Docker trên máy hiện tại → cần cài Docker Desktop để verify runtime.
+## Tài liệu
+
+Xem thư mục [`docs/`](docs/): SRS, API Specification, Data Dictionary, Test Plan, Sprint Plan, Technical Roadmap, Use Case, và các phân tích nghiệp vụ.

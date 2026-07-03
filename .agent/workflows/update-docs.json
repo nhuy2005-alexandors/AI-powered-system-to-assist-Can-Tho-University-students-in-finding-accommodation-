@@ -1,8 +1,0 @@
-{
-    "id": "update-docs",
-    "description": "Đồng bộ hóa tài liệu dự án",
-    "preconditions": ["registry.json exists"],
-    "required_agents": ["orchestrator"],
-    "required_skills": ["documentation-templates"],
-    "memory_policy": "optional"
-}

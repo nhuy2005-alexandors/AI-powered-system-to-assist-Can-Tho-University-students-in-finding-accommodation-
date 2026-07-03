@@ -1,8 +1,0 @@
-{
-    "id": "test",
-    "description": "Thực hiện Unit Test và TDD",
-    "preconditions": [],
-    "required_agents": ["quality-inspector"],
-    "required_skills": ["clean-code"],
-    "memory_policy": "optional"
-}

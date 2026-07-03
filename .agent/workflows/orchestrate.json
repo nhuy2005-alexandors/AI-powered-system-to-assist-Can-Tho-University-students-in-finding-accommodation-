@@ -1,8 +1,0 @@
-{
-    "id": "orchestrate",
-    "description": "Điều phối hệ thống và phân bổ nhiệm vụ phức tạp cho nhiều Agent",
-    "preconditions": ["registry.json exists"],
-    "required_agents": ["orchestrator"],
-    "required_skills": ["system-architect", "agent-memory-mcp"],
-    "memory_policy": "required"
-}
