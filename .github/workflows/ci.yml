@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  backend:
+    name: Backend build + test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and start API with DB
+        run: docker compose up -d --build api
+
+      - name: Wait for DB and API
+        run: |
+          echo "Waiting for services..."
+          sleep 10
+          docker compose ps
+
+      - name: Copy tests into container
+        run: |
+          API_CID=$(docker compose ps -q api)
+          docker cp apps/api/tests $API_CID:/app/tests
+
+      - name: Run tests
+        run: docker compose exec -T api python -m pytest -v
+
+  frontend:
+    name: Frontend build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type-check + build
+        run: npm run build

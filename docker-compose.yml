@@ -32,6 +32,10 @@ services:
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-nckh}:${POSTGRES_PASSWORD:-nckh}@db:5432/${POSTGRES_DB:-nckh}
       REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: ${JWT_SECRET:-dev-insecure-change-me}
+      ACCESS_TOKEN_TTL_MIN: ${ACCESS_TOKEN_TTL_MIN:-15}
+      REFRESH_TOKEN_TTL_DAYS: ${REFRESH_TOKEN_TTL_DAYS:-30}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
     ports:
       - "8000:8000"
     depends_on:
@@ -49,6 +53,7 @@ services:
     build: ./apps/web
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000
+      API_INTERNAL_URL: http://api:8000
     ports:
       - "3000:3000"
     depends_on:

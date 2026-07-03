@@ -10,5 +10,12 @@ class Settings(BaseSettings):
     # bật scheduler crawler trong app (tắt mặc định: dev/test không tự crawl ra mạng)
     crawler_enabled: bool = False
 
+    # auth (Sprint 1.9). Secret THẬT đặt trong .env, KHÔNG commit.
+    jwt_secret: str = "dev-insecure-change-me"
+    jwt_algorithm: str = "HS256"
+    access_token_ttl_min: int = 15
+    refresh_token_ttl_days: int = 30
+    google_client_id: str = ""  # bắt buộc khi dùng Google login
+
 
 settings = Settings()

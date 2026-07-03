@@ -12,5 +12,10 @@ APScheduler==3.11.0
 datasketch==1.6.5
 tenacity==9.0.0
 
+# auth
+bcrypt==4.2.1
+pyjwt==2.10.1
+email-validator==2.2.0
+
 # test
 pytest==8.3.4

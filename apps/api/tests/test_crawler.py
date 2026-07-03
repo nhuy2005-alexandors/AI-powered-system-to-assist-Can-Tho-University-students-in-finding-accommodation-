@@ -79,6 +79,27 @@ def test_parse_detail_page_tromoi(tromoi_detail_html):
     assert all("/storage/uploads/" in u for u in d["images"])
 
 
+# ── parser (Mogi) ──
+def test_parse_list_page_mogi(mogi_html):
+    config = load_source_config("mogi")
+    items = parse_list_page(mogi_html, config)
+    assert len(items) > 0
+    first = items[0]
+    assert first.source == "mogi"
+    assert first.source_id
+    assert first.source_url.startswith("https://mogi.vn/")
+    assert first.title
+    assert first.price_text
+
+
+def test_parse_detail_page_mogi(mogi_detail_html):
+    config = load_source_config("mogi")
+    d = parse_detail_page(mogi_detail_html, config)
+    assert d.get("description")
+    assert len(d.get("images", [])) >= 0
+
+
+
 # ── normalize ──
 def test_parse_price_variants():
     assert parse_price("2,5 triệu/tháng") == 2_500_000

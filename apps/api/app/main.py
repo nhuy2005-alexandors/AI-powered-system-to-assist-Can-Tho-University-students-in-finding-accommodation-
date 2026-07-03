@@ -7,11 +7,14 @@ import redis
 from .config import settings
 from .crawler import ListingRepo, build_scheduler, run_source
 from .listings import init_listings, listings_router
+from .auth import AuthRepo, auth_router, init_auth, init_auth_deps
 
 # psycopg3 sync engine; pre_ping avoids stale conns after db restart
 engine = create_engine(settings.database_url, pool_pre_ping=True)
 redis_client = redis.from_url(settings.redis_url, decode_responses=True)
 init_listings(engine)
+init_auth(engine)
+init_auth_deps(AuthRepo(engine))
 
 
 @asynccontextmanager
@@ -29,6 +32,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="NCKH API", version="0.1.0", lifespan=lifespan)
 app.include_router(listings_router)
+app.include_router(auth_router)
 
 
 @app.get("/health")

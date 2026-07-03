@@ -1,0 +1,30 @@
+{
+  "source": "bds123",
+  "base_url": "https://bds123.vn",
+  "name": "BĐS123 Cần Thơ",
+  "list_url": "https://bds123.vn/cho-thue-phong-tro-nha-tro-can-tho",
+  "list_page_param": "?page={page}",
+  "incremental_pages": 2,
+  "full_pages": 5,
+  "max_detail_incremental": 20,
+  "use_jsonld": true,
+  "item_mode": "self",
+  "selectors": {
+    "item": "ul.bg-white li article",
+    "item_anchor": "a",
+    "item_url_attr": "href",
+    "title": "h3.text-blue-650, h3",
+    "price": "strong.text-red",
+    "area": "div.d-flex.mb-2 span",
+    "district": "address.line-row-1, address",
+    "thumb": "figure.post__thumb img"
+  },
+  "detail": {
+    "title": "h1",
+    "address": ".line-row-1, address",
+    "description_body": ".content-detail, .description",
+    "images_filter": "static123",
+    "images_attr": "src",
+    "images": "img"
+  }
+}

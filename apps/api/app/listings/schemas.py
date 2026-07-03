@@ -79,3 +79,27 @@ class SearchResult(BaseModel):
     page: int
     size: int
     items: list[ListingOut]
+
+
+class ListingCreate(BaseModel):
+    """Payload đăng tin UGC (FR-3.1)."""
+
+    title: str = Field(min_length=1)
+    price: int | None = None
+    area: float | None = None
+    address: str | None = None
+    district: str | None = None
+    description: str | None = None
+    images: list[str] = Field(default_factory=list)
+
+
+class ListingUpdate(BaseModel):
+    """Payload sửa tin UGC — mọi field optional (partial update)."""
+
+    title: str | None = None
+    price: int | None = None
+    area: float | None = None
+    address: str | None = None
+    district: str | None = None
+    description: str | None = None
+    images: list[str] | None = None

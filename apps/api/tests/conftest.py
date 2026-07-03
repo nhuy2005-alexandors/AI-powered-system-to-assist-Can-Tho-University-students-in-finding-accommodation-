@@ -27,3 +27,13 @@ def tromoi_html() -> str:
 @pytest.fixture
 def tromoi_detail_html() -> str:
     return (FIXTURES / "tromoi_detail.html").read_text(encoding="utf-8")
+
+
+@pytest.fixture
+def mogi_html() -> str:
+    return (FIXTURES / "mogi_list.html").read_text(encoding="utf-8")
+
+
+@pytest.fixture
+def mogi_detail_html() -> str:
+    return (FIXTURES / "mogi_detail.html").read_text(encoding="utf-8")

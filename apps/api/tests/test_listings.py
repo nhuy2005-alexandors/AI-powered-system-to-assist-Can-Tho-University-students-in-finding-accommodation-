@@ -28,10 +28,10 @@ def test_freshness_label():
     assert freshness_label(None) == "không rõ"
 
 
-# ── build_filters: luôn ẩn expired ──
-def test_build_filters_hides_expired():
+# ── build_filters: luôn ẩn expired và hidden ──
+def test_build_filters_hides_expired_and_hidden():
     where, params = build_filters(SearchParams())
-    assert "status <> 'expired'" in where
+    assert "status NOT IN ('expired', 'hidden')" in where
     assert params == {}
 
 

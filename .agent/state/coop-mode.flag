@@ -1,0 +1,8 @@
+{
+  "active": true,
+  "planner": "claude-code",
+  "executor": "gemini",
+  "set_at": "2026-07-01T08:28:42.757Z",
+  "set_by_pid": 28516,
+  "host": "LAPTOP-JGTVFO79"
+}

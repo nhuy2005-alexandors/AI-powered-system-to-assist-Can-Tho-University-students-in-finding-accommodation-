@@ -1,8 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.engine import Engine
 
-from .repo import ListingQueryRepo
-from .schemas import ListingOut, SearchParams, SearchResult, SortBy
+from ..auth import get_current_user
+from ..auth.schemas import UserOut
+from ..crawler.geocode import Geocoder, haversine_m, CTU_LAT, CTU_LNG
+from .repo import ListingQueryRepo, ListingWriteRepo
+from .schemas import ListingCreate, ListingOut, ListingUpdate, SearchParams, SearchResult, SortBy
 
 router = APIRouter(prefix="/listings", tags=["listings"])
 
@@ -19,6 +22,22 @@ def get_repo() -> ListingQueryRepo:
     if _engine is None:
         raise HTTPException(503, "Listings repo chưa khởi tạo")
     return ListingQueryRepo(_engine)
+
+
+def get_write_repo() -> ListingWriteRepo:
+    if _engine is None:
+        raise HTTPException(503, "Listings repo chưa khởi tạo")
+    return ListingWriteRepo(_engine)
+
+
+async def _geocode_address(address: str | None):
+    """Geocode address → (lat, lng, conf, distance_to_ctu). None nếu không có address."""
+    if not address:
+        return None, None, None, None
+    async with Geocoder() as g:
+        lat, lng, conf = await g.geocode(address)
+    dist = haversine_m(lat, lng, CTU_LAT, CTU_LNG) if lat is not None and lng is not None else None
+    return lat, lng, conf, dist
 
 
 @router.get("", response_model=SearchResult)
@@ -58,8 +77,62 @@ def nearby_listings(
 
 @router.get("/{listing_id}", response_model=ListingOut)
 def get_listing(listing_id: int, repo: ListingQueryRepo = Depends(get_repo)):
-    """Chi tiết 1 tin (FR-2.6)."""
-    item = repo.get(listing_id)
+    """Chi tiết 1 tin (FR-2.6). Ẩn tin expired/hidden."""
+    item = repo.get_visible(listing_id)
     if item is None:
         raise HTTPException(404, "Không tìm thấy tin")
     return item
+
+
+def _check_owner(owner_row, user: UserOut) -> None:
+    """404 nếu tin không tồn tại, 403 nếu không phải chủ tin và không phải admin (FR-3)."""
+    if owner_row is None:
+        raise HTTPException(404, "Không tìm thấy tin")
+    if user.id != owner_row["posted_by"] and user.role != "admin":
+        raise HTTPException(403, "Không có quyền sửa/xoá tin này")
+
+
+@router.post("", response_model=ListingOut, status_code=201)
+async def create_listing(
+    body: ListingCreate,
+    user: UserOut = Depends(get_current_user),
+    repo: ListingQueryRepo = Depends(get_repo),
+    write: ListingWriteRepo = Depends(get_write_repo),
+):
+    """Đăng tin UGC (FR-3.1)."""
+    lat, lng, conf, dist = await _geocode_address(body.address)
+    new_id = write.create(body.model_dump(), user.id, lat, lng, conf, dist)
+    return repo.get(new_id)
+
+
+@router.put("/{listing_id}", response_model=ListingOut)
+async def update_listing(
+    listing_id: int,
+    body: ListingUpdate,
+    user: UserOut = Depends(get_current_user),
+    repo: ListingQueryRepo = Depends(get_repo),
+    write: ListingWriteRepo = Depends(get_write_repo),
+):
+    """Sửa tin UGC — chỉ chủ tin hoặc admin (FR-3.2)."""
+    owner_row = write.get_owner(listing_id)
+    _check_owner(owner_row, user)
+
+    fields = body.model_dump(exclude_unset=True)
+    lat, lng, conf, dist = None, None, None, None
+    if "address" in fields:
+        lat, lng, conf, dist = await _geocode_address(fields["address"])
+
+    write.update(listing_id, fields, lat, lng, conf, dist)
+    return repo.get(listing_id)
+
+
+@router.delete("/{listing_id}", status_code=204)
+def delete_listing(
+    listing_id: int,
+    user: UserOut = Depends(get_current_user),
+    write: ListingWriteRepo = Depends(get_write_repo),
+):
+    """Xoá (ẩn) tin UGC — chỉ chủ tin hoặc admin (FR-3.3)."""
+    owner_row = write.get_owner(listing_id)
+    _check_owner(owner_row, user)
+    write.soft_delete(listing_id)
