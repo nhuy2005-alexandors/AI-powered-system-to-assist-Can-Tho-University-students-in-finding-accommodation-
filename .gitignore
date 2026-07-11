@@ -38,3 +38,8 @@ Thumbs.db
 
 # ── Docker volumes / runtime ──
 pgdata/
+
+# ── Temporary & sensitive files ──
+.tmp-map*.png
+test_all_proxies.ps1
+apps/web/tsconfig.tsbuildinfo

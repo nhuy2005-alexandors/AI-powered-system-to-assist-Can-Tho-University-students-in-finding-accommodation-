@@ -1,0 +1,83 @@
+# Gotchas — Trọ CTU
+
+Bẫy đã dính, tích lũy, KHÔNG xóa. Mỗi khi dính bẫy mới → append.
+
+## Crawler 404 làm crash cả job (500)
+- **Triệu chứng**: Một URL nguồn hỏng làm sập toàn bộ job crawl với lỗi 500.
+- **Nguyên nhân**: Chỉ 403/429 được xử lý; 404/410/5xx lọt ra ngoài. URL `bds123` thiếu `.html` → 302 → 404.
+- **Cách tránh/fix**: `pipeline.py` bắt `HTTPStatusError` (404/410/5xx) → skip nguồn, không crash. Nguồn: `docs/tech_specs/Crawler_Pipeline_Hardening.md:43`; `apps/api/app/crawler/fetcher.py:55`.
+
+## Cleaner chỉ chạy theo lịch → data kẹt ở trạng thái `raw`
+- **Triệu chứng**: Data crawl thủ công không bao giờ được clean, kẹt ở `cleaning_status='raw'`, bị loại khỏi search.
+- **Nguyên nhân**: `run_cleaner` trước đây chỉ chạy trong scheduler.
+- **Cách tránh/fix**: `POST /crawler/run` giờ gọi `run_cleaner` sau khi crawl. Nguồn: `docs/CHECKPOINT.md:36`; `Crawler_Pipeline_Hardening.md:47`.
+
+## `source_id` quá dài làm tràn cột upsert
+- **Triệu chứng**: Crawl crash khi `source_id` > 100 ký tự tràn `VARCHAR(100)`.
+- **Nguyên nhân**: Vài nguồn sinh ID rất dài.
+- **Cách tránh/fix**: Nếu > 100 ký tự → hash MD5 (32 ký tự). Nguồn: `Crawler_Pipeline_Hardening.md:46`.
+
+## MinHash dedup chỉ trong 1 batch (dupe cross-batch lọt)
+- **Triệu chứng**: ~37 tin near-duplicate còn tồn tại (348 rows / 311 unique content_hash).
+- **Nguyên nhân**: `find_duplicates` chạy MinHashLSH chỉ trong một batch crawl, không so với các row đã có trong DB.
+- **Cách tránh/fix**: Ngưỡng `JACCARD_THRESHOLD = 0.5` (bigram shingle) chỉnh cho text tiếng Việt ngắn — comment ghi "Tinh chỉnh trên tập gán nhãn khi có data thật". Kế hoạch: dedup so với DB. Nguồn: `apps/api/app/crawler/dedup.py:9-11,39`; `docs/tech_specs/Crawler_Data_Quality_Assessment.md:69`.
+
+## Diện tích ước tính (imputed) không tin cậy cho ~43% tin
+- **Triệu chứng**: Filter/gợi ý AI theo diện tích không đáng tin cho gần nửa data.
+- **Nguyên nhân**: 138/324 (42.6%) diện tích là *đoán* từ bậc giá khi thiếu m² (`is_imputed_area=true`) — heuristic thô.
+- **Cách tránh/fix**: Ưu tiên diện tích thật từ trang chi tiết; gắn cờ "ước tính" ở UI/AI. Nguồn: `Crawler_Data_Quality_Assessment.md:32-36`.
+
+## Nominatim geocode fail ~7.8% + nhãn confidence lạc quan
+- **Triệu chứng**: 27 tin không có toạ độ (không lên bản đồ / không tính được khoảng cách CTU); nhiều điểm gắn nhãn "high" thực ra là fallback cấp quận.
+- **Nguyên nhân**: Nominatim trên địa chỉ tiếng Việt nhiễu; fallback `"{quận}, Cần Thơ"` khi địa chỉ fail.
+- **Cách tránh/fix**: Rate limit ≤1 req/s + User-Agent định danh (chính sách Nominatim); cân nhắc bảng landmark/phường nội bộ. Nguồn: `apps/api/app/crawler/geocode.py:3,19-21`; `Crawler_Data_Quality_Assessment.md:62-64`.
+
+## Crawler bị chặn (403/429) → phải throttle + xoay User-Agent
+- **Triệu chứng**: Nguồn chặn request.
+- **Nguyên nhân**: Fetch quá dồn dập.
+- **Cách tránh/fix**: 1 req / 5s (`RATE_LIMIT_SECONDS = 5.0`), xoay User-Agent, tenacity retry chỉ với `TransportError` tạm thời. Nguồn: `apps/api/app/crawler/fetcher.py:12,19,22-23,55`.
+
+## JWT secret + DB creds mặc định không an toàn
+- **Triệu chứng**: JWT/DB creds đoán được nếu `.env` không set → token có thể bị giả mạo.
+- **Nguyên nhân**: Mặc định `jwt_secret="dev-insecure-change-me"`, `database_url` dùng `nckh:nckh`.
+- **Cách tránh/fix**: Set secret mạnh trong `.env`; checklist cảnh báo rõ không dùng mặc định `nckh/nckh`. Nguồn: `apps/api/app/config.py:7,14`; `docs/Deployment_Guide.md:84`.
+
+## Access token TTL ngắn — phụ thuộc refresh flow, HTTPBearer trả 403 không phải 401
+- **Triệu chứng**: Access token hết hạn sau 15 phút; request 401 trừ khi refresh chạy được. Thiếu header Authorization trả **403** (không phải 401).
+- **Nguyên nhân**: `access_token_ttl_min=15`, `refresh_token_ttl_days=30`; `HTTPBearer(auto_error=True)`.
+- **Cách tránh/fix**: Frontend phải xử lý refresh (TC-AU-04). Chú ý khi assert status code trong test. Nguồn: `apps/api/app/config.py:16-17`; `apps/api/tests/test_listings_crud.py:72`.
+
+## Thiếu district khi địa chỉ nguồn quá ngắn
+- **Triệu chứng**: ~14 tin `nhadatcantho247` thiếu district → không lên bản đồ được.
+- **Nguyên nhân**: `infer_district` quét 9 tên quận Cần Thơ; địa chỉ ngắn (vd "hẻm 9 Phạm Ngọc Hưng") không chứa tên nào.
+- **Cách tránh/fix**: Cân nhắc suy district từ chuyên mục URL. Nguồn: `docs/CHECKPOINT.md:34`; `Crawler_Pipeline_Hardening.md:56-57`.
+
+## Classifier bỏ tin không keyword vào `khac` → ẩn khỏi search
+- **Triệu chứng**: Tin hợp lệ biến mất khỏi search mặc định.
+- **Nguyên nhân**: Title không có keyword rõ → phân loại `khac`; search mặc định chỉ trả `phong_tro` sạch.
+- **Cách tránh/fix**: Cân nhắc phân loại từ chuyên mục URL. Nguồn: `docs/CHECKPOINT.md:35`.
+
+## `docker compose down -v` xoá sạch pgdata
+- **Triệu chứng**: Mất toàn bộ data khi hạ stack.
+- **Nguyên nhân**: Cờ `-v` xoá volume `pgdata`.
+- **Cách tránh/fix**: Không dùng `-v` trừ khi cố tình reset DB. Nguồn: `docs/Deployment_Guide.md:38` "XÓA volume pgdata — mất hết data".
+
+## Render free-tier ngủ khi idle → scheduler không đáng tin
+- **Triệu chứng**: Job crawl theo lịch không chạy đúng hẹn khi service ngủ.
+- **Nguyên nhân**: Free-tier sleep khi idle (đánh đổi của nguyên tắc P1 chi phí=0đ).
+- **Cách tránh/fix**: Dùng external cron gọi thức dậy. Nguồn: `docs/Deployment_Guide.md:53`.
+
+## CORS chưa cấu hình dù checklist yêu cầu
+- **Triệu chứng**: Khoảng trống bảo mật — chưa giới hạn origin frontend.
+- **Nguyên nhân**: `apps/api/app/main.py` chưa gắn CORS middleware (grep không thấy), trong khi checklist yêu cầu "CORS chỉ cho domain frontend".
+- **Cách tránh/fix**: Thêm CORSMiddleware giới hạn origin trước khi deploy. Nguồn: `docs/Deployment_Guide.md:89`; `apps/api/app/main.py`.
+
+## ORS dùng thứ tự [lon, lat] — ngược với DB [lat, lng]
+- **Triệu chứng**: (chưa dính, ghi phòng) route time/geometry ra sai bét, điểm rơi tận đâu, KHÔNG crash → bug âm thầm.
+- **Nguyên nhân**: OpenRouteService quy ước mọi coordinate array là `[lon, lat]` (docs "General Info"). DB lưu `ST_Y(geom)=lat, ST_X(geom)=lng` (`repo.py:15`) → bê thẳng vào ORS là đảo.
+- **Cách tránh/fix**: Khi gọi Matrix/Directions phải xếp `[lng, lat]`, không phải `[lat, lng]`. Test bằng 1 cặp điểm đã biết khoảng cách thật trước khi backfill hàng loạt. Nguồn: `docs/specs/Map_Routing.md` (ràng buộc ORS).
+
+## Nguồn lệch mục tiêu làm nhiễu tập học AI
+- **Triệu chứng**: Tập data lẫn nhà/mặt bằng thương mại, không phải trọ SV.
+- **Nguyên nhân**: mogi ~83%, nhadatcantho247 ~84% là nhà/thương mại.
+- **Cách tránh/fix**: Lọc theo `listing_type=phong_tro` + `quality_score` trước khi train. Nguồn: `Crawler_Data_Quality_Assessment.md:39-50`.
