@@ -36,6 +36,8 @@ services:
       ACCESS_TOKEN_TTL_MIN: ${ACCESS_TOKEN_TTL_MIN:-15}
       REFRESH_TOKEN_TTL_DAYS: ${REFRESH_TOKEN_TTL_DAYS:-30}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      CRAWLER_ENABLED: ${CRAWLER_ENABLED:-true}
+      ORS_API_KEY: ${ORS_API_KEY:-}
     ports:
       - "8000:8000"
     depends_on:

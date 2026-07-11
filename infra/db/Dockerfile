@@ -13,3 +13,5 @@ COPY migrations/20_listings.sql /docker-entrypoint-initdb.d/20-listings.sql
 COPY migrations/30_users.sql /docker-entrypoint-initdb.d/30-users.sql
 COPY migrations/40_auth.sql /docker-entrypoint-initdb.d/40-auth.sql
 COPY migrations/50_ugc.sql /docker-entrypoint-initdb.d/50-ugc.sql
+COPY migrations/60_data_cleaning.sql /docker-entrypoint-initdb.d/60-data-cleaning.sql
+COPY migrations/70_listing_classify.sql /docker-entrypoint-initdb.d/70-listing-classify.sql
