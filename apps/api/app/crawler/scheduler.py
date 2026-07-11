@@ -14,7 +14,9 @@ ENABLED_SOURCES = [
     "phongtro123",
     "tromoi",
     "mogi",
-    "bds123"
+    "bds123",
+    "nhadatcantho",
+    "nhadatcantho247"
 ]
 
 
@@ -22,6 +24,11 @@ async def _job(engine: Engine, source: str, mode: str) -> None:
     repo = ListingRepo(engine)
     try:
         await run_source(source, mode, repo)
+        
+        # Chạy pipeline làm sạch sau khi crawl xong
+        from app.cleaner.pipeline import run_cleaner
+        run_cleaner(engine)
+        
     except Exception:  # noqa: BLE001 — job không được làm chết scheduler
         log.exception("crawl job failed source=%s mode=%s", source, mode)
 

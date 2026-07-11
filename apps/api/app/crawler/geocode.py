@@ -54,6 +54,9 @@ WARD_CENTROIDS: dict[str, tuple[float, float]] = {
 
 # landmark phổ biến SV hay nhắc
 LANDMARKS: dict[str, tuple[float, float]] = {
+    # Hồ Bún Xáng — ổ trọ SV rìa campus khu II. PHẢI đứng TRƯỚC "dai hoc can tho":
+    # tin "gần ĐH Cần Thơ" mà có "bún xáng" thì snap về hồ, không về giữa trường.
+    "bun xang": (10.0318, 105.7641),
     "dai hoc can tho": (CTU_LAT, CTU_LNG),
     "ctu": (CTU_LAT, CTU_LNG),
     "dai hoc y duoc": (10.0270, 105.7690),
@@ -66,6 +69,16 @@ LANDMARKS: dict[str, tuple[float, float]] = {
     "san bay": (10.0850, 105.7120),
     "cho can tho": (10.0350, 105.7900),
 }
+
+
+# bbox Cần Thơ (lat, lng) — chặn Nominatim match tên đường trùng ra tỉnh khác (HN/HCM).
+# Rộng đủ ôm mọi ward centroid quanh CTU, hẹp đủ loại 21.x (HN) / 10.75,106.6 (HCM).
+_CT_LAT = (9.8, 10.3)
+_CT_LNG = (105.4, 106.0)
+
+
+def _in_cantho(lat: float, lng: float) -> bool:
+    return _CT_LAT[0] <= lat <= _CT_LAT[1] and _CT_LNG[0] <= lng <= _CT_LNG[1]
 
 
 def _norm(text: str) -> str:
@@ -161,14 +174,14 @@ class Geocoder:
         stripped = strip_admin(address)
         if stripped:
             coord = await self._query(stripped)
-            if coord:
+            if coord and _in_cantho(*coord):
                 return coord[0], coord[1], "high"
 
         # Tầng 2: Nominatim cấp phường (ward+district+city) → tọa độ phường thật (medium)
         wdc = ward_district_city(address)
         if wdc:
             coord = await self._query(wdc)
-            if coord:
+            if coord and _in_cantho(*coord):
                 return coord[0], coord[1], "medium"
 
         # Tầng 3: landmark table (medium)

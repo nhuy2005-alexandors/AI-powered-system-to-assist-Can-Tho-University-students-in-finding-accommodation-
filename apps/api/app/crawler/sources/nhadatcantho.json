@@ -1,0 +1,30 @@
+{
+  "source": "nhadatcantho",
+  "base_url": "https://nhadatcantho.com.vn",
+  "list_url": "https://nhadatcantho.com.vn/cho-thue-nha-dat-can-tho",
+  "list_page_param": "?page={page}",
+  "incremental_pages": 2,
+  "full_pages": 11,
+  "max_detail_incremental": 20,
+  "use_jsonld": false,
+  "item_mode": "thumb_parent",
+  "selectors": {
+    "item": ".product-row.card",
+    "item_anchor": ".title-link",
+    "item_url_attr": "href",
+    "title": ".title-link",
+    "price": ".card-meta_item i.fa-usd-circle ~ b",
+    "area": ".card-meta_item i.fa-ruler-combined ~ b",
+    "address": ".card-desc",
+    "district": ".card-meta_item i.fa-map-marker-alt ~ a",
+    "thumb": ".card-left_link--image",
+    "images_attr": "data-src"
+  },
+  "detail": {
+    "title": "h1.product-title",
+    "price": ".price",
+    "description_body": "#product-content",
+    "images": ".product-image_slide img",
+    "images_attr": "data-src"
+  }
+}

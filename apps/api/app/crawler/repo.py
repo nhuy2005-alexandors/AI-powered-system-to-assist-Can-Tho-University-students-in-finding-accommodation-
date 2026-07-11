@@ -33,6 +33,7 @@ _UPSERT = text(
                      THEN :price ELSE aggregated_listings.price END,
         area = CASE WHEN aggregated_listings.content_hash <> :content_hash
                     THEN :area ELSE aggregated_listings.area END,
+        district = COALESCE(:district, aggregated_listings.district),
         description = CASE WHEN aggregated_listings.content_hash <> :content_hash
                           THEN :description ELSE aggregated_listings.description END,
         address = CASE WHEN aggregated_listings.content_hash <> :content_hash
@@ -44,6 +45,8 @@ _UPSERT = text(
         distance_to_ctu = COALESCE(CAST(:distance_to_ctu AS REAL), aggregated_listings.distance_to_ctu),
         geocode_confidence = :geocode_confidence,
         content_hash = :content_hash,
+        cleaning_status = CASE WHEN aggregated_listings.content_hash <> :content_hash
+                               THEN 'raw' ELSE aggregated_listings.cleaning_status END,
         updated_at = CASE WHEN aggregated_listings.content_hash <> :content_hash
                           THEN :now ELSE aggregated_listings.updated_at END
     RETURNING (xmax = 0) AS inserted,
@@ -111,6 +114,29 @@ class ListingRepo:
                 {"source": source, "ids": seen_ids or [""]},
             ).fetchall()
         return sum(1 for r in rows if r.status == "expired")
+
+    def pending_route(self) -> list[dict]:
+        """Tin có geom nhưng chưa route_time_campus (mới crawl, hoặc backfill sót)."""
+        with self.engine.connect() as conn:
+            rows = conn.execute(
+                text(
+                    "SELECT id, ST_Y(geom) AS lat, ST_X(geom) AS lng "
+                    "FROM aggregated_listings "
+                    "WHERE geom IS NOT NULL AND route_time_campus IS NULL"
+                )
+            ).mappings().all()
+        return [dict(r) for r in rows]
+
+    def set_route_times(self, updates: list[tuple[int, list[float]]]) -> None:
+        """Batch UPDATE route_time_campus. updates = [(listing_id, [khuI,II,III]), ...]."""
+        if not updates:
+            return
+        with self.engine.begin() as conn:
+            for listing_id, times in updates:
+                conn.execute(
+                    text("UPDATE aggregated_listings SET route_time_campus = :t WHERE id = :id"),
+                    {"t": times, "id": listing_id},
+                )
 
     def refresh_scores(self) -> None:
         """Tính lại freshness_score theo tuổi last_seen (gọi định kỳ)."""

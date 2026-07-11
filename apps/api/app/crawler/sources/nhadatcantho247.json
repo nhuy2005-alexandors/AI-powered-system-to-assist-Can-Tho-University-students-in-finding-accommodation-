@@ -1,0 +1,29 @@
+{
+  "source": "nhadatcantho247",
+  "base_url": "https://nhadatcantho247.com",
+  "list_url": "https://nhadatcantho247.com/cho-thue/page/",
+  "list_page_param": "{page}",
+  "incremental_pages": 2,
+  "full_pages": 11,
+  "max_detail_incremental": 20,
+  "use_jsonld": false,
+  "item_mode": "self",
+  "selectors": {
+    "item": ".listing-view .item-wrap",
+    "item_anchor": ".item-title a",
+    "item_url_attr": "href",
+    "title": ".item-title a",
+    "price": ".item-price",
+    "area": ".h-area .hz-figure",
+    "address": ".item-address",
+    "district": "",
+    "thumb": ".hover-effect img",
+    "images_attr": "src"
+  },
+  "detail": {
+    "title": "h1",
+    "price": ".item-price-wrap .price",
+    "description_body": ".property-description-content",
+    "images": ".listing-slider img"
+  }
+}

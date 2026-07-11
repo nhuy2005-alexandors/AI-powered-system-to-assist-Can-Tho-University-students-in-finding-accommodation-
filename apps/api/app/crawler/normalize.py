@@ -18,6 +18,32 @@ AMENITY_KEYWORDS = {
 
 _NUM_RE = re.compile(r"[\d.,]+")
 
+# Quận/huyện Cần Thơ — suy ra district từ address khi selector nguồn không có
+# (vd nhadatcantho247). Key = dạng bỏ dấu để so khớp; value = tên hiển thị chuẩn.
+CANTHO_DISTRICTS = {
+    "ninh kieu": "Ninh Kiều",
+    "binh thuy": "Bình Thủy",
+    "cai rang": "Cái Răng",
+    "o mon": "Ô Môn",
+    "thot not": "Thốt Nốt",
+    "phong dien": "Phong Điền",
+    "co do": "Cờ Đỏ",
+    "thoi lai": "Thới Lai",
+    "vinh thanh": "Vĩnh Thạnh",
+}
+
+
+def infer_district(*texts: str | None) -> str | None:
+    """Dò tên quận/huyện Cần Thơ trong address/title khi nguồn không cho district."""
+    for txt in texts:
+        if not txt:
+            continue
+        blob = _strip_accents(txt.lower())
+        for key, name in CANTHO_DISTRICTS.items():
+            if key in blob:
+                return name
+    return None
+
 
 def _strip_accents(text: str) -> str:
     return "".join(
@@ -130,7 +156,7 @@ def normalize(raw: RawListing) -> NormalizedListing:
         price=parse_price(raw.price_text),
         area=parse_area(raw.area_text),
         address=(raw.address or "").strip() or None,
-        district=raw.district,
+        district=(raw.district or "").strip() or infer_district(raw.address, raw.title),
         description=(raw.description or "").strip() or None,
         images=raw.images,
         amenities=parse_amenities(raw.amenities_text, raw.description, raw.title),

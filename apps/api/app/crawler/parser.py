@@ -95,6 +95,9 @@ def parse_list_page(html: str, config: dict) -> list[RawListing]:
                 # slug cuối path làm id ổn định (nguồn không có ID số, vd tromoi)
                 slug = url.rstrip("/").split("/")[-1].split(".")[0]
                 source_id = slug or hashlib.md5(url.encode("utf-8")).hexdigest()
+            # source_id cột VARCHAR(100): slug dài → hash md5 (32 ký tự) để không tràn
+            if source_id and len(source_id) > 100:
+                source_id = hashlib.md5(source_id.encode("utf-8")).hexdigest()
 
         thumb_img = item.css_first(sel.get("thumb", "img"))
         images = []

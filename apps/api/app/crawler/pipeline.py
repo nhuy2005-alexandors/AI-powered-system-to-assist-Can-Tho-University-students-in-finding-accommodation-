@@ -1,5 +1,7 @@
 import logging
 
+import httpx
+
 from .dedup import find_duplicates
 from .fetcher import BlockedError, Fetcher
 from .geocode import CTU_LAT, CTU_LNG, Geocoder, haversine_m
@@ -84,6 +86,11 @@ async def run_source(
                 counts["error"] = str(exc)
                 log.warning("BLOCKED source=%s: %s", source, exc)
                 break
+            except httpx.HTTPStatusError as exc:
+                # URL list sai/hết trang (404/410/5xx) → dừng nguồn này, không crash job
+                counts["error"] = str(exc)
+                log.warning("HTTP %s source=%s url=%s", exc.response.status_code, source, url)
+                break
 
         listings = process_html_pages(source, pages_html)
 
@@ -102,9 +109,13 @@ async def run_source(
             except Exception as exc:  # noqa: BLE001 — 1 detail lỗi không làm hỏng cả run
                 log.warning("detail fetch fail %s: %s", n.source_url, exc)
 
-        # geocode (T2): address → lat/lng/confidence + distance_to_ctu
+        # geocode (T2): address → lat/lng/confidence + distance_to_ctu.
+        # Address rỗng/rác (vd bds123 "Xin chào Khách", mogi trống) → fallback district
+        # để vẫn có toạ độ cấp quận (lên được bản đồ/nearby thay vì mất hẳn).
         for n in listings:
             lat, lng, conf = await geocoder.geocode(n.address)
+            if lat is None and n.district:
+                lat, lng, conf = await geocoder.geocode(f"{n.district}, Cần Thơ")
             n.lat, n.lng, n.geocode_confidence = lat, lng, conf
             if lat is not None and lng is not None:
                 n.distance_to_ctu = haversine_m(lat, lng, CTU_LAT, CTU_LNG)
@@ -122,6 +133,28 @@ async def run_source(
             counts["expired_count"] = repo.mark_misses(source, seen_ids)
 
         repo.refresh_scores()
+
+        # auto-route (VIỆC 4, Map & Routing): tin có geom nhưng chưa route_time_campus
+        # (tin mới, hoặc tin cũ lỡ sót) → tính qua ORS Matrix, 1 batch call.
+        # KHÔNG route lại toàn bộ — chỉ những dòng route_time_campus IS NULL.
+        # Thiếu key/lỗi mạng → skip êm, không làm hỏng cả crawl job.
+        from ..config import settings as _settings
+        if _settings.ors_api_key:
+            pending = repo.pending_route()
+            if pending:
+                try:
+                    from ..listings.routing import matrix_minutes
+                    points = [(r["lat"], r["lng"]) for r in pending]
+                    times = await matrix_minutes(points)
+                    updates = [
+                        (r["id"], t) for r, t in zip(pending, times) if t is not None
+                    ]
+                    repo.set_route_times(updates)
+                    log.info("auto-route source=%s routed=%d/%d", source, len(updates), len(pending))
+                except Exception as exc:  # noqa: BLE001 — routing lỗi không crash crawl job
+                    log.warning("auto-route fail source=%s: %s", source, exc)
+        else:
+            log.info("ORS_API_KEY rỗng — skip auto-route source=%s", source)
     except Exception as exc:  # noqa: BLE001 — ghi lỗi vào run rồi re-raise cho scheduler log
         counts["error"] = str(exc)
         repo.finish_run(run_id, **counts)
