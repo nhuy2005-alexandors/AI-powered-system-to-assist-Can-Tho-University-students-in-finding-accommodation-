@@ -76,4 +76,7 @@ async def crawler_run(source: str = "phongtro123", mode: str = "incremental"):
     if mode not in ("incremental", "full"):
         raise HTTPException(400, "mode phải là 'incremental' hoặc 'full'")
     counts = await run_source(source, mode, ListingRepo(engine))
+    # làm sạch ngay để manual run cũng cho ra data 'cleaned' (không kẹt ở 'raw')
+    from .cleaner.pipeline import run_cleaner
+    run_cleaner(engine)
     return {"source": source, "mode": mode, **counts}

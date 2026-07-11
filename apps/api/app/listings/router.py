@@ -1,11 +1,17 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.engine import Engine
 
 from ..auth import get_current_user
 from ..auth.schemas import UserOut
+from ..config import settings
 from ..crawler.geocode import Geocoder, haversine_m, CTU_LAT, CTU_LNG
 from .repo import ListingQueryRepo, ListingWriteRepo
+from .routing import CAMPUSES, matrix_minutes, route_geometry
 from .schemas import ListingCreate, ListingOut, ListingUpdate, SearchParams, SearchResult, SortBy
+
+log = logging.getLogger("listings.router")
 
 router = APIRouter(prefix="/listings", tags=["listings"])
 
@@ -38,6 +44,21 @@ async def _geocode_address(address: str | None):
         lat, lng, conf = await g.geocode(address)
     dist = haversine_m(lat, lng, CTU_LAT, CTU_LNG) if lat is not None and lng is not None else None
     return lat, lng, conf, dist
+
+
+async def _route_one(lat: float | None, lng: float | None) -> list[float] | None:
+    """Route 1 điểm tới 3 campus (VIỆC 4 — re-route khi user sửa address).
+
+    ors_api_key rỗng hoặc lỗi mạng → None, skip êm (không chặn create/update tin).
+    """
+    if lat is None or lng is None or not settings.ors_api_key:
+        return None
+    try:
+        times = await matrix_minutes([(lat, lng)])
+        return times[0] if times else None
+    except Exception as exc:  # noqa: BLE001 — routing lỗi không chặn CRUD tin
+        log.warning("route on address change fail: %s", exc)
+        return None
 
 
 @router.get("", response_model=SearchResult)
@@ -75,6 +96,15 @@ def nearby_listings(
     return repo.nearby(lat, lng, radius)
 
 
+@router.get("/mine", response_model=list[ListingOut])
+def my_listings(
+    user: UserOut = Depends(get_current_user),
+    repo: ListingQueryRepo = Depends(get_repo),
+):
+    """Tin do user tự đăng ("Tin của tôi"). Phải khai báo TRƯỚC /{listing_id}."""
+    return repo.by_owner(user.id)
+
+
 @router.get("/{listing_id}", response_model=ListingOut)
 def get_listing(listing_id: int, repo: ListingQueryRepo = Depends(get_repo)):
     """Chi tiết 1 tin (FR-2.6). Ẩn tin expired/hidden."""
@@ -82,6 +112,27 @@ def get_listing(listing_id: int, repo: ListingQueryRepo = Depends(get_repo)):
     if item is None:
         raise HTTPException(404, "Không tìm thấy tin")
     return item
+
+
+@router.get("/{listing_id}/route", response_model=list[list[float]])
+async def get_route_geometry(
+    listing_id: int,
+    campus: int = Query(1, ge=0, le=2),
+    repo: ListingQueryRepo = Depends(get_repo),
+):
+    """Polyline route thật campus→tin (FR-M.8), fetch on-demand khi user click 1 tin.
+
+    campus: 0=khu I, 1=khu II (mặc định), 2=khu III.
+    """
+    item = repo.get_visible(listing_id)
+    if item is None or item.lat is None or item.lng is None:
+        raise HTTPException(404, "Không tìm thấy tin hoặc tin chưa có toạ độ")
+    if not settings.ors_api_key:
+        raise HTTPException(503, "Routing chưa cấu hình (ORS_API_KEY)")
+    try:
+        return await route_geometry(CAMPUSES[campus], (item.lat, item.lng))
+    except Exception as exc:  # noqa: BLE001 — lỗi ORS → 502, không lộ trace
+        raise HTTPException(502, f"Không lấy được route: {exc}") from exc
 
 
 def _check_owner(owner_row, user: UserOut) -> None:
@@ -102,6 +153,9 @@ async def create_listing(
     """Đăng tin UGC (FR-3.1)."""
     lat, lng, conf, dist = await _geocode_address(body.address)
     new_id = write.create(body.model_dump(), user.id, lat, lng, conf, dist)
+    times = await _route_one(lat, lng)
+    if times is not None:
+        write.set_route_time(new_id, times)
     return repo.get(new_id)
 
 
@@ -123,6 +177,10 @@ async def update_listing(
         lat, lng, conf, dist = await _geocode_address(fields["address"])
 
     write.update(listing_id, fields, lat, lng, conf, dist)
+    if "address" in fields:
+        times = await _route_one(lat, lng)
+        if times is not None:
+            write.set_route_time(listing_id, times)
     return repo.get(listing_id)
 
 

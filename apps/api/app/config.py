@@ -17,5 +17,7 @@ class Settings(BaseSettings):
     refresh_token_ttl_days: int = 30
     google_client_id: str = ""  # bắt buộc khi dùng Google login
 
+    ors_api_key: str = ""  # OpenRouteService — route time/geometry; rỗng = tắt routing
+
 
 settings = Settings()

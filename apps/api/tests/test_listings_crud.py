@@ -69,7 +69,7 @@ def test_create_listing_persists_with_owner():
 
 def test_create_listing_requires_auth():
     r = client.post("/listings", json=_listing_payload())
-    # HTTPBearer(auto_error=True) trả 403 khi thiếu header Authorization (không phải 401)
+    # HTTPBearer(auto_error=True) trả 403 "Not authenticated" khi thiếu header Authorization
     assert r.status_code == 403, r.text
 
 

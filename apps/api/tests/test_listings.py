@@ -11,7 +11,8 @@ from app.listings.repo import build_filters, _SORT_SQL
 
 # ── risk_level ──
 def test_risk_level_thresholds():
-    assert risk_level(0.0) == "safe"
+    assert risk_level(0.0) == "unknown"
+    assert risk_level(0.01) == "safe"
     assert risk_level(0.29) == "safe"
     assert risk_level(0.3) == "caution"
     assert risk_level(0.59) == "caution"

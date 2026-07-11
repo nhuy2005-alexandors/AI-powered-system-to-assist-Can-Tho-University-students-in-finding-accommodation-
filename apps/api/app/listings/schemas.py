@@ -10,11 +10,14 @@ class SortBy(str, Enum):
     newest = "newest"
     nearest = "nearest"
     freshness = "freshness"
+    quality = "quality"
 
 
 def risk_level(score: float | None) -> str:
     """risk_score → nhãn badge (FR-7.2). ✅ safe / ⚠️ caution / 🔴 suspicious."""
-    if score is None:
+    # ponytail: risk engine chưa build (team làm sau) → score=0 mặc định = CHƯA đánh giá,
+    # không phải "an toàn". Bỏ guard này khi risk detection ghi score thật.
+    if not score:
         return "unknown"
     if score < 0.3:
         return "safe"
@@ -63,6 +66,7 @@ class ListingOut(BaseModel):
     lat: float | None = None
     lng: float | None = None
     distance_to_ctu: float | None = None
+    description: str | None = None
     images: list[str] = Field(default_factory=list)
     source: str
     source_url: str | None = None
@@ -71,7 +75,9 @@ class ListingOut(BaseModel):
     geocode_confidence: str | None = None
     freshness_score: float | None = None
     freshness_label: str = ""
+    quality_score: float | None = None
     last_seen: datetime | None = None
+    route_time_campus: list[float] | None = None  # [khuI, khuII, khuIII] phút, None = chưa route
 
 
 class SearchResult(BaseModel):

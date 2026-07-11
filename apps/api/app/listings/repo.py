@@ -11,9 +11,10 @@ from .schemas import (
 
 # cột select chung; geom → tách lat/lng qua ST_X/ST_Y
 _COLS = (
-    "id, title, price, area, address, district, "
+    "id, title, price, area, address, district, description, "
     "ST_Y(geom) AS lat, ST_X(geom) AS lng, distance_to_ctu, images, "
-    "source, source_url, risk_score, geocode_confidence, freshness_score, last_seen"
+    "source, source_url, risk_score, geocode_confidence, freshness_score, "
+    "quality_score, last_seen, route_time_campus"
 )
 
 _SORT_SQL = {
@@ -22,6 +23,8 @@ _SORT_SQL = {
     SortBy.newest: "last_seen DESC",
     SortBy.nearest: "distance_to_ctu ASC NULLS LAST",
     SortBy.freshness: "freshness_score DESC",
+    # tin chất lượng cao (đủ field, area thật, geocode tốt) lên trước
+    SortBy.quality: "quality_score DESC, last_seen DESC",
 }
 
 
@@ -29,8 +32,13 @@ def build_filters(p: SearchParams) -> tuple[str, dict]:
     """Dựng mệnh đề WHERE + params. Tách riêng để unit-test không cần DB.
 
     Luôn ẩn tin status='expired' (FR-2.8) và 'hidden' (user tự ẩn).
+    Mặc định chỉ trả tin phòng trọ đã làm sạch (ẩn nhà/mặt bằng + tin raw/rejected)
+    — trừ tin user tự đăng (source='user', chưa qua cleaner nhưng là trọ do user khai).
     """
-    clauses = ["status NOT IN ('expired', 'hidden')"]
+    clauses = [
+        "status NOT IN ('expired', 'hidden')",
+        "(source = 'user' OR (cleaning_status = 'cleaned' AND listing_type = 'phong_tro'))",
+    ]
     params: dict = {}
 
     if p.q:
@@ -100,6 +108,19 @@ class ListingQueryRepo:
             ).mappings().first()
         return _to_out(row) if row else None
 
+    def by_owner(self, user_id: int) -> list[ListingOut]:
+        """Tin do 1 user tự đăng (trang "Tin của tôi"). Ẩn tin đã xoá mềm ('hidden')."""
+        with self.engine.connect() as conn:
+            rows = conn.execute(
+                text(
+                    f"SELECT {_COLS} FROM aggregated_listings "
+                    "WHERE posted_by = :uid AND status <> 'hidden' "
+                    "ORDER BY last_seen DESC"
+                ),
+                {"uid": user_id},
+            ).mappings().all()
+        return [_to_out(r) for r in rows]
+
     def get_visible(self, listing_id: int) -> ListingOut | None:
         """Detail công khai — ẩn tin expired/hidden (dùng cho GET /listings/{id})."""
         with self.engine.connect() as conn:
@@ -112,7 +133,7 @@ class ListingQueryRepo:
             ).mappings().first()
         return _to_out(row) if row else None
 
-    def nearby(self, lat: float, lng: float, radius_m: float, limit: int = 50) -> list[ListingOut]:
+    def nearby(self, lat: float, lng: float, radius_m: float, limit: int = 300) -> list[ListingOut]:
         """Tin trong bán kính (FR-2.5) — PostGIS ST_DWithin trên geography."""
         with self.engine.connect() as conn:
             rows = conn.execute(
@@ -121,6 +142,8 @@ class ListingQueryRepo:
                     "ST_Distance(geom::geography, ST_SetSRID(ST_MakePoint(:lng,:lat),4326)::geography) AS dist "
                     "FROM aggregated_listings "
                     "WHERE status NOT IN ('expired', 'hidden') AND geom IS NOT NULL "
+                    # đồng bộ filter sạch với search() (build_filters): map = list
+                    "AND (source = 'user' OR (cleaning_status = 'cleaned' AND listing_type = 'phong_tro')) "
                     "AND ST_DWithin(geom::geography, ST_SetSRID(ST_MakePoint(:lng,:lat),4326)::geography, :r) "
                     "ORDER BY dist ASC LIMIT :limit"
                 ),
@@ -211,6 +234,14 @@ class ListingWriteRepo:
         sql = f"UPDATE aggregated_listings SET {', '.join(set_clauses)} WHERE id = :id"
         with self.engine.begin() as conn:
             conn.execute(text(sql), params)
+
+    def set_route_time(self, listing_id: int, times: list[float]) -> None:
+        """Ghi route_time_campus cho 1 tin (sau khi geocode address UGC). Xem routing.py."""
+        with self.engine.begin() as conn:
+            conn.execute(
+                text("UPDATE aggregated_listings SET route_time_campus = :t WHERE id = :id"),
+                {"t": times, "id": listing_id},
+            )
 
     def soft_delete(self, listing_id: int) -> None:
         """Ẩn tin (status='hidden') thay vì xoá cứng — user có thể khôi phục sau (không làm ở đây)."""
