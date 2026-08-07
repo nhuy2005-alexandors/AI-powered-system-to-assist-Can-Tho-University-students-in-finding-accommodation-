@@ -1,0 +1,9 @@
+{
+  "checks": [
+    {
+      "name": "test_crawler",
+      "cmd": "docker exec nckh-api-1 python -m pytest tests/test_crawler.py -q",
+      "timeout": 120000
+    }
+  ]
+}

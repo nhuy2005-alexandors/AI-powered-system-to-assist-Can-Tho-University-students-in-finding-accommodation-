@@ -23,6 +23,10 @@ RATE_LIMIT = 1.0  # giây/req
 # tọa độ CTU khu 2 (cổng chính, đường 3/2) — hằng số tính distance_to_ctu
 CTU_LAT, CTU_LNG = 10.0301, 105.7681
 
+# centroid TP Cần Thơ (Ninh Kiều) — fallback cuối khi address không parse được nhưng
+# tin chắc chắn ở CT (mọi nguồn lọc list_url theo Cần Thơ). Confidence = 'city'.
+CANTHO_CENTROID = (10.0333, 105.7880)
+
 # prefix hành chính Nominatim không parse được → strip
 _ADMIN_PREFIXES = ("Phường ", "Quận ", "Xã ", "Thị trấn ", "Huyện ", "khu vực ", "Khu vực ")
 
@@ -49,7 +53,10 @@ WARD_CENTROIDS: dict[str, tuple[float, float]] = {
     "thoi an dong": (10.0050, 105.7350),
     "phong dien": (10.0800, 105.6700),
     "o mon": (10.1100, 105.6250),
-    "can tho": (10.0333, 105.7880),  # fallback cấp thành phố
+    # KHÔNG đặt key "can tho" ở đây: _match_table dùng substring nên MỌI address
+    # ("hẻm 9, Cần Thơ") đều khớp → tầng 4 trả đúng CANTHO_CENTROID nhưng dán nhãn
+    # 'low', tầng 5 thành code chết và 'city' gần như không bao giờ xuất hiện.
+    # Tâm thành phố là việc của tầng 5 (confidence 'city', không cộng quality_score).
 }
 
 # landmark phổ biến SV hay nhắc
@@ -68,6 +75,28 @@ LANDMARKS: dict[str, tuple[float, float]] = {
     "ben xe": (10.0490, 105.7820),
     "san bay": (10.0850, 105.7120),
     "cho can tho": (10.0350, 105.7900),
+    # KDC / địa danh dân gian hay gặp ở nguồn địa phương (vd nhadatcantho247) mà
+    # Nominatim không có — bắt bằng bảng để tin không rơi vào 'failed' (mất khỏi map).
+    "hong loan": (10.0247, 105.7573),      # KDC Hồng Loan, Cái Răng
+    "91b": (10.0198, 105.7469),            # KDC 91B, Ninh Kiều/An Khánh
+    "nam long": (10.0225, 105.7620),       # KDC Nam Long, Hưng Thạnh
+    "hong phat": (10.0230, 105.7590),      # KDC Nam Long Hồng Phát
+    # Key phải ĐỦ DÀI để không bắt bừa: _match_table dùng substring nên "586" trần sẽ
+    # khớp cả "586/12 Nguyễn Văn Cừ" hay giá "5.860.000" → pin sai về Cái Răng.
+    # Giữ dạng có tiền tố ("kdc 586", "cho 586"), bỏ key số trần.
+    "cho 586": (10.0180, 105.7500),        # KDC 586 / chợ 586, Cái Răng
+    "kdc 586": (10.0180, 105.7500),
+    "cty 8": (10.0090, 105.7420),          # KDC Công ty 8 (Metro), Cái Răng
+    "cong ty 8": (10.0090, 105.7420),
+    "phu an": (10.0210, 105.7640),         # KDC Phú An, Cái Răng
+    "ecopark": (10.0160, 105.7440),        # KDC Ecopark Cần Thơ
+    # "metro" trần khớp cả "metro house", "metropolitan", tên toà nhà bất kỳ → dùng
+    # dạng có định danh siêu thị thật.
+    "sieu thi metro": (10.0100, 105.7430),  # gần Metro/MM Mega, Cái Răng
+    "mm mega": (10.0100, 105.7430),
+    "vo van kiet": (10.0350, 105.7350),    # đại lộ Võ Văn Kiệt
+    "nguyen van cu": (10.0230, 105.7580),  # Nguyễn Văn Cừ (trục chính SV)
+    "3 thang 2": (10.0301, 105.7681),      # đường 3/2 (cạnh CTU khu II)
 }
 
 
@@ -115,6 +144,40 @@ def ward_district_city(address: str) -> str | None:
     return ", ".join(admin) if admin else None
 
 
+# OSM type = đường thật (tầng 1b): match rơi đúng con đường → high. Type khác
+# (POI trên/gần đường như hospital/government) vẫn in-bbox → medium, không dám high.
+_STREET_TYPES = frozenset({
+    "primary", "secondary", "tertiary", "residential", "trunk",
+    "road", "unclassified", "living_street", "pedestrian", "service",
+})
+
+
+def street_district_city(address: str) -> str | None:
+    """Trích 'Đường Trần Phú, ..., Quận Y, Cần Thơ' → 'Trần Phú, Y, Cần Thơ'.
+
+    Khác ward_district_city: GIỮ tên đường (bỏ số nhà + prefix 'Đường') để Nominatim
+    pin về ĐÚNG con đường thay vì tâm phường. Trả None nếu không có phần 'Đường'.
+    """
+    street: str | None = None
+    admin: list[str] = []
+    for part in (p.strip() for p in address.split(",")):
+        low = part.lower()
+        if street is None and ("đường" in low or "duong" in low):
+            # bỏ mọi thứ tới hết token 'Đường' (số nhà + 'hẻm ..' đứng trước) → còn tên đường
+            m = re.search(r"(?:đường|duong)\s+(.+)", part, re.IGNORECASE)
+            if m:
+                street = m.group(1).strip()
+        elif part.startswith(("Phường ", "Quận ", "Huyện ", "Xã ")):
+            # GIỮ cả Phường: đường dài (Nguyễn Văn Cừ ~8km) xuyên nhiều phường,
+            # bỏ phường thì Nominatim pin điểm bất kỳ trên đường → lệch vài km.
+            admin.append(part.split(" ", 1)[1].strip())
+        elif "Cần Thơ" in part or "Can Tho" in part:
+            admin.append(part)
+    if not street:
+        return None
+    return ", ".join([street, *admin]) if admin else street
+
+
 def _match_table(address: str, table: dict[str, tuple[float, float]]) -> tuple[float, float] | None:
     norm = _norm(address)
     for key, coord in table.items():
@@ -123,7 +186,7 @@ def _match_table(address: str, table: dict[str, tuple[float, float]]) -> tuple[f
     return None
 
 
-async def _nominatim(client: httpx.AsyncClient, query: str) -> tuple[float, float] | None:
+async def _nominatim(client: httpx.AsyncClient, query: str) -> tuple[float, float, str] | None:
     resp = await client.get(
         NOMINATIM_URL,
         params={"q": query, "format": "json", "limit": 1, "countrycodes": "vn"},
@@ -132,7 +195,7 @@ async def _nominatim(client: httpx.AsyncClient, query: str) -> tuple[float, floa
     resp.raise_for_status()
     data = resp.json()
     if data:
-        return float(data[0]["lat"]), float(data[0]["lon"])
+        return float(data[0]["lat"]), float(data[0]["lon"]), data[0].get("type", "")
     return None
 
 
@@ -160,8 +223,8 @@ class Geocoder:
         self._cache[address] = result
         return result
 
-    async def _query(self, q: str) -> tuple[float, float] | None:
-        """1 lần gọi Nominatim có rate-limit + nuốt lỗi mạng."""
+    async def _query(self, q: str) -> tuple[float, float, str] | None:
+        """1 lần gọi Nominatim có rate-limit + nuốt lỗi mạng. Trả (lat, lng, osm_type)."""
         try:
             async with self._lock:
                 await asyncio.sleep(RATE_LIMIT)
@@ -173,16 +236,25 @@ class Geocoder:
         # Tầng 1: full address đã strip prefix → số nhà chính xác (high)
         stripped = strip_admin(address)
         if stripped:
-            coord = await self._query(stripped)
-            if coord and _in_cantho(*coord):
-                return coord[0], coord[1], "high"
+            r = await self._query(stripped)
+            if r and _in_cantho(r[0], r[1]):
+                return r[0], r[1], "high"
+
+        # Tầng 1b: tên đường + quận + Cần Thơ → pin đúng con đường thay vì tâm phường.
+        # street-type = high (đúng đường); type khác nhưng in-bbox = medium (vẫn hơn
+        # centroid, nhưng KHÔNG khẳng định high vì Nominatim match POI trên/gần đường).
+        sdc = street_district_city(address)
+        if sdc:
+            r = await self._query(sdc)
+            if r and _in_cantho(r[0], r[1]):
+                return r[0], r[1], "high" if r[2] in _STREET_TYPES else "medium"
 
         # Tầng 2: Nominatim cấp phường (ward+district+city) → tọa độ phường thật (medium)
         wdc = ward_district_city(address)
         if wdc:
-            coord = await self._query(wdc)
-            if coord and _in_cantho(*coord):
-                return coord[0], coord[1], "medium"
+            r = await self._query(wdc)
+            if r and _in_cantho(r[0], r[1]):
+                return r[0], r[1], "medium"
 
         # Tầng 3: landmark table (medium)
         lm = _match_table(address, LANDMARKS)
@@ -194,7 +266,11 @@ class Geocoder:
         if wc:
             return wc[0], wc[1], "low"
 
-        return None, None, "failed"
+        # Tầng 5: centroid TP Cần Thơ (confidence 'city'). Mọi nguồn đều lọc list_url
+        # theo Cần Thơ → address không parse được (vd "CTY 8", "hẻm 9") vẫn CHẮC ở CT.
+        # Toạ độ tâm TP còn hơn 'failed' (mất khỏi bản đồ/nearby). Downstream lọc theo
+        # confidence nếu muốn loại 'city' khỏi thống kê chính xác.
+        return CANTHO_CENTROID[0], CANTHO_CENTROID[1], "city"
 
 
 def haversine_m(lat1: float, lng1: float, lat2: float, lng2: float) -> float:

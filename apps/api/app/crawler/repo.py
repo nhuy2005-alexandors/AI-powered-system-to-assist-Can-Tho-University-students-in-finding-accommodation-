@@ -93,6 +93,26 @@ class ListingRepo:
             return "new"
         return "updated" if row.updated else "seen"
 
+    def existing_geo(self, source: str, source_ids: list[str]) -> dict[str, dict]:
+        """Map source_id -> {address, lat, lng, confidence, distance_to_ctu} cho tin đã có geom.
+
+        Dùng để skip geocode lại tin cũ chưa đổi địa chỉ (Nominatim rate-limit 1req/s):
+        chỉ geocode khi tin mới HOẶC address đổi. Chỉ trả tin geom IS NOT NULL.
+        """
+        if not source_ids:
+            return {}
+        with self.engine.connect() as conn:
+            rows = conn.execute(
+                text(
+                    "SELECT source_id, address, ST_Y(geom) AS lat, ST_X(geom) AS lng, "
+                    "geocode_confidence, distance_to_ctu "
+                    "FROM aggregated_listings "
+                    "WHERE source = :s AND geom IS NOT NULL AND source_id = ANY(:ids)"
+                ),
+                {"s": source, "ids": source_ids},
+            ).mappings().all()
+        return {r["source_id"]: dict(r) for r in rows}
+
     def mark_misses(self, source: str, seen_ids: list[str]) -> int:
         """Sau full run: tin của nguồn không nằm trong seen_ids → miss_count++ và có thể expired."""
         with self.engine.begin() as conn:

@@ -263,3 +263,91 @@ def test_area_extraction_ignores_noise():
     n = NormalizedListing(source="s", title="MINI HOUSE rộng rãi", area=None)
     merge_detail(n, {"description": "Nhà đẹp không ghi diện tích"})
     assert n.area is None
+
+
+# ── Tầng 5 city centroid: 3 lỗi tìm ra ở review, đóng lại bằng test ──
+def _geocode_offline(monkeypatch, address):
+    """Geocode với Nominatim chết → chỉ còn các tầng bảng tra + tầng 5."""
+    async def _fail(*a, **k):
+        raise httpx.ConnectError("no net")
+    monkeypatch.setattr(geocode, "_nominatim", _fail)
+
+    async def run():
+        g = geocode.Geocoder()
+        try:
+            return await g.geocode(address)
+        finally:
+            await g.__aexit__(None, None, None)
+    return asyncio.run(run())
+
+
+def test_geocode_city_fallback_never_none(monkeypatch):
+    """Address rác + không khớp bảng nào → tầng 5 trả centroid TP, KHÔNG phải None.
+
+    Đây là tiền đề của bug guard `lat is None` ở pipeline: vì lat không bao giờ None
+    nên nhánh fallback district từng là code chết.
+    """
+    lat, lng, conf = _geocode_offline(monkeypatch, "hẻm 9 xyz không parse được")
+    assert conf == "city"
+    assert (lat, lng) == geocode.CANTHO_CENTROID
+
+
+def test_landmark_bare_number_key_does_not_false_match(monkeypatch):
+    """Key '586' trần từng khớp cả số nhà '586/12 Nguyễn Văn Cừ' → pin sai về Cái Răng."""
+    lat, lng, conf = _geocode_offline(monkeypatch, "586/12 Nguyễn Văn Cừ")
+    assert (lat, lng) != geocode.LANDMARKS["cho 586"], "số nhà 586 bị bắt như KDC 586"
+    assert "586" not in geocode.LANDMARKS, "key số trần phải bị bỏ"
+
+
+def test_landmark_metro_key_does_not_false_match(monkeypatch):
+    """Key 'metro' trần từng khớp 'Metro House'/'Metropolitan' — tên toà nhà bất kỳ."""
+    lat, lng, _ = _geocode_offline(monkeypatch, "Metropolitan Tower, Ninh Kiều")
+    assert (lat, lng) != (10.0100, 105.7430), "'metro' trần vẫn bắt bừa"
+    assert "metro" not in geocode.LANDMARKS
+    assert "sieu thi metro" in geocode.LANDMARKS
+
+
+def test_pipeline_district_fallback_beats_city_centroid(monkeypatch):
+    """conf=='city' + có district → phải hạ về tâm QUẬN, không giữ tâm THÀNH PHỐ."""
+    async def _fail(*a, **k):
+        raise httpx.ConnectError("no net")
+    monkeypatch.setattr(geocode, "_nominatim", _fail)
+
+    async def run():
+        g = geocode.Geocoder()
+        try:
+            junk = await g.geocode("xyz rác")
+            district = await g.geocode("Bình Thủy, Cần Thơ")
+            return junk, district
+        finally:
+            await g.__aexit__(None, None, None)
+
+    junk, district = asyncio.run(run())
+    assert junk[2] == "city"
+    # tâm quận (từ WARD_CENTROIDS) khác tâm TP → fallback thực sự cải thiện toạ độ
+    assert district[2] == "low"
+    assert (district[0], district[1]) != geocode.CANTHO_CENTROID
+
+
+def test_ward_centroid_has_no_city_catchall(monkeypatch):
+    """Key 'can tho' trong WARD_CENTROIDS từng bắt MỌI địa chỉ ở tầng 4.
+
+    Mọi address thật đều chứa "Cần Thơ" → substring match ở tầng 4 luôn khớp, trả
+    ĐÚNG toạ độ CANTHO_CENTROID nhưng dán nhãn 'low' thay vì 'city'. Hệ quả: tầng 5
+    gần như không bao giờ chạy, và tâm thành phố bị tính là 'low' → được cộng 0.20
+    quality_score (pipeline.py:123 cộng cho high/medium... nhưng badge/thống kê coi
+    'low' là có vị trí thật). Tâm TP phải mang nhãn 'city' để trung thực.
+    """
+    assert "can tho" not in geocode.WARD_CENTROIDS, "catch-all cấp TP phải nằm ở tầng 5"
+    lat, lng, conf = _geocode_offline(monkeypatch, "hẻm 9 không rõ, Cần Thơ")
+    assert conf == "city", f"address rác + 'Cần Thơ' phải là 'city', không phải {conf!r}"
+    assert (lat, lng) == geocode.CANTHO_CENTROID
+
+
+def test_cached_geo_with_coords_not_labelled_failed():
+    """Dòng có toạ độ mà confidence rỗng → default 'low', KHÔNG phải 'failed'.
+
+    'failed' nghĩa là không có toạ độ; gán nó cho dòng đang có geom là dán nhãn sai.
+    """
+    cached = {"lat": 10.03, "lng": 105.78, "geocode_confidence": None}
+    assert (cached.get("geocode_confidence") or "low") == "low"
