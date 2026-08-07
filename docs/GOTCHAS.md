@@ -77,6 +77,11 @@ Bẫy đã dính, tích lũy, KHÔNG xóa. Mỗi khi dính bẫy mới → appen
 - **Nguyên nhân**: OpenRouteService quy ước mọi coordinate array là `[lon, lat]` (docs "General Info"). DB lưu `ST_Y(geom)=lat, ST_X(geom)=lng` (`repo.py:15`) → bê thẳng vào ORS là đảo.
 - **Cách tránh/fix**: Khi gọi Matrix/Directions phải xếp `[lng, lat]`, không phải `[lat, lng]`. Test bằng 1 cặp điểm đã biết khoảng cách thật trước khi backfill hàng loạt. Nguồn: `docs/specs/Map_Routing.md` (ràng buộc ORS).
 
+## Bảng tra dùng substring → key ngắn/chung nuốt hết tầng dưới
+- **Triệu chứng**: Tầng geocode dưới không bao giờ chạy; toạ độ đúng nhưng **nhãn confidence sai** → không crash, không test nào đỏ, chỉ sai âm thầm trong data. Đã dính 3 lần cùng một nguyên nhân: `"586"` khớp số nhà `"586/12 Nguyễn Văn Cừ"`; `"metro"` khớp `"Metropolitan Tower"`; `"can tho"` trong `WARD_CENTROIDS` khớp **mọi** address Cần Thơ → tầng 4 trả tâm TP dán nhãn `low`, tầng 5 (`city`) thành code chết.
+- **Nguyên nhân**: `_match_table` (`apps/api/app/crawler/geocode.py`) so `if key in norm` — substring, không phải token/word-boundary. Key càng ngắn và càng chung thì càng khớp bừa, và vì bảng tra chạy TRƯỚC tầng dưới nên nó chặn luôn tầng sau.
+- **Cách tránh/fix**: Key phải đủ dài + có tiền tố định danh (`"kdc 586"`, `"sieu thi metro"`), tuyệt đối KHÔNG đặt tên cấp thành phố/tỉnh vào bảng cấp phường — tâm thành phố là việc của tầng 5. Khi thêm key mới vào `LANDMARKS`/`WARD_CENTROIDS`, tự hỏi "chuỗi này có nằm trong địa chỉ bình thường nào khác không?". Test đóng lại: `test_landmark_bare_number_key_does_not_false_match`, `test_landmark_metro_key_does_not_false_match`, `test_ward_centroid_has_no_city_catch_all`.
+
 ## Nguồn lệch mục tiêu làm nhiễu tập học AI
 - **Triệu chứng**: Tập data lẫn nhà/mặt bằng thương mại, không phải trọ SV.
 - **Nguyên nhân**: mogi ~83%, nhadatcantho247 ~84% là nhà/thương mại.

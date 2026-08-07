@@ -173,13 +173,17 @@ Bước 3: Nếu vẫn thất bại → Geocode đến cấp Phường/Quận
   "Phường An Bình, Ninh Kiều" → Tọa độ trung tâm phường
   confidence = "low" → Hiển thị badge "Vị trí ước lượng" trên bản đồ
 
-Bước 4: Hoàn toàn không geocode được → Ẩn khỏi bản đồ, chỉ hiện trong danh sách
+Bước 4: Địa chỉ không parse được ở mức nào (vd "CTY 8", "hẻm 9") → centroid TP Cần Thơ
+  confidence = "city" → badge "Vị trí ước lượng", KHÔNG cộng quality_score
+  (mọi nguồn đều lọc list_url theo Cần Thơ nên tin CHẮC listing ở TP)
+
+Bước 5: Hoàn toàn không geocode được (address rỗng) → 'failed', ẩn khỏi bản đồ
 ```
 
 **Lưu lại `geocode_confidence` trong DB để cảnh báo người dùng:**
 ```sql
 ALTER TABLE aggregated_listings 
-ADD COLUMN geocode_confidence VARCHAR(10); -- 'high'|'medium'|'low'|'failed'
+ADD COLUMN geocode_confidence VARCHAR(10); -- 'high'|'medium'|'low'|'city'|'failed'
 ```
 
 ---
