@@ -38,14 +38,14 @@ precompute sẵn cho mọi tin để AI rank + hiển thị chính xác, hội �
 - **POI (Point of Interest)**: điểm đáng chú ý không phải trọ (trường/chợ/bến xe). **POI layer** = lớp marker riêng. Mầm có sẵn: dict `LANDMARKS` trong `geocode.py`.
 
 ## Yêu cầu
-- [ ] FR-M.1 Bản đồ Leaflet + tile OSM, marker mỗi tin có toạ độ, popup giá + link chi tiết *(đã có, giữ)*
+- [x] FR-M.1 Bản đồ Leaflet + tile OSM, marker mỗi tin có toạ độ, popup giá + link chi tiết *(đã có, giữ)*
 - [x] FR-M.2 **3 toạ độ campus thật** (khu I, II, III) — đã chốt (xem bảng Campus dưới)
-- [ ] FR-M.3 Campus picker: user chọn khu → gốc tính khoảng cách đổi theo
+- [x] FR-M.3 Campus picker: user chọn khu → gốc tính khoảng cách đổi theo
 - [ ] FR-M.4 Cột `route_time_campus[1,2,3]` (phút, route thật) precompute lúc upsert — như `distance_to_ctu`
 - [ ] FR-M.5 Backfill route time cho tin đã có, qua ORS **Matrix endpoint** (batch, không N call lẻ)
 - [ ] FR-M.6 Re-route khi user sửa address (piggyback vào path geocode `router.py:38`)
 - [ ] FR-M.7 AI rank top-K bằng route time thật (không phải chim bay) → card hiện "X phút tới trường"
-- [ ] FR-M.8 Route **geometry** (polyline) fetch on-demand khi user click 1 tin, không precompute
+- [x] FR-M.8 Route **geometry** (polyline) fetch on-demand khi user click 1 tin, không precompute — verified trên UI thật (polyline vẽ sau click, e2e `map.spec.ts`)
 - [ ] FR-M.9 POI layer từ dict `LANDMARKS` có sẵn (trường/chợ/bến xe)
 
 ## Campus (gốc tính route — chốt 2026-07-06)
@@ -61,6 +61,7 @@ precompute sẵn cho mọi tin để AI rank + hiển thị chính xác, hội �
 - Backfill KHÔNG đụng quota: Matrix nhận nhiều điểm/request (trần **3.500 locations/request**, verified [ORS restrictions](https://openrouteservice.org/restrictions/) 2026-07-06). 3 campus + 414 tin = 417 locations → cả backfill gói trong **1-2 call**, không phải 1302 call lẻ. Quota daily thành non-issue ở quy mô này.
 - Chưa lấy được con số quota daily chính xác (trang plans ORS render rỗng, cần login dashboard = API key của user). Không chặn — vì backfill chỉ 1-2 call + steady-state vài tin/ngày, dưới mọi mức plausible. Xác nhận lại trên dashboard khi có key.
 - Steady-state chỉ route tin MỚI mỗi lần crawl (vài tin) → cost tỉ lệ *tin mới*, không phải *tổng tin*.
+- **Browser KHÔNG gọi thẳng FastAPI được — phải qua Route Handler proxy same-origin.** API chưa bật CORS middleware, nên `fetch("http://localhost:8000/listings/{id}/route")` từ trang 3000 bị chặn ở preflight ("No 'Access-Control-Allow-Origin'"). Lỗi rơi vào `catch` → `setRoute(null)` → map im lặng không vẽ gì, `curl` vẫn 200 nên dễ tưởng đã xong. Đường đi hiện qua `apps/web/src/app/api/listings/[id]/route-path/route.ts` (server-side, dùng `API_INTERNAL_URL`). Áp cho MỌI fetch client-side sang API sau này.
 - Chỉ route được tin đã có `geom` (coverage hiện tại ~95%, 414/434). Tin thiếu toạ độ không lên map — giới hạn geocode, không phải bug routing.
 - **Trần độ chính xác geocode = cấp phường/đường, KHÔNG tới hẻm/số nhà.** OSM/Nominatim (đang dùng) không có data hẻm+số nhà ở Cần Thơ. String nguồn kiểu "hẻm 3 Hồ bún xáng gần ĐH Cần Thơ" (không phường, không số) là **vô-thông-tin** → không engine nào định vị chính xác được, kể cả trả tiền. Rác vào rác ra. Use case (SV lọc khu → đọc địa chỉ text gốc → gọi chủ trọ) KHÔNG đòi cấp số nhà → trần cấp-phường là ĐỦ.
 

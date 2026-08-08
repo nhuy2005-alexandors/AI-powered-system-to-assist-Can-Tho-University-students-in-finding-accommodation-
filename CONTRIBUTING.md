@@ -9,9 +9,19 @@ First off, thank you for considering contributing to this project! It's people l
    - Run `cp .env.example .env`.
 3. **Run the Project with Docker**:
    - Run `docker compose up --build`.
-   - This will start the PostgreSQL DB, Redis, FastAPI Backend, and Next.js Frontend.
+   - Database migrations and sample data (Seed Data) will be loaded automatically on first boot.
    - Access Backend at `http://localhost:8000/docs`
    - Access Frontend at `http://localhost:3000`
+
+4. **Reset Database & Seed Data (Optional)**:
+   - Windows: Run `.\infra\db\reset_and_seed.ps1`
+   - Linux/Mac: Run `./infra/db/reset_and_seed.sh`
+   - Test accounts (Password: `123456`):
+     - Admin: `admin@ctu.edu.vn`
+     - Sinh viên K47: `nguyenvana@ctu.edu.vn` (MSSV: `B2101234`)
+     - Sinh viên K48: `tranthib@ctu.edu.vn` (MSSV: `B2205678`)
+     - Chủ trọ: `chutro.xuanhuong@gmail.com`
+
 
 ## Branching Strategy
 

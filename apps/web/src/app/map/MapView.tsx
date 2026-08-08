@@ -8,18 +8,21 @@ import type { ListingOut } from "@/lib/api";
 const MapInner = dynamic(() => import("./MapInner"), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[70vh] w-full items-center justify-center rounded-lg bg-slate-100 text-sm text-slate-400">
+    <div className="flex h-full w-full items-center justify-center bg-slate-100 text-sm text-slate-400">
       Đang tải bản đồ...
     </div>
   ),
 });
 
-export default function MapView({
-  items,
-  center,
-}: {
+export type MapViewProps = {
   items: ListingOut[];
   center: [number, number];
-}) {
-  return <MapInner items={items} center={center} />;
+  campus: number;
+  selectedId: number | null;
+  route: [number, number][] | null;
+  onSelect: (id: number) => void;
+};
+
+export default function MapView(props: MapViewProps) {
+  return <MapInner {...props} />;
 }

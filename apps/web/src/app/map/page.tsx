@@ -1,12 +1,12 @@
-import Link from "next/link";
 import { getNearby, type ApiError, type ListingOut } from "@/lib/api";
-import MapView from "./MapView";
+import MapShell from "./MapShell";
 
 export const dynamic = "force-dynamic";
 
 // Toạ độ ĐH Cần Thơ (khu II) — mặc định tâm tìm kiếm khi không có query.
-const CTU_LAT = 10.03;
-const CTU_LNG = 105.769;
+// Khớp CAMPUSES[1] trong campuses.ts / apps/api/app/listings/routing.py:10.
+const CTU_LAT = 10.0322;
+const CTU_LNG = 105.7683;
 const DEFAULT_RADIUS = 3000;
 
 export default async function MapPage({
@@ -28,33 +28,11 @@ export default async function MapPage({
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 p-4 sm:p-8">
-      <div className="mx-auto max-w-3xl">
-        <Link href="/" className="text-sm text-emerald-600 hover:text-emerald-700">
-          ← Về danh sách
-        </Link>
-
-        <h1 className="mt-4 text-2xl font-bold text-slate-800">Tin gần bạn</h1>
-        <p className="mt-1 text-sm text-slate-500">
-          Bán kính tìm kiếm: {(radius / 1000).toFixed(1)} km quanh ĐH Cần Thơ.
-        </p>
-
-        {errorMessage && (
-          <p className="mt-6 rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-600">
-            {errorMessage}
-          </p>
-        )}
-
-        {!errorMessage && items.length === 0 && (
-          <p className="mt-10 text-center text-slate-500">
-            Không tìm thấy tin nào trong bán kính này
-          </p>
-        )}
-
-        <div className="mt-6">
-          <MapView items={items} center={[lat, lng]} />
-        </div>
-      </div>
-    </main>
+    <MapShell
+      items={items}
+      center={[lat, lng]}
+      radius={radius}
+      errorMessage={errorMessage}
+    />
   );
 }

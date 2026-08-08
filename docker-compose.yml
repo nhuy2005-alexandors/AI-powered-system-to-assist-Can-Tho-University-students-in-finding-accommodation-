@@ -40,6 +40,11 @@ services:
       ORS_API_KEY: ${ORS_API_KEY:-}
     ports:
       - "8000:8000"
+    volumes:
+      # Dockerfile cố tình KHÔNG copy tests vào image (image chạy prod chỉ cần app/).
+      # Mount read-only để chạy được `docker exec nckh-api-1 python -m pytest tests/...`
+      # (gate .claude-gate.json) mà không phình image.
+      - ./apps/api/tests:/app/tests:ro
     depends_on:
       db:
         condition: service_healthy

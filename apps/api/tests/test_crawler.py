@@ -231,8 +231,11 @@ def test_geocode_medium_via_ward_query(monkeypatch):
 
     async def _fake(client, q):
         calls.append(q)
-        # chỉ match query cấp phường chính xác (tầng 2), full-address (tầng 1) fail
-        return (10.06, 105.76) if q == "An Thới, Bình Thuỷ, Cần Thơ" else None
+        # chỉ match query cấp phường chính xác (tầng 2), full-address (tầng 1) fail.
+        # Phần tử thứ 3 = OSM `type`, BẮT BUỘC: _nominatim thật luôn trả 3-tuple và
+        # tầng 2 giờ kiểm type ∈ _ADMIN_TYPES. Fake 2-tuple = fixture nói dối về
+        # hình dạng của hàm thật → IndexError, không phải lỗi implementation.
+        return (10.06, 105.76, "administrative") if q == "An Thới, Bình Thuỷ, Cần Thơ" else None
     monkeypatch.setattr(geocode, "_nominatim", _fake)
 
     async def run():
@@ -351,3 +354,410 @@ def test_cached_geo_with_coords_not_labelled_failed():
     """
     cached = {"lat": 10.03, "lng": 105.78, "geocode_confidence": None}
     assert (cached.get("geocode_confidence") or "low") == "low"
+
+
+# ── Tầng 3b: address trần + ", Cần Thơ" (đo 2026-08-08 trên 59 tin 'failed' thật) ──
+def test_bare_street_appends_city_token():
+    """Nominatim không biết address thuộc tỉnh nào → match tên đường trùng ra HN/HCM.
+
+    Đo thật: 'Lý tự trọng' trần trả (10.7786, 106.7016) = TP.HCM, bị bbox chặn nên
+    tin rơi xuống 'failed'; thêm ', Cần Thơ' thì ra (10.0330, 105.7813) = đúng đường
+    Lý Tự Trọng, Ninh Kiều. Đây là nguyên nhân THẬT của 82 tin failed, không phải
+    "string nguồn cụt" như checkpoint cũ ghi.
+    """
+    assert geocode.bare_street_in_cantho("Lý tự trọng") == "Lý tự trọng, Cần Thơ"
+    assert geocode.bare_street_in_cantho("Phạm Ngũ Lão") == "Phạm Ngũ Lão, Cần Thơ"
+
+
+def test_bare_street_rejects_address_without_proper_name():
+    """Address chỉ có số + filler → KHÔNG được query: Nominatim trả đường bất kỳ.
+
+    Đo thật: 'Hẻm 359' / 'Hẻm 105' / 'Hẻm 118-120' / 'Hẻm 3-4' là 4 địa chỉ KHÁC
+    nhau nhưng cùng trả (10.0752, 105.7287) — toạ độ sai tự tin, tệ hơn 'city'
+    (ADR-011: không dán nhãn lạc quan lên vị trí không biết).
+    """
+    for addr in ("Hẻm 359", "Hẻm 105", "Hẻm 118-120", "Hẻm 3-4", "Số 5", "hẻm 9",
+                 "Đường số 16", "Hẻm 77", "Hẻm tổ 10", "Kdc 3a"):
+        assert geocode.bare_street_in_cantho(addr) is None, f"{addr!r} không có tên riêng"
+
+
+def test_bare_street_skips_when_address_has_admin_part():
+    """Có 'Cần Thơ' hoặc phần hành chính → tầng 1/2 đã lo, 3b không được chen vào."""
+    assert geocode.bare_street_in_cantho("Lý Tự Trọng, Cần Thơ") is None
+    assert geocode.bare_street_in_cantho("Trần Phú, Phường An Nghiệp") is None
+
+
+def test_tier3b_rejects_non_street_osm_type(monkeypatch):
+    """OSM type không phải đường → Nominatim bám 1 POI trùng chữ, phải bỏ.
+
+    Đo thật: 'CTY 8' trả type='hotel', 'Hẻm tổ 10' trả 'clothes', 'Hẻm 107 Xô viết
+    nghệ tỉnh' trả 'bicycle_rental' — đều in-bbox nhưng không phải con đường trong
+    address. Nhận chúng = pin tin vào một cửa hàng ngẫu nhiên.
+    """
+    async def _nom(client, query):
+        # tầng 1 (address trần): OSM match tên trùng ngoài CT → bbox chặn, rơi xuống 3b
+        if "Cần Thơ" not in query:
+            return 10.7786, 106.7016, "hotel"
+        return 10.0300, 105.7800, "hotel"  # 3b: in-bbox nhưng là POI, không phải đường
+
+    monkeypatch.setattr(geocode, "_nominatim", _nom)
+    monkeypatch.setattr(geocode, "RATE_LIMIT", 0.0)
+
+    async def run():
+        g = geocode.Geocoder()
+        try:
+            return await g.geocode("Tạ Thị Phi")
+        finally:
+            await g.__aexit__(None, None, None)
+
+    lat, lng, conf = asyncio.run(run())
+    assert geocode.bare_street_in_cantho("Tạ Thị Phi") == "Tạ Thị Phi, Cần Thơ"
+    assert conf == "city", f"POI in-bbox phải bị bỏ → tầng 5, không phải {conf!r}"
+    assert (lat, lng) == geocode.CANTHO_CENTROID
+
+
+def test_tier3b_accepts_street_type_as_medium(monkeypatch):
+    """Type là đường thật + in-bbox → 'medium' (biết đúng đường, không biết số nhà)."""
+    calls: list[str] = []
+
+    async def _street(client, query):
+        calls.append(query)
+        # tầng 1 (address trần, không có 'Cần Thơ') → OSM match ra TP.HCM, bbox chặn
+        if "Cần Thơ" not in query:
+            return 10.7786, 106.7016, "tertiary"
+        return 10.0330, 105.7813, "tertiary"
+
+    monkeypatch.setattr(geocode, "_nominatim", _street)
+    monkeypatch.setattr(geocode, "RATE_LIMIT", 0.0)
+
+    async def run():
+        g = geocode.Geocoder()
+        try:
+            return await g.geocode("Lý tự trọng")
+        finally:
+            await g.__aexit__(None, None, None)
+
+    lat, lng, conf = asyncio.run(run())
+    assert conf == "medium", f"đường thật in-bbox phải là medium, không phải {conf!r}"
+    assert (lat, lng) == (10.0330, 105.7813)
+    assert "Lý tự trọng, Cần Thơ" in calls
+
+
+# ── Guard OSM `type` cho tầng 1 / tầng 2 (bug đo 2026-08-08 trên data chotot) ──
+def _geocode_with_osm(monkeypatch, address, replies):
+    """Geocode với Nominatim giả: replies = dict[substring_query] -> (lat,lng,type)|None.
+
+    Khớp theo substring để test không phụ thuộc chính xác chuỗi query từng tầng dựng.
+    """
+    async def _fake(client, query):
+        for needle, val in replies.items():
+            if needle in query:
+                return val
+        return None
+
+    monkeypatch.setattr(geocode, "_nominatim", _fake)
+    monkeypatch.setattr(geocode, "RATE_LIMIT", 0.0)
+
+    async def run():
+        g = geocode.Geocoder()
+        try:
+            return await g.geocode(address)
+        finally:
+            await g.__aexit__(None, None, None)
+    return asyncio.run(run())
+
+
+def test_tier2_rejects_poi_type_as_ward_centroid(monkeypatch):
+    """Query cấp phường mà OSM trả POI → KHÔNG được nhận làm tâm phường 'medium'.
+
+    Đo thật trên 3 tin chotot cùng phường Hưng Thạnh: query "Hưng Thạnh, Cái Răng,
+    Cần Thơ" trả type=place_of_worship (10.0047474, 105.7502592). Nhận nó làm tâm
+    phường thì 3 address KHÁC NHAU cùng ra 1 điểm, lệch ~3km so với vị trí thật.
+    """
+    lat, lng, conf = _geocode_with_osm(
+        monkeypatch,
+        "Kdc Hưng Phú Cty8, Phường Hưng Thạnh, Quận Cái Răng, Cần Thơ",
+        {"Hưng Thạnh": (10.0047474, 105.7502592, "place_of_worship")},
+    )
+    assert (lat, lng) != (10.0047474, 105.7502592) or conf == "low", (
+        f"place_of_worship bị nhận làm tâm phường với nhãn {conf!r}"
+    )
+    assert conf != "medium", "POI không được mang nhãn medium của tầng phường"
+
+
+def test_tier2_accepts_administrative_type(monkeypatch):
+    """OSM trả ranh giới hành chính thật → vẫn là 'medium' như trước (không hồi quy)."""
+    lat, lng, conf = _geocode_with_osm(
+        monkeypatch,
+        "Hẻm 12 Da Liễu, Phường Lê Bình, Quận Cái Răng, Cần Thơ",
+        {"Lê Bình": (9.9990419, 105.7519114, "administrative")},
+    )
+    assert conf == "medium", f"ranh giới phường thật phải là medium, không phải {conf!r}"
+    assert (lat, lng) == (9.9990419, 105.7519114)
+
+
+def test_tier1_does_not_label_poi_as_high(monkeypatch):
+    """Tầng 1 match POI (không phải nhà/đường) → KHÔNG được phong 'high'.
+
+    "Khu Dân Cư Văn Hóa Tây Đô, Hưng Thạnh, Cái Răng, Cần Thơ" từng trả
+    type=place_of_worship và được gắn high — nhãn cao nhất cho một nhà thờ cách
+    vị trí thật ~3km.
+    """
+    _lat, _lng, conf = _geocode_with_osm(
+        monkeypatch,
+        "Khu Dân Cư Văn Hóa Tây Đô, Phường Hưng Thạnh, Quận Cái Răng, Cần Thơ",
+        {"Tây Đô": (10.0047474, 105.7502592, "place_of_worship")},
+    )
+    assert conf != "high", "POI trùng chữ không được mang nhãn high (có số nhà)"
+
+
+def test_tier1_keeps_high_for_house_type(monkeypatch):
+    """Số nhà thật (type=house) vẫn 'high' — guard không được làm mất tầng 1."""
+    lat, lng, conf = _geocode_with_osm(
+        monkeypatch,
+        "148/150G Đường 3/2, Phường Tân An, Quận Ninh Kiều, Cần Thơ",
+        {"148/150G": (10.033044, 105.7872, "house")},
+    )
+    assert conf == "high", f"type=house phải là high, không phải {conf!r}"
+    assert (lat, lng) == (10.033044, 105.7872)
+
+
+def test_poi_candidate_beats_city_centroid_but_labelled_low(monkeypatch):
+    """POI bị từ chối vẫn dùng được làm ứng viên cuối, nhưng nhãn phải là 'low'.
+
+    Thà giữ toạ độ có liên quan tới address hơn là tâm TP, nhưng KHÔNG được nhận
+    nhãn medium/high vì chưa xác thực (quality_score chỉ cộng cho high/medium).
+    """
+    lat, lng, conf = _geocode_with_osm(
+        monkeypatch,
+        "Xyz Qwe Rty, Phường Zzz Kkk, Quận Www Vvv, Cần Thơ",
+        {"Zzz Kkk": (10.0210, 105.7654, "place_of_worship")},
+    )
+    assert conf == "low", f"ứng viên POI phải là low, không phải {conf!r}"
+    assert (lat, lng) == (10.0210, 105.7654)
+    assert (lat, lng) != geocode.CANTHO_CENTROID
+
+
+# ── _match_table: biên từ + ưu tiên cấp nhỏ (bug đo trên address thật chotot 2026-08-08) ──
+def test_match_table_word_boundary_rejects_substring_hit():
+    """'an hoa' KHÔNG được khớp trong 'Văn Hóa Tây Đô' ('Hóa'→'hoa' sau khi bỏ dấu).
+
+    Substring trần pin tin về tâm phường An Hòa, lệch 6.5km so với Hưng Thạnh.
+    """
+    addr = "Khu Dân Cư Văn Hóa Tây Đô, Phường Hưng Thạnh, Quận Cái Răng, Cần Thơ"
+    hit = geocode._match_table(addr, geocode.WARD_CENTROIDS, prefer="earliest")
+    assert hit != geocode.WARD_CENTROIDS["an hoa"], "'an hoa' bắt bừa trong 'Văn Hóa'"
+    assert hit != geocode.WARD_CENTROIDS["an cu"], "'an cu' bắt bừa trong 'Dân Cư'"
+    # chỉ còn khớp thật: quận Cái Răng
+    assert hit == geocode.WARD_CENTROIDS["cai rang"]
+
+
+def test_match_table_earliest_prefers_ward_over_district():
+    """Address VN viết nhỏ→lớn: key xuất hiện sớm hơn là cấp nhỏ hơn, phải thắng.
+
+    'Võ Tánh, Lê Bình, Cái Răng' từng trả tâm QUẬN Cái Răng chỉ vì 'cai rang' khai
+    báo trước 'le binh' trong dict → mất thông tin phường mà address đã cho (2.7km).
+    """
+    addr = "Đường Võ Tánh, Phường Lê Bình, Quận Cái Răng, Cần Thơ"
+    assert geocode._match_table(addr, geocode.WARD_CENTROIDS, prefer="earliest") == \
+        geocode.WARD_CENTROIDS["le binh"]
+    # thứ tự dict vẫn là cái sẽ thắng nếu dùng prefer mặc định — chứng minh bug thật
+    assert geocode._match_table(addr, geocode.WARD_CENTROIDS) == \
+        geocode.WARD_CENTROIDS["cai rang"]
+
+
+def test_match_table_order_mode_keeps_bunxang_priority():
+    """LANDMARKS phải giữ ưu tiên-thứ-tự: 'bun xang' thắng 'dai hoc can tho'.
+
+    Đây là ngoại lệ có chủ đích (CHECKPOINT 2026-07-06): tin 'gần ĐH Cần Thơ, hẻm
+    bún xáng' phải snap về hồ Bún Xáng (ổ trọ SV) chứ không về giữa trường. Nếu đổi
+    LANDMARKS sang 'earliest' thì 'dai hoc can tho' xuất hiện trước → hỏng ý đồ.
+    """
+    addr = "Hẻm gần Đại học Cần Thơ, khu bún xáng"
+    assert geocode._match_table(addr, geocode.LANDMARKS) == geocode.LANDMARKS["bun xang"]
+
+
+# ── Cờ `degraded`: tách "Nominatim không tìm thấy" khỏi "Nominatim không trả lời" ──
+def test_degraded_flag_set_on_network_error(monkeypatch):
+    """Lỗi mạng phải bật cờ. Không có cờ thì backfill hạ nhãn hàng loạt do timeout."""
+    async def _fail(*a, **k):
+        raise httpx.ConnectError("no net")
+    monkeypatch.setattr(geocode, "_nominatim", _fail)
+    monkeypatch.setattr(geocode, "RATE_LIMIT", 0.0)
+
+    async def run():
+        g = geocode.Geocoder()
+        try:
+            res = await g.geocode("Đường Võ Tánh, Phường Lê Bình, Quận Cái Răng, Cần Thơ")
+            return res, g.degraded
+        finally:
+            await g.__aexit__(None, None, None)
+
+    (lat, lng, conf), degraded = asyncio.run(run())
+    assert degraded is True, "query chết vì mạng mà cờ không bật"
+    # vẫn trả toạ độ bảng tra (không crash), nhưng caller biết là không đáng tin
+    assert conf in ("low", "city")
+
+
+def test_degraded_flag_clear_when_nominatim_answers_empty(monkeypatch):
+    """Nominatim TRẢ LỜI nhưng không có kết quả → KHÔNG degraded.
+
+    Đây là ca 'địa chỉ thật sự không tra được' — nhãn thấp là đúng, phải được ghi.
+    """
+    async def _empty(client, q):
+        return None
+    monkeypatch.setattr(geocode, "_nominatim", _empty)
+    monkeypatch.setattr(geocode, "RATE_LIMIT", 0.0)
+
+    async def run():
+        g = geocode.Geocoder()
+        try:
+            res = await g.geocode("Đường Võ Tánh, Phường Lê Bình, Quận Cái Răng, Cần Thơ")
+            return res, g.degraded
+        finally:
+            await g.__aexit__(None, None, None)
+
+    (lat, lng, conf), degraded = asyncio.run(run())
+    assert degraded is False, "Nominatim trả lời rỗng không phải lỗi mạng"
+    assert conf == "low"
+
+
+def test_degraded_result_not_cached(monkeypatch):
+    """Kết quả lỗi mạng KHÔNG được cache — nếu cache thì retry mất tác dụng."""
+    state = {"fail": True}
+
+    async def _flaky(client, q):
+        if state["fail"]:
+            raise httpx.ConnectError("no net")
+        return 10.0330, 105.7813, "tertiary"
+    monkeypatch.setattr(geocode, "_nominatim", _flaky)
+    monkeypatch.setattr(geocode, "RATE_LIMIT", 0.0)
+
+    addr = "Đường Lý Tự Trọng, Phường An Cư, Quận Ninh Kiều, Cần Thơ"
+
+    async def run():
+        g = geocode.Geocoder()
+        try:
+            first = await g.geocode(addr)
+            state["fail"] = False
+            second = await g.geocode(addr)  # phải gọi lại thật, không lấy cache lỗi
+            return first, second
+        finally:
+            await g.__aexit__(None, None, None)
+
+    first, second = asyncio.run(run())
+    assert second[2] == "high", f"lần 2 mạng đã ổn mà vẫn trả {second[2]!r} (cache lỗi)"
+    assert second[:2] == (10.0330, 105.7813)
+
+
+# ── backfill: circuit breaker + không hạ nhãn do lỗi mạng (2026-08-08) ──
+class _FakeConn:
+    """Conn tối thiểu cho backfill: SELECT trả rows định trước, UPDATE ghi vào list."""
+
+    def __init__(self, rows, writes):
+        self._rows = rows
+        self._writes = writes
+
+    def execute(self, stmt, params=None):
+        if params is None:
+            self._last = self._rows
+            return self
+        self._writes.append(params)
+        return self
+
+    def mappings(self):
+        return self
+
+    def all(self):
+        return self._rows
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+
+class _FakeEngine:
+    def __init__(self, rows, writes):
+        self._rows, self._writes = rows, writes
+
+    def connect(self):
+        return _FakeConn(self._rows, self._writes)
+
+    def begin(self):
+        return _FakeConn(self._rows, self._writes)
+
+    def dispose(self):
+        pass
+
+
+def _run_backfill(monkeypatch, rows, nominatim):
+    """Chạy backfill với DB giả + Nominatim giả. Trả (stats, danh sách UPDATE đã ghi)."""
+    from app.crawler import backfill as bf
+
+    writes: list[dict] = []
+    monkeypatch.setattr(bf, "create_engine", lambda *a, **k: _FakeEngine(rows, writes))
+    monkeypatch.setattr(geocode, "_nominatim", nominatim)
+    monkeypatch.setattr(geocode, "RATE_LIMIT", 0.0)
+    return asyncio.run(bf.backfill()), writes
+
+
+def test_backfill_aborts_after_consecutive_network_failures(monkeypatch):
+    """Nominatim chặn (429) → dừng sớm, KHÔNG nện hết 500 dòng.
+
+    Đã dính 2026-08-08: probe tay dùng hết quota Nominatim, backfill chạy tiếp và ăn
+    429 hàng loạt — vừa vô ích vừa vi phạm usage policy. Circuit breaker phải cắt.
+    """
+    from app.crawler import backfill as bf
+
+    rows = [{"id": i, "title": "t", "address": f"Đường Số {i}, Phường An Cư, Quận Ninh Kiều, Cần Thơ",
+             "description": None, "area": 20.0, "old_conf": "high"} for i in range(1, 51)]
+
+    async def _blocked(client, q):
+        raise httpx.HTTPStatusError("429", request=None, response=None)
+
+    stats, writes = _run_backfill(monkeypatch, rows, _blocked)
+
+    assert stats["aborted"] is True, "429 hàng loạt mà không dừng sớm"
+    assert writes == [], "lỗi mạng mà vẫn ghi DB → nhãn cũ bị đè bằng nhãn không đáng tin"
+    assert stats["skipped_net"] == bf._MAX_CONSECUTIVE_FAIL
+    assert stats["skipped_net"] < len(rows), "phải dừng trước khi quét hết bảng"
+
+
+def test_backfill_resets_breaker_after_a_success(monkeypatch):
+    """Lỗi rải rác (mạng chập chờn) KHÔNG được cắt run — chỉ lỗi LIÊN TIẾP mới cắt."""
+    state = {"n": 0}
+
+    rows = [{"id": i, "title": "t", "address": f"Đường Số {i}, Phường An Cư, Quận Ninh Kiều, Cần Thơ",
+             "description": None, "area": 20.0, "old_conf": "low"} for i in range(1, 21)]
+
+    async def _flaky(client, q):
+        state["n"] += 1
+        if state["n"] % 3 == 0:  # cứ 3 query lỗi 1 lần → không bao giờ đủ 5 dòng liên tiếp
+            raise httpx.ConnectError("blip")
+        return 10.0330, 105.7813, "tertiary"
+
+    stats, writes = _run_backfill(monkeypatch, rows, _flaky)
+
+    assert stats["aborted"] is False, "lỗi rải rác không được cắt cả run"
+    assert stats["written"] > 0, "phải ghi được những dòng geocode thành công"
+
+
+def test_backfill_writes_downgrade_when_network_is_healthy(monkeypatch):
+    """Mạng ổn + nhãn cũ sai (high) → PHẢI ghi hạ nhãn.
+
+    Đây là mục đích của lần backfill 2026-08-08: logic vừa siết lại nên việc chính
+    LÀ hạ nhãn sai xuống đúng. Guard "chỉ ghi khi rank >= cũ" của bản cũ sẽ chặn mất.
+    """
+    rows = [{"id": 1, "title": "t",
+             "address": "Khu Dân Cư Abc Xyz, Phường Qqq Www, Quận Eee Rrr, Cần Thơ",
+             "description": None, "area": 20.0, "old_conf": "high"}]
+
+    async def _poi(client, q):
+        return 10.0210, 105.7654, "place_of_worship"  # POI → tầng 1/2 từ chối → low
+
+    stats, writes = _run_backfill(monkeypatch, rows, _poi)
+
+    assert stats["downgraded"] == 1, "nhãn cũ 'high' sai mà không bị hạ"
+    assert len(writes) == 1 and writes[0]["conf"] == "low"
