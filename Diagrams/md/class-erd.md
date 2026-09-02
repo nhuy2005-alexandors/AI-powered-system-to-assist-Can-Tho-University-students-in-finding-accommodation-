@@ -203,7 +203,7 @@ erDiagram
         real risk_score
         text_arr risk_reasons
         real distance_to_ctu "haversine meters"
-        varchar geocode_confidence "high|medium|low|city|failed"
+        varchar geocode_confidence "high|medium|low|failed"
         vector embedding_vector "384-dim, RAG search"
         listing_status status "active|expired|flagged|hidden"
         timestamptz first_seen

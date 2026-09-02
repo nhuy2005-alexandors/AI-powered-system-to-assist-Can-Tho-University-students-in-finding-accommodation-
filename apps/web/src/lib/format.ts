@@ -7,6 +7,14 @@ export function formatPrice(price: number | null | undefined): string {
   return `${formatted} triệu/tháng`;
 }
 
+// Bản ngắn cho card: giá to + hậu tố "/ tháng" tách riêng ở UI.
+export function formatPriceShort(price: number | null | undefined): string {
+  if (price == null) return "Thỏa thuận";
+  const trieu = price / 1_000_000;
+  const formatted = Number.isInteger(trieu) ? trieu.toFixed(0) : trieu.toFixed(1);
+  return `${formatted} triệu`;
+}
+
 export function formatArea(area: number | null | undefined): string {
   if (area == null) return "";
   return `${area} m²`;

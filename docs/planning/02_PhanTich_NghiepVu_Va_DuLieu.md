@@ -161,7 +161,7 @@ CREATE TABLE aggregated_listings (
     distance_to_ctu   REAL,
     distance_to_police REAL,
     distance_to_hospital REAL,
-    geocode_confidence VARCHAR(10),      -- 'high'|'medium'|'low'|'city'|'failed' ('city' = centroid TP, tầng 5)
+    geocode_confidence VARCHAR(10),      -- 'high'|'medium'|'low'|'failed'
     embedding_vector  VECTOR(384),
     
     -- Thời gian

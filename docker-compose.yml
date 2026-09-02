@@ -38,18 +38,27 @@ services:
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
       CRAWLER_ENABLED: ${CRAWLER_ENABLED:-true}
       ORS_API_KEY: ${ORS_API_KEY:-}
+      CHATBOT_EMBEDDING_MODEL: ${CHATBOT_EMBEDDING_MODEL:-intfloat/multilingual-e5-small}
+      CHATBOT_CONFIDENCE_THRESHOLD: ${CHATBOT_CONFIDENCE_THRESHOLD:-0.65}
+      CHATBOT_MAX_RESULTS: ${CHATBOT_MAX_RESULTS:-5}
+      CHATBOT_LLM_PROVIDER: ${CHATBOT_LLM_PROVIDER:-auto}
+      CHATBOT_LLM_TIMEOUT_SECONDS: ${CHATBOT_LLM_TIMEOUT_SECONDS:-120}
+      OLLAMA_BASE_URL: ${OLLAMA_DOCKER_BASE_URL:-http://host.docker.internal:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:7b}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.7-flash}
+      GEMINI_BASE_URL: ${GEMINI_BASE_URL:-https://generativelanguage.googleapis.com/v1beta}
+      RISK_AUTO_ASSESS: ${RISK_AUTO_ASSESS:-true}
+      RISK_AUTO_ASSESS_LIMIT: ${RISK_AUTO_ASSESS_LIMIT:-1000}
     ports:
       - "8000:8000"
-    volumes:
-      # Dockerfile cố tình KHÔNG copy tests vào image (image chạy prod chỉ cần app/).
-      # Mount read-only để chạy được `docker exec nckh-api-1 python -m pytest tests/...`
-      # (gate .claude-gate.json) mà không phình image.
-      - ./apps/api/tests:/app/tests:ro
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     develop:
       watch:
         - action: sync+restart
@@ -61,6 +70,7 @@ services:
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000
       API_INTERNAL_URL: http://api:8000
+      AUTH_COOKIE_SECURE: ${AUTH_COOKIE_SECURE:-false}
     ports:
       - "3000:3000"
     depends_on:

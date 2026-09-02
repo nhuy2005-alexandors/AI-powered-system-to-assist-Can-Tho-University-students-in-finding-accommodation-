@@ -13,8 +13,10 @@ from .schemas import (
 _COLS = (
     "id, title, price, area, address, district, description, "
     "ST_Y(geom) AS lat, ST_X(geom) AS lng, distance_to_ctu, images, "
-    "source, source_url, risk_score, geocode_confidence, freshness_score, "
-    "quality_score, last_seen, route_time_campus"
+    "source, source_url, posted_by, risk_score, risk_reasons, geocode_confidence, freshness_score, "
+    "quality_score, last_seen, route_time_campus, "
+    "(SELECT count(*) FROM reports r WHERE r.listing_id = aggregated_listings.id "
+    "AND r.status IN ('pending', 'reviewed')) AS report_count"
 )
 
 _SORT_SQL = {
@@ -71,6 +73,7 @@ def build_filters(p: SearchParams) -> tuple[str, dict]:
 def _to_out(row) -> ListingOut:
     d = dict(row)
     d["images"] = d.get("images") or []
+    d["risk_reasons"] = d.get("risk_reasons") or []
     d["risk_level"] = risk_level(d.get("risk_score"))
     d["freshness_label"] = freshness_label(d.get("last_seen"))
     return ListingOut(**d)

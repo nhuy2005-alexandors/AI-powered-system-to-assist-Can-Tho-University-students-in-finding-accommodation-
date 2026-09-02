@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #e6ebf2; -webkit-font-smoothing: antialiased; }
+  a { color: #1069bd; text-decoration: none; }
+  a:hover { color: #06305c; }
+</style>
+</helmet>
+<div style="font-family: 'Be Vietnam Pro', ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; gap: 56px; padding: 56px; align-items: flex-start; color: #10243a;">
+
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #5b7189;">Giao diện mới · tone xanh dương + trắng</div>
+    <div style="font-size: 32px; font-weight: 800; letter-spacing: -.02em;">Trọ CTU — hệ thống tìm nhà trọ cho sinh viên ĐH Cần Thơ</div>
+  </div>
+
+  <!-- ============ 1. TRANG CHỦ ============ -->
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5b7189;">01 — Trang chủ: hero + tìm kiếm ngôn ngữ tự nhiên + gợi ý AI + danh sách</div>
+    <div data-screen-label="Mới — Trang chủ" style="position: relative; width: 1440px; background: #f6f8fb; box-shadow: 0 24px 60px -30px rgba(6,48,92,.45); overflow: hidden;">
+
+      <div style="background: #06305c; color: #b9d3ec; font-size: 12.5px; padding: 8px 40px; display: flex; justify-content: space-between; align-items: center;">
+        <span>Sản phẩm nghiên cứu khoa học sinh viên · Trường Công nghệ Thông tin &amp; Truyền thông, ĐH Cần Thơ</span>
+        <span style="display: flex; gap: 20px;"><span>Hỗ trợ</span><span>Báo tin sai</span></span>
+      </div>
+
+      <header style="background: #ffffff; border-bottom: 1px solid #dde5ee; padding: 0 40px; height: 76px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: #0b4d8f; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px;">T</div>
+          <div style="display: flex; flex-direction: column; line-height: 1.15;">
+            <span style="font-size: 18px; font-weight: 800; letter-spacing: -.01em;">Trọ CTU</span>
+            <span style="font-size: 12px; color: #5b7189;">Tìm phòng trọ gần trường</span>
+          </div>
+        </div>
+        <nav style="display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 500;">
+          <span style="color: #0b4d8f; font-weight: 600; padding-bottom: 2px; border-bottom: 2px solid #0b4d8f;">Tìm trọ</span>
+          <span style="color: #3d5871;">Bản đồ</span>
+          <span style="color: #3d5871;">Ghép bạn ở</span>
+          <span style="color: #3d5871;">Tin của tôi</span>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 15px; font-weight: 500; color: #3d5871;">Đăng nhập</span>
+          <span style="background: #0b4d8f; color: #fff; font-size: 15px; font-weight: 600; padding: 10px 18px; border-radius: 10px;">Đăng tin miễn phí</span>
+        </div>
+      </header>
+
+      <!-- HERO -->
+      <section style="background: #0b4d8f; color: #ffffff; padding: 52px 40px 60px; position: relative; overflow: hidden;">
+        <div style="position: absolute; right: -80px; top: -120px; width: 460px; height: 460px; border-radius: 9999px; background: rgba(255,255,255,.05);"></div>
+        <div style="position: absolute; right: 120px; bottom: -180px; width: 300px; height: 300px; border-radius: 9999px; background: rgba(255,255,255,.04);"></div>
+        <div style="position: relative; display: grid; grid-template-columns: 1fr 330px; gap: 56px; align-items: start;">
+          <div>
+            <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); padding: 6px 12px; border-radius: 9999px; font-size: 13px; font-weight: 500;">
+              <span style="width: 7px; height: 7px; border-radius: 9999px; background: #7fe0b0; display: block;"></span>
+              262 tin đã lọc sạch từ 6 nguồn, cập nhật mỗi 6 giờ
+            </div>
+            <h1 style="margin: 18px 0 0; font-size: 46px; line-height: 1.1; font-weight: 800; letter-spacing: -.03em; max-width: 17ch; text-wrap: balance;">Ở gần trường, đúng giá sinh viên.</h1>
+            <p style="margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: #cfe1f4; max-width: 52ch;">Gõ đúng điều bạn cần — hệ thống hiểu tiếng Việt tự nhiên, tự lọc tin ảo và tính số phút xe máy tới từng khu của ĐH Cần Thơ.</p>
+
+            <div style="margin-top: 28px; background: #ffffff; border-radius: 16px; padding: 10px; display: flex; align-items: center; gap: 12px; box-shadow: 0 18px 40px -20px rgba(0,0,0,.5);">
+              <div style="display: flex; align-items: center; gap: 10px; padding-left: 12px; flex: 1;">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink: 0;"><circle cx="9" cy="9" r="6.2" stroke="#5b7189" stroke-width="1.8"/><line x1="13.6" y1="13.6" x2="17.5" y2="17.5" stroke="#5b7189" stroke-width="1.8" stroke-linecap="round"/></svg>
+                <span style="font-size: 16.5px; color: #10243a;">trọ dưới 2 triệu, có gác, 10 phút tới khu II</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; padding: 0 8px 0 14px; border-left: 1px solid #dde5ee; font-size: 14px; color: #5b7189;">Cần Thơ</div>
+              <span style="background: #1069bd; color: #fff; font-size: 16px; font-weight: 600; padding: 13px 26px; border-radius: 11px;">Tìm trọ</span>
+            </div>
+            <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+              <span style="font-size: 13px; color: #a9c7e4; margin-right: 4px;">Sinh viên hay tìm:</span>
+              <sc-for list="{{ chips }}" as="c" hint-placeholder-count="4">
+                <span style="font-size: 13.5px; padding: 7px 13px; border-radius: 9999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); color: #eaf3fb;">{{ c }}</span>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 18px; padding: 22px;">
+            <div style="font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #a9c7e4;">Dữ liệu hệ thống</div>
+            <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 16px;">
+              <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+                <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.12);">
+                  <span style="font-size: 14.5px; color: #cfe1f4;">{{ s.label }}</span>
+                  <span style="font-size: 22px; font-weight: 700;">{{ s.value }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <p style="margin: 14px 0 0; font-size: 12.5px; line-height: 1.5; color: #a9c7e4;">Tin rác, tin bán nhà và tin trùng đã bị loại bởi bộ làm sạch 5 tầng.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- GỢI Ý AI -->
+      <sc-if value="{{ showRecs }}" hint-placeholder-val="{{ true }}">
+      <section style="padding: 36px 40px 8px; background: #f6f8fb;">
+        <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 20px;">
+          <div>
+            <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #1069bd;">
+              <span style="width: 8px; height: 8px; background: #1069bd; display: block; transform: rotate(45deg);"></span>
+              Gợi ý riêng cho bạn
+            </div>
+            <h2 style="margin: 8px 0 0; font-size: 26px; font-weight: 700; letter-spacing: -.02em;">Dựa trên hồ sơ của bạn: khoa CNTT, khu II, ngân sách 2 triệu</h2>
+          </div>
+          <span style="font-size: 14.5px; font-weight: 600; color: #1069bd; white-space: nowrap;">Sửa hồ sơ tìm trọ →</span>
+        </div>
+        <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+          <sc-for list="{{ recs }}" as="r" hint-placeholder-count="3">
+            <div style="background: #ffffff; border: 1px solid #dde5ee; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 2px rgba(16,36,58,.04);">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+                <span style="font-size: 13px; font-weight: 700; color: #0b4d8f; background: #e3effb; padding: 5px 11px; border-radius: 9999px;">{{ r.match }} phù hợp</span>
+                <span style="font-size: 13px; color: #5b7189;">{{ r.minutes }}</span>
+              </div>
+              <div style="font-size: 16.5px; font-weight: 600; line-height: 1.35;">{{ r.title }}</div>
+              <div style="font-size: 20px; font-weight: 700; color: #0b4d8f;">{{ r.price }}</div>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                <sc-for list="{{ r.reasons }}" as="why" hint-placeholder-count="2">
+                  <span style="font-size: 12.5px; color: #3d5871; background: #f0f4f9; border: 1px solid #e3e9f1; padding: 5px 10px; border-radius: 8px;">{{ why }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+      </sc-if>
+
+      <!-- KẾT QUẢ -->
+      <section style="padding: 36px 40px 56px; display: grid; grid-template-columns: 292px 1fr; gap: 28px; align-items: start;">
+
+        <aside style="background: #ffffff; border: 1px solid #dde5ee; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 22px; position: sticky; top: 20px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 17px; font-weight: 700;">Bộ lọc</span>
+            <span style="font-size: 13.5px; color: #1069bd; font-weight: 500;">Xóa hết</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <span style="font-size: 13px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #5b7189;">Giá thuê / tháng</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="flex: 1; border: 1px solid #dde5ee; border-radius: 10px; padding: 10px 12px; font-size: 14.5px; color: #10243a;">1.0 triệu</span>
+              <span style="color: #9aa9ba;">–</span>
+              <span style="flex: 1; border: 1px solid #dde5ee; border-radius: 10px; padding: 10px 12px; font-size: 14.5px; color: #10243a;">2.5 triệu</span>
+            </div>
+            <div style="height: 4px; background: #e6ecf3; border-radius: 9999px; position: relative; margin: 6px 2px 0;">
+              <div style="position: absolute; left: 12%; right: 32%; top: 0; bottom: 0; background: #1069bd; border-radius: 9999px;"></div>
+              <div style="position: absolute; left: 12%; top: -5px; width: 14px; height: 14px; margin-left: -7px; border-radius: 9999px; background: #fff; border: 3px solid #0b4d8f;"></div>
+              <div style="position: absolute; right: 32%; top: -5px; width: 14px; height: 14px; margin-right: -7px; border-radius: 9999px; background: #fff; border: 3px solid #0b4d8f;"></div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <span style="font-size: 13px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #5b7189;">Thời gian tới trường</span>
+            <div style="display: flex; gap: 6px; background: #f0f4f9; padding: 4px; border-radius: 11px;">
+              <span style="flex: 1; text-align: center; font-size: 14px; padding: 8px 0; border-radius: 8px; color: #3d5871;">Khu I</span>
+              <span style="flex: 1; text-align: center; font-size: 14px; font-weight: 600; padding: 8px 0; border-radius: 8px; background: #ffffff; color: #0b4d8f; box-shadow: 0 1px 3px rgba(16,36,58,.12);">Khu II</span>
+              <span style="flex: 1; text-align: center; font-size: 14px; padding: 8px 0; border-radius: 8px; color: #3d5871;">Khu III</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <span style="flex: 1; text-align: center; font-size: 13.5px; padding: 9px 0; border-radius: 9px; border: 1px solid #dde5ee; color: #3d5871;">≤ 5 phút</span>
+              <span style="flex: 1; text-align: center; font-size: 13.5px; padding: 9px 0; border-radius: 9px; border: 1px solid #0b4d8f; background: #e3effb; color: #0b4d8f; font-weight: 600;">≤ 10 phút</span>
+              <span style="flex: 1; text-align: center; font-size: 13.5px; padding: 9px 0; border-radius: 9px; border: 1px solid #dde5ee; color: #3d5871;">≤ 20 phút</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <span style="font-size: 13px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #5b7189;">Quận / huyện</span>
+            <div style="display: flex; flex-direction: column; gap: 9px;">
+              <sc-for list="{{ districts }}" as="d" hint-placeholder-count="6">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 15px;">
+                  <span style="display: flex; align-items: center; gap: 10px; color: #10243a;">
+                    <span style="width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid #c6d2e0; background: #fff; display: block;"></span>
+                    {{ d.name }}
+                  </span>
+                  <span style="font-size: 13px; color: #8b9cb0;">{{ d.count }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <span style="font-size: 13px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #5b7189;">Diện tích tối thiểu</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <span style="font-size: 13.5px; padding: 8px 14px; border-radius: 9px; border: 1px solid #dde5ee; color: #3d5871;">15 m²</span>
+              <span style="font-size: 13.5px; padding: 8px 14px; border-radius: 9px; border: 1px solid #dde5ee; color: #3d5871;">20 m²</span>
+              <span style="font-size: 13.5px; padding: 8px 14px; border-radius: 9px; border: 1px solid #dde5ee; color: #3d5871;">25 m²</span>
+            </div>
+          </div>
+
+          <div style="background: #0b4d8f; color: #fff; text-align: center; font-size: 15.5px; font-weight: 600; padding: 13px 0; border-radius: 11px;">Áp dụng bộ lọc</div>
+        </aside>
+
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+            <div>
+              <h2 style="margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.01em;">190 phòng trọ trong 3 km quanh ĐH Cần Thơ</h2>
+              <p style="margin: 5px 0 0; font-size: 14px; color: #5b7189;">Đã ẩn tin hết hạn và tin trùng · giá trung bình 1.8 triệu/tháng</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 14px; color: #5b7189;">Sắp xếp</span>
+              <span style="display: inline-flex; align-items: center; gap: 10px; border: 1px solid #dde5ee; background: #fff; border-radius: 10px; padding: 10px 14px; font-size: 14.5px; font-weight: 500;">Gần CTU nhất <span style="width: 7px; height: 7px; border-right: 1.5px solid #5b7189; border-bottom: 1.5px solid #5b7189; transform: rotate(45deg) translateY(-2px); display: block;"></span></span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
+            <sc-for list="{{ listings }}" as="l" hint-placeholder-count="6">
+              <div style="background: #ffffff; border: 1px solid #dde5ee; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(16,36,58,.04);">
+                <div style="position: relative; height: 176px; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px); display: flex; align-items: center; justify-content: center;">
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8b9cb0;">{{ l.photo }}</span>
+                  <span style="position: absolute; left: 12px; top: 12px; font-size: 12.5px; font-weight: 600; padding: 5px 10px; border-radius: 8px; background: rgba(255,255,255,.94); color: #10243a;">{{ l.badge }}</span>
+                  <span style="position: absolute; right: 12px; top: 12px; width: 32px; height: 32px; border-radius: 9999px; background: rgba(255,255,255,.94); display: flex; align-items: center; justify-content: center; font-size: 15px; color: #5b7189;">♡</span>
+                </div>
+                <div style="padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1;">
+                  <div style="font-size: 16.5px; font-weight: 600; line-height: 1.35; color: #10243a;">{{ l.title }}</div>
+                  <div style="display: flex; align-items: baseline; gap: 8px;">
+                    <span style="font-size: 21px; font-weight: 700; color: #0b4d8f;">{{ l.price }}</span>
+                    <span style="font-size: 13.5px; color: #5b7189;">/ tháng</span>
+                  </div>
+                  <div style="display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14.5px; color: #3d5871; padding-top: 2px;">
+                    <span>{{ l.area }}</span>
+                    <span>{{ l.district }}</span>
+                    <span>{{ l.km }}</span>
+                  </div>
+                  <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid #eef2f7; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+                    <span style="font-size: 13.5px; color: #5b7189;">{{ l.minutes }} xe máy tới khu II</span>
+                    <span style="font-size: 14px; font-weight: 600; color: #1069bd;">Xem chi tiết</span>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: center; gap: 14px; padding-top: 8px;">
+            <span style="font-size: 14.5px; color: #9aa9ba; border: 1px solid #e6ecf3; padding: 10px 18px; border-radius: 10px;">Trước</span>
+            <span style="font-size: 14.5px; font-weight: 600; color: #fff; background: #0b4d8f; width: 40px; text-align: center; padding: 10px 0; border-radius: 10px;">1</span>
+            <span style="font-size: 14.5px; color: #3d5871; border: 1px solid #dde5ee; width: 40px; text-align: center; padding: 10px 0; border-radius: 10px;">2</span>
+            <span style="font-size: 14.5px; color: #3d5871; border: 1px solid #dde5ee; width: 40px; text-align: center; padding: 10px 0; border-radius: 10px;">3</span>
+            <span style="font-size: 14.5px; color: #3d5871; border: 1px solid #dde5ee; padding: 10px 18px; border-radius: 10px;">Sau</span>
+          </div>
+        </div>
+      </section>
+
+      <footer style="background: #06305c; color: #a9c7e4; padding: 32px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 13.5px;">
+        <span>Trọ CTU · Đề tài NCKH sinh viên 2026 · Trường CNTT&amp;TT, ĐH Cần Thơ</span>
+        <span style="display: flex; gap: 24px;"><span>Về hệ thống</span><span>Nguồn dữ liệu</span><span>Báo tin sai</span></span>
+      </footer>
+
+      <!-- CHATBOT FAB -->
+      <div style="position: absolute; right: 28px; bottom: 130px; display: flex; align-items: center; gap: 12px;">
+        <span style="background: #ffffff; border: 1px solid #dde5ee; border-radius: 12px; padding: 10px 14px; font-size: 14px; color: #10243a; box-shadow: 0 10px 24px -12px rgba(6,48,92,.5);">Hỏi mình về trọ, giá, hợp đồng…</span>
+        <span style="width: 60px; height: 60px; border-radius: 9999px; background: #1069bd; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; box-shadow: 0 14px 30px -10px rgba(16,105,189,.8);">AI</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 2. CHI TIẾT ============ -->
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5b7189;">02 — Chi tiết phòng: ảnh, phút tới 3 khu, cảnh báo rủi ro, liên hệ</div>
+    <div data-screen-label="Mới — Chi tiết tin" style="width: 1440px; background: #f6f8fb; box-shadow: 0 24px 60px -30px rgba(6,48,92,.45); overflow: hidden;">
+      <header style="background: #ffffff; border-bottom: 1px solid #dde5ee; padding: 0 40px; height: 76px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: #0b4d8f; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px;">T</div>
+          <span style="font-size: 18px; font-weight: 800;">Trọ CTU</span>
+        </div>
+        <nav style="display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 500; color: #3d5871;">
+          <span>Tìm trọ</span><span>Bản đồ</span><span>Ghép bạn ở</span><span>Tin của tôi</span>
+        </nav>
+        <span style="background: #0b4d8f; color: #fff; font-size: 15px; font-weight: 600; padding: 10px 18px; border-radius: 10px;">Đăng tin miễn phí</span>
+      </header>
+
+      <div style="padding: 24px 40px 56px;">
+        <div style="font-size: 14px; color: #5b7189;">Tìm trọ · Ninh Kiều · <span style="color: #10243a;">Phòng trọ mới xây đường 3/2</span></div>
+
+        <div style="margin-top: 16px; display: grid; grid-template-columns: 1.7fr 1fr; grid-template-rows: 118px 118px; gap: 10px; height: 246px;">
+          <div style="grid-row: span 2; border-radius: 16px 0 0 16px; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8b9cb0;">ảnh chính của phòng</div>
+          <div style="border-radius: 0 16px 0 0; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8b9cb0;">ảnh gác lửng</div>
+          <div style="position: relative; border-radius: 0 0 16px 0; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8b9cb0;">ảnh nhà vệ sinh
+            <span style="position: absolute; right: 12px; bottom: 12px; background: rgba(6,48,92,.85); color: #fff; font-size: 13px; font-weight: 600; padding: 7px 13px; border-radius: 9px;">+4 ảnh</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 28px; display: grid; grid-template-columns: 1fr 340px; gap: 28px; align-items: start;">
+          <div style="display: flex; flex-direction: column; gap: 22px;">
+            <div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="font-size: 12.5px; font-weight: 600; color: #0f7a52; background: #e2f5ec; padding: 5px 11px; border-radius: 9999px;">Tin đã kiểm tra</span>
+                <span style="font-size: 12.5px; font-weight: 600; color: #3d5871; background: #eef2f7; padding: 5px 11px; border-radius: 9999px;">Cập nhật 6 giờ trước</span>
+                <span style="font-size: 12.5px; font-weight: 600; color: #3d5871; background: #eef2f7; padding: 5px 11px; border-radius: 9999px;">Nguồn: phongtro123</span>
+              </div>
+              <h1 style="margin: 14px 0 0; font-size: 30px; font-weight: 800; letter-spacing: -.02em; line-height: 1.25;">Phòng trọ mới xây đường 3/2, có gác lửng, gần khu II</h1>
+              <p style="margin: 8px 0 0; font-size: 15.5px; color: #3d5871;">145/12 đường 3/2, P. Xuân Khánh, Q. Ninh Kiều, TP. Cần Thơ</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+              <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+                <div style="background: #ffffff; border: 1px solid #dde5ee; border-radius: 14px; padding: 15px 16px;">
+                  <div style="font-size: 12.5px; color: #5b7189;">{{ f.k }}</div>
+                  <div style="margin-top: 5px; font-size: 19px; font-weight: 700; color: #10243a;">{{ f.v }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #dde5ee; border-radius: 16px; padding: 20px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <span style="font-size: 17px; font-weight: 700;">Thời gian đi xe máy tới trường</span>
+                <span style="font-size: 13px; color: #5b7189;">Tính bằng dữ liệu đường thật (OpenRouteService)</span>
+              </div>
+              <div style="margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                <sc-for list="{{ campuses }}" as="c" hint-placeholder-count="3">
+                  <div style="border: 1px solid #e3e9f1; background: #f8fafc; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; flex-direction: column;">
+                      <span style="font-size: 15px; font-weight: 600;">{{ c.name }}</span>
+                      <span style="font-size: 12.5px; color: #5b7189;">{{ c.note }}</span>
+                    </div>
+                    <span style="font-size: 22px; font-weight: 700; color: #0b4d8f;">{{ c.min }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="margin-top: 16px; position: relative; height: 190px; border-radius: 12px; overflow: hidden; background: #e8eee7; background-image: linear-gradient(0deg, rgba(255,255,255,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px); background-size: 56px 56px;">
+                <div style="position: absolute; inset: 0; background: repeating-linear-gradient(115deg, transparent 0 44px, rgba(255,255,255,.75) 44px 50px);"></div>
+                <div style="position: absolute; left: 22%; top: 58%; width: 16px; height: 16px; border-radius: 9999px; background: #1069bd; border: 3px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.25);"></div>
+                <div style="position: absolute; left: 66%; top: 26%; width: 16px; height: 16px; background: #06305c; border: 3px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.25);"></div>
+                <div style="position: absolute; left: 24%; top: 30%; font-size: 12px; font-weight: 600; color: #0b4d8f; background: rgba(255,255,255,.9); padding: 3px 8px; border-radius: 6px;">Phòng trọ</div>
+                <div style="position: absolute; left: 62%; top: 14%; font-size: 12px; font-weight: 600; color: #06305c; background: rgba(255,255,255,.9); padding: 3px 8px; border-radius: 6px;">CTU khu II</div>
+                <span style="position: absolute; right: 8px; bottom: 4px; font-size: 11px; color: #3d5871; background: rgba(255,255,255,.75); padding: 1px 5px;">© OpenStreetMap</span>
+              </div>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #dde5ee; border-radius: 16px; padding: 20px;">
+              <span style="font-size: 17px; font-weight: 700;">Mô tả từ người cho thuê</span>
+              <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.7; color: #3d5871; text-wrap: pretty;">Phòng mới xây, có gác lửng để đồ, wifi miễn phí, giờ tự do, chỗ để xe rộng trong nhà. Khu vực an ninh, cách chợ Xuân Khánh 300 m và Hồ Bún Xáng 500 m — đi bộ ra quán ăn sinh viên rất tiện. Điện 3.500đ/kWh, nước 15.000đ/m³, cọc 1 tháng.</p>
+              <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px;">
+                <sc-for list="{{ amenities }}" as="a" hint-placeholder-count="6">
+                  <span style="font-size: 13.5px; color: #10243a; background: #f0f4f9; border: 1px solid #e3e9f1; padding: 8px 13px; border-radius: 9px;">{{ a }}</span>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="background: #fdf6e7; border: 1px solid #f2e0b5; border-radius: 16px; padding: 18px 20px; display: flex; gap: 14px;">
+              <span style="flex-shrink: 0; width: 26px; height: 26px; border-radius: 9999px; background: #b57d10; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700;">!</span>
+              <div>
+                <div style="font-size: 15.5px; font-weight: 700; color: #7a5406;">Trước khi đặt cọc, hãy đi xem phòng</div>
+                <p style="margin: 5px 0 0; font-size: 14.5px; line-height: 1.6; color: #7a5406;">Vị trí trên bản đồ chỉ chính xác tới cấp đường/phường. Không chuyển cọc khi chưa gặp chủ trọ và chưa xem hợp đồng. Nếu tin có dấu hiệu lừa đảo, bấm “Báo tin sai”.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 16px; position: sticky; top: 20px;">
+            <div style="background: #ffffff; border: 1px solid #dde5ee; border-radius: 16px; padding: 22px; box-shadow: 0 12px 30px -22px rgba(6,48,92,.5);">
+              <div style="font-size: 13px; color: #5b7189;">Giá thuê</div>
+              <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 4px;">
+                <span style="font-size: 32px; font-weight: 800; color: #0b4d8f; letter-spacing: -.02em;">1.8 triệu</span>
+                <span style="font-size: 15px; color: #5b7189;">/ tháng</span>
+              </div>
+              <div style="margin-top: 6px; font-size: 13.5px; color: #0f7a52;">Thấp hơn 12% so với trung bình quanh khu II</div>
+              <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px;">
+                <span style="background: #0b4d8f; color: #fff; text-align: center; font-size: 16px; font-weight: 600; padding: 14px 0; border-radius: 11px;">Xem số điện thoại</span>
+                <span style="border: 1px solid #c6d2e0; color: #0b4d8f; text-align: center; font-size: 15.5px; font-weight: 600; padding: 13px 0; border-radius: 11px;">Lưu tin này</span>
+              </div>
+              <div style="margin-top: 18px; padding-top: 16px; border-top: 1px solid #eef2f7; display: flex; align-items: center; gap: 12px;">
+                <span style="width: 40px; height: 40px; border-radius: 9999px; background: #e3effb; color: #0b4d8f; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px;">C</span>
+                <div style="display: flex; flex-direction: column;">
+                  <span style="font-size: 15px; font-weight: 600;">Chủ trọ · Cô Thanh</span>
+                  <span style="font-size: 13px; color: #5b7189;">Thường trả lời trong 2 giờ</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background: #e3effb; border: 1px solid #c7ddf5; border-radius: 16px; padding: 18px 20px;">
+              <div style="font-size: 15.5px; font-weight: 700; color: #06305c;">Hỏi trợ lý về phòng này</div>
+              <p style="margin: 6px 0 12px; font-size: 14px; line-height: 1.55; color: #12507f;">“Giá điện nước ở đây có cao không?”, “Khu này có ngập không?”</p>
+              <span style="display: inline-block; background: #1069bd; color: #fff; font-size: 14.5px; font-weight: 600; padding: 11px 16px; border-radius: 10px;">Mở trợ lý AI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 3. BẢN ĐỒ ============ -->
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5b7189;">03 — Bản đồ: chọn khu, cluster, thời gian tới trường</div>
+    <div data-screen-label="Mới — Bản đồ" style="width: 1440px; background: #f6f8fb; box-shadow: 0 24px 60px -30px rgba(6,48,92,.45); overflow: hidden;">
+      <header style="background: #ffffff; border-bottom: 1px solid #dde5ee; padding: 0 40px; height: 76px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: #0b4d8f; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px;">T</div>
+          <span style="font-size: 18px; font-weight: 800;">Trọ CTU</span>
+        </div>
+        <div style="flex: 1; max-width: 520px; margin: 0 32px; display: flex; align-items: center; gap: 10px; border: 1px solid #dde5ee; background: #f8fafc; border-radius: 11px; padding: 11px 14px;">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6.2" stroke="#5b7189" stroke-width="1.8"/><line x1="13.6" y1="13.6" x2="17.5" y2="17.5" stroke="#5b7189" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span style="font-size: 15px; color: #5b7189;">trọ dưới 2 triệu, 10 phút tới khu II</span>
+        </div>
+        <span style="background: #0b4d8f; color: #fff; font-size: 15px; font-weight: 600; padding: 10px 18px; border-radius: 10px;">Đăng tin miễn phí</span>
+      </header>
+
+      <div style="display: grid; grid-template-columns: 400px 1fr; height: 720px;">
+        <div style="border-right: 1px solid #dde5ee; background: #ffffff; display: flex; flex-direction: column;">
+          <div style="padding: 18px 20px; border-bottom: 1px solid #eef2f7;">
+            <div style="font-size: 17px; font-weight: 700;">190 tin trong bán kính 3 km</div>
+            <div style="margin-top: 12px; display: flex; gap: 6px; background: #f0f4f9; padding: 4px; border-radius: 11px;">
+              <span style="flex: 1; text-align: center; font-size: 14px; padding: 8px 0; border-radius: 8px; color: #3d5871;">Khu I</span>
+              <span style="flex: 1; text-align: center; font-size: 14px; font-weight: 600; padding: 8px 0; border-radius: 8px; background: #0b4d8f; color: #fff;">Khu II</span>
+              <span style="flex: 1; text-align: center; font-size: 14px; padding: 8px 0; border-radius: 8px; color: #3d5871;">Khu III</span>
+            </div>
+            <p style="margin: 10px 0 0; font-size: 13px; color: #5b7189;">Bấm một tin để vẽ đường đi từ khu II tới phòng.</p>
+          </div>
+          <div style="padding: 12px; display: flex; flex-direction: column; gap: 10px;">
+            <sc-for list="{{ mapList }}" as="m" hint-placeholder-count="4">
+              <div style="display: flex; gap: 12px; padding: 12px; border-radius: 13px; border: 1px solid #e6ecf3;">
+                <div style="flex-shrink: 0; width: 84px; height: 74px; border-radius: 10px; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px);"></div>
+                <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+                  <span style="font-size: 14.5px; font-weight: 600; line-height: 1.3;">{{ m.title }}</span>
+                  <span style="font-size: 16px; font-weight: 700; color: #0b4d8f;">{{ m.price }}</span>
+                  <span style="font-size: 13px; color: #5b7189;">{{ m.meta }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="position: relative; background: #e8eee7; background-image: linear-gradient(0deg, rgba(255,255,255,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px); background-size: 72px 72px;">
+          <div style="position: absolute; inset: 0; background: repeating-linear-gradient(118deg, transparent 0 60px, rgba(255,255,255,.72) 60px 68px);"></div>
+          <div style="position: absolute; left: 8%; top: 6%; right: 8%; bottom: 6%; border: 2px dashed rgba(16,105,189,.45); border-radius: 9999px;"></div>
+          <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <span style="width: 22px; height: 22px; background: #06305c; border: 3px solid #fff; box-shadow: 0 3px 8px rgba(0,0,0,.3);"></span>
+            <span style="font-size: 12.5px; font-weight: 700; color: #06305c; background: rgba(255,255,255,.92); padding: 4px 9px; border-radius: 7px;">CTU khu II</span>
+          </div>
+          <div style="position: absolute; left: 26%; top: 34%; width: 44px; height: 44px; border-radius: 9999px; background: rgba(16,105,189,.9); border: 3px solid rgba(255,255,255,.85); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;">112</div>
+          <div style="position: absolute; left: 68%; top: 24%; width: 34px; height: 34px; border-radius: 9999px; background: rgba(16,105,189,.9); border: 3px solid rgba(255,255,255,.85); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">37</div>
+          <div style="position: absolute; left: 62%; top: 72%; width: 30px; height: 30px; border-radius: 9999px; background: rgba(16,105,189,.9); border: 3px solid rgba(255,255,255,.85); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 700;">9</div>
+          <div style="position: absolute; left: 38%; top: 62%; width: 15px; height: 15px; border-radius: 9999px; background: #1069bd; border: 3px solid #fff;"></div>
+
+          <div style="position: absolute; left: 30%; top: 58%; width: 250px; background: #ffffff; border-radius: 14px; box-shadow: 0 18px 40px -16px rgba(6,48,92,.55); padding: 14px; border: 1px solid #dde5ee;">
+            <div style="height: 84px; border-radius: 9px; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px);"></div>
+            <div style="margin-top: 10px; font-size: 14.5px; font-weight: 600; line-height: 1.3;">Trọ Hồ Bún Xáng, có gác</div>
+            <div style="margin-top: 4px; font-size: 17px; font-weight: 700; color: #0b4d8f;">1.5 triệu<span style="font-size: 13px; font-weight: 400; color: #5b7189;"> / tháng</span></div>
+            <div style="margin-top: 4px; font-size: 13px; color: #5b7189;">18 m² · Ninh Kiều · 7 phút tới khu II</div>
+            <div style="margin-top: 6px; font-size: 12px; color: #8b9cb0;">Vị trí tương đối (chính xác tới cấp đường)</div>
+            <div style="margin-top: 10px; background: #0b4d8f; color: #fff; text-align: center; font-size: 14px; font-weight: 600; padding: 10px 0; border-radius: 9px;">Xem chi tiết</div>
+          </div>
+
+          <div style="position: absolute; right: 16px; top: 16px; background: #ffffff; border: 1px solid #dde5ee; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #3d5871;">
+            <span style="font-weight: 700; color: #10243a; font-size: 13.5px;">Bán kính 3.0 km</span>
+            <div style="height: 4px; width: 150px; background: #e6ecf3; border-radius: 9999px; position: relative;">
+              <div style="position: absolute; left: 0; right: 40%; top: 0; bottom: 0; background: #1069bd; border-radius: 9999px;"></div>
+              <div style="position: absolute; right: 40%; top: -5px; width: 14px; height: 14px; margin-right: -7px; border-radius: 9999px; background: #fff; border: 3px solid #0b4d8f;"></div>
+            </div>
+          </div>
+          <span style="position: absolute; right: 10px; bottom: 6px; font-size: 11px; color: #3d5871; background: rgba(255,255,255,.78); padding: 2px 6px;">© OpenStreetMap contributors</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 4. CHATBOT + 5. GHÉP BẠN Ở ============ -->
+  <div style="display: flex; gap: 40px; align-items: flex-start;">
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5b7189;">04 — Trợ lý AI (RAG) mở ở góc phải</div>
+      <div data-screen-label="Mới — Chatbot" style="width: 420px; background: #ffffff; border: 1px solid #dde5ee; border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px -30px rgba(6,48,92,.45); display: flex; flex-direction: column; height: 620px;">
+        <div style="background: #0b4d8f; color: #fff; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 11px;">
+            <span style="width: 36px; height: 36px; border-radius: 9999px; background: rgba(255,255,255,.16); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;">AI</span>
+            <div style="display: flex; flex-direction: column; line-height: 1.25;">
+              <span style="font-size: 15.5px; font-weight: 700;">Trợ lý Trọ CTU</span>
+              <span style="font-size: 12px; color: #b9d3ec;">Trả lời dựa trên 262 tin trong hệ thống</span>
+            </div>
+          </div>
+          <span style="font-size: 18px; color: #b9d3ec;">×</span>
+        </div>
+        <div style="flex: 1; padding: 18px; display: flex; flex-direction: column; gap: 14px; background: #f8fafc; overflow: hidden;">
+          <div style="align-self: flex-end; max-width: 78%; background: #0b4d8f; color: #fff; font-size: 14.5px; line-height: 1.5; padding: 11px 14px; border-radius: 14px 14px 4px 14px;">Mình học khu II, muốn phòng dưới 2 triệu, có gác. Ở đâu hợp?</div>
+          <div style="align-self: flex-start; max-width: 86%; background: #ffffff; border: 1px solid #e6ecf3; font-size: 14.5px; line-height: 1.6; padding: 12px 14px; border-radius: 14px 14px 14px 4px; color: #10243a;">Khu Xuân Khánh và hẻm quanh Hồ Bún Xáng là hợp nhất: giá 1.4–1.9 triệu, đi xe máy 5–8 phút tới khu II. Mình tìm được 14 phòng có gác trong tầm giá của bạn.</div>
+          <div style="align-self: flex-start; width: 86%; display: flex; flex-direction: column; gap: 8px;">
+            <sc-for list="{{ chatCards }}" as="c" hint-placeholder-count="2">
+              <div style="display: flex; gap: 10px; background: #ffffff; border: 1px solid #e6ecf3; border-radius: 12px; padding: 10px;">
+                <div style="flex-shrink: 0; width: 60px; height: 54px; border-radius: 8px; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px);"></div>
+                <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+                  <span style="font-size: 13.5px; font-weight: 600; line-height: 1.3;">{{ c.title }}</span>
+                  <span style="font-size: 14.5px; font-weight: 700; color: #0b4d8f;">{{ c.price }}</span>
+                  <span style="font-size: 12px; color: #5b7189;">{{ c.meta }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="align-self: flex-start; display: flex; flex-wrap: wrap; gap: 7px;">
+            <span style="font-size: 13px; color: #0b4d8f; background: #e3effb; border: 1px solid #c7ddf5; padding: 7px 12px; border-radius: 9999px;">Xem 14 phòng này</span>
+            <span style="font-size: 13px; color: #0b4d8f; background: #e3effb; border: 1px solid #c7ddf5; padding: 7px 12px; border-radius: 9999px;">Giá điện nước thường bao nhiêu?</span>
+          </div>
+        </div>
+        <div style="border-top: 1px solid #e6ecf3; padding: 12px 14px; display: flex; align-items: center; gap: 10px; background: #fff;">
+          <span style="flex: 1; font-size: 14.5px; color: #8b9cb0;">Nhập câu hỏi của bạn…</span>
+          <span style="width: 38px; height: 38px; border-radius: 10px; background: #1069bd; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px;">↑</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5b7189;">05 — Ghép bạn cùng phòng</div>
+      <div data-screen-label="Mới — Ghép bạn ở" style="width: 900px; background: #f6f8fb; border: 1px solid #dde5ee; border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px -30px rgba(6,48,92,.45); padding: 32px;">
+        <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 20px;">
+          <div>
+            <h2 style="margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -.02em;">Ghép bạn cùng phòng</h2>
+            <p style="margin: 6px 0 0; font-size: 15px; color: #5b7189;">Chia tiền trọ với bạn có giờ sinh hoạt và ngân sách giống bạn.</p>
+          </div>
+          <span style="background: #0b4d8f; color: #fff; font-size: 15px; font-weight: 600; padding: 11px 18px; border-radius: 10px; white-space: nowrap;">Cập nhật hồ sơ</span>
+        </div>
+
+        <div style="margin-top: 20px; background: #ffffff; border: 1px solid #dde5ee; border-radius: 16px; padding: 18px 20px; display: flex; gap: 26px; flex-wrap: wrap;">
+          <sc-if value="{{ true }}" hint-placeholder-val="{{ true }}">
+          <sc-for list="{{ profile }}" as="p" hint-placeholder-count="4">
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <span style="font-size: 12.5px; color: #5b7189;">{{ p.k }}</span>
+              <span style="font-size: 15.5px; font-weight: 600;">{{ p.v }}</span>
+            </div>
+          </sc-for>
+          </sc-if>
+        </div>
+
+        <div style="margin-top: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+          <sc-for list="{{ mates }}" as="m" hint-placeholder-count="3">
+            <div style="background: #ffffff; border: 1px solid #dde5ee; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <span style="width: 46px; height: 46px; border-radius: 9999px; background: #e3effb; color: #0b4d8f; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700;">{{ m.initial }}</span>
+                <div style="display: flex; flex-direction: column; line-height: 1.3;">
+                  <span style="font-size: 15.5px; font-weight: 700;">{{ m.name }}</span>
+                  <span style="font-size: 13px; color: #5b7189;">{{ m.major }}</span>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="flex: 1; height: 6px; background: #eef2f7; border-radius: 9999px; overflow: hidden;">
+                  <div style="height: 100%; width: 84%; background: #1069bd;"></div>
+                </div>
+                <span style="font-size: 13.5px; font-weight: 700; color: #0b4d8f;">{{ m.match }}</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <sc-for list="{{ m.tags }}" as="t" hint-placeholder-count="3">
+                  <span style="font-size: 13.5px; color: #3d5871;">· {{ t }}</span>
+                </sc-for>
+              </div>
+              <div style="margin-top: auto; display: flex; gap: 8px;">
+                <span style="flex: 1; text-align: center; background: #0b4d8f; color: #fff; font-size: 14px; font-weight: 600; padding: 10px 0; border-radius: 9px;">Gửi lời mời</span>
+                <span style="text-align: center; border: 1px solid #c6d2e0; color: #3d5871; font-size: 14px; font-weight: 600; padding: 10px 14px; border-radius: 9px;">Ẩn</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 6. CHAT REALTIME GIỮA SINH VIÊN ĐÃ MATCH ============ -->
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5b7189;">06 — Tin nhắn realtime giữa hai sinh viên đã ghép ở</div>
+    <div data-screen-label="Mới — Tin nhắn" style="width: 1440px; background: #f6f8fb; box-shadow: 0 24px 60px -30px rgba(6,48,92,.45); overflow: hidden;">
+      <header style="background: #ffffff; border-bottom: 1px solid #dde5ee; padding: 0 40px; height: 76px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: #0b4d8f; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px;">T</div>
+          <span style="font-size: 18px; font-weight: 800;">Trọ CTU</span>
+        </div>
+        <nav style="display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 500; color: #3d5871;">
+          <span>Tìm trọ</span><span>Bản đồ</span>
+          <span style="color: #0b4d8f; font-weight: 600; padding-bottom: 2px; border-bottom: 2px solid #0b4d8f; display: inline-flex; align-items: center; gap: 7px;">Tin nhắn <span style="background: #1069bd; color: #fff; font-size: 11.5px; font-weight: 700; min-width: 18px; height: 18px; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; padding: 0 5px;">3</span></span>
+          <span>Tin của tôi</span>
+        </nav>
+        <span style="background: #0b4d8f; color: #fff; font-size: 15px; font-weight: 600; padding: 10px 18px; border-radius: 10px;">Đăng tin miễn phí</span>
+      </header>
+
+      <div style="display: grid; grid-template-columns: 328px 1fr 300px; grid-template-rows: minmax(0, 1fr); height: 900px;">
+
+        <!-- DANH SÁCH HỘI THOẠI -->
+        <div style="border-right: 1px solid #dde5ee; background: #ffffff; display: flex; flex-direction: column;">
+          <div style="padding: 18px 18px 14px; border-bottom: 1px solid #eef2f7;">
+            <div style="font-size: 18px; font-weight: 800; letter-spacing: -.01em;">Tin nhắn</div>
+            <div style="margin-top: 12px; display: flex; align-items: center; gap: 9px; border: 1px solid #dde5ee; background: #f8fafc; border-radius: 10px; padding: 9px 12px;">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6.2" stroke="#5b7189" stroke-width="1.8"/><line x1="13.6" y1="13.6" x2="17.5" y2="17.5" stroke="#5b7189" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <span style="font-size: 14px; color: #8b9cb0;">Tìm bạn hoặc tin nhắn…</span>
+            </div>
+            <div style="margin-top: 12px; display: flex; gap: 6px; background: #f0f4f9; padding: 4px; border-radius: 10px;">
+              <span style="flex: 1; text-align: center; font-size: 13.5px; font-weight: 600; padding: 7px 0; border-radius: 7px; background: #ffffff; color: #0b4d8f; box-shadow: 0 1px 3px rgba(16,36,58,.12);">Đã ghép</span>
+              <span style="flex: 1; text-align: center; font-size: 13.5px; padding: 7px 0; border-radius: 7px; color: #3d5871;">Chủ trọ</span>
+              <span style="flex: 1; text-align: center; font-size: 13.5px; padding: 7px 0; border-radius: 7px; color: #3d5871;">Lời mời</span>
+            </div>
+          </div>
+          <div style="flex: 1; min-height: 0; padding: 8px; display: flex; flex-direction: column; gap: 4px; overflow: hidden;">
+            <div style="display: flex; gap: 12px; padding: 12px; border-radius: 12px; background: #e3effb; border: 1px solid #c7ddf5;">
+              <div style="position: relative; flex-shrink: 0;">
+                <span style="width: 44px; height: 44px; border-radius: 9999px; background: #ffffff; color: #0b4d8f; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700;">MT</span>
+                <span style="position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-radius: 9999px; background: #22a06b; border: 2px solid #fff; display: block;"></span>
+              </div>
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+                <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                  <span style="font-size: 15px; font-weight: 700; color: #06305c;">Minh Thư</span>
+                  <span style="font-size: 12px; color: #5b7189; flex-shrink: 0;">14:31</span>
+                </div>
+                <span style="font-size: 13.5px; color: #12507f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Đã gửi 4 ảnh</span>
+                <span style="font-size: 12px; color: #0f7a52;">Ghép 92% · CNTT K48</span>
+              </div>
+            </div>
+            <sc-for list="{{ threads }}" as="t" hint-placeholder-count="4">
+              <div style="display: flex; gap: 12px; padding: 12px; border-radius: 12px;">
+                <div style="position: relative; flex-shrink: 0;">
+                  <span style="width: 44px; height: 44px; border-radius: 9999px; background: #e3effb; color: #0b4d8f; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700;">{{ t.initial }}</span>
+                  <span style="position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-radius: 9999px; background: #b9c6d6; border: 2px solid #fff; display: block;"></span>
+                </div>
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                    <span style="font-size: 15px; font-weight: 700; color: #10243a;">{{ t.name }}</span>
+                    <span style="font-size: 12px; color: #8b9cb0; flex-shrink: 0;">{{ t.time }}</span>
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <span style="font-size: 13.5px; color: #5b7189; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ t.last }}</span>
+                    <sc-if value="{{ t.unread }}" hint-placeholder-val="{{ false }}">
+                      <span style="flex-shrink: 0; background: #1069bd; color: #fff; font-size: 11.5px; font-weight: 700; min-width: 18px; height: 18px; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; padding: 0 5px;">{{ t.unread }}</span>
+                    </sc-if>
+                  </div>
+                  <span style="font-size: 12px; color: #0f7a52;">{{ t.match }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- KHUNG CHAT -->
+        <div style="display: flex; flex-direction: column; background: #f8fafc; min-width: 0;">
+          <div style="background: #ffffff; border-bottom: 1px solid #dde5ee; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="position: relative;">
+                <span style="width: 42px; height: 42px; border-radius: 9999px; background: #e3effb; color: #0b4d8f; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700;">MT</span>
+                <span style="position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-radius: 9999px; background: #22a06b; border: 2px solid #fff; display: block;"></span>
+              </div>
+              <div style="display: flex; flex-direction: column; line-height: 1.3;">
+                <span style="font-size: 16px; font-weight: 700;">Minh Thư</span>
+                <span style="font-size: 12.5px; color: #22a06b;">Đang hoạt động</span>
+              </div>
+              <span style="margin-left: 6px; font-size: 12.5px; font-weight: 600; color: #0f7a52; background: #e2f5ec; padding: 5px 11px; border-radius: 9999px;">Đã ghép 92%</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="border: 1px solid #dde5ee; background: #fff; color: #3d5871; font-size: 13.5px; font-weight: 600; padding: 9px 14px; border-radius: 9px;">Xem hồ sơ</span>
+              <span style="border: 1px solid #dde5ee; background: #fff; color: #3d5871; font-size: 13.5px; font-weight: 600; padding: 9px 14px; border-radius: 9px;">Báo cáo</span>
+            </div>
+          </div>
+
+          <div style="flex: 1; min-height: 0; padding: 14px 26px 18px; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; overflow: hidden;">
+            <div style="align-self: center; font-size: 12.5px; color: #12507f; background: #e3effb; border: 1px solid #c7ddf5; padding: 6px 14px; border-radius: 9999px;">Đã ghép ở 92% · hôm nay</div>
+            <div style="display: flex; gap: 10px; align-items: flex-end;">
+              <span style="flex-shrink: 0; width: 32px; height: 32px; border-radius: 9999px; background: #e3effb; color: #0b4d8f; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">MT</span>
+              <div style="max-width: 62%; display: flex; flex-direction: column; gap: 4px;">
+                <div style="background: #ffffff; border: 1px solid #e6ecf3; font-size: 15px; line-height: 1.55; padding: 11px 14px; border-radius: 14px 14px 14px 4px; color: #10243a;">Chào Thư nha! Mình thấy hồ sơ bạn cũng học khu II, ngân sách gần giống mình.</div>
+                <span style="font-size: 11.5px; color: #8b9cb0; padding-left: 4px;">14:02</span>
+              </div>
+            </div>
+
+            <div style="align-self: flex-end; max-width: 62%; display: flex; flex-direction: column; gap: 4px; align-items: flex-end;">
+              <div style="background: #0b4d8f; color: #fff; font-size: 15px; line-height: 1.55; padding: 11px 14px; border-radius: 14px 14px 4px 14px;">Ừ đúng rồi! Mình đang để ý phòng 25 m² ở đường 3/2, chia đôi khoảng 900k/người.</div>
+              <span style="font-size: 11.5px; color: #8b9cb0; padding-right: 4px;">14:05 · Đã xem</span>
+            </div>
+
+            <div style="align-self: flex-end; max-width: 58%; display: flex; flex-direction: column; gap: 4px; align-items: flex-end;">
+              <div style="background: #ffffff; border: 1px solid #dde5ee; border-radius: 14px; padding: 10px; width: 260px; box-shadow: 0 1px 2px rgba(16,36,58,.05);">
+                <div style="display: flex; gap: 10px;">
+                  <div style="flex-shrink: 0; width: 74px; height: 66px; border-radius: 9px; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px);"></div>
+                  <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+                    <span style="font-size: 13.5px; font-weight: 600; line-height: 1.3;">Phòng 25 m² đường 3/2, có gác</span>
+                    <span style="font-size: 15px; font-weight: 700; color: #0b4d8f;">1.8 triệu</span>
+                    <span style="font-size: 12px; color: #5b7189;">8 phút tới khu II</span>
+                  </div>
+                </div>
+                <div style="margin-top: 9px; text-align: center; border: 1px solid #c6d2e0; color: #0b4d8f; font-size: 13.5px; font-weight: 600; padding: 8px 0; border-radius: 8px;">Mở tin này</div>
+              </div>
+              <span style="font-size: 11.5px; color: #8b9cb0; padding-right: 4px;">14:05</span>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: flex-end;">
+              <span style="flex-shrink: 0; width: 32px; height: 32px; border-radius: 9999px; background: #e3effb; color: #0b4d8f; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">MT</span>
+              <div style="max-width: 62%; display: flex; flex-direction: column; gap: 6px;">
+                <div style="background: #ffffff; border: 1px solid #e6ecf3; font-size: 15px; line-height: 1.55; padding: 11px 14px; border-radius: 14px 14px 14px 4px; color: #10243a;">Chiều nay mình đi coi rồi, gửi bạn mấy tấm mình chụp:</div>
+                <div style="display: grid; grid-template-columns: repeat(2, 132px); gap: 6px;">
+                  <div style="height: 106px; border-radius: 12px 4px 4px 4px; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #8b9cb0;">ảnh sinh viên gửi</div>
+                  <div style="position: relative; height: 106px; border-radius: 4px 12px 4px 4px; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #8b9cb0;">
+                    <span style="position: absolute; inset: 0; background: rgba(6,48,92,.55); border-radius: 4px 12px 4px 4px; color: #fff; font-family: 'Be Vietnam Pro', sans-serif; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center;">+2</span>
+                  </div>
+                </div>
+                <span style="font-size: 11.5px; color: #8b9cb0; padding-left: 4px;">14:31</span>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <span style="flex-shrink: 0; width: 32px; height: 32px; border-radius: 9999px; background: #e3effb; color: #0b4d8f; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">MT</span>
+              <div style="background: #ffffff; border: 1px solid #e6ecf3; border-radius: 14px 14px 14px 4px; padding: 13px 16px; display: flex; align-items: center; gap: 5px;">
+                <span style="width: 7px; height: 7px; border-radius: 9999px; background: #b9c6d6; display: block;"></span>
+                <span style="width: 7px; height: 7px; border-radius: 9999px; background: #9aabbf; display: block;"></span>
+                <span style="width: 7px; height: 7px; border-radius: 9999px; background: #7d92aa; display: block;"></span>
+              </div>
+              <span style="font-size: 12.5px; color: #8b9cb0;">Minh Thư đang nhập…</span>
+            </div>
+          </div>
+
+          <div style="background: #ffffff; border-top: 1px solid #dde5ee; padding: 14px 22px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #dde5ee; color: #5b7189; display: flex; align-items: center; justify-content: center; font-size: 19px; flex-shrink: 0;">+</span>
+              <span style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid #dde5ee; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="2.5" y="3.5" width="15" height="13" rx="2.5" stroke="#5b7189" stroke-width="1.7"/><circle cx="7.5" cy="8" r="1.6" fill="#5b7189"/></svg>
+              </span>
+              <div style="flex: 1; border: 1px solid #dde5ee; background: #f8fafc; border-radius: 11px; padding: 12px 14px; font-size: 15px; color: #8b9cb0;">Nhắn cho Minh Thư…</div>
+              <span style="background: #1069bd; color: #fff; font-size: 15px; font-weight: 600; padding: 12px 22px; border-radius: 11px; flex-shrink: 0;">Gửi</span>
+            </div>
+            <div style="margin-top: 10px; display: flex; gap: 7px; flex-wrap: wrap;">
+              <span style="font-size: 13px; color: #0b4d8f; background: #e3effb; border: 1px solid #c7ddf5; padding: 6px 12px; border-radius: 9999px;">Chia sẻ một tin trọ</span>
+              <span style="font-size: 13px; color: #0b4d8f; background: #e3effb; border: 1px solid #c7ddf5; padding: 6px 12px; border-radius: 9999px;">Hẹn đi xem phòng</span>
+              <span style="font-size: 13px; color: #0b4d8f; background: #e3effb; border: 1px solid #c7ddf5; padding: 6px 12px; border-radius: 9999px;">Gửi ngân sách của mình</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CỘT PHẢI: HỒ SƠ + AN TOÀN -->
+        <div style="border-left: 1px solid #dde5ee; background: #ffffff; padding: 22px 20px; display: flex; flex-direction: column; gap: 20px;">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;">
+            <span style="width: 64px; height: 64px; border-radius: 9999px; background: #e3effb; color: #0b4d8f; display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: 700;">MT</span>
+            <span style="font-size: 17px; font-weight: 700;">Minh Thư</span>
+            <span style="font-size: 13.5px; color: #5b7189;">CNTT · K48 · Học khu II</span>
+            <span style="font-size: 12.5px; font-weight: 600; color: #0f7a52; background: #e2f5ec; padding: 5px 11px; border-radius: 9999px;">Email @student.ctu.edu.vn đã xác thực</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <span style="font-size: 12.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #5b7189;">Hồ sơ ở ghép</span>
+            <sc-for list="{{ profile }}" as="p" hint-placeholder-count="4">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #eef2f7;">
+                <span style="font-size: 13.5px; color: #5b7189;">{{ p.k }}</span>
+                <span style="font-size: 14.5px; font-weight: 600; text-align: right;">{{ p.v }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <span style="font-size: 12.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #5b7189;">Tin đã chia sẻ</span>
+            <div style="display: flex; gap: 10px; border: 1px solid #e6ecf3; border-radius: 12px; padding: 10px;">
+              <div style="flex-shrink: 0; width: 56px; height: 50px; border-radius: 8px; background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px);"></div>
+              <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+                <span style="font-size: 13px; font-weight: 600; line-height: 1.3;">Phòng 25 m² đường 3/2</span>
+                <span style="font-size: 13.5px; font-weight: 700; color: #0b4d8f;">1.8 triệu</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: auto; background: #fdf6e7; border: 1px solid #f2e0b5; border-radius: 13px; padding: 14px;">
+            <div style="font-size: 14px; font-weight: 700; color: #7a5406;">Nhắc an toàn</div>
+            <p style="margin: 5px 0 0; font-size: 13px; line-height: 1.55; color: #7a5406;">Không chuyển tiền cọc qua chat. Hẹn gặp ở nơi công cộng hoặc đi xem phòng cùng nhau.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showRecs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nội dung&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      showRecs: this.props.showRecs ?? true,
+      chips: ["Dưới 1.5 triệu", "Có gác lửng", "Gần khu II", "Giờ tự do", "Ở ghép 2 người"],
+      stats: [
+        { label: "Tin đang hiển thị", value: "262" },
+        { label: "Nguồn tổng hợp", value: "6" },
+        { label: "Trong 3 km quanh CTU", value: "190" },
+        { label: "Giá phổ biến", value: "1.8tr" }
+      ],
+      recs: [
+        { match: "94%", minutes: "6 phút tới khu II", title: "Phòng có gác, hẻm 51 Trần Nam Phú", price: "1.6 triệu/tháng", reasons: ["Đúng ngân sách", "Có gác lửng", "Gần Bún Xáng"] },
+        { match: "88%", minutes: "8 phút tới khu II", title: "Trọ mới xây đường 3/2, giờ tự do", price: "1.8 triệu/tháng", reasons: ["Giờ tự do", "Chỗ để xe trong nhà"] },
+        { match: "81%", minutes: "11 phút tới khu II", title: "Phòng 25 m² Nguyễn Văn Cừ nối dài", price: "2 triệu/tháng", reasons: ["Rộng hơn bạn cần", "Có thể ở ghép 2"] }
+      ],
+      districts: [
+        { name: "Ninh Kiều", count: 148 },
+        { name: "Bình Thủy", count: 61 },
+        { name: "Cái Răng", count: 29 },
+        { name: "Phong Điền", count: 12 },
+        { name: "Ô Môn", count: 8 },
+        { name: "Thốt Nốt", count: 4 }
+      ],
+      listings: [
+        { title: "Phòng trọ mới xây đường 3/2, có gác lửng", price: "1.8 triệu", area: "20 m²", district: "Ninh Kiều", km: "cách CTU 1.2 km", minutes: "8 phút", badge: "Gần khu II nhất", photo: "ảnh phòng trọ" },
+        { title: "Cho thuê phòng hẻm 51 Trần Nam Phú, gần Hồ Bún Xáng", price: "1.5 triệu", area: "18 m²", district: "Ninh Kiều", km: "cách CTU 0.9 km", minutes: "7 phút", badge: "Giá tốt", photo: "ảnh phòng trọ" },
+        { title: "Nhà trọ sinh viên khu Xuân Khánh, giờ tự do", price: "2 triệu", area: "25 m²", district: "Ninh Kiều", km: "cách CTU 1.5 km", minutes: "9 phút", badge: "Mới đăng", photo: "ảnh phòng trọ" },
+        { title: "Phòng trọ đường Nguyễn Văn Cừ nối dài, có ban công", price: "1.6 triệu", area: "22 m²", district: "Bình Thủy", km: "cách CTU 2.4 km", minutes: "12 phút", badge: "Cho ở ghép", photo: "ảnh phòng trọ" },
+        { title: "Trọ giá rẻ gần Trường Nông Nghiệp, khu an ninh", price: "1.2 triệu", area: "16 m²", district: "Ninh Kiều", km: "cách CTU 0.6 km", minutes: "5 phút", badge: "Rẻ nhất khu", photo: "ảnh phòng trọ" },
+        { title: "Phòng đầy đủ nội thất, đường Mậu Thân", price: "2.5 triệu", area: "30 m²", district: "Ninh Kiều", km: "cách CTU 2.8 km", minutes: "13 phút", badge: "Có nội thất", photo: "ảnh phòng trọ" }
+      ],
+      facts: [
+        { k: "Diện tích", v: "20 m²" },
+        { k: "Cách CTU", v: "1.2 km" },
+        { k: "Quận", v: "Ninh Kiều" },
+        { k: "Điểm chất lượng", v: "82%" }
+      ],
+      campuses: [
+        { name: "Khu I", note: "Đường 30/4", min: "14 ph" },
+        { name: "Khu II", note: "Đường 3/2", min: "8 ph" },
+        { name: "Khu III", note: "Lý Tự Trọng", min: "11 ph" }
+      ],
+      amenities: ["Gác lửng", "Wifi miễn phí", "Giờ tự do", "Chỗ để xe trong nhà", "Nhà vệ sinh riêng", "Máy giặt chung", "Điện 3.500đ/kWh", "Nước 15.000đ/m³"],
+      mapList: [
+        { title: "Trọ Hồ Bún Xáng, có gác", price: "1.5 triệu", meta: "18 m² · Ninh Kiều · 7 phút tới khu II" },
+        { title: "Phòng trọ mới xây đường 3/2", price: "1.8 triệu", meta: "20 m² · Ninh Kiều · 8 phút tới khu II" },
+        { title: "Trọ giá rẻ gần Trường Nông Nghiệp", price: "1.2 triệu", meta: "16 m² · Ninh Kiều · 5 phút tới khu II" },
+        { title: "Phòng 25 m² Nguyễn Văn Cừ nối dài", price: "2 triệu", meta: "25 m² · Bình Thủy · 12 phút tới khu II" }
+      ],
+      chatCards: [
+        { title: "Trọ Hồ Bún Xáng, có gác", price: "1.5 triệu", meta: "7 phút tới khu II" },
+        { title: "Phòng gác lửng đường 3/2", price: "1.8 triệu", meta: "8 phút tới khu II" }
+      ],
+      profile: [
+        { k: "Ngân sách chia đôi", v: "900k – 1.2tr" },
+        { k: "Giờ sinh hoạt", v: "Ngủ trước 23h" },
+        { k: "Khu học", v: "Khu II" },
+        { k: "Nấu ăn", v: "Có, buổi tối" }
+      ],
+      threads: [
+        { initial: "QH", name: "Quốc Huy", time: "13:20", last: "Bạn có đi xem phòng cuối tuần không?", unread: 2, match: "Ghép 85% · KTMT K47" },
+        { initial: "NL", name: "Ngọc Linh", time: "Hôm qua", last: "Mình chốt phòng khác rồi, cảm ơn bạn nha", unread: 0, match: "Ghép 78% · Kinh tế K48" },
+        { initial: "TD", name: "Thành Đạt", time: "T4", last: "Ok để mình hỏi chủ trọ giá điện", unread: 0, match: "Ghép 74% · Nông nghiệp K47" },
+        { initial: "PN", name: "Phương Nghi", time: "T2", last: "Bạn ở khu II hay khu III?", unread: 0, match: "Ghép 71% · Sư phạm K48" }
+      ],
+      mates: [
+        { initial: "MT", name: "Minh Thư", major: "CNTT · K48", match: "92%", tags: ["Ngân sách 1tr", "Không thuốc lá", "Ngủ sớm"] },
+        { initial: "QH", name: "Quốc Huy", major: "Kỹ thuật máy tính · K47", match: "85%", tags: ["Ngân sách 1.2tr", "Hay tự nấu ăn", "Về nhà cuối tuần"] },
+        { initial: "NL", name: "Ngọc Linh", major: "Kinh tế · K48", match: "78%", tags: ["Ngân sách 900k", "Thích yên tĩnh", "Có xe máy"] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

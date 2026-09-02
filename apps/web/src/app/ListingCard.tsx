@@ -1,42 +1,47 @@
 import Link from "next/link";
 import type { ListingOut } from "@/lib/api";
-import { formatArea, formatDistance, formatPrice, riskBadge } from "@/lib/format";
+import { formatArea, formatDistance, formatPriceShort, riskBadge } from "@/lib/format";
 
+// Card tin theo mockup 01 UI_NCKH.html: ảnh + badge, giá xanh to, meta, footer phút tới khu II.
 export default function ListingCard({ listing }: { listing: ListingOut }) {
   const badge = riskBadge(listing.risk_level);
   const cover = listing.images[0];
+  const minutes = listing.route_time_campus?.[1]; // khu II — khu chính gần nhất với đa số tin
 
   return (
     <Link
       href={`/listings/${listing.id}`}
-      className="block rounded-lg border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-[0_1px_2px_rgba(16,36,58,.04)] transition hover:-translate-y-0.5 hover:shadow-lg"
     >
-      {cover ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={cover}
-          alt={listing.title}
-          className="h-40 w-full rounded-t-lg object-cover"
-        />
-      ) : (
-        <div className="flex h-40 w-full items-center justify-center rounded-t-lg bg-slate-100 text-sm text-slate-400">
-          Không có ảnh
-        </div>
-      )}
+      <div className="relative h-44 w-full shrink-0">
+        {cover ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={cover} alt={listing.title} className="h-full w-full object-cover" />
+        ) : (
+          <div className="photo-placeholder flex h-full w-full items-center justify-center text-xs text-ink-faint">
+            Chưa có ảnh
+          </div>
+        )}
+        <span
+          className={`absolute left-3 top-3 rounded-lg px-2.5 py-1 text-[12.5px] font-semibold ${badge.className}`}
+        >
+          {badge.label}
+        </span>
+      </div>
 
-      <div className="space-y-1 p-4">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="line-clamp-2 font-medium text-slate-800">{listing.title}</h3>
-          <span
-            className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${badge.className}`}
-          >
-            {badge.label}
+      <div className="flex flex-1 flex-col gap-2 p-4">
+        <h3 className="line-clamp-2 text-[16px] font-semibold leading-snug text-ink">
+          {listing.title}
+        </h3>
+
+        <p className="flex items-baseline gap-1.5">
+          <span className="text-[20px] font-bold text-primary">
+            {formatPriceShort(listing.price)}
           </span>
-        </div>
+          {listing.price != null && <span className="text-[13px] text-ink-muted">/ tháng</span>}
+        </p>
 
-        <p className="font-semibold text-emerald-700">{formatPrice(listing.price)}</p>
-
-        <div className="flex flex-wrap gap-x-3 text-sm text-slate-600">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-[14px] text-ink-soft">
           {listing.area != null && <span>{formatArea(listing.area)}</span>}
           {listing.district && <span>{listing.district}</span>}
           {listing.distance_to_ctu != null && (
@@ -44,9 +49,16 @@ export default function ListingCard({ listing }: { listing: ListingOut }) {
           )}
         </div>
 
-        {listing.freshness_label && (
-          <p className="text-xs text-slate-400">{listing.freshness_label}</p>
-        )}
+        <div className="mt-auto flex items-center justify-between gap-2 border-t border-line-soft pt-3">
+          <span className="text-[13px] text-ink-muted">
+            {minutes != null
+              ? `${Math.round(minutes)} phút xe máy tới khu II`
+              : listing.freshness_label || " "}
+          </span>
+          <span className="shrink-0 text-sm font-semibold text-primary-bright group-hover:underline">
+            Xem chi tiết
+          </span>
+        </div>
       </div>
     </Link>
   );

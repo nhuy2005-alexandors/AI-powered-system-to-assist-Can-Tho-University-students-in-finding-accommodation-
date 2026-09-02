@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* Ô ảnh placeholder sọc chéo theo mockup UI_NCKH.html */
+  .photo-placeholder {
+    background: repeating-linear-gradient(135deg, #eef2f7 0 9px, #e5ebf3 9px 18px);
+  }
+}

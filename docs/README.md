@@ -4,6 +4,8 @@
 - `CHECKPOINT.md` — trạng thái hiện tại (Đã xong / Đang làm / Tiếp theo / Gotcha)
 - `DECISIONS.md` — quyết định kiến trúc + lý do (ADR)
 - `GOTCHAS.md` — bẫy kỹ thuật đã dính
+- `AI_CHAT_RISK_INTEGRATION.md` — cấu hình Qwen local, Gemini, risk và chạy stack hợp nhất
+- `REPORT_RISK_MODERATION.md` — quy trình User báo cáo, Risk cộng điểm và Admin kiểm duyệt
 
 ## Thư mục
 - `specs/` — thiết kế TRƯỚC khi code (mỗi feature 1 file)

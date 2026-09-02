@@ -7,13 +7,14 @@ import {
 } from "./config";
 
 // httpOnly cookie — JS client không đọc được token (chống XSS đánh cắp token).
-// secure=false ở dev (http localhost); prod bật qua NODE_ENV.
-const isProd = process.env.NODE_ENV === "production";
+// Docker local vẫn chạy Next ở NODE_ENV=production nhưng dùng http://localhost,
+// nên Secure phải là cấu hình triển khai thay vì suy ra từ NODE_ENV.
+const cookieSecure = process.env.AUTH_COOKIE_SECURE === "true";
 
 const baseOpts = {
   httpOnly: true,
   sameSite: "lax" as const,
-  secure: isProd,
+  secure: cookieSecure,
   path: "/",
 };
 
