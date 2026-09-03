@@ -36,7 +36,8 @@ export default function LoginForm() {
       });
 
       if (res.ok) {
-        const next = searchParams.get("next") || "/me";
+        const requested = searchParams.get("next");
+        const next = requested?.startsWith("/") && !requested.startsWith("//") ? requested : "/";
         router.push(next);
         router.refresh();
         return;

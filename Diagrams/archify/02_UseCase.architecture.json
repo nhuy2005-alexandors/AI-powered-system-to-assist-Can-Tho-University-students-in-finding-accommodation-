@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Trọ CTU — Sơ Đồ Use Case",
+    "subtitle": "Actor & nhóm chức năng (THS2026-66)",
+    "output": "02_UseCase.html"
+  },
+  "components": [
+    { "id": "guest", "type": "external", "label": "Khách (Guest)", "sublabel": "chưa đăng nhập", "pos": [40, 120], "size": [140, 60] },
+    { "id": "user", "type": "external", "label": "Người dùng (User)", "sublabel": "SV đã đăng nhập", "pos": [40, 320], "size": [140, 60] },
+    { "id": "admin", "type": "external", "label": "Admin", "sublabel": "quản trị viên", "pos": [40, 520], "size": [140, 60] },
+    { "id": "system", "type": "external", "label": "System (Cron)", "sublabel": "tự động", "pos": [40, 680], "size": [140, 60] },
+
+    { "id": "auth", "type": "security", "label": "Xác thực & Phân quyền", "sublabel": "đăng ký/nhập, OAuth, hồ sơ", "pos": [300, 120], "size": [200, 64] },
+    { "id": "search", "type": "frontend", "label": "Tìm kiếm & Xem tin", "sublabel": "lọc, sắp xếp, bản đồ, chi tiết", "pos": [560, 120], "size": [200, 64] },
+    { "id": "interact", "type": "frontend", "label": "Tương tác", "sublabel": "yêu thích, báo cáo, đăng tin", "pos": [820, 120], "size": [200, 64] },
+
+    { "id": "recommend", "type": "backend", "label": "Gợi ý nhà trọ (AI)", "sublabel": "Onboarding, Cosine, Explore", "pos": [300, 320], "size": [200, 64] },
+    { "id": "chatbot", "type": "backend", "label": "Chatbot RAG (AI)", "sublabel": "hỏi đáp ngôn ngữ tự nhiên", "pos": [560, 320], "size": [200, 64] },
+    { "id": "matching", "type": "backend", "label": "Bạn ở ghép (AI)", "sublabel": "Weighted Cosine, kết nối", "pos": [820, 320], "size": [200, 64] },
+
+    { "id": "risk", "type": "security", "label": "Cảnh báo rủi ro (AI)", "sublabel": "badge + giải thích", "pos": [300, 480], "size": [200, 64] },
+    { "id": "notify", "type": "messagebus", "label": "Thông báo", "sublabel": "tin mới, bạn ghép", "pos": [560, 480], "size": [200, 64] },
+
+    { "id": "admintools", "type": "backend", "label": "Quản trị", "sublabel": "dashboard, kiểm duyệt, cấu hình", "pos": [300, 640], "size": [200, 64] },
+    { "id": "pipeline", "type": "database", "label": "Pipeline backend", "sublabel": "crawl, NLP, geocode, dedup, embed", "pos": [560, 640], "size": [220, 64] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Hệ thống Trọ CTU", "wraps": ["auth", "search", "interact", "recommend", "chatbot", "matching", "risk", "notify", "admintools", "pipeline"] }
+  ],
+  "connections": [
+    { "from": "guest", "to": "auth", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "from": "guest", "to": "search", "fromSide": "top", "toSide": "left", "route": "orthogonal-v" },
+    { "from": "user", "to": "recommend", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "from": "user", "to": "chatbot", "fromSide": "right", "toSide": "bottom", "route": "orthogonal-h" },
+    { "from": "user", "to": "matching", "fromSide": "right", "toSide": "bottom", "route": "orthogonal-h" },
+    { "from": "user", "to": "interact", "fromSide": "top", "toSide": "bottom", "route": "orthogonal-v" },
+    { "from": "admin", "to": "admintools", "variant": "emphasis", "fromSide": "right", "toSide": "left" },
+    { "from": "system", "to": "pipeline", "variant": "emphasis", "fromSide": "right", "toSide": "left" }
+  ],
+  "cards": [
+    { "dot": "rose", "title": "Guest (không cần login)", "items": ["Tìm kiếm, lọc, bản đồ, bán kính", "Xem chi tiết + badge rủi ro", "Đăng ký / Đăng nhập / OAuth Google"] },
+    { "dot": "cyan", "title": "User (kế thừa Guest)", "items": ["Quiz → gợi ý cá nhân hóa", "Chatbot RAG, tìm bạn ở ghép", "Lưu/so sánh/báo cáo/đăng tin", "Nhận thông báo phù hợp"] },
+    { "dot": "emerald", "title": "Quan hệ UML", "items": ["include: Search→Lọc/Sắp xếp; Crawl→NLP→Geo/Dedup/Embed", "extend: Yêu thích/Báo cáo→Chi tiết", "generalization: User ▷ Guest, Admin ▷ User"] },
+    { "dot": "violet", "title": "System (tự động)", "items": ["Crawl 6-12h, chuẩn hóa NLP", "Geocoding đa tầng (Nominatim)", "Dedup MinHash, embedding RAG"] }
+  ]
+}

@@ -4,7 +4,7 @@
 -- ====================================================================
 
 -- 1. SEED USERS & IDENTITIES (Mật khẩu mặc định: '123456' - bcrypt hash)
--- Hash: $2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW
+-- Hash: $2b$12$sMWRAe4eEg/qh53l/lV56uoRusX.VP0Rwh6C7DNW/BK1yeBeLfFEO
 INSERT INTO users (id, email, name, role, email_verified, phone)
 VALUES 
     (1, 'admin@ctu.edu.vn', 'Quản Trị Viên CTU', 'admin', true, '0901234567'),
@@ -17,12 +17,12 @@ SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
 
 INSERT INTO user_identities (user_id, provider, provider_user_id, secret_hash)
 VALUES
-    (1, 'local', 'admin@ctu.edu.vn', '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW'),
-    (2, 'ctu', 'B2101234', '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW'),
-    (2, 'local', 'nguyenvana@ctu.edu.vn', '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW'),
-    (3, 'ctu', 'B2205678', '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW'),
-    (3, 'local', 'tranthib@ctu.edu.vn', '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW'),
-    (4, 'local', 'chutro.xuanhuong@gmail.com', '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW')
+    (1, 'local', 'admin@ctu.edu.vn', '$2b$12$sMWRAe4eEg/qh53l/lV56uoRusX.VP0Rwh6C7DNW/BK1yeBeLfFEO'),
+    (2, 'ctu', 'B2101234', '$2b$12$sMWRAe4eEg/qh53l/lV56uoRusX.VP0Rwh6C7DNW/BK1yeBeLfFEO'),
+    (2, 'local', 'nguyenvana@ctu.edu.vn', '$2b$12$sMWRAe4eEg/qh53l/lV56uoRusX.VP0Rwh6C7DNW/BK1yeBeLfFEO'),
+    (3, 'ctu', 'B2205678', '$2b$12$sMWRAe4eEg/qh53l/lV56uoRusX.VP0Rwh6C7DNW/BK1yeBeLfFEO'),
+    (3, 'local', 'tranthib@ctu.edu.vn', '$2b$12$sMWRAe4eEg/qh53l/lV56uoRusX.VP0Rwh6C7DNW/BK1yeBeLfFEO'),
+    (4, 'local', 'chutro.xuanhuong@gmail.com', '$2b$12$sMWRAe4eEg/qh53l/lV56uoRusX.VP0Rwh6C7DNW/BK1yeBeLfFEO')
 ON CONFLICT (provider, provider_user_id) DO NOTHING;
 
 -- 2. SEED ROOMMATE PROFILES (Tìm bạn ở ghép)

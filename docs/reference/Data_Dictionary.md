@@ -41,7 +41,7 @@ aggregated_listings 1──N crawl_runs (theo source, không FK cứng)
 | risk_score | REAL | DEFAULT 0 | Điểm rủi ro 0-1 (T10) |
 | risk_reasons | TEXT[] | | Lý do rủi ro |
 | distance_to_ctu | REAL | | Khoảng cách đến CTU (m) |
-| geocode_confidence | VARCHAR(10) | | high/medium/low/city/failed (T2). `city` = centroid TP Cần Thơ (tầng 5, mọi tầng trên fail) → KHÔNG cộng quality_score, hiện badge "vị trí ước lượng" |
+| geocode_confidence | VARCHAR(10) | | high/medium/low/failed (T2) |
 | embedding_vector | VECTOR(384) | | Embedding cho RAG/recommend |
 | status | listing_status | DEFAULT 'active' | active/expired/flagged (P2: không xóa) |
 | first_seen | TIMESTAMPTZ | DEFAULT now() | Lần đầu crawl thấy |

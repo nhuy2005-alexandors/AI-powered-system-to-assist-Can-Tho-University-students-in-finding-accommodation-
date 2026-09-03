@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Luồng Tìm Kiếm & Gợi Ý",
+    "subtitle": "Cold-start lai + Content-Based Cosine",
+    "output": "06_Workflow_TimKiem.html",
+    "viewBox": [780, 620]
+  },
+  "lanes": [
+    { "id": "user", "label": "Người dùng" },
+    { "id": "ai", "label": "Hệ thống AI" },
+    { "id": "db", "label": "Database" }
+  ],
+  "nodes": [
+    { "id": "home", "lane": "user", "col": 0, "type": "frontend", "label": "Mở trang chủ", "sublabel": "guest / user" },
+    { "id": "vec", "lane": "ai", "col": 1, "type": "backend", "label": "Lấy preference", "sublabel": "vector / popularity", "tag": "T5", "width": 130 },
+    { "id": "reco", "lane": "db", "col": 2, "type": "database", "label": "Top-10", "sublabel": "Cosine / phổ biến" },
+    { "id": "show", "lane": "user", "col": 2, "type": "frontend", "label": "Gợi ý", "sublabel": "\"Dành cho bạn\"" },
+    { "id": "search", "lane": "user", "col": 4, "type": "frontend", "label": "Tìm + lọc", "sublabel": "giá/DT/quận", "width": 110 },
+    { "id": "query", "lane": "db", "col": 4, "type": "database", "label": "Query + sort", "sublabel": "ẩn expired, PostGIS", "width": 120 },
+    { "id": "result", "lane": "user", "col": 5, "type": "frontend", "label": "Kết quả", "sublabel": "+ badge \"X giờ trước\"" }
+  ],
+  "edges": [
+    { "from": "home", "to": "vec", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "vec", "to": "reco", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "reco", "to": "show", "variant": "emphasis", "fromSide": "top", "toSide": "bottom", "route": "up-channel" },
+    { "from": "show", "to": "search", "variant": "default" },
+    { "from": "search", "to": "query", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "query", "to": "result", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" }
+  ],
+  "cards": [
+    { "dot": "violet", "title": "T5 — Cold Start lai", "items": ["User có vector → Content-Based Cosine", "Guest/chưa quiz → Popularity-Based", "Luôn ≥10 gợi ý, không màn hình rỗng"] },
+    { "dot": "cyan", "title": "Tìm kiếm & lọc", "items": ["Lọc: giá, diện tích, quận/phường, tiện ích", "Sắp xếp: giá ↑↓ / mới / gần CTU", "Map view: pin Leaflet/OSM + popup"] },
+    { "dot": "amber", "title": "Độ tươi data (near-fresh)", "items": ["Query ẩn tin status=expired", "Badge \"cập nhật X giờ trước\" theo last_seen", "Sort freshness + nút \"đã hết phòng\" cho user"] },
+    { "dot": "emerald", "title": "Chỉ số nghiệm thu", "items": ["Precision@10 ≥0.6 sau quiz", "NDCG@10 ≥0.65, ILS ≤0.7", "ε-greedy 80/20 chống filter bubble"] }
+  ]
+}

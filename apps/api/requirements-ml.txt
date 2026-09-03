@@ -1,0 +1,6 @@
+# Optional local embedding runtime. The core API remains functional in explicit
+# degraded lexical mode when this file is not installed.
+-r requirements.txt
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1+cpu
+sentence-transformers==3.3.1

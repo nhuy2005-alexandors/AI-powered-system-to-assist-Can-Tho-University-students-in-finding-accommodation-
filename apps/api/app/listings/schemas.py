@@ -70,7 +70,9 @@ class ListingOut(BaseModel):
     images: list[str] = Field(default_factory=list)
     source: str
     source_url: str | None = None
+    posted_by: int | None = None
     risk_score: float | None = None
+    risk_reasons: list[str] = Field(default_factory=list)
     risk_level: str = "unknown"
     geocode_confidence: str | None = None
     freshness_score: float | None = None
@@ -78,6 +80,7 @@ class ListingOut(BaseModel):
     quality_score: float | None = None
     last_seen: datetime | None = None
     route_time_campus: list[float] | None = None  # [khuI, khuII, khuIII] phút, None = chưa route
+    report_count: int = 0
 
 
 class SearchResult(BaseModel):

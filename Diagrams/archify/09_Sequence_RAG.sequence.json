@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Sequence — Chatbot RAG (T8/T9)",
+    "subtitle": "Confidence threshold chống hallucination + memory 5 lượt",
+    "output": "09_Sequence_RAG.html",
+    "viewBox": [860, 720]
+  },
+  "participants": [
+    { "id": "user", "type": "external", "label": "Sinh viên", "sublabel": "chat widget" },
+    { "id": "api", "type": "backend", "label": "RAG API", "sublabel": "/chat/ask" },
+    { "id": "embed", "type": "backend", "label": "Embedder", "sublabel": "e5-small" },
+    { "id": "vdb", "type": "database", "label": "pgvector", "sublabel": "listings" },
+    { "id": "llm", "type": "cloud", "label": "Gemini", "sublabel": "2.0 Flash" }
+  ],
+  "segments": [
+    { "from": 150, "to": 290, "label": "Embed + search" },
+    { "from": 310, "to": 470, "label": "Gate (T8)" },
+    { "from": 490, "to": 650, "label": "Sinh / fallback" }
+  ],
+  "messages": [
+    { "from": "user", "to": "api", "y": 185, "label": "POST /chat/ask + session_id", "variant": "emphasis" },
+    { "from": "api", "to": "embed", "y": 230, "label": "embed câu hỏi", "variant": "default" },
+    { "from": "embed", "to": "api", "y": 272, "label": "query vector", "variant": "return" },
+    { "from": "api", "to": "vdb", "y": 320, "label": "similarity search top-5", "variant": "default" },
+    { "from": "vdb", "to": "api", "y": 365, "label": "chunks + score", "variant": "return" },
+    { "from": "api", "to": "user", "y": 425, "label": "score<0.65 → fallback (không bịa)", "variant": "security" },
+    { "from": "api", "to": "llm", "y": 495, "label": "prompt: context + memory 5 lượt", "variant": "emphasis" },
+    { "from": "llm", "to": "api", "y": 545, "label": "answer", "variant": "return" },
+    { "from": "api", "to": "user", "y": 600, "label": "answer + trích dẫn nguồn", "variant": "return" }
+  ],
+  "activations": [
+    { "participant": "api", "from": 185, "to": 605, "type": "backend" },
+    { "participant": "embed", "from": 225, "to": 276, "type": "backend" },
+    { "participant": "vdb", "from": 315, "to": 369, "type": "database" },
+    { "participant": "llm", "from": 490, "to": 549, "type": "cloud" }
+  ],
+  "cards": [
+    { "dot": "rose", "title": "T8 — Chống hallucination", "items": ["Best score < 0.65 → KHÔNG gọi LLM", "Trả fallback có link tìm kiếm", "LLM chỉ chạy khi context đủ liên quan"] },
+    { "dot": "cyan", "title": "T9 — Multi-turn", "items": ["Memory 5 lượt gần nhất theo session_id", "Prompt = context (5 chunk) + lịch sử", "Faithfulness ≥0.7, AnswerRel ≥0.75"] },
+    { "dot": "emerald", "title": "Trích dẫn", "items": ["Answer gắn listing_id nguồn", "User kiểm chứng được, tăng minh bạch", "e5-small embed song ngữ VI/EN"] }
+  ]
+}

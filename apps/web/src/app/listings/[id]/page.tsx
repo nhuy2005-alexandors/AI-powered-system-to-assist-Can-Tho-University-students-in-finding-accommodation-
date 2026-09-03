@@ -4,6 +4,7 @@ import { getListing, type ApiError } from "@/lib/api";
 import { getCurrentUser } from "@/lib/current-user";
 import { formatArea, formatDistance, formatPrice, riskBadge } from "@/lib/format";
 import DeleteListingButton from "./DeleteListingButton";
+import ReportButton from "./ReportButton";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +22,10 @@ export default async function ListingDetailPage({
   }
 
   const user = await getCurrentUser();
-  const canManage = Boolean(user) && listing.source === "user";
+  const canManage = Boolean(user) && (
+    user?.role === "admin" || (listing.source === "user" && listing.posted_by === user?.id)
+  );
+  const canReport = Boolean(user) && listing.posted_by !== user?.id;
   const badge = riskBadge(listing.risk_level);
 
   return (
@@ -103,6 +107,34 @@ export default async function ListingDetailPage({
               Điểm chất lượng: {(listing.quality_score * 100).toFixed(0)}%
             </p>
           )}
+
+          {listing.risk_reasons.length > 0 && (
+            <section className="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4">
+              <h2 className="text-sm font-semibold text-amber-900">Lý do cảnh báo rủi ro</h2>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-amber-800">
+                {listing.risk_reasons.map((reason) => (
+                  <li key={reason}>{reason}</li>
+                ))}
+              </ul>
+              <p className="mt-2 text-xs text-amber-700">
+                Điểm rủi ro chỉ hỗ trợ sàng lọc; luôn xem phòng và xác minh trước khi đặt cọc.
+              </p>
+            </section>
+          )}
+
+          {listing.report_count > 0 && (
+            <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-700">
+              Tin này có {listing.report_count} báo cáo chưa bị bác bỏ từ cộng đồng.
+            </p>
+          )}
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <ReportButton
+              listingId={listing.id}
+              loggedIn={Boolean(user)}
+              canReport={canReport}
+            />
+          </div>
 
           {canManage && (
             <div className="mt-6 flex gap-3">
