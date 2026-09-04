@@ -28,6 +28,20 @@ async def _job(engine: Engine, source: str, mode: str) -> None:
         # Chạy pipeline làm sạch sau khi crawl xong
         from app.cleaner.pipeline import run_cleaner
         run_cleaner(engine)
+
+        # Risk enrichment dùng chung dữ liệu với list/map; lỗi không làm mất crawl run.
+        from app.config import settings
+        if settings.risk_auto_assess:
+            try:
+                from app.room_service.risk.repo import RiskRepository
+                from app.room_service.risk.service import RiskService
+
+                result = RiskService(RiskRepository(engine)).assess_pending(
+                    settings.risk_auto_assess_limit
+                )
+                log.info("risk auto-assess processed=%d", result.processed)
+            except Exception:  # noqa: BLE001
+                log.exception("risk auto-assess failed after crawler source=%s", source)
         
     except Exception:  # noqa: BLE001 — job không được làm chết scheduler
         log.exception("crawl job failed source=%s mode=%s", source, mode)

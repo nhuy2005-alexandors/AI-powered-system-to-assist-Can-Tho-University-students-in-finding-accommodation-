@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Luồng Matching Bạn Ở Ghép",
+    "subtitle": "Weighted Cosine Similarity + kết nối 2 chiều",
+    "output": "05_Workflow_Matching.html",
+    "viewBox": [780, 660]
+  },
+  "lanes": [
+    { "id": "sva", "label": "Sinh viên A" },
+    { "id": "ai", "label": "Hệ thống AI" },
+    { "id": "db", "label": "Database" },
+    { "id": "svb", "label": "Sinh viên B" }
+  ],
+  "nodes": [
+    { "id": "start", "lane": "sva", "col": 0, "type": "frontend", "label": "Tìm bạn ghép", "sublabel": "bấm bắt đầu" },
+    { "id": "form", "lane": "sva", "col": 1, "type": "frontend", "label": "Điền form", "sublabel": "6 câu", "tag": "nếu chưa có" },
+    { "id": "vector", "lane": "ai", "col": 2, "type": "backend", "label": "Vector", "sublabel": "384-dim" },
+    { "id": "profile", "lane": "db", "col": 2, "type": "database", "label": "Lưu hồ sơ", "sublabel": "profiles" },
+    { "id": "cosine", "lane": "ai", "col": 4, "type": "backend", "label": "W-Cosine", "sublabel": "thresh 0.7", "tag": "T7" },
+    { "id": "list", "lane": "sva", "col": 4, "type": "frontend", "label": "DS tương thích", "sublabel": "score %", "width": 110 },
+    { "id": "invite", "lane": "sva", "col": 5, "type": "frontend", "label": "Gửi mời", "sublabel": "+ giới thiệu" },
+    { "id": "reqdb", "lane": "db", "col": 5, "type": "database", "label": "Requests", "sublabel": "lưu lời mời" },
+    { "id": "notify", "lane": "svb", "col": 5, "type": "messagebus", "label": "Báo B", "sublabel": "muốn ghép" }
+  ],
+  "edges": [
+    { "from": "start", "to": "form", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "form", "to": "vector", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "vector", "to": "profile", "variant": "default", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "profile", "to": "cosine", "label": "so khớp", "variant": "emphasis", "labelAt": [380, 360] },
+    { "from": "cosine", "to": "list", "variant": "emphasis", "fromSide": "top", "toSide": "bottom", "route": "up-channel" },
+    { "from": "list", "to": "invite", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "invite", "to": "reqdb", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "reqdb", "to": "notify", "variant": "emphasis", "fromSide": "bottom", "toSide": "top", "route": "drop" },
+    { "from": "notify", "to": "list", "label": "B chấp nhận → lộ SĐT", "variant": "dashed", "fromSide": "top", "toSide": "right", "route": "outside-right", "labelAt": [400, 500] }
+  ],
+  "cards": [
+    { "dot": "violet", "title": "T7 — Weighted Cosine", "items": ["6 câu → matching_vector 384-dim", "Trọng số: ngân sách 25%, giờ ngủ 20%...", "Threshold 0.7, MAE feedback ≤1.5/5"] },
+    { "dot": "cyan", "title": "Forced-choice quiz", "items": ["Câu hỏi tình huống thay vì tự khai", "Hút thuốc, mức ồn, sạch sẽ, giới tính", "Tránh khai sai hồ sơ"] },
+    { "dot": "emerald", "title": "Kết nối 2 chiều", "items": ["A gửi mời → B nhận thông báo", "B chấp nhận → lộ SĐT/Zalo cả hai", "B từ chối → A thử người khác"] }
+  ]
+}

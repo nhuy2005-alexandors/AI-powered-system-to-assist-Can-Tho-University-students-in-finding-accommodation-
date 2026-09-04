@@ -61,6 +61,19 @@ async def _route_one(lat: float | None, lng: float | None) -> list[float] | None
         return None
 
 
+def _assess_risk(listing_id: int) -> None:
+    """Risk là enrichment: lỗi/migration thiếu không được chặn CRUD listing."""
+    if not settings.risk_auto_assess or _engine is None:
+        return
+    try:
+        from ..room_service.risk.repo import RiskRepository
+        from ..room_service.risk.service import RiskService
+
+        RiskService(RiskRepository(_engine)).assess(listing_id, persist=True)
+    except Exception as exc:  # noqa: BLE001
+        log.warning("risk assess listing=%s fail: %s", listing_id, exc)
+
+
 @router.get("", response_model=SearchResult)
 def search_listings(
     q: str | None = None,
@@ -156,6 +169,7 @@ async def create_listing(
     times = await _route_one(lat, lng)
     if times is not None:
         write.set_route_time(new_id, times)
+    _assess_risk(new_id)
     return repo.get(new_id)
 
 
@@ -181,6 +195,7 @@ async def update_listing(
         times = await _route_one(lat, lng)
         if times is not None:
             write.set_route_time(listing_id, times)
+    _assess_risk(listing_id)
     return repo.get(listing_id)
 
 

@@ -112,36 +112,13 @@ async def run_source(
         # geocode (T2): address → lat/lng/confidence + distance_to_ctu.
         # Address rỗng/rác (vd bds123 "Xin chào Khách", mogi trống) → fallback district
         # để vẫn có toạ độ cấp quận (lên được bản đồ/nearby thay vì mất hẳn).
-        # T-opt: reuse geom cũ khi tin đã có toạ độ VÀ address không đổi — Nominatim
-        # rate-limit 1req/s, full sweep re-geocode hàng trăm tin cũ = phí + dễ bị OSM chặn.
-        prev = repo.existing_geo(source, [n.source_id for n in listings if n.source_id])
-        geocoded = 0
         for n in listings:
-            cached = prev.get(n.source_id) if n.source_id else None
-            addr = (n.address or "").strip()
-            if cached and cached.get("lat") is not None and (cached.get("address") or "").strip() == addr:
-                # địa chỉ y hệt + đã có toạ độ → dùng lại, không gọi Nominatim
-                n.lat, n.lng = cached["lat"], cached["lng"]
-                # nhánh này chỉ chạy khi cached['lat'] is not None → tin CÓ toạ độ thật.
-                # Default 'low' (không phải 'failed'): 'failed' nghĩa là không có toạ độ,
-                # gán nó cho dòng đang có geom là tự dán nhãn sai lên dữ liệu thật.
-                n.geocode_confidence = cached.get("geocode_confidence") or "low"
-                n.distance_to_ctu = cached.get("distance_to_ctu")
-                continue
             lat, lng, conf = await geocoder.geocode(n.address)
-            # Tầng 5 của geocode() trả centroid TP + conf='city' nên lat KHÔNG BAO GIỜ None
-            # với address non-empty → guard `lat is None` một mình làm nhánh district thành
-            # code chết, mọi tin không parse được address bị pin về tâm TP thay vì tâm quận.
-            # Có district thì tâm quận luôn sát hơn tâm thành phố.
-            if (lat is None or conf == "city") and n.district:
-                d_lat, d_lng, d_conf = await geocoder.geocode(f"{n.district}, Cần Thơ")
-                if d_lat is not None and d_conf != "city":
-                    lat, lng, conf = d_lat, d_lng, d_conf
+            if lat is None and n.district:
+                lat, lng, conf = await geocoder.geocode(f"{n.district}, Cần Thơ")
             n.lat, n.lng, n.geocode_confidence = lat, lng, conf
             if lat is not None and lng is not None:
                 n.distance_to_ctu = haversine_m(lat, lng, CTU_LAT, CTU_LNG)
-            geocoded += 1
-        log.info("geocode source=%s: %d gọi mới / %d bỏ qua (reuse)", source, geocoded, len(listings) - geocoded)
 
         for n in listings:
             result = repo.upsert(n)

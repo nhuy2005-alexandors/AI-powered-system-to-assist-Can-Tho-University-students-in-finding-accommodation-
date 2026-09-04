@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Trọ CTU — Kiến Trúc Hệ Thống",
+    "subtitle": "Hệ thống tổng hợp & gợi ý nhà trọ AI (THS2026-66)",
+    "output": "01_Architecture.html"
+  },
+  "components": [
+    { "id": "student", "type": "external", "label": "Sinh viên CTU", "sublabel": "Browser / Mobile", "pos": [40, 320], "size": [130, 60] },
+    { "id": "admin", "type": "external", "label": "Admin", "sublabel": "Quản trị viên", "pos": [40, 470], "size": [130, 60] },
+    { "id": "web", "type": "frontend", "label": "Next.js 14 Web", "sublabel": "Tailwind + Leaflet :3000", "pos": [250, 380], "size": [150, 64], "tag": "SSR" },
+    { "id": "api", "type": "backend", "label": "FastAPI", "sublabel": "REST + JWT :8000", "pos": [490, 380], "size": [150, 64], "tag": "nghiệp vụ + AI" },
+    { "id": "redis", "type": "database", "label": "Redis", "sublabel": "cache + session :6379", "pos": [490, 230], "size": [150, 60] },
+    { "id": "db", "type": "database", "label": "PostgreSQL 16", "sublabel": "PostGIS + pgvector :5432", "pos": [740, 380], "size": [160, 64], "tag": "spatial + vector" },
+    { "id": "crawler", "type": "backend", "label": "Crawler Worker", "sublabel": "Scrapy + cron 6-12h", "pos": [490, 540], "size": [150, 64], "tag": "async" },
+    { "id": "sources", "type": "external", "label": "Nguồn tin trọ", "sublabel": "Chợ Tốt / Mogi / Phongtro123", "pos": [250, 540], "size": [160, 64] },
+    { "id": "nominatim", "type": "cloud", "label": "Nominatim/OSM", "sublabel": "Geocoding (free)", "pos": [740, 540], "size": [160, 60] },
+    { "id": "gemini", "type": "cloud", "label": "Gemini 2.0 Flash", "sublabel": "LLM (RAG fallback)", "pos": [740, 230], "size": [160, 60] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Docker Compose (free-tier P1)", "wraps": ["web", "api", "redis", "db", "crawler"] },
+    { "kind": "security-group", "label": "JWT Auth Boundary", "wraps": ["web", "api"] }
+  ],
+  "connections": [
+    { "from": "student", "to": "web", "label": "HTTPS", "variant": "emphasis" },
+    { "from": "admin", "to": "web", "label": "dashboard", "fromSide": "right", "toSide": "left" },
+    { "from": "web", "to": "api", "label": "REST/JSON", "variant": "emphasis" },
+    { "from": "api", "to": "redis", "label": "cache gợi ý", "fromSide": "top", "toSide": "bottom", "labelDy": -68 },
+    { "from": "api", "to": "db", "label": "SQL + vector search" },
+    { "from": "api", "to": "gemini", "label": "RAG query", "variant": "dashed", "fromSide": "right", "toSide": "bottom", "labelDx": 40, "labelDy": -30 },
+    { "from": "crawler", "to": "sources", "label": "crawl", "variant": "dashed", "fromSide": "left", "toSide": "right" },
+    { "from": "crawler", "to": "nominatim", "label": "geocode", "variant": "dashed", "fromSide": "right", "toSide": "left" },
+    { "from": "crawler", "to": "db", "label": "ghi listing", "fromSide": "top", "toSide": "bottom", "labelDy": 58 }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Frontend", "items": ["Next.js 14 SSR + Tailwind", "Bản đồ Leaflet/OSM", "Guest dùng không cần login"] },
+    { "dot": "emerald", "title": "Backend & AI", "items": ["FastAPI gánh nghiệp vụ + AI", "Recommend (Cosine), Roommate (Weighted Cosine)", "RAG Chatbot, Risk Detection 5 lớp"] },
+    { "dot": "violet", "title": "Dữ liệu", "items": ["PostGIS: khoảng cách POI/CTU", "pgvector: embedding gợi ý + RAG", "Redis: cache + session"] },
+    { "dot": "amber", "title": "Pipeline (P1: 0đ)", "items": ["Crawler batch 6-12h, không live", "Nominatim geocode tránh phí Google", "Gemini free-tier cho RAG"] }
+  ]
+}

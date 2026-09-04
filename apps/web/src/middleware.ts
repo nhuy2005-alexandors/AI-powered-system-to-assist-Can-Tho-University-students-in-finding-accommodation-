@@ -2,10 +2,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "@/lib/config";
 
 // Gate nhẹ theo sự tồn tại của cookie (không verify chữ ký ở đây — page tự
-// gọi /me để xác thực thật). Middleware chỉ điều hướng UX: chặn vào trang cần
-// login khi thiếu token, và đẩy user đã login khỏi trang login/register.
-const PROTECTED = ["/me", "/dashboard", "/listings/new", "/listings/mine"];
-const AUTH_PAGES = ["/login", "/register"];
+// gọi /me để xác thực thật). Chỉ chặn trang cần đăng nhập khi hoàn toàn thiếu
+// token. Không chặn /login hoặc /register vì cookie có thể đã hết hạn/hỏng.
+const PROTECTED = ["/me", "/dashboard", "/admin", "/listings/new", "/listings/mine"];
 
 // Route dynamic /listings/[id]/edit không match được bằng startsWith cố định
 // vì id nằm giữa path — check riêng bằng regex.
@@ -26,13 +25,6 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (AUTH_PAGES.some((p) => pathname.startsWith(p)) && hasSession) {
-    const url = req.nextUrl.clone();
-    url.pathname = "/me";
-    url.search = "";
-    return NextResponse.redirect(url);
-  }
-
   return NextResponse.next();
 }
 
@@ -40,8 +32,7 @@ export const config = {
   matcher: [
     "/me/:path*",
     "/dashboard/:path*",
-    "/login",
-    "/register",
+    "/admin/:path*",
     "/listings/new",
     "/listings/mine",
     "/listings/:id/edit",
