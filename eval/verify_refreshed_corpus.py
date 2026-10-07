@@ -40,7 +40,7 @@ for relative, digest in manifest['input_sha256'].items():
 candidate = read(ROOT / 'docs/legal_web_supplement_20261004/candidate_corpus/manifest.json')
 reviewed = [p for entry in candidate['documents'] for p in read(ROOT / entry['file'])['provisions']]
 assert all(any(p['provision_id'] == q['provision_id'] and p['content'] == q['content'] for q in provisions) for p in reviewed)
-bank = (ROOT / 'docs/LEGAL_QUESTION_BANK.md').read_text(encoding='utf-8')
+bank = (ROOT / 'eval/datasets/legal_question_bank.txt').read_text(encoding='utf-8')
 questions = [m[1] for line in bank.splitlines() if (m := re.match(r'^\d+\. (.+)$', line))]
 assert len(questions) == 36
 exact_overlap = set(questions) & set(guidance_questions)

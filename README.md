@@ -2,18 +2,16 @@
 
 Hệ thống hỗ trợ sinh viên Đại học Cần Thơ tìm nhà trọ.
 
-- [Bổ sung embedding KTX CTU và cấu hình chatbot local ngày 07/10/2026](docs/CTU_KTX_EMBEDDING_20261007.md)
+- [Tài liệu tổng về chatbot: kiến trúc, KTX, lịch sử, vận hành và báo cáo](docs/CHATBOT.md)
 
-Nhánh hiện tại dùng Datahouse làm kho phòng chính, Graph RAG với nguồn pháp lý từ Word và nguồn thông tin KTX công bố bởi CTU. Hỗ trợ tìm trọ, hỏi đáp KTX và pháp lý thuê trọ cơ bản; không soạn hợp đồng hoặc điền tờ khai. Dùng hướng dẫn `CTU_KTX_EMBEDDING_20261007.md` cho cấu hình local có KTX; `WORD_ONLY_TENANT_SUPPORT_20261005.md` mô tả phiên bản trước.
+Bản local dùng Datahouse làm kho phòng chính, Graph RAG với nguồn pháp lý từ Word và nguồn thông tin KTX công bố bởi CTU. Giữ flow cũ: Gemini phân tích câu hỏi, Qwen chọn bằng chứng, Gemini tổng hợp và kiểm chứng câu trả lời. Hỗ trợ tìm trọ, hỏi đáp KTX và pháp lý thuê trọ cơ bản; không soạn hợp đồng hoặc điền tờ khai. Cấu hình hiện hành và các báo cáo trước được gộp trong `docs/CHATBOT.md`.
+
+Chat lưu lịch sử theo tài khoản, mở lại hội thoại cũ và dùng lại câu trả lời có nguồn khi hỏi trùng trong cùng ngữ cảnh; có nút tạo cuộc chat mới và xóa lịch sử.
 
 - [Hướng dẫn triển khai FR1 / FR2 / FR4 / FR6 / FR7 và bàn giao FR3 / FR8](docs/FR_DELIVERY_GUIDE.md)
 - [Đặc tả yêu cầu](docs/planning/SRS.md)
 - [Tài liệu dự án](docs/README.md)
 - [Vận hành Docker local và kiểm tra hệ thống](docs/LOCAL_DEPLOYMENT.md)
-- [Kho embedding pháp lý cập nhật và kiểm thử 36 câu ngày 04/10/2026](docs/LEGAL_REFRESH_20261004.md)
-- [Nhánh Graph RAG, kho nhà trọ riêng và kiểm thử 56 câu](docs/GRAPH_RAG_20261004.md)
-- [Datahouse làm kho chính, nguồn nguyên gốc và Graph RAG tối ưu](docs/SOURCE_GROUNDED_DATAHOUSE_20261004.md)
-- [Phiên bản Word: phạm vi thuê trọ cơ bản, bỏ PDF/OCR và kiểm thử 36 câu](docs/WORD_ONLY_TENANT_SUPPORT_20261005.md)
 
 Nhánh Datahouse/Graph RAG: `codex/source-grounded-datahouse-20261004`.
 Các mốc trước đó: nhánh sao lưu `codex/baseline-before-fr-updates` (`6d36e9a`) và triển khai FR `codex/fr1-fr2-fr4-fr6-fr7`.

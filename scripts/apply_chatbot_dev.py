@@ -27,6 +27,8 @@ def main() -> None:
         ROOT / "infra/db/migrations/96_reviews_sentiment.sql",
         ROOT / "infra/db/migrations/97_response_performance.sql",
         ROOT / "infra/db/migrations/98_legal_quality.sql",
+        ROOT / "infra/db/migrations/99_chat_history.sql",
+        ROOT / "infra/db/migrations/100_shared_answers_document_control.sql",
     ]
     seed_path = ROOT / "infra/db/seeds/dev_chatbot.sql"
     if not args.skip_seed and not seed_path.exists():

@@ -39,8 +39,8 @@ def main():
     source_hashes = {p.relative_to(ROOT).as_posix(): digest(p) for p in files}
     for name in ("question_bank_ragas.py", "compare_model_upgrade.py", "stamp_model_upgrade.py"):
         source_hashes["eval/" + name] = digest(EVAL_ROOT / name)
-    question_path = Path("/question_bank.md") if Path("/question_bank.md").exists() else ROOT / "docs/LEGAL_QUESTION_BANK.md"
-    source_hashes["docs/LEGAL_QUESTION_BANK.md"] = digest(question_path)
+    question_path = Path("/question_bank.md") if Path("/question_bank.md").exists() else ROOT / "eval/datasets/legal_question_bank.txt"
+    source_hashes["eval/datasets/legal_question_bank.txt"] = digest(question_path)
     data_root = Path("/data") if Path("/data").exists() else ROOT / "Data"
     data = sorted(p for p in data_root.rglob("*") if p.is_file())
     manifest = {

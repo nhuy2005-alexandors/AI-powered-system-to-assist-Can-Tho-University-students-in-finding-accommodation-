@@ -1,10 +1,11 @@
 # Tài liệu — Trọ CTU
 
 ## Khung làm việc (đọc trước)
+- [CHATBOT.md](CHATBOT.md) — tài liệu tổng duy nhất về chatbot: flow Gemini + Qwen, corpus/KTX, lịch sử, vận hành, bộ câu hỏi và báo cáo
 - `CHECKPOINT.md` — trạng thái hiện tại (Đã xong / Đang làm / Tiếp theo / Gotcha)
 - `DECISIONS.md` — quyết định kiến trúc + lý do (ADR)
 - `GOTCHAS.md` — bẫy kỹ thuật đã dính
-- `AI_CHAT_RISK_INTEGRATION.md` — cấu hình Qwen local, Gemini, risk và chạy stack hợp nhất
+- `AI_CHAT_RISK_INTEGRATION.md` — phần tích hợp Risk được giữ riêng; nội dung chatbot đã chuyển vào `CHATBOT.md`
 - `REPORT_RISK_MODERATION.md` — quy trình User báo cáo, Risk cộng điểm và Admin kiểm duyệt
 - `REVIEWS_SENTIMENT.md` — đánh giá sao, bình luận và ML gắn cờ cảm xúc tiêu cực
 - `AI_PRODUCT_FEATURES.md` — phạm vi chức năng AI/nghiệp vụ đã triển khai ngoài crawler

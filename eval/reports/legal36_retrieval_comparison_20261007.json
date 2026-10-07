@@ -1,0 +1,2065 @@
+{
+  "before_schema": "legal_ctu_ktx_v1_20261007",
+  "after_schema": "legal_ctu_ktx_v2_20261007",
+  "confidence_threshold_unchanged": 0.65,
+  "mode": "real E5 + hybrid/graph retrieval; original questions without generated expansion",
+  "diagnosis": {
+    "empty_before": [
+      26,
+      27
+    ],
+    "below_threshold_before": [
+      25,
+      26,
+      27
+    ],
+    "empty_after": [],
+    "below_threshold_after": []
+  },
+  "cases": [
+    {
+      "id": 1,
+      "question": "Trước khi ký hợp đồng thuê trọ, sinh viên nên kiểm tra những điều khoản nào?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 163. Hợp đồng về nhà ở",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 172. Đơn phương chấm dứt thực hiện hợp đồng thuê nhà ở | Khoản 2",
+            "similarity_score": 0.987108
+          },
+          {
+            "source_id": "consumer19-word",
+            "category": "housing_contract",
+            "heading": "Điều 10. Các hành vi bị nghiêm cấm trong bảo vệ quyền lợi người tiêu dùng | Khoản 1",
+            "similarity_score": 0.923928
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 398. Nội dung của hợp đồng",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 163. Hợp đồng về nhà ở",
+            "similarity_score": 0.970277
+          },
+          {
+            "source_id": "supplement-s02-word",
+            "category": "housing_contract",
+            "heading": "Kinh nghiệm tìm nhà trọ cho tân sinh viên | Đoạn nguyên văn 23",
+            "similarity_score": 0.952937
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "question": "Hợp đồng thuê phòng có cần ghi rõ tiền cọc, tiền thuê và ngày thanh toán không?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 328. Đặt cọc",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 163. Hợp đồng về nhà ở",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 172. Đơn phương chấm dứt thực hiện hợp đồng thuê nhà ở | Khoản 2",
+            "similarity_score": 0.747457
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 328. Đặt cọc",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 163. Hợp đồng về nhà ở",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 398. Nội dung của hợp đồng",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "question": "Nếu chủ trọ muốn tăng giá thuê giữa thời hạn hợp đồng thì cần xem xét những gì?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 170. Thời hạn thuê, giá thuê, cho thuê lại nhà ở | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 163. Hợp đồng về nhà ở | Khoản 3",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 170. Thời hạn thuê, giá thuê, cho thuê lại nhà ở | Khoản 1",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 170. Thời hạn thuê, giá thuê, cho thuê lại nhà ở | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 163. Hợp đồng về nhà ở | Khoản 3",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 170. Thời hạn thuê, giá thuê, cho thuê lại nhà ở | Khoản 1",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "question": "Khi trả phòng, việc hoàn lại tiền cọc được xác định theo hợp đồng và quy định như thế nào?",
+      "before": {
+        "confidence": 0.9335275000000001,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 328. Đặt cọc",
+            "similarity_score": 0.95137
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 481. Trả tiền thuê | Khoản 1",
+            "similarity_score": 0.758434
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 172. Đơn phương chấm dứt thực hiện hợp đồng thuê nhà ở | Khoản 2",
+            "similarity_score": 0.757823
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.95137
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.91334425,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 328. Đặt cọc",
+            "similarity_score": 0.924459
+          },
+          {
+            "source_id": "supplement-s02-word",
+            "category": "housing_contract",
+            "heading": "Kinh nghiệm tìm nhà trọ cho tân sinh viên | Đoạn nguyên văn 23",
+            "similarity_score": 0.881006
+          },
+          {
+            "source_id": "supplement-s01-word",
+            "category": "housing_contract",
+            "heading": "Mẹo khi thuê phòng | Đoạn nguyên văn 78",
+            "similarity_score": 0.817793
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.924459
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "question": "Chủ trọ được thu tiền điện của người thuê như thế nào theo quy định?",
+      "before": {
+        "confidence": 0.909775,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Điều 12. Giá bán lẻ điện sinh hoạt | Khoản 5",
+            "similarity_score": 0.9197
+          },
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.9197
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.909775,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Điều 12. Giá bán lẻ điện sinh hoạt | Khoản 5",
+            "similarity_score": 0.9197
+          },
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.9197
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "question": "Ba sinh viên ở chung một phòng được tính tiền điện ra sao?",
+      "before": {
+        "confidence": 0.89666575,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Điều 12. Giá bán lẻ điện sinh hoạt | Khoản 5",
+            "similarity_score": 0.902221
+          },
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.902221
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.89666575,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Điều 12. Giá bán lẻ điện sinh hoạt | Khoản 5",
+            "similarity_score": 0.902221
+          },
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.902221
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "question": "Nếu tôi nghi tiền điện bị thu cao hơn quy định, nên kiểm tra hóa đơn và căn cứ nào?",
+      "before": {
+        "confidence": 0.8694737499999999,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Điều 12. Giá bán lẻ điện sinh hoạt | Khoản 5",
+            "similarity_score": 0.865965
+          },
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.865965
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.8694737499999999,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Điều 12. Giá bán lẻ điện sinh hoạt | Khoản 5",
+            "similarity_score": 0.865965
+          },
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.865965
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "question": "Chủ trọ có phải thông báo cách tính tiền điện và số điện đã sử dụng không?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Điều 12. Giá bán lẻ điện sinh hoạt | Khoản 5",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "electricity61-word",
+            "category": "electricity",
+            "heading": "Điều 56. Đo đếm điện | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "electricity61-word",
+            "category": "electricity",
+            "heading": "Điều 56. Đo đếm điện | Khoản 3",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "electricity61-word",
+            "category": "electricity",
+            "heading": "Điều 56. Đo đếm điện | Khoản 6",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Điều 12. Giá bán lẻ điện sinh hoạt | Khoản 5",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "evn-cantho-transparency-word",
+            "category": "electricity",
+            "heading": "Công khai cách tính tiền điện nhà trọ — PC TP Cần Thơ / EVNSPC",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "electricity61-word",
+            "category": "electricity",
+            "heading": "Điều 56. Đo đếm điện | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "electricity61-word",
+            "category": "electricity",
+            "heading": "Điều 56. Đo đếm điện | Khoản 3",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "electricity60-word",
+            "category": "electricity",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "question": "Giá nước sinh hoạt áp dụng cho phòng trọ ở Cần Thơ được xác định theo căn cứ nào?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 1",
+            "similarity_score": 0.986673
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 2. Điều chỉnh giá nước sạch | Khoản 2",
+            "similarity_score": 0.912967
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 1",
+            "similarity_score": 0.987476
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 2. Điều chỉnh giá nước sạch | Khoản 2",
+            "similarity_score": 0.910786
+          }
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "question": "Tôi nên kiểm tra gì khi chủ trọ thu tiền nước theo đầu người thay vì đồng hồ?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 2. Điều chỉnh giá nước sạch | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Bảng giá trong Word — thứ tự đoạn/ô, cần đối chiếu bố cục gốc",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 2",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 2. Điều chỉnh giá nước sạch | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s01-word",
+            "category": "housing_contract",
+            "heading": "Mẹo khi thuê phòng | Đoạn nguyên văn 78",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 398. Nội dung của hợp đồng | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "question": "Nếu nhà trọ dùng chung đồng hồ nước, cách phân chia chi phí nên được thỏa thuận ra sao?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 2. Điều chỉnh giá nước sạch | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "consumer19-word",
+            "category": "housing_contract",
+            "heading": "Điều 4. Quyền của người tiêu dùng | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 2",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 2. Điều chỉnh giá nước sạch | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s01-word",
+            "category": "housing_contract",
+            "heading": "Mẹo khi thuê phòng | Đoạn nguyên văn 78",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 398. Nội dung của hợp đồng | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "question": "Tôi có thể đối chiếu tiền nước trên hóa đơn với đơn vị cấp nước như thế nào?",
+      "before": {
+        "confidence": 0.95386825,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 1",
+            "similarity_score": 0.978491
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 2",
+            "similarity_score": 0.86977
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 2. Điều chỉnh giá nước sạch | Khoản 2",
+            "similarity_score": 0.831138
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.852748,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 1",
+            "similarity_score": 0.843664
+          },
+          {
+            "source_id": "supplement-s05-word",
+            "category": "water_cantho",
+            "heading": "Hướng dẫn tra cứu hóa đơn điện tử | Đoạn nguyên văn 0",
+            "similarity_score": 0.821165
+          },
+          {
+            "source_id": "water215-word",
+            "category": "water_cantho",
+            "heading": "Điều 1. Quy định giá nước sạch sinh hoạt tại đô thị và khu vực nông thôn áp dụng đối với các đơn vị kinh doanh nước sạch, các tổ chức và khách hàng sử dụng nước sạch trên địa bàn thành phố Cần Thơ như sau: | Khoản 2",
+            "similarity_score": 0.761189
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "question": "Sinh viên thuê trọ tại Cần Thơ cần làm thủ tục cư trú nào?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 27. Điều kiện đăng ký tạm trú | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 27. Điều kiện đăng ký tạm trú | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 27. Điều kiện đăng ký tạm trú | Khoản 3",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 27. Điều kiện đăng ký tạm trú | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 27. Điều kiện đăng ký tạm trú | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 27. Điều kiện đăng ký tạm trú | Khoản 3",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "question": "Ai có trách nhiệm cung cấp thông tin, giấy tờ để người thuê đăng ký tạm trú?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 9. Nghĩa vụ của công dân về cư trú | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 3",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "residence58-official-word",
+            "category": "residence",
+            "heading": "Điều 4. Sửa đổi, bổ sung một số điều của Nghị định số 154/2024/NĐ-CP quy định chi tiết một số điều và biện pháp thi hành Luật Cư trú (sau đây viết gọn là Nghị định số 154/2024/NĐ-CP) | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence154-official-word",
+            "category": "residence",
+            "heading": "Điều 5. Giấy tờ, tài liệu, thông tin chứng minh chỗ ở hợp pháp | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 9. Nghĩa vụ của công dân về cư trú | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 10. Quyền, nghĩa vụ của chủ hộ và thành viên hộ gia đình về cư trú | Khoản 5",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence58-official-word",
+            "category": "residence",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "question": "Tôi cần chuẩn bị những giấy tờ gì để đăng ký tạm trú tại phòng trọ?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 3",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 3",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "question": "Nếu chuyển sang phòng trọ khác, tôi cần cập nhật thông tin cư trú thế nào?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 3",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 27. Điều kiện đăng ký tạm trú | Khoản 1",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 29. Xóa đăng ký tạm trú | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence58-official-word",
+            "category": "residence",
+            "heading": "Điều 4. Sửa đổi, bổ sung một số điều của Nghị định số 154/2024/NĐ-CP quy định chi tiết một số điều và biện pháp thi hành Luật Cư trú (sau đây viết gọn là Nghị định số 154/2024/NĐ-CP) | Khoản 7",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 29. Xóa đăng ký tạm trú | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "residence58-official-word",
+            "category": "residence",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "question": "Khi xem phòng trọ, tôi nên kiểm tra những điều kiện phòng cháy, chữa cháy nào?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 20. Phòng cháy đối với nhà ở",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 21. Phòng cháy đối với nhà ở kết hợp sản xuất, kinh doanh",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 24. Phòng cháy trong lắp đặt, sử dụng điện cho sinh hoạt, sản xuất | Khoản 1",
+            "similarity_score": 0.994752
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 20. Phòng cháy đối với nhà ở",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 21. Phòng cháy đối với nhà ở kết hợp sản xuất, kinh doanh",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 24. Phòng cháy trong lắp đặt, sử dụng điện cho sinh hoạt, sản xuất | Khoản 1",
+            "similarity_score": 0.923023
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "question": "Nhà trọ có nhiều phòng cần đáp ứng những yêu cầu an toàn cháy nổ nào?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 20. Phòng cháy đối với nhà ở",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 21. Phòng cháy đối với nhà ở kết hợp sản xuất, kinh doanh",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 23. Phòng cháy đối với cơ sở",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 20. Phòng cháy đối với nhà ở",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 21. Phòng cháy đối với nhà ở kết hợp sản xuất, kinh doanh",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 23. Phòng cháy đối với cơ sở",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "question": "Nếu lối thoát nạn bị khóa hoặc bị chặn, người thuê nên làm gì?",
+      "before": {
+        "confidence": 0.8722225,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 20. Phòng cháy đối với nhà ở",
+            "similarity_score": 0.86963
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 21. Phòng cháy đối với nhà ở kết hợp sản xuất, kinh doanh",
+            "similarity_score": 0.805731
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 8. Trách nhiệm của cơ quan, tổ chức, hộ gia đình, cá nhân trong | Khoản 7",
+            "similarity_score": 0.701042
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "fire-emergency114-word",
+            "category": "fire_safety",
+            "heading": "Báo cháy 114 — Công an tỉnh Phú Thọ",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s14-word",
+            "category": "fire_safety",
+            "heading": "Tăng cường bảo đảm an toàn PCCC và kỹ năng thoát nạn tại các khu chung cư nhà trọ | Đoạn nguyên văn 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s14-word",
+            "category": "fire_safety",
+            "heading": "Tăng cường bảo đảm an toàn PCCC và kỹ năng thoát nạn tại các khu chung cư nhà trọ | Đoạn nguyên văn 22",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 20. Phòng cháy đối với nhà ở",
+            "similarity_score": 0.777073
+          }
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "question": "Chủ trọ và người thuê có trách nhiệm gì đối với thiết bị điện và an toàn cháy nổ?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 8. Trách nhiệm của cơ quan, tổ chức, hộ gia đình, cá nhân trong | Khoản 8",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 8. Trách nhiệm của cơ quan, tổ chức, hộ gia đình, cá nhân trong | Khoản 6",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 24. Phòng cháy trong lắp đặt, sử dụng điện cho sinh hoạt, sản xuất | Khoản 1",
+            "similarity_score": 0.849553
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 8. Trách nhiệm của cơ quan, tổ chức, hộ gia đình, cá nhân trong | Khoản 8",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "fire55-word",
+            "category": "fire_safety",
+            "heading": "Điều 8. Trách nhiệm của cơ quan, tổ chức, hộ gia đình, cá nhân trong | Khoản 6",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s14-word",
+            "category": "fire_safety",
+            "heading": "Tăng cường bảo đảm an toàn PCCC và kỹ năng thoát nạn tại các khu chung cư nhà trọ | Đoạn nguyên văn 2",
+            "similarity_score": 0.89422
+          }
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "question": "Người giới thiệu phòng trọ và thu phí môi giới cần công khai những thông tin gì?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 46. Nội dung chính của hợp đồng trong kinh doanh bất động sản | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 61. Điều kiện của tổ chức, cá nhân kinh doanh dịch vụ môi giới bất động sản | Khoản 1",
+            "similarity_score": 0.892503
+          },
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 65. Nghĩa vụ của doanh nghiệp kinh doanh dịch vụ môi giới bất động sản, cá nhân hành nghề môi giới bất động sản | Khoản 1",
+            "similarity_score": 0.873786
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 519. Trả tiền dịch vụ | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 520. Đơn phương chấm dứt thực hiện hợp đồng dịch vụ | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 520. Đơn phương chấm dứt thực hiện hợp đồng dịch vụ | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 46. Nội dung chính của hợp đồng trong kinh doanh bất động sản | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "question": "Trước khi chuyển tiền cho người môi giới, tôi nên kiểm tra quyền cho thuê và thông tin phòng như thế nào?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 46. Nội dung chính của hợp đồng trong kinh doanh bất động sản | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 160. Điều kiện của nhà ở tham gia giao dịch | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 161. Điều kiện của các bên tham gia giao dịch về nhà ở | Khoản 3",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 520. Đơn phương chấm dứt thực hiện hợp đồng dịch vụ | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 46. Nội dung chính của hợp đồng trong kinh doanh bất động sản | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 520. Đơn phương chấm dứt thực hiện hợp đồng dịch vụ | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 513. Hợp đồng dịch vụ",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "question": "Nếu người môi giới đưa thông tin khác với phòng thực tế, người thuê có thể làm gì?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 46. Nội dung chính của hợp đồng trong kinh doanh bất động sản | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 65. Nghĩa vụ của doanh nghiệp kinh doanh dịch vụ môi giới bất động sản, cá nhân hành nghề môi giới bất động sản | Khoản 1",
+            "similarity_score": 0.977126
+          },
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 65. Nghĩa vụ của doanh nghiệp kinh doanh dịch vụ môi giới bất động sản, cá nhân hành nghề môi giới bất động sản | Khoản 2",
+            "similarity_score": 0.82236
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 519. Trả tiền dịch vụ | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 520. Đơn phương chấm dứt thực hiện hợp đồng dịch vụ | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 520. Đơn phương chấm dứt thực hiện hợp đồng dịch vụ | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 46. Nội dung chính của hợp đồng trong kinh doanh bất động sản | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "question": "Khoản phí môi giới nên được thỏa thuận và thể hiện trong giấy tờ ra sao?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 46. Nội dung chính của hợp đồng trong kinh doanh bất động sản | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 65. Nghĩa vụ của doanh nghiệp kinh doanh dịch vụ môi giới bất động sản, cá nhân hành nghề môi giới bất động sản | Khoản 1",
+            "similarity_score": 0.936609
+          },
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 65. Nghĩa vụ của doanh nghiệp kinh doanh dịch vụ môi giới bất động sản, cá nhân hành nghề môi giới bất động sản | Khoản 2",
+            "similarity_score": 0.841206
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 519. Trả tiền dịch vụ | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 520. Đơn phương chấm dứt thực hiện hợp đồng dịch vụ | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 520. Đơn phương chấm dứt thực hiện hợp đồng dịch vụ | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "broker29-word",
+            "category": "real_estate_brokerage",
+            "heading": "Điều 46. Nội dung chính của hợp đồng trong kinh doanh bất động sản | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "question": "Khi tìm phòng qua một nền tảng trực tuyến, tôi nên kiểm tra người đăng và nguồn tin như thế nào?",
+      "before": {
+        "confidence": 0.5068285,
+        "passes_threshold": false,
+        "sources": [
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 163. Hợp đồng về nhà ở | Khoản 1",
+            "similarity_score": 0.382438
+          },
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 145. Trách nhiệm tiếp nhận và thẩm quyền giải quyết tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 3",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "consumer19-word",
+            "category": "housing_contract",
+            "heading": "Điều 10. Các hành vi bị nghiêm cấm trong bảo vệ quyền lợi người tiêu dùng | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 87. Nguồn chứng cứ | Khoản 1",
+            "similarity_score": 0.642429
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.75421825,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "supplement-s09-word",
+            "category": "ecommerce_platform",
+            "heading": "Nhà Tốt bảo vệ người dùng như thế nào | Đoạn nguyên văn 75",
+            "similarity_score": 0.712291
+          },
+          {
+            "source_id": "google-lens-word",
+            "category": "ecommerce_platform",
+            "heading": "Google Lens — tìm ảnh và trang chứa ảnh tương tự",
+            "similarity_score": 0.584589
+          },
+          {
+            "source_id": "supplement-s12-word",
+            "category": "criminal_law",
+            "heading": "Cảnh giác mạo danh Fanpage khách sạn nhà hàng đặt cọc trực tuyến dịp Lễ hội Thành Tuyên 2026 | Đoạn nguyên văn 12",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s01-word",
+            "category": "housing_contract",
+            "heading": "Mẹo khi thuê phòng | Đoạn nguyên văn 78",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "question": "Nếu một tin đăng nhà trọ có thông tin sai, tôi có thể báo cáo cho nền tảng bằng cách nào?",
+      "before": {
+        "confidence": 0,
+        "passes_threshold": false,
+        "sources": []
+      },
+      "after": {
+        "confidence": 0.85306225,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "supplement-s08-word",
+            "category": "ecommerce_platform",
+            "heading": "Làm thế nào để báo cáo tin đăng | Đoạn nguyên văn 93",
+            "similarity_score": 0.844083
+          },
+          {
+            "source_id": "nhatot-report-proof-word",
+            "category": "ecommerce_platform",
+            "heading": "Hình ảnh trao đổi khi phản ánh tin đăng/người bán vi phạm",
+            "similarity_score": 0.732908
+          },
+          {
+            "source_id": "supplement-s16-word",
+            "category": "ecommerce_platform",
+            "heading": "Điều 17. Trách nhiệm của chủ quản nền tảng thương mại điện tử | Khoản 1",
+            "similarity_score": 0.808612
+          },
+          {
+            "source_id": "supplement-s16-word",
+            "category": "ecommerce_platform",
+            "heading": "Điều 18. Trách nhiệm của chủ quản nền tảng thương mại điện tử trung gian | Khoản 1",
+            "similarity_score": 0.809169
+          },
+          {
+            "source_id": "supplement-s16-word",
+            "category": "ecommerce_platform",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.844083
+          }
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "question": "Nền tảng đăng tin có trách nhiệm gì đối với thông tin người bán hoặc người cho thuê theo tài liệu hiện có?",
+      "before": {
+        "confidence": 0,
+        "passes_threshold": false,
+        "sources": []
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "supplement-s16-word",
+            "category": "ecommerce_platform",
+            "heading": "Điều 17. Trách nhiệm của chủ quản nền tảng thương mại điện tử | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s16-word",
+            "category": "ecommerce_platform",
+            "heading": "Điều 18. Trách nhiệm của chủ quản nền tảng thương mại điện tử trung gian | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s16-word",
+            "category": "ecommerce_platform",
+            "heading": "Điều 18. Trách nhiệm của chủ quản nền tảng thương mại điện tử trung gian | Khoản 2",
+            "similarity_score": 0.960623
+          },
+          {
+            "source_id": "supplement-s16-word",
+            "category": "ecommerce_platform",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "question": "Nếu người đăng yêu cầu chuyển cọc qua liên kết lạ, tôi nên kiểm tra những dấu hiệu nào trước khi trả tiền?",
+      "before": {
+        "confidence": 0.84437875,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "consumer19-word",
+            "category": "housing_contract",
+            "heading": "Điều 10. Các hành vi bị nghiêm cấm trong bảo vệ quyền lợi người tiêu dùng | Khoản 2",
+            "similarity_score": 0.832505
+          },
+          {
+            "source_id": "consumer19-word",
+            "category": "housing_contract",
+            "heading": "Điều 10. Các hành vi bị nghiêm cấm trong bảo vệ quyền lợi người tiêu dùng | Khoản 1",
+            "similarity_score": 0.698126
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 328. Đặt cọc",
+            "similarity_score": 0.660356
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.832505
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "supplement-s11-word",
+            "category": "criminal_law",
+            "heading": "Cảnh báo các thủ đoạn lừa đảo học sinh tân sinh viên mùa tựu trường | Đoạn nguyên văn 12",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s12-word",
+            "category": "criminal_law",
+            "heading": "Cảnh giác mạo danh Fanpage khách sạn nhà hàng đặt cọc trực tuyến dịp Lễ hội Thành Tuyên 2026 | Đoạn nguyên văn 12",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "online-secrets-1-word",
+            "category": "criminal_law",
+            "heading": "Cảnh báo bảo mật và liên kết lạ — Bộ Công an",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s16-word",
+            "category": "ecommerce_platform",
+            "heading": "Điều 17. Trách nhiệm của chủ quản nền tảng thương mại điện tử | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s16-word",
+            "category": "ecommerce_platform",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "question": "Chủ trọ có thể yêu cầu tôi cung cấp những thông tin cá nhân nào để làm hợp đồng và đăng ký cư trú?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 9. Sự đồng ý của chủ thể dữ liệu cá nhân | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 163. Hợp đồng về nhà ở | Khoản 1",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "residence68-word",
+            "category": "residence",
+            "heading": "Điều 28. Hồ sơ, thủ tục đăng ký tạm trú, gia hạn tạm trú | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 9. Sự đồng ý của chủ thể dữ liệu cá nhân | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "housing79-word",
+            "category": "housing_contract",
+            "heading": "Điều 163. Hợp đồng về nhà ở | Khoản 1",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "question": "Ảnh căn cước công dân của người thuê được lưu và sử dụng như thế nào?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 3. Nguyên tắc bảo vệ dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 15. Cung cấp dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 10. Yêu cầu rút lại sự đồng ý, yêu cầu hạn chế xử lý dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 9. Sự đồng ý của chủ thể dữ liệu cá nhân | Khoản 2",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 3. Nguyên tắc bảo vệ dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 15. Cung cấp dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 10. Yêu cầu rút lại sự đồng ý, yêu cầu hạn chế xử lý dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 9. Sự đồng ý của chủ thể dữ liệu cá nhân | Khoản 2",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "question": "Chủ trọ có được đăng công khai ảnh giấy tờ hoặc số điện thoại của tôi không?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 16. Công khai dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 3. Nguyên tắc bảo vệ dữ liệu cá nhân | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 9. Sự đồng ý của chủ thể dữ liệu cá nhân | Khoản 2",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 16. Công khai dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 3. Nguyên tắc bảo vệ dữ liệu cá nhân | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 9. Sự đồng ý của chủ thể dữ liệu cá nhân | Khoản 2",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "question": "Nếu thông tin cá nhân của tôi bị chia sẻ sai mục đích, tôi nên yêu cầu xử lý như thế nào?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "privacy356-word",
+            "category": "privacy_data",
+            "heading": "Điều 5. Thực hiện quyền của chủ thể dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 10. Yêu cầu rút lại sự đồng ý, yêu cầu hạn chế xử lý dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 3. Nguyên tắc bảo vệ dữ liệu cá nhân | Khoản 2",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "privacy356-word",
+            "category": "privacy_data",
+            "heading": "Điều 5. Thực hiện quyền của chủ thể dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 10. Yêu cầu rút lại sự đồng ý, yêu cầu hạn chế xử lý dữ liệu cá nhân",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "privacy91-word",
+            "category": "privacy_data",
+            "heading": "Điều 3. Nguyên tắc bảo vệ dữ liệu cá nhân | Khoản 2",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "question": "Người đăng yêu cầu đặt cọc trước nhưng không cho xem phòng: tôi nên kiểm tra những dấu hiệu rủi ro nào?",
+      "before": {
+        "confidence": 0.9683575,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "criminal135-word",
+            "category": "criminal_law",
+            "heading": "Điều 174. Tội lừa đảo chiếm đoạt tài sản | Khoản 1",
+            "similarity_score": 0.99781
+          },
+          {
+            "source_id": "criminal135-word",
+            "category": "criminal_law",
+            "heading": "Điều 174. Tội lừa đảo chiếm đoạt tài sản | Khoản 2",
+            "similarity_score": 0.925375
+          },
+          {
+            "source_id": "criminal135-word",
+            "category": "criminal_law",
+            "heading": "Điều 175. Tội lạm dụng tín nhiệm chiếm đoạt tài sản[102] | Khoản 1",
+            "similarity_score": 0.921271
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "supplement-s12-word",
+            "category": "criminal_law",
+            "heading": "Cảnh giác mạo danh Fanpage khách sạn nhà hàng đặt cọc trực tuyến dịp Lễ hội Thành Tuyên 2026 | Đoạn nguyên văn 12",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s11-word",
+            "category": "criminal_law",
+            "heading": "Cảnh báo các thủ đoạn lừa đảo học sinh tân sinh viên mùa tựu trường | Đoạn nguyên văn 12",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "criminal135-word",
+            "category": "criminal_law",
+            "heading": "Điều 174. Tội lừa đảo chiếm đoạt tài sản | Khoản 1",
+            "similarity_score": 0.95749
+          }
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "question": "Tôi đã chuyển cọc cho một tin trọ có dấu hiệu giả mạo; nên lưu lại bằng chứng gì và trình báo ở đâu?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 145. Trách nhiệm tiếp nhận và thẩm quyền giải quyết tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 145. Trách nhiệm tiếp nhận và thẩm quyền giải quyết tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 3",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 144. Tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 2",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "supplement-s12-word",
+            "category": "criminal_law",
+            "heading": "Cảnh giác mạo danh Fanpage khách sạn nhà hàng đặt cọc trực tuyến dịp Lễ hội Thành Tuyên 2026 | Đoạn nguyên văn 12",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 145. Trách nhiệm tiếp nhận và thẩm quyền giải quyết tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 145. Trách nhiệm tiếp nhận và thẩm quyền giải quyết tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 3",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "question": "Khi nào tranh chấp tiền cọc có thể có dấu hiệu lừa đảo, và khi nào chỉ là tranh chấp hợp đồng?",
+      "before": {
+        "confidence": 0.7427334999999999,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Điều 328. Đặt cọc",
+            "similarity_score": 0.696978
+          },
+          {
+            "source_id": "criminal135-word",
+            "category": "criminal_law",
+            "heading": "Điều 174. Tội lừa đảo chiếm đoạt tài sản | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "criminal135-word",
+            "category": "criminal_law",
+            "heading": "Điều 174. Tội lừa đảo chiếm đoạt tài sản | Khoản 4",
+            "similarity_score": 0.825832
+          },
+          {
+            "source_id": "civil91-word",
+            "category": "housing_contract",
+            "heading": "Hiệu lực, phạm vi mức phạt và điều khoản chuyển tiếp",
+            "similarity_score": 0.696978
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.773233,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "supplement-s01-word",
+            "category": "housing_contract",
+            "heading": "Mẹo khi thuê phòng | Đoạn nguyên văn 78",
+            "similarity_score": 0.737644
+          },
+          {
+            "source_id": "criminal135-word",
+            "category": "criminal_law",
+            "heading": "Điều 174. Tội lừa đảo chiếm đoạt tài sản | Khoản 1",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "supplement-s11-word",
+            "category": "criminal_law",
+            "heading": "Cảnh báo các thủ đoạn lừa đảo học sinh tân sinh viên mùa tựu trường | Đoạn nguyên văn 12",
+            "similarity_score": 0.814168
+          }
+        ]
+      }
+    },
+    {
+      "id": 36,
+      "question": "Nếu có nhiều sinh viên cùng bị một người nhận cọc rồi cắt liên lạc, chúng tôi nên cung cấp thông tin gì cho cơ quan có thẩm quyền?",
+      "before": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 145. Trách nhiệm tiếp nhận và thẩm quyền giải quyết tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 145. Trách nhiệm tiếp nhận và thẩm quyền giải quyết tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 4",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 145. Trách nhiệm tiếp nhận và thẩm quyền giải quyết tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 3",
+            "similarity_score": 1.0
+          }
+        ]
+      },
+      "after": {
+        "confidence": 0.97,
+        "passes_threshold": true,
+        "sources": [
+          {
+            "source_id": "supplement-s12-word",
+            "category": "criminal_law",
+            "heading": "Cảnh giác mạo danh Fanpage khách sạn nhà hàng đặt cọc trực tuyến dịp Lễ hội Thành Tuyên 2026 | Đoạn nguyên văn 12",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 145. Trách nhiệm tiếp nhận và thẩm quyền giải quyết tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 2",
+            "similarity_score": 1.0
+          },
+          {
+            "source_id": "procedure17-word",
+            "category": "criminal_law",
+            "heading": "Điều 145. Trách nhiệm tiếp nhận và thẩm quyền giải quyết tố giác, tin báo về tội phạm, kiến nghị khởi tố | Khoản 4",
+            "similarity_score": 1.0
+          }
+        ]
+      }
+    }
+  ]
+}

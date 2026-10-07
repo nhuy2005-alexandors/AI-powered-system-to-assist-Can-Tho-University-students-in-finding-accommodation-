@@ -7,7 +7,7 @@ services:
       CHATBOT_GRAPH_SCHEMA: graph_rag_v4
       CHATBOT_LISTING_SCHEMA: housing_graph_v4
       CHATBOT_LEGAL_SCHEMA: legal_v6_20261005
-      CHATBOT_LLM_PROVIDER: gemini
+      CHATBOT_LLM_PROVIDER: qwen
       CHATBOT_AGENTS_ENABLED: "true"
       CHATBOT_ANSWER_SYNTHESIS_ENABLED: "true"
   ragas-eval:
@@ -16,10 +16,10 @@ services:
       CHATBOT_GRAPH_SCHEMA: graph_rag_v4
       CHATBOT_LISTING_SCHEMA: housing_graph_v4
       CHATBOT_LEGAL_SCHEMA: legal_v6_20261005
-      CHATBOT_LLM_PROVIDER: gemini
+      CHATBOT_LLM_PROVIDER: qwen
       CHATBOT_AGENTS_ENABLED: "true"
       CHATBOT_ANSWER_SYNTHESIS_ENABLED: "true"
     volumes:
       - ./docs:/workspace/docs
       - ./Datehouse:/catalog:ro
-      - ./docs/CHATBOT_QUESTION_BANK.md:/housing_bank.md:ro
+      - ./eval/datasets/chatbot_question_bank.txt:/housing_bank.md:ro

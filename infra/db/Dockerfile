@@ -25,3 +25,5 @@ COPY migrations/95_fr_delivery.sql /docker-entrypoint-initdb.d/95-fr-delivery.sq
 COPY migrations/96_reviews_sentiment.sql /docker-entrypoint-initdb.d/96-reviews-sentiment.sql
 COPY migrations/97_response_performance.sql /docker-entrypoint-initdb.d/97-response-performance.sql
 COPY migrations/98_legal_quality.sql /docker-entrypoint-initdb.d/98-legal-quality.sql
+COPY migrations/99_chat_history.sql /docker-entrypoint-initdb.d/99-chat-history.sql
+COPY migrations/100_shared_answers_document_control.sql /docker-entrypoint-initdb.d/100-shared-answers-document-control.sql

@@ -5,4 +5,4 @@ services:
       CHATBOT_LISTING_SCHEMA: housing_v2
     volumes:
       - ./Datehouse:/catalog:ro
-      - ./docs/CHATBOT_QUESTION_BANK.md:/housing_bank.md:ro
+      - ./eval/datasets/chatbot_question_bank.txt:/housing_bank.md:ro

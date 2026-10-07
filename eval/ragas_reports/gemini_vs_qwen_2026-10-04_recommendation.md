@@ -1,7 +1,0 @@
-**Đề xuất chọn phương án B — Gemini phân tích, Qwen chọn trích đoạn — cho phần hỏi đáp pháp lý khi ưu tiên bám nguồn.** B có 15/36 câu đủ theo kiểm tra hệ thống, so với 12/36 của A. Trên các cặp có điểm, mức bám nguồn của B cao hơn; ngay cả khi ba điểm Faithfulness còn thiếu nhận giá trị thấp nhất, trung bình toàn bộ B vẫn cao hơn A. Điểm liên quan câu hỏi và hữu dụng ngữ cảnh gần với A, nên không kết luận B cải thiện rõ hai chỉ số này.
-
-Đánh đổi là thời gian và độ dài: p50 của B là 30,7 giây, A là 18,2 giây; p95 tương ứng 66,3 và 25,3 giây. Phản hồi B dài trung vị 2.473 ký tự, A khoảng 856 ký tự. Nếu cần trả lời ngắn và nhanh, A phù hợp hơn. B hiện chọn và ghép nguồn nguyên văn, chưa phải một luồng giải thích/tư vấn áp dụng luật đã kiểm định.
-
-Khuyến nghị này giới hạn ở bộ 36 câu pháp lý và máy hiện tại, không suy ra hiệu quả tìm phòng. B vẫn có 21 phản hồi một phần; Gemini phân tích thành công 28/36 câu và fallback bằng quy tắc ở 8 câu. Ba điểm Faithfulness ở câu 6–8 giữ N/A sau một lượt thử lại; so sánh điểm này dùng 33 cặp tương ứng. Chưa có đáp án chuẩn độc lập, nên không gọi điểm bám nguồn là tỷ lệ đúng pháp luật.
-
-Cả hai còn thiếu 12 tệp mới trong chỉ mục. Bước tiếp theo nên nạp và xác minh các nguồn bổ sung, rà thủ công những câu thay đổi kết quả (đặc biệt điện, PCCC và dữ liệu cá nhân), rồi chạy lại trước khi nghiệm thu. Cải thiện cách rút gọn và giải thích đáp án Qwen là đề xuất tiếp theo, chưa được kiểm thử trong lượt này.

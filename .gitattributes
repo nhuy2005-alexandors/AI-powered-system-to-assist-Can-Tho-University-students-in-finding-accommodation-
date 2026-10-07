@@ -31,3 +31,7 @@ eval/reports/legal_repair*.json -text whitespace=cr-at-eol
 CTU_LEGAL_REVIEW_36.md -text whitespace=cr-at-eol
 # Public legal-only baseline for the reproducible 36-question comparison.
 eval/reports/graph_rag_priority7_36_v20_2026-10-06.json -text whitespace=cr-at-eol
+# Consolidated archives and question banks preserve the original documents.
+docs/CHATBOT.md -text -whitespace
+eval/datasets/*question_bank.txt -text -whitespace
+eval/datasets/legal_reference_point_review.txt -text -whitespace

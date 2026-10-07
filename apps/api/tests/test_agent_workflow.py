@@ -104,7 +104,7 @@ def test_workflow_keeps_selected_source_scope_and_records_roles():
     assert 'Các đoạn trả lời trực tiếp' not in result.answer
     assert selector.calls == client.writes == client.checks == 1
     roles = [step['agent'] for step in result.agent_trace]
-    assert roles[:5] == ['question_analysis', 'legal_retrieval', 'source_coverage', 'evidence_selection', 'answer_synthesis']
+    assert roles[:4] == ['question_analysis', 'legal_retrieval', 'evidence_selection', 'answer_synthesis']
     assert any(s['agent'] == 'source_verification' and s['provider'] == 'gemini' and s['status'] == 'accepted' for s in result.agent_trace)
 
 

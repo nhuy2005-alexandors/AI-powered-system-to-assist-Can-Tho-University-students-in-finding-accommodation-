@@ -98,7 +98,7 @@ def test_separate_verifier_never_generates_the_answer_and_records_fallback():
         def check_legal_evidence(self,*args,**kwargs): raise RuntimeError('HTTP 429')
     fallback=QwenAnswerAgent(Local(),Unavailable()).check_legal_evidence('question','answer',[])
     assert fallback==['local issue']
-    assert fallback.trace['provider']=='rules' and fallback.trace['http_status']==429
+    assert fallback.trace['provider']=='qwen_and_rules' and fallback.trace['http_status']==429
     assert fallback.degraded_reasons
 
 

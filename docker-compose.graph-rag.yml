@@ -5,13 +5,13 @@ services:
       CHATBOT_GRAPH_ENABLED: "true"
       CHATBOT_GRAPH_SCHEMA: graph_rag_v1
       CHATBOT_LISTING_SCHEMA: housing_graph_v1
-      CHATBOT_LLM_PROVIDER: gemini
+      CHATBOT_LLM_PROVIDER: qwen
   ragas-eval:
     environment:
       CHATBOT_GRAPH_ENABLED: "true"
       CHATBOT_GRAPH_SCHEMA: graph_rag_v1
       CHATBOT_LISTING_SCHEMA: housing_graph_v1
-      CHATBOT_LLM_PROVIDER: gemini
+      CHATBOT_LLM_PROVIDER: qwen
     volumes:
       - ./Datehouse:/catalog:ro
-      - ./docs/CHATBOT_QUESTION_BANK.md:/housing_bank.md:ro
+      - ./eval/datasets/chatbot_question_bank.txt:/housing_bank.md:ro

@@ -1,0 +1,316 @@
+{
+  "documents": 44,
+  "provisions": 491,
+  "originals_verified": true,
+  "manifest_and_provision_hashes_verified": true,
+  "entries": [
+    {
+      "id": "housing79-word",
+      "category": "housing_contract",
+      "source_file": "docs/legal_word_corpus_v7_20261005/housing79-word.json",
+      "provisions": 37,
+      "verified_original": true
+    },
+    {
+      "id": "consumer19-word",
+      "category": "housing_contract",
+      "source_file": "docs/legal_word_corpus_v7_20261005/consumer19-word.json",
+      "provisions": 29,
+      "verified_original": true
+    },
+    {
+      "id": "electricity61-word",
+      "category": "electricity",
+      "source_file": "docs/legal_word_corpus_v7_20261005/electricity61-word.json",
+      "provisions": 26,
+      "verified_original": true
+    },
+    {
+      "id": "electricity60-word",
+      "category": "electricity",
+      "source_file": "docs/legal_word_corpus_v7_20261005/electricity60-word.json",
+      "provisions": 10,
+      "verified_original": true
+    },
+    {
+      "id": "electricity1279-word",
+      "category": "electricity",
+      "source_file": "docs/legal_word_corpus_v7_20261005/electricity1279-word.json",
+      "provisions": 4,
+      "verified_original": true
+    },
+    {
+      "id": "fire105-word",
+      "category": "fire_safety",
+      "source_file": "docs/legal_word_corpus_v7_20261005/fire105-word.json",
+      "provisions": 2,
+      "verified_original": true
+    },
+    {
+      "id": "broker29-word",
+      "category": "real_estate_brokerage",
+      "source_file": "docs/legal_word_corpus_v7_20261005/broker29-word.json",
+      "provisions": 15,
+      "verified_original": true
+    },
+    {
+      "id": "identity26-word",
+      "category": "privacy_data",
+      "source_file": "docs/legal_word_corpus_v7_20261005/identity26-word.json",
+      "provisions": 19,
+      "verified_original": true
+    },
+    {
+      "id": "privacy91-word",
+      "category": "privacy_data",
+      "source_file": "docs/legal_word_corpus_v7_20261005/privacy91-word.json",
+      "provisions": 42,
+      "verified_original": true
+    },
+    {
+      "id": "privacy356-word",
+      "category": "privacy_data",
+      "source_file": "docs/legal_word_corpus_v7_20261005/privacy356-word.json",
+      "provisions": 15,
+      "verified_original": true
+    },
+    {
+      "id": "water215-word",
+      "category": "water_cantho",
+      "source_file": "docs/legal_word_corpus_v7_20261005/water215-word.json",
+      "provisions": 6,
+      "verified_original": true
+    },
+    {
+      "id": "criminal135-word",
+      "category": "criminal_law",
+      "source_file": "docs/legal_word_corpus_v7_20261005/criminal135-word.json",
+      "provisions": 10,
+      "verified_original": true
+    },
+    {
+      "id": "procedure17-word",
+      "category": "criminal_law",
+      "source_file": "docs/legal_word_corpus_v7_20261005/procedure17-word.json",
+      "provisions": 15,
+      "verified_original": true
+    },
+    {
+      "id": "civil91-word",
+      "category": "housing_contract",
+      "source_file": "docs/legal_word_repair_corpus_v14_20261006/civil91-word.json",
+      "provisions": 46,
+      "verified_original": true
+    },
+    {
+      "id": "fire55-word",
+      "category": "fire_safety",
+      "source_file": "docs/legal_word_corpus_v7_20261005/fire55-word.json",
+      "provisions": 25,
+      "verified_original": true
+    },
+    {
+      "id": "residence68-word",
+      "category": "residence",
+      "source_file": "docs/legal_word_repair_corpus_v16_20261006/residence68-word.json",
+      "provisions": 46,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s01-word",
+      "category": "housing_contract",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s01-word.json",
+      "provisions": 2,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s02-word",
+      "category": "housing_contract",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s02-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s03-word",
+      "category": "electricity",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s03-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s04-word",
+      "category": "ecommerce_platform",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s04-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s05-word",
+      "category": "water_cantho",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s05-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s06-word",
+      "category": "water_cantho",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s06-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s08-word",
+      "category": "ecommerce_platform",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s08-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s09-word",
+      "category": "ecommerce_platform",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s09-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s10-word",
+      "category": "ecommerce_platform",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s10-word.json",
+      "provisions": 4,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s11-word",
+      "category": "criminal_law",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s11-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s12-word",
+      "category": "criminal_law",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s12-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s14-word",
+      "category": "fire_safety",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s14-word.json",
+      "provisions": 2,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s15-word",
+      "category": "ecommerce_platform",
+      "source_file": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s15-word.json",
+      "provisions": 41,
+      "verified_original": true
+    },
+    {
+      "id": "supplement-s16-word",
+      "category": "ecommerce_platform",
+      "source_file": "docs/legal_word_priority7_corpus_v13_20261006/supplement-s16-word.json",
+      "provisions": 26,
+      "verified_original": true
+    },
+    {
+      "id": "google-lens-word",
+      "category": "ecommerce_platform",
+      "source_file": "docs/legal_word_focus3_corpus_v10_20261006/google-lens-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "nhatot-report-proof-word",
+      "category": "ecommerce_platform",
+      "source_file": "docs/legal_word_focus3_corpus_v11_20261006/nhatot-report-proof-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "evn-cantho-transparency-word",
+      "category": "electricity",
+      "source_file": "docs/legal_word_priority7_corpus_v13_20261006/evn-cantho-transparency-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "fire-emergency114-word",
+      "category": "fire_safety",
+      "source_file": "docs/legal_word_priority7_corpus_v13_20261006/fire-emergency114-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "online-secrets-0-word",
+      "category": "criminal_law",
+      "source_file": "docs/legal_word_repair_corpus_v14_20261006/online-secrets-0-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "online-secrets-1-word",
+      "category": "criminal_law",
+      "source_file": "docs/legal_word_repair_corpus_v14_20261006/online-secrets-1-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "online-fake-link-0-word",
+      "category": "criminal_law",
+      "source_file": "docs/legal_word_repair_corpus_v14_20261006/online-fake-link-0-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "online-fake-link-1-word",
+      "category": "criminal_law",
+      "source_file": "docs/legal_word_repair_corpus_v14_20261006/online-fake-link-1-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "residence154-official-word",
+      "category": "residence",
+      "source_file": "docs/legal_word_repair_corpus_v16_20261006/residence154-official-word.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "residence58-official-word",
+      "category": "residence",
+      "source_file": "docs/legal_word_repair_corpus_v16_20261006/residence58-official-word.json",
+      "provisions": 5,
+      "verified_original": true
+    },
+    {
+      "id": "ctu-2026-registration",
+      "category": "student_housing",
+      "source_file": "docs/ctu_ktx_corpus_20261007/ctu-2026-registration.json",
+      "provisions": 2,
+      "verified_original": true
+    },
+    {
+      "id": "ctu-new-students",
+      "category": "student_housing",
+      "source_file": "docs/ctu_ktx_corpus_20261007/ctu-new-students.json",
+      "provisions": 1,
+      "verified_original": true
+    },
+    {
+      "id": "ctu-ktx-rules",
+      "category": "student_housing",
+      "source_file": "docs/ctu_ktx_corpus_20261007/ctu-ktx-rules.json",
+      "provisions": 42,
+      "verified_original": true
+    },
+    {
+      "id": "ctu-ktx-facilities",
+      "category": "student_housing",
+      "source_file": "docs/ctu_ktx_corpus_20261007/ctu-ktx-facilities.json",
+      "provisions": 1,
+      "verified_original": true
+    }
+  ]
+}

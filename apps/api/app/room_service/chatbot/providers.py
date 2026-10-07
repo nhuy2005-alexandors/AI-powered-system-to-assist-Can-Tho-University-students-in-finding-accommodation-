@@ -145,12 +145,6 @@ class GenerationResult:
     agent_trace: tuple[dict, ...] = ()
     source_fallback: GenerationResult | None = None
     claim_records: tuple[dict, ...] = ()
-    content_completeness: str | None = None
-    source_coverage_status: str = 'not_evaluated'
-    answer_coverage_status: str = 'not_evaluated'
-    provenance_status: str = 'not_evaluated'
-    application_status: str = 'not_evaluated'
-    completion_reasons: tuple[str, ...] = ()
 
     @property
     def text_for_verification(self) -> str:
@@ -439,28 +433,13 @@ class OllamaQwenGenerator:
                 response.raise_for_status();data=response.json()
                 if data.get('done_reason')=='length':raise RuntimeError('Incomplete source selection')
                 return data['message']['content']
-            from dataclasses import replace
-            attempts = []
             raw=select(prompt)
-            try:
-                attempts.append({'attempt': 1, 'selected_ids': json.loads(raw).get('selected_ids', [])})
-            except Exception:
-                pass
             missing=missing_selection_facets(question,candidates,raw)
             if missing:
                 raw=select(prompt+'\nLần chọn trước bỏ sót các ý/chủ đề người dùng đã hỏi: '
                     +json.dumps(missing,ensure_ascii=False)+'. Chọn lại các ID cho toàn bộ câu hỏi. '
                     'Chỉ dùng đoạn có sẵn, đúng phạm vi; nếu vẫn thiếu thì insufficient=true. Không tự viết luật.')
-                try:
-                    attempts.append({'attempt': 2, 'selected_ids': json.loads(raw).get('selected_ids', [])})
-                except Exception:
-                    pass
-            draft = render_selection(question,contexts,candidates,raw,self.provider_name,self.model)
-            decision_trace = {
-                'agent': 'selection_decision', 'provider': 'qwen', 'model': self.model,
-                'attempts': attempts, 'missing_facets': missing
-            }
-            return replace(draft, agent_trace=(*draft.agent_trace, decision_trace))
+            return render_selection(question,contexts,candidates,raw,self.provider_name,self.model)
         system_prompt = (
             LEGAL_SYSTEM_PROMPT if context_kind == "legal" else SYSTEM_PROMPT
         )
@@ -562,24 +541,11 @@ class GeminiGenerator:
             remaining = deadline - time.monotonic()
             if remaining <= 0:
                 raise RuntimeError("Gemini hết thời gian gọi")
-            for transient_attempt in range(2):
-                remaining = deadline - time.monotonic()
-                if remaining <= 0:
-                    raise RuntimeError("Gemini hết thời gian gọi")
-                from .request_telemetry import post_with_telemetry
-                response = post_with_telemetry(self._client,
-                    f"{self.base_url}/models/{self.model}:generateContent",
-                    headers={"Content-Type": "application/json", "x-goog-api-key": self.api_keys[index]},
-                    json=payload, timeout=httpx.Timeout(min(self.per_request_timeout_seconds, remaining), connect=min(5.0, remaining)),
-                )
-                # One retry on a transient gateway/server error, on the same
-                # credential and inside the original deadline. Quota, overload
-                # and timeouts keep their existing fail-fast/cooldown behavior.
-                if (response.status_code not in (500, 502, 504) or transient_attempt
-                        or deadline - time.monotonic() <= 0.25):
-                    break
-                response.close()
-                time.sleep(0.25)
+            response = self._client.post(
+                f"{self.base_url}/models/{self.model}:generateContent",
+                headers={"Content-Type": "application/json", "x-goog-api-key": self.api_keys[index]},
+                json=payload, timeout=httpx.Timeout(min(self.per_request_timeout_seconds, remaining), connect=min(5.0, remaining)),
+            )
             if response.status_code in (401, 403):
                 last_status = response.status_code
                 with self._key_lock:
@@ -613,13 +579,6 @@ class GeminiGenerator:
         raise RuntimeError(f"Gemini chưa có khóa truy cập được (HTTP {last_status or 'cooldown'})")
 
     def request_json(self, prompt: str, schema: dict, *, max_output_tokens: int = 8192) -> tuple[str, dict]:
-        from .request_telemetry import json_call
-        with json_call(self.model, schema) as record:
-            result, usage = self._request_json(prompt, schema, max_output_tokens=max_output_tokens)
-            record['usage'] = usage
-            return result, usage
-
-    def _request_json(self, prompt: str, schema: dict, *, max_output_tokens: int = 8192) -> tuple[str, dict]:
         data = self._request_content({
             "contents": [{"role": "user", "parts": [{"text": prompt}]}],
             "generationConfig": {"temperature": 0, "maxOutputTokens": max_output_tokens,
@@ -788,7 +747,6 @@ class FallbackResponseGenerator:
         self.providers = list(providers)
         self.fallback = fallback or GroundedTemplateGenerator()
         self.initial_degraded_reasons = tuple(initial_degraded_reasons)
-        self.listing_generator = None
 
     def check_legal_evidence(self, question: str, answer: str, contexts: Sequence[dict]) -> list[str]:
         unavailable = []
@@ -807,13 +765,10 @@ class FallbackResponseGenerator:
     def generate(
         self, question: str, contexts: Sequence[dict], *, context_kind: str = "listing"
     ) -> GenerationResult:
-        if context_kind != 'legal' and self.listing_generator is not None:
-            return self.listing_generator.generate(question, contexts, context_kind=context_kind)
         if not contexts:
             return self.fallback.generate(question, contexts, context_kind=context_kind)
 
         reasons = list(self.initial_degraded_reasons)
-        failures = []
         started = time.monotonic()
         for provider in self.providers:
             if time.monotonic() - started >= (180 if context_kind == "legal" else 4):
@@ -834,18 +789,11 @@ class FallbackResponseGenerator:
                     literal_source_answer=result.literal_source_answer,
                     selected_evidence=result.selected_evidence,
                     evidence_limitations=result.evidence_limitations,
-                    agent_trace=(*failures, *result.agent_trace),
+                    agent_trace=result.agent_trace,
                     source_fallback=result.source_fallback,
-                    claim_records=result.claim_records,
                 )
             except Exception as exc:  # provider lỗi không được làm chết chatbot
                 reasons.append(f"{provider_name} không khả dụng ({type(exc).__name__})")
-                if context_kind == 'legal':
-                    status = re.search(r'HTTP (\d{3})', str(exc))
-                    failures.append(dict(agent='evidence_selection', provider=provider_name,
-                        model=getattr(provider, 'model', None), status='unavailable',
-                        error_type=type(exc).__name__, http_status=int(status[1]) if status else None,
-                        attempts=getattr(exc, 'selection_attempts', [])))
 
         result = self.fallback.generate(question, contexts, context_kind=context_kind)
         return GenerationResult(
@@ -853,5 +801,4 @@ class FallbackResponseGenerator:
             provider=result.provider,
             model=result.model,
             degraded_reasons=tuple(reasons),
-            agent_trace=tuple(failures),
         )

@@ -38,15 +38,6 @@ def install(service, engine, cases, schema):
             raise ValueError('Non-legal route blocked before provider call')
         return original_ask(body)
     service.ask=ask
-    for provider in getattr(service.generator, 'providers', []):
-        if hasattr(provider, 'client') and getattr(provider, 'provider_name', None) == 'gemini':
-            original_generate = provider.generate
-            def generate(question, contexts, *, context_kind='listing', _generate=original_generate):
-                if context_kind != 'legal':
-                    raise ValueError('Cloud selector accepts legal evidence only')
-                check(contexts)
-                return _generate(question, contexts, context_kind=context_kind)
-            provider.generate = generate
     writer=getattr(service.generator,'writer',None)
     if writer is not None:
         original_write=writer.synthesize
@@ -54,12 +45,6 @@ def install(service, engine, cases, schema):
             check(draft.selected_evidence)
             return original_write(question,draft,*args,**kwargs)
         writer.synthesize=write
-        if hasattr(writer, 'select_and_synthesize'):
-            original_combined = writer.select_and_synthesize
-            def combined(question, contexts, *args, **kwargs):
-                check(contexts)
-                return original_combined(question, contexts, *args, **kwargs)
-            writer.select_and_synthesize = combined
     verifier=getattr(service.generator,'verifier',None)
     if verifier is not None:
         original_check=verifier.check_legal_evidence

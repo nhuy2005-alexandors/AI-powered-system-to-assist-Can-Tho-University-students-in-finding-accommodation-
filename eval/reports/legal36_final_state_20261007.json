@@ -1,0 +1,20 @@
+{
+  "legal_schema": "legal_ctu_ktx_v2_20261007",
+  "graph_schema": "graph_ctu_ktx_v2_20261007",
+  "active": {
+    "documents": 44,
+    "chunks": 530,
+    "vectors": 530
+  },
+  "base_unchanged": true,
+  "base_after": {
+    "legal_documents": {
+      "rows": 40,
+      "digest": "d53a28bd44ca348c993a1feba21e9817"
+    },
+    "legal_chunks": {
+      "rows": 478,
+      "digest": "815ad2cd756e5c9d5bf9230d5fa79549"
+    }
+  }
+}

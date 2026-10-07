@@ -1,0 +1,92 @@
+{
+  "base_schema": "legal_word_repair_v16_20261006",
+  "legal_schema": "legal_ctu_ktx_v2_20261007",
+  "graph_schema": "graph_ctu_ktx_v2_20261007",
+  "listing_schema": "housing_graph_word_repair_v16",
+  "ktx": {
+    "chunks": 52,
+    "vectors": 52,
+    "documents": 4
+  },
+  "total": {
+    "chunks": 530,
+    "vectors": 530,
+    "documents": 44
+  },
+  "categories": [
+    {
+      "category": "criminal_law",
+      "documents": 8,
+      "chunks": 32
+    },
+    {
+      "category": "ecommerce_platform",
+      "documents": 8,
+      "chunks": 92
+    },
+    {
+      "category": "electricity",
+      "documents": 5,
+      "chunks": 46
+    },
+    {
+      "category": "fire_safety",
+      "documents": 4,
+      "chunks": 32
+    },
+    {
+      "category": "housing_contract",
+      "documents": 5,
+      "chunks": 120
+    },
+    {
+      "category": "privacy_data",
+      "documents": 3,
+      "chunks": 77
+    },
+    {
+      "category": "real_estate_brokerage",
+      "documents": 1,
+      "chunks": 15
+    },
+    {
+      "category": "residence",
+      "documents": 3,
+      "chunks": 55
+    },
+    {
+      "category": "student_housing",
+      "documents": 4,
+      "chunks": 52
+    },
+    {
+      "category": "water_cantho",
+      "documents": 3,
+      "chunks": 9
+    }
+  ],
+  "indexed": [],
+  "source_before": {
+    "legal_documents": {
+      "rows": 40,
+      "digest": "d53a28bd44ca348c993a1feba21e9817"
+    },
+    "legal_chunks": {
+      "rows": 478,
+      "digest": "815ad2cd756e5c9d5bf9230d5fa79549"
+    }
+  },
+  "source_after": {
+    "legal_documents": {
+      "rows": 40,
+      "digest": "d53a28bd44ca348c993a1feba21e9817"
+    },
+    "legal_chunks": {
+      "rows": 478,
+      "digest": "815ad2cd756e5c9d5bf9230d5fa79549"
+    }
+  },
+  "base_unchanged": true,
+  "manifest_sha256": "4e60a863fb9f9a43404eaa5cc196c39d42cf510da31def31bfed87d509f05d84",
+  "activation": "validated; apply docker-compose.ctu-ktx.yml"
+}

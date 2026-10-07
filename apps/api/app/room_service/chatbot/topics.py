@@ -37,8 +37,7 @@ def question_categories(query: str) -> tuple[str, ...]:
     text = normalize_text(query)
     found = [key for key, phrases in TOPICS.items() if any(has_phrase(text, p) for p in phrases)]
     if 'student_housing' in found:
-        # Explicit dormitory questions need CTU operational information first,
-        # including electricity/water fees and cooking rules.
+        # CTU operational information comes first for explicit KTX questions.
         found = ['student_housing', *(key for key in found if key != 'student_housing')]
     if user_listing_check_question(query):
         # Include published rental/fraud checking advice; do not route a human

@@ -13,7 +13,9 @@ paths = list(manifest['input_sha256']) + ['docs/LEGAL_QUESTION_BANK.md',
 unpublished, changed, markers = [], [], []
 for relative in paths:
     result = subprocess.run(['git', 'show', BASELINE + ':' + relative], cwd=ROOT, capture_output=True)
-    content = (ROOT / relative).read_bytes()
+    # Compare the unchanged bank bytes against their historical Git path.
+    actual = 'eval/datasets/legal_question_bank.txt' if relative == 'docs/LEGAL_QUESTION_BANK.md' else relative
+    content = (ROOT / actual).read_bytes()
     if result.returncode:
         unpublished.append(relative)
     elif result.stdout.replace(b'\r\n', b'\n') != content.replace(b'\r\n', b'\n'):
@@ -21,7 +23,7 @@ for relative in paths:
     decoded = content.decode('utf-8')
     for marker in ('Datehouse', 'housing_cases_', '@example.test', 'GEMINI_API_KEY=', 'JWT_SECRET='):
         if marker in decoded: markers.append(dict(file=relative, marker=marker))
-questions = (ROOT / 'docs/LEGAL_QUESTION_BANK.md').read_text(encoding='utf-8')
+questions = (ROOT / 'eval/datasets/legal_question_bank.txt').read_text(encoding='utf-8')
 report = dict(public_repository='https://github.com/phucbeo223/Local-Project-For-Student-Room',
     public_baseline_commit=BASELINE, input_files_checked=len(paths), unpublished_inputs=unpublished,
     changed_since_publication=changed, private_or_secret_marker_hits=markers,

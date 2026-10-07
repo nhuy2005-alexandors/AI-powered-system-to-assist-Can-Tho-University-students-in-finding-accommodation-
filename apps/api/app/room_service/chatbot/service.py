@@ -10,7 +10,6 @@ from .providers import EmbeddingProvider, ResponseGenerator, GroundedTemplateGen
 from .repo import ChatRepository
 from .legal_retrieval import evidence_issues, expand_legal_query, append_commencement_evidence, legal_completion_status
 from .legal_answer import extract_legal_answer, extract_partial_provisions
-from .answer_coverage import missing_answer_facets, coverage_repair_issues, source_coverage, answer_coverage, source_facets
 from .schemas import (
     ChatAskRequest,
     ChatAskResponse,
@@ -201,41 +200,11 @@ class ChatService:
         # not inherit the stricter listing recommendation threshold.
         if confidence < self.confidence_threshold:
             chunks = []
-        # One bounded lexical supplement before selection/writing. Requirements
-        # come from the question; absent retrieved topics are still detectable.
-        source_check = source_coverage(query, chunks)
-        if chunks and source_check['missing_facets']:
-            supplement_started = time.perf_counter()
-            added = []
-            seen = {(r.get('document_id'), r.get('chunk_id')) for r in chunks}
-            missing = source_check['missing_facets']
-            for group in (missing[:3], missing[3:]):
-                if not group or len(chunks) >= 8 or time.perf_counter() - supplement_started >= 15:
-                    continue
-                search = query + '\n' + '; '.join(r['label'] for r in group)
-                more = self.repo.retrieve_legal(search, None, limit=8)
-                for row in more:
-                    key = (row.get('document_id'), row.get('chunk_id'))
-                    if key in seen or len(chunks) >= 8:
-                        continue
-                    if not {r['facet'] for r in group} & source_facets(query, row).keys():
-                        continue
-                    seen.add(key)
-                    row = dict(row, rank=max((r['rank'] for r in chunks), default=0) + 1)
-                    chunks.append(row)
-                    added.append(key)
-            source_check = source_coverage(query, chunks)
-            agent_trace.append(dict(agent='coverage_retrieval', provider='lexical', rounds=1,
-                max_queries=2, max_sources=8, time_budget_seconds=15, model_calls=0,
-                added_source_ids=added, duration_ms=round((time.perf_counter()-supplement_started)*1000)))
-        agent_trace.append(dict(agent='source_coverage', provider='rules', **source_check,
-                                scope='question requirements before evidence selection'))
         if hasattr(self.generator, 'generate_legal'):
             generated = self.generator.generate_legal(query, chunks, question_plan=question_plan)
         else:
             generated = (extract_legal_answer(query, chunks) if self.question_analyzer is None else None) or self.generator.generate(query, chunks, context_kind="legal")
         generation_trace.extend(generated.agent_trace)
-        degraded_reasons.extend(generated.degraded_reasons)
         # Synthesized claims may use only the selected evidence, not other
         # retrieved rows that Qwen omitted. Keep original ranks for the UI.
         verification_chunks = list(generated.selected_evidence) or chunks
@@ -245,8 +214,7 @@ class ChatService:
         verification_trace = generation_trace
         if chunks and generated.provider != "template" and not generated.literal_source_answer:
             generated = replace(generated, text=append_commencement_evidence(generated.text, verification_chunks, query))
-        issues = evidence_issues(generated.text_for_verification, verification_chunks, query,
-            claim_records=generated.claim_records, check_coverage=not bool(generated.claim_records)) if chunks and not generated.literal_source_answer else []
+        issues = evidence_issues(generated.text_for_verification, verification_chunks, query, claim_records=generated.claim_records) if chunks and not generated.literal_source_answer else []
         if generated.literal_source_answer:
             verification_trace.append({'agent':'source_verification','provider':'exact_source_match',
                 'status':'accepted','scope':'verbatim source text only; no legal application inferred'})
@@ -256,36 +224,10 @@ class ChatService:
         rule_records = identify_rule_issues(issues, generated, verification_chunks) if generated.claim_records else []
         if rule_records:
             issues = [json.dumps(r, ensure_ascii=False) for r in rule_records]
-        coverage_gaps = missing_answer_facets(query, verification_chunks, generated.claim_records) if generated.claim_records else []
-        issues.extend(json.dumps(r, ensure_ascii=False) for r in coverage_repair_issues(coverage_gaps))
-        repairable = repairable or bool(coverage_gaps)
         checked = None
-        verified_versions = {}
         def verify(current):
-            from .agents import AgentEvidenceIssues
-            from .claim_verification import ClaimIssues
-            # Reuse a verdict only for the identical claim, source binding and
-            # kind. Changed/new claims still require a fresh verification.
-            preserved = {c['claim_id']: verified_versions[c['claim_id']][1]
-                         for c in current.claim_records if c['claim_id'] in verified_versions
-                         and c == verified_versions[c['claim_id']][0]}
-            pending = tuple(c for c in current.claim_records if c['claim_id'] not in preserved)
-            text = '\n'.join(c['rendered'] for c in pending) if preserved else current.text_for_verification
-            kwargs = {'claim_records': pending} if getattr(self.generator, 'supports_claim_records', False) else {}
-            result = (self.generator.check_legal_evidence(query, text, verification_chunks, **kwargs)
-                      if pending or not preserved else ClaimIssues([]))
-            if not preserved:
-                return result
-            verdicts = {v['claim_id']: v for v in getattr(result, 'verdicts', ())}
-            combined = ClaimIssues([preserved.get(c['claim_id']) or verdicts.get(c['claim_id']) or dict(
-                claim_id=c['claim_id'], source_ids=c['source_ranks'], kind=c['kind'], supported=False,
-                reason='Chưa kiểm chứng được ý mới hoặc đã sửa.') for c in current.claim_records])
-            trace = dict(getattr(result, 'trace', dict(agent='source_verification', provider='rules', status='accepted')),
-                         preserved_claim_ids=list(preserved), checked_claim_ids=[c['claim_id'] for c in pending],
-                         claim_verdicts=combined.verdicts)
-            return AgentEvidenceIssues(combined, trace,
-                unavailable=getattr(result, 'unavailable', False),
-                degraded_reasons=getattr(result, 'degraded_reasons', ()))
+            kwargs = {'claim_records': current.claim_records} if getattr(self.generator, 'supports_claim_records', False) else {}
+            return self.generator.check_legal_evidence(query, current.text_for_verification, verification_chunks, **kwargs)
         if chunks and not generated.literal_source_answer and generated.provider not in {"template", "legal-extractive", "legal-insufficient"} and hasattr(self.generator, "check_legal_evidence"):
             checked = verify(generated)
             if hasattr(checked,'trace'):
@@ -293,13 +235,10 @@ class ChatService:
                 degraded_reasons.extend(checked.degraded_reasons)
             issues.extend(checked)
             repairable = repairable or (bool(checked) and not getattr(checked, "unavailable", False))
-        if issues and repairable and not getattr(checked, 'unavailable', False) and generated.provider not in {"template", "legal-extractive", "legal-insufficient"}:
+        if issues and repairable and generated.provider not in {"template", "legal-extractive", "legal-insufficient"}:
             if generated.source_fallback is not None and hasattr(self.generator, 'repair_legal_answer'):
                 blocked_ids = {r['claim_id'] for r in rule_records}
                 accepted_ids = [v['claim_id'] for v in getattr(checked, 'verdicts', ()) if v['supported'] and v['claim_id'] not in blocked_ids] if 'answer' not in blocked_ids else []
-                records = {c['claim_id']: c for c in generated.claim_records}
-                verified_versions = {v['claim_id']: (records[v['claim_id']], v)
-                                     for v in getattr(checked, 'verdicts', ()) if v['claim_id'] in accepted_ids}
                 generated = self.generator.repair_legal_answer(query, generated,
                     question_plan=question_plan, issues=issues, accepted_ids=accepted_ids)
             else:
@@ -314,8 +253,7 @@ class ChatService:
             verification_chunks = list(generated.selected_evidence) or chunks
             if generated.provider != "template" and not generated.literal_source_answer:
                 generated = replace(generated, text=append_commencement_evidence(generated.text, verification_chunks, query))
-            issues = evidence_issues(generated.text_for_verification, verification_chunks, query,
-                claim_records=generated.claim_records, check_coverage=not bool(generated.claim_records)) if not generated.literal_source_answer else []
+            issues = evidence_issues(generated.text_for_verification, verification_chunks, query, claim_records=generated.claim_records) if not generated.literal_source_answer else []
             deterministic_issues = list(issues)
             rule_records = identify_rule_issues(issues, generated, verification_chunks) if generated.claim_records else []
             if rule_records:
@@ -337,8 +275,7 @@ class ChatService:
             partial_check = ClaimIssues([dict(v, supported=False) if v['claim_id'] in blocked_ids else v
                                         for v in getattr(checked, 'verdicts', ())])
             retained = retained_answer(generated, partial_check)
-            if retained and not evidence_issues(retained.text_for_verification, verification_chunks, query,
-                    claim_records=retained.claim_records, check_coverage=False) and _citation_accuracy(retained.text, verification_chunks) == 1:
+            if retained and not evidence_issues(retained.text_for_verification, verification_chunks, query, claim_records=retained.claim_records) and _citation_accuracy(retained.text, verification_chunks) == 1:
                 degraded_reasons.extend(issues)
                 generated = retained
                 rejected = False
@@ -349,7 +286,7 @@ class ChatService:
             fallback = generated.source_fallback
             if fallback.literal_source_answer and _citation_accuracy(fallback.text, verification_chunks) == 1:
                 degraded_reasons.extend(issues)
-                degraded_reasons.append('Bản tổng hợp chưa được nguồn xác nhận; dùng trích đoạn từ nguồn đã chọn.')
+                degraded_reasons.append('Bản tổng hợp chưa được nguồn xác nhận sau lần sửa; dùng trích đoạn Qwen đã chọn.')
                 generated = fallback
                 rejected = False
                 verification_trace.append({'agent': 'source_verification', 'provider': 'exact_source_match',
@@ -367,50 +304,20 @@ class ChatService:
             degraded_reasons.extend(issues)
         elif partial:
             generated = partial
-        if generated.claim_records:
-            coverage_gaps = missing_answer_facets(query, verification_chunks, generated.claim_records)
-            answer_check = answer_coverage(query, verification_chunks, generated.claim_records)
-            selected_check = source_coverage(query, verification_chunks)
-            generation_trace.append(dict(agent='answer_coverage', provider='rules', **answer_check,
-                scope='selected-source facets; semantic correctness checked separately'))
-            generation_trace.append(dict(agent='selected_source_coverage', provider='rules', **selected_check))
-            gaps = [*coverage_gaps, *selected_check['missing_facets']]
-            generated = replace(generated, source_coverage_status=selected_check['status'],
-                answer_coverage_status=answer_check['status'],
-                content_completeness='partial' if gaps else generated.content_completeness,
-                completion_reasons=(*generated.completion_reasons, *(r['label'] for r in gaps)))
-            if coverage_gaps:
-                notice = 'Chưa đủ căn cứ trong phần trả lời đã kiểm chứng cho: ' + '; '.join(r['label'] for r in coverage_gaps) + '.'
-                generated = replace(generated, text=generated.text + '\n\n' + notice)
-                degraded_reasons.append(notice)
-            if selected_check['missing_facets']:
-                notice = 'Chưa tìm thấy đủ nguồn cho: ' + '; '.join(r['label'] for r in selected_check['missing_facets']) + '.'
-                generated = replace(generated, text=generated.text + '\n\n' + notice)
-                degraded_reasons.append(notice)
         # Keep full clauses for selection, synthesis and verification, but never
         # dump them into a long user-facing fallback. No legal unit is sliced.
-        source_notice = ('Dịch vụ trả lời hoặc kiểm chứng đang gián đoạn; dưới đây chỉ là nguồn tham khảo, '
-                         'chưa phải câu trả lời tổng hợp đã được kiểm chứng.')
-        service_interrupted = any(s.get('error_type') and s.get('status') in ('unavailable', 'fallback')
-                                  for s in generation_trace)
-        source_only = service_interrupted and not generated.claim_records
-        if generated.literal_source_answer and (len(generated.text) > 3500 or source_only) and generated.selected_evidence:
+        if generated.literal_source_answer and len(generated.text) > 3500 and generated.selected_evidence:
             from .source_selection import render_source_fallback
             parts = [dict(document=row.get('title'), heading=row.get('heading'),
                           rank=row['rank'], text=row['content']) for row in generated.selected_evidence]
             generated = replace(generated, text=render_source_fallback(
-                parts, (*generated.evidence_limitations, *([source_notice] if source_only else [])),
+                parts, generated.evidence_limitations,
                 insufficient=legal_completion_status(generated.text) != 'complete'))
             generation_trace.append({'agent': 'answer_display', 'provider': 'rules',
                                      'status': 'compact_source_fallback',
                                      'full_evidence_retained': True})
-        elif source_only:
-            generated = replace(generated, text=source_notice + '\n\n' + generated.text)
-        if source_only:
-            degraded_reasons.append(source_notice)
         degraded_reasons.extend(generated.degraded_reasons)
-        degraded_reasons = list(dict.fromkeys(degraded_reasons))
-        completion = legal_completion_status(generated.text, content_completeness=generated.content_completeness)
+        completion = legal_completion_status(generated.text)
         if completion != 'complete' and generated.provider not in {'template', 'legal-insufficient', 'legal-partial-extractive'}:
             degraded_reasons.append('Phản hồi chưa đáp ứng đầy đủ yêu cầu chính; đánh dấu theo nội dung thay vì provider.')
         sources = [
@@ -448,12 +355,6 @@ class ChatService:
             else []
         )
         response = ChatAskResponse(
-            content_completeness=completion,
-            source_coverage_status=generated.source_coverage_status,
-            answer_coverage_status=generated.answer_coverage_status,
-            provenance_status=generated.provenance_status,
-            application_status=generated.application_status,
-            completion_reasons=list(dict.fromkeys(generated.completion_reasons)),
             agent_trace=agent_trace + generation_trace + ([{"agent": "answer", "provider": generated.provider,
                 "model": generated.model, "status": completion,
                 "attempted_provider":attempted_provider,"attempted_model":attempted_model},

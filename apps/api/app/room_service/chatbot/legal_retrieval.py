@@ -407,12 +407,8 @@ def diversified_legal_rows(query: str, rows: list[dict], limit: int) -> list[dic
     return unique[:limit]
 
 
-def legal_completion_status(answer: str, *, content_completeness=None) -> str:
+def legal_completion_status(answer: str) -> str:
     """Report incomplete answers independently of provider or citation validity."""
-    if content_completeness is not None:
-        if content_completeness not in ('complete', 'partial', 'insufficient'):
-            raise ValueError('Unknown structured content completeness')
-        return content_completeness
     # A quoted statutory condition is evidence, not the assistant's abstention.
     visible = re.sub(r'“[^”]*”|"[^"\n]*"', '', answer, flags=re.S)
     # This fixed application notice describes provenance, not a missing answer
@@ -449,11 +445,8 @@ def _citation_scope_issues(segment: str, cited: list[dict], claim_kind=None) -> 
     issues = []
     norm = normalize_text(segment)
     heading_articles = {n for row in cited for n in re.findall(r'Điều\s+(\d+)\b', str(row.get('heading') or ''), re.I)}
-    # An exception can correctly refer to another article quoted in the cited
-    # clause. A heading-only comparison rejects that intact cross-reference.
-    referenced_articles = {n for row in cited for n in re.findall(r'Điều\s+(\d+)\b', row['content'], re.I)}
     claim_articles = set(re.findall(r'Điều\s+(\d+)\b', segment, re.I))
-    if heading_articles and claim_articles - (heading_articles | referenced_articles):
+    if heading_articles and claim_articles - heading_articles:
         issues.append('Số điều được khẳng định không khớp điều khoản của nguồn trích dẫn.')
     heading_clauses = {n for row in cited for n in re.findall(r'Khoản\s+(\d+)\b', str(row.get('heading') or ''), re.I)}
     claim_clauses = set(re.findall(r'Khoản\s+(\d+)\b', segment, re.I))
@@ -490,12 +483,12 @@ def _citation_scope_issues(segment: str, cited: list[dict], claim_kind=None) -> 
     return issues
 
 
-def evidence_issues(answer: str, chunks: list[dict], query: str, *, claim_records=(), check_coverage=True) -> list[str]:
+def evidence_issues(answer: str, chunks: list[dict], query: str, *, claim_records=()) -> list[str]:
     """Deterministic guard, not a claim of full semantic entailment verification."""
     issues = []
     normalized = normalize_text(answer)
     question = normalize_text(query)
-    if (check_coverage and 'nen tang' in question and 'trach nhiem' in question
+    if ('nen tang' in question and 'trach nhiem' in question
             and any(t in question for t in ('thong tin nguoi', 'nguoi dang', 'nguoi ban', 'nguoi cho thue'))):
         from .evidence_units import operator_facets, OPERATOR_LABELS
         available = set().union(*(operator_facets(row) for row in chunks))
@@ -538,10 +531,7 @@ def evidence_issues(answer: str, chunks: list[dict], query: str, *, claim_record
             agreement_fact_question = (re.search(r'\b(?:ban|cac ben|ben cho thue|chu tro)\b', segment_normalized)
                 and re.search(r'\b(?:da|hien|dang)\b.*\b(?:thoa thuan|thong nhat)\b', segment_normalized)
                 and not re.search(r'\b(?:phai|bat buoc|duoc phep|co quyen|co nghia vu)\b', segment_normalized))
-            classification_question = (re.search(r'\bcó\s+phải\s+là\b', segment, re.I)
-                and not re.search(r'\b(phải|bắt buộc|được phép|có quyền|có nghĩa vụ|vi phạm|chịu trách nhiệm|bị xử lý|xử phạt|bồi thường|hoàn trả)\b',
-                    re.sub(r'\bcó\s+phải\s+là\b', '', segment, flags=re.I), re.I))
-            if segment.rstrip().endswith('?') and (not legal_assertion or contract_fact_question or agreement_fact_question or classification_question):
+            if segment.rstrip().endswith('?') and (not legal_assertion or contract_fact_question or agreement_fact_question):
                 continue
             limitation = any(term in segment_normalized for term in ("chua tim thay", "chua du can cu", "khong du can cu", "chua xac minh", "chua ket luan"))
             advice = any(term in segment_normalized for term in ("kiem tra", "doi chieu", "khuyen nghi", "loi khuyen"))
@@ -586,7 +576,7 @@ def evidence_issues(answer: str, chunks: list[dict], query: str, *, claim_record
             r'(?:dieu luat|(?:quy dinh|dieu khoan)(?: phap luat| luat)?|van ban quy pham phap luat)\b')
         if claim_kind=='source_limit':
             source_classification_pattern=(r'\bkhong phai(?: la)? '
-                r'(?:kenh|duong day|danh muc ho so bat buoc|ho so bat buoc|dieu luat|(?:quy dinh|dieu khoan)(?: phap luat| luat)?|van ban quy pham phap luat)\b')
+                r'(?:kenh|duong day|dieu luat|(?:quy dinh|dieu khoan)(?: phap luat| luat)?|van ban quy pham phap luat)\b')
         scoped_absence = (any(term in segment_normalized for term in gap_phrases)
                           or re.search(source_gap_pattern, segment_normalized)
                           or re.search(source_classification_pattern, segment_normalized))

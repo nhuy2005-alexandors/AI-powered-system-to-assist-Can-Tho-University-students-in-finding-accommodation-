@@ -13,7 +13,7 @@ def main():
     root=Path(__file__).resolve().parents[1]
     old=json.loads(args.prior.read_text(encoding='utf-8'))
     if any('answer' in c for c in old['cases']):raise ValueError('Only an empty quota checkpoint can seed a fresh run')
-    bank=root/'docs/LEGAL_QUESTION_BANK.md'
+    bank=root/'eval/datasets/legal_question_bank.txt'
     if hashlib.sha256(bank.read_bytes()).hexdigest()!=old['question_bank_sha256']:raise ValueError('Question bank changed')
     files=sorted((root/'apps/api/app/room_service/chatbot').glob('*.py'))
     report={'started_at_utc':datetime.now(timezone.utc).isoformat(),

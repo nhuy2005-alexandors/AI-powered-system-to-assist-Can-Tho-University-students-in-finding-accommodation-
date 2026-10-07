@@ -11,6 +11,7 @@ const NAV = [
   { href: "/admin/listings", label: "Quản lý bài tin", icon: "▤" },
   { href: "/admin/users", label: "Người dùng", icon: "♙" },
   { href: "/admin/ai", label: "Chất lượng AI", icon: "✦" },
+  { href: "/admin/documents", label: "Tài liệu chatbot", icon: "▥" },
 ];
 
 function active(pathname: string, href: string) {

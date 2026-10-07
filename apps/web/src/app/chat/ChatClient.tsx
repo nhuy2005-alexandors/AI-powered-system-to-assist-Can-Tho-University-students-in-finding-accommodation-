@@ -51,18 +51,16 @@ type Turn = {
   listings?: Listing[];
   sources?: Source[];
   degraded?: boolean;
-  contentCompleteness?: string;
-  provenanceStatus?: string;
-  answerCoverageStatus?: string;
   generationProvider?: string;
   eventId?: number | null;
   feedback?: -1 | 1;
+  reusedAnswer?: boolean;
 };
 
 type AskResponse = {
-  content_completeness?: string;
-  provenance_status?: string;
-  answer_coverage_status?: string;
+  conversation_id?: string | null;
+  turn_id?: number | null;
+  reused_answer?: boolean;
   conversation_state?: ConversationState | null;
   answer: string;
   listings: Listing[];
@@ -76,6 +74,21 @@ type AskResponse = {
   event_id: number | null;
   citation_accuracy: number;
 };
+
+type Conversation = { id: string; title: string; updated_at: string; turn_count: number };
+type SavedTurn = { id: number; question: string; response: AskResponse; created_at: string };
+type SavedConversation = { id: string; title: string; turns: SavedTurn[]; has_more: boolean };
+
+function savedTurns(items: SavedTurn[]): Turn[] {
+  return items.flatMap(item => [
+    { key: `user-saved-${item.id}`, role: "user" as const, content: item.question },
+    { key: `assistant-saved-${item.id}`, role: "assistant" as const, content: item.response.answer,
+      conversationState: item.response.conversation_state, listings: item.response.listings,
+      sources: item.response.sources, degraded: item.response.degraded,
+      generationProvider: item.response.generation_provider, eventId: item.response.event_id,
+      reusedAnswer: item.response.reused_answer },
+  ]);
+}
 
 type ConversationState = {
   filters: Record<string, unknown>;
@@ -135,7 +148,7 @@ function distance(value: number | null) {
   return value >= 1000 ? `${(value / 1000).toFixed(1)} km đến CTU` : `${Math.round(value)} m đến CTU`;
 }
 
-function Icon({ name }: { name: "chat" | "expand" | "shrink" | "close" | "send" | "reset" }) {
+function Icon({ name }: { name: "chat" | "expand" | "shrink" | "close" | "send" | "reset" | "history" }) {
   const paths = {
     chat: <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" />,
     expand: <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />,
@@ -143,6 +156,7 @@ function Icon({ name }: { name: "chat" | "expand" | "shrink" | "close" | "send" 
     close: <path d="m6 6 12 12M18 6 6 18" />,
     send: <path d="m22 2-7 20-4-9-9-4 20-7ZM11 13 22 2" />,
     reset: <path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5" />,
+    history: <path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5M12 7v5l3 2" />,
   };
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
@@ -158,15 +172,54 @@ export default function ChatClient() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [conversationId, setConversationId] = useState<string | null>(null);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
+  const [historyBusy, setHistoryBusy] = useState(false);
+  const [historyError, setHistoryError] = useState<string | null>(null);
+  const [moreConversations, setMoreConversations] = useState(false);
+  const [olderTurns, setOlderTurns] = useState(false);
+  const [firstSavedId, setFirstSavedId] = useState<number | null>(null);
+  const epochRef = useRef(0);
+  const restoreRef = useRef(true);
+  const skipScrollRef = useRef(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const latestTurnRef = useRef<HTMLElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (pathname === "/chat") setMode("compact");
+    if (pathname === "/login" || pathname === "/register") {
+      epochRef.current++;
+      setTurns([WELCOME]);
+      setConversationId(null);
+      setConversations([]);
+      setShowHistory(false);
+      setLoading(false);
+      setError(null);
+      setOlderTurns(false);
+      restoreRef.current = true;
+    }
   }, [pathname]);
 
   useEffect(() => {
+    if (mode === "closed" || !restoreRef.current) return;
+    restoreRef.current = false;
+    const epoch = epochRef.current;
+    void (async () => {
+      try {
+        const response = await fetch("/api/chat/conversations?limit=30", { cache: "no-store" });
+        if (!response.ok || epoch !== epochRef.current) return;
+        const data = await response.json();
+        setConversations(data.items);
+        setMoreConversations(data.has_more);
+        if (data.items.length > 0) await openConversation(data.items[0].id, epoch);
+      } catch { /* History can be retried from the history button. */ }
+    })();
+  }, [mode, pathname]);
+
+  useEffect(() => {
+    if (skipScrollRef.current) { skipScrollRef.current = false; return; }
     const container = scrollRef.current;
     const latest = latestTurnRef.current;
     if (!container) return;
@@ -187,6 +240,8 @@ export default function ChatClient() {
     setMessage("");
     setError(null);
     setLoading(true);
+    const epoch = ++epochRef.current;
+    restoreRef.current = false;
     const history = turns
       .filter((turn) => turn.key !== "welcome")
       .slice(-10)
@@ -199,12 +254,14 @@ export default function ChatClient() {
       const response = await fetch("/api/chat/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: cleanText, conversation_history: history,
+        body: JSON.stringify({ message: cleanText, conversation_id: conversationId, conversation_history: history,
           conversation_state: [...turns].reverse().find((turn) => turn.role === "assistant" && turn.conversationState)?.conversationState }),
       });
       const body = await response.json();
       if (!response.ok) throw new Error(body.detail || "Không thể gửi câu hỏi");
       const result = body as AskResponse;
+      if (epoch !== epochRef.current) return;
+      setConversationId(result.conversation_id ?? conversationId);
       setTurns((items) => [
         ...items,
         {
@@ -215,18 +272,77 @@ export default function ChatClient() {
           listings: result.listings,
           sources: result.sources,
           degraded: result.degraded,
-          contentCompleteness: result.content_completeness,
-          provenanceStatus: result.provenance_status,
-          answerCoverageStatus: result.answer_coverage_status,
           generationProvider: result.generation_provider,
           eventId: result.event_id,
+          reusedAnswer: result.reused_answer,
         },
       ]);
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Đã có lỗi xảy ra");
+      if (epoch === epochRef.current) setError(caught instanceof Error ? caught.message : "Đã có lỗi xảy ra");
     } finally {
-      setLoading(false);
+      if (epoch === epochRef.current) setLoading(false);
     }
+  }
+
+  async function loadHistory(append = false) {
+    setHistoryBusy(true);
+    setHistoryError(null);
+    const epoch = epochRef.current;
+    try {
+      const response = await fetch(`/api/chat/conversations?limit=30&offset=${append ? conversations.length : 0}`, { cache: "no-store" });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || "Không thể tải lịch sử");
+      if (epoch !== epochRef.current) return;
+      setConversations(items => append ? [...items, ...data.items] : data.items);
+      setMoreConversations(data.has_more);
+    } catch (caught) {
+      if (epoch === epochRef.current) setHistoryError(caught instanceof Error ? caught.message : "Không thể tải lịch sử");
+    } finally { setHistoryBusy(false); }
+  }
+
+  async function openConversation(id: string, expectedEpoch?: number, before?: number) {
+    const epoch = expectedEpoch ?? ++epochRef.current;
+    setHistoryBusy(true);
+    setHistoryError(null);
+    try {
+      const response = await fetch(`/api/chat/conversations/${id}?limit=50${before ? `&before_id=${before}` : ""}`, { cache: "no-store" });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.detail || "Không thể mở cuộc trò chuyện");
+      if (epoch !== epochRef.current) return;
+      const saved = data as SavedConversation;
+      if (before) {
+        skipScrollRef.current = true;
+        setTurns(items => [WELCOME, ...savedTurns(saved.turns), ...items.filter(t => t.key !== "welcome")]);
+      } else setTurns([WELCOME, ...savedTurns(saved.turns)]);
+      setConversationId(id);
+      setFirstSavedId(saved.turns[0]?.id ?? null);
+      setOlderTurns(saved.has_more);
+      setShowHistory(false);
+      setError(null);
+      setMessage("");
+    } catch (caught) {
+      if (epoch === epochRef.current) {
+        const detail = caught instanceof Error ? caught.message : "Không thể mở cuộc trò chuyện";
+        setHistoryError(detail);
+        setError(detail);
+      }
+    } finally { setHistoryBusy(false); }
+  }
+
+  async function deleteConversation(id: string) {
+    setHistoryBusy(true);
+    setHistoryError(null);
+    try {
+      const response = await fetch(`/api/chat/conversations/${id}`, { method: "DELETE" });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.detail || "Không thể xóa cuộc trò chuyện");
+      }
+      setConversations(items => items.filter(item => item.id !== id));
+      if (conversationId === id) resetConversation();
+    } catch (caught) {
+      setHistoryError(caught instanceof Error ? caught.message : "Không thể xóa cuộc trò chuyện");
+    } finally { setHistoryBusy(false); }
   }
 
   async function sendFeedback(key: string, eventId: number | null | undefined, rating: -1 | 1) {
@@ -260,6 +376,12 @@ export default function ChatClient() {
   }
 
   function resetConversation() {
+    epochRef.current++;
+    restoreRef.current = false;
+    setConversationId(null);
+    setOlderTurns(false);
+    setFirstSavedId(null);
+    setShowHistory(false);
     setTurns([WELCOME]);
     setError(null);
     setMessage("");
@@ -298,7 +420,7 @@ export default function ChatClient() {
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="relative shrink-0 overflow-hidden bg-gradient-to-br from-[#0068b7] via-[#005baa] to-[#003f7d] px-4 py-3.5 text-white">
           <div className="absolute -right-10 -top-14 h-36 w-36 rounded-full border border-white/10 bg-white/5" />
-          <div className="relative flex items-center gap-3">
+          <div className="relative flex flex-wrap items-center gap-3">
             <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white text-[#005baa] shadow-sm">
               <span className="text-xl font-black">CTU</span>
             </div>
@@ -309,20 +431,50 @@ export default function ChatClient() {
                 Tìm phòng · Ký túc xá · Hỏi đáp thuê trọ
               </p>
             </div>
-            <button type="button" onClick={resetConversation} title="Cuộc trò chuyện mới" className="rounded-xl p-2 text-blue-100 transition hover:bg-white/15 hover:text-white">
-              <Icon name="reset" />
-            </button>
-            <button type="button" onClick={() => setMode(expanded ? "compact" : "expanded")} title={expanded ? "Thu nhỏ" : "Phóng to"} className="rounded-xl p-2 text-blue-100 transition hover:bg-white/15 hover:text-white">
-              <Icon name={expanded ? "shrink" : "expand"} />
-            </button>
             <button type="button" onClick={() => setMode("closed")} title="Đóng" className="rounded-xl p-2 text-blue-100 transition hover:bg-white/15 hover:text-white">
               <Icon name="close" />
             </button>
+            <div className="flex w-full items-center gap-2 border-t border-white/10 pt-2">
+            <button type="button" disabled={loading || historyBusy} onClick={() => { setShowHistory(!showHistory); if (!showHistory) void loadHistory(); }} title="Lịch sử trò chuyện" aria-label="Lịch sử trò chuyện" className="flex items-center gap-1.5 rounded-xl px-2 py-1 text-xs text-blue-100 transition hover:bg-white/15 hover:text-white disabled:opacity-40">
+              <Icon name="history" />
+              Lịch sử
+            </button>
+            <button type="button" disabled={loading || historyBusy} onClick={resetConversation} title="Cuộc trò chuyện mới" className="flex items-center gap-1.5 rounded-xl px-2 py-1 text-xs text-blue-100 transition hover:bg-white/15 hover:text-white disabled:opacity-40">
+              <Icon name="reset" />
+              Chat mới
+            </button>
+            <button type="button" onClick={() => setMode(expanded ? "compact" : "expanded")} title={expanded ? "Thu nhỏ" : "Phóng to"} className="ml-auto rounded-xl p-1 text-blue-100 transition hover:bg-white/15 hover:text-white">
+              <Icon name={expanded ? "shrink" : "expand"} />
+            </button>
+            </div>
           </div>
         </header>
 
-        <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#f4f8fc] px-3 py-4 sm:px-4">
+        {showHistory ? (
+          <div className="min-h-0 flex-1 overflow-y-auto bg-[#f4f8fc] p-4" aria-label="Lịch sử đã lưu">
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <h3 className="font-bold text-slate-800">Lịch sử của bạn</h3>
+              <button type="button" onClick={() => setShowHistory(false)} className="text-xs font-medium text-[#005baa]">Quay lại chat</button>
+            </div>
+            {historyError && <p role="alert" className="mb-3 text-sm text-rose-700">{historyError}</p>}
+            {!historyBusy && !historyError && conversations.length === 0 && <p className="text-sm text-slate-500">Chưa có cuộc trò chuyện đã lưu.</p>}
+            <div className="space-y-2">
+              {conversations.map(item => (
+                <div key={item.id} className={`flex items-center gap-2 rounded-xl border bg-white p-3 ${item.id === conversationId ? "border-blue-400" : "border-blue-100"}`}>
+                  <button type="button" disabled={historyBusy} onClick={() => void openConversation(item.id)} className="min-w-0 flex-1 text-left">
+                    <p className="line-clamp-2 break-words text-sm font-medium text-slate-800">{item.title}</p>
+                    <p className="mt-1 text-[11px] text-slate-500">{item.turn_count} câu hỏi · {new Date(item.updated_at).toLocaleString("vi-VN")}</p>
+                  </button>
+                  <button type="button" disabled={historyBusy} aria-label={`Xóa cuộc trò chuyện: ${item.title}`} onClick={() => void deleteConversation(item.id)} className="shrink-0 rounded-lg px-2 py-1 text-xs text-rose-600 hover:bg-rose-50">Xóa</button>
+                </div>
+              ))}
+            </div>
+            {historyBusy && <p role="status" className="mt-3 text-xs text-slate-500">Đang tải lịch sử…</p>}
+            {moreConversations && <button type="button" disabled={historyBusy} onClick={() => void loadHistory(true)} className="mt-3 text-sm font-medium text-[#005baa]">Xem lịch sử cũ hơn</button>}
+          </div>
+        ) : <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#f4f8fc] px-3 py-4 sm:px-4">
           <div className={`mx-auto space-y-4 ${expanded ? "max-w-5xl" : "max-w-full"}`}>
+            {olderTurns && conversationId && firstSavedId && <button type="button" disabled={historyBusy || loading} onClick={() => void openConversation(conversationId, undefined, firstSavedId)} className="text-xs font-medium text-[#005baa]">Xem tin nhắn cũ hơn</button>}
             {turns.map((turn, index) => (
               <article key={turn.key} ref={index === turns.length - 1 ? latestTurnRef : undefined} className={turn.role === "user" ? "ml-auto max-w-[85%] break-words [overflow-wrap:anywhere]" : "mr-auto min-w-0 max-w-full"}>
                 <div
@@ -334,14 +486,11 @@ export default function ChatClient() {
                 >
                   {turn.role === "assistant" ? <ChatAnswer content={turn.content} sources={turn.sources} /> : turn.content}
                 </div>
-                {(turn.degraded || turn.contentCompleteness === 'partial' || turn.provenanceStatus === 'limited') && (
+                {turn.reusedAnswer && <p className="mt-1 px-2 text-[11px] text-slate-500">Đã dùng lại câu trả lời đã lưu.</p>}
+                {turn.degraded && (
                   <p className="mt-1.5 px-2 text-[11px] text-amber-700">
                     {turn.generationProvider === "template"
                       ? "Chưa có câu trả lời AI đáng tin cậy; đang hiển thị thông tin theo nguồn."
-                      : turn.contentCompleteness === 'partial'
-                      ? "Câu trả lời còn thiếu ý hoặc điều kiện áp dụng; hãy đọc phần giới hạn."
-                      : turn.contentCompleteness === 'complete' && turn.provenanceStatus === 'limited'
-                      ? "Đã trả lời các ý được kiểm chứng; nguồn trích tuyển vẫn cần đối chiếu bản chính thức."
                       : "Câu trả lời còn giới hạn; hãy đọc lưu ý và đối chiếu nguồn."}
                   </p>
                 )}
@@ -414,9 +563,9 @@ export default function ChatClient() {
               </div>
             )}
           </div>
-        </div>
+        </div>}
 
-        <form onSubmit={submit} className="shrink-0 border-t border-blue-100 bg-white p-3">
+        {!showHistory && <form onSubmit={submit} className="shrink-0 border-t border-blue-100 bg-white p-3">
           <div className={`mx-auto ${expanded ? "max-w-5xl" : "max-w-full"}`}>
             {error && <p className="mb-2 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-700">{error}</p>}
             <div className="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-1.5 focus-within:border-blue-300 focus-within:ring-2 focus-within:ring-blue-100">
@@ -434,9 +583,9 @@ export default function ChatClient() {
                 <Icon name="send" />
               </button>
             </div>
-            <p className="mt-1.5 text-center text-[10px] text-slate-400">Trò chuyện chỉ giữ trong cửa sổ này. Kiểm tra thông tin trước khi đặt cọc.</p>
+            <p className="mt-1.5 text-center text-[10px] text-slate-400">Lịch sử được lưu theo tài khoản của bạn. Kiểm tra thông tin trước khi đặt cọc.</p>
           </div>
-        </form>
+        </form>}
       </div>
     </section>
   );

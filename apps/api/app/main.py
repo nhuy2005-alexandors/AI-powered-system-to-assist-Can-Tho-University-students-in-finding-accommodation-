@@ -20,6 +20,7 @@ from .room_service.risk.service import RiskService
 from .reports import init_reports, reports_router
 from .reviews import init_reviews, reviews_router
 from .engagement.router import init_engagement, router as engagement_router
+from .room_service.legal_knowledge.admin import router as documents_admin_router
 
 log = logging.getLogger("app.main")
 
@@ -77,6 +78,7 @@ app.include_router(risk_router)
 app.include_router(reports_router)
 app.include_router(reviews_router)
 app.include_router(engagement_router)
+app.include_router(documents_admin_router)
 
 
 @app.get("/health")

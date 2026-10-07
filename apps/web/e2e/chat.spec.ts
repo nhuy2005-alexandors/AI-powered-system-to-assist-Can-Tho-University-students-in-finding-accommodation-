@@ -1,23 +1,20 @@
 import { expect, test } from "@playwright/test";
 
-test("structured completeness preserves provenance warning without marking content missing", async ({ page }) => {
+test("legacy degraded response displays its limitation warning", async ({ page }) => {
   let calls = 0;
   await page.route("**/api/chat/ask", route => route.fulfill({ json: {
     answer: "Kiểm tra giá thuê, tiền cọc và kỳ thanh toán trong hợp đồng [1].",
-    sources: [], listings: [], degraded: false, generation_provider: "gemini-agent",
-    content_completeness: ++calls === 1 ? "complete" : "partial",
-    provenance_status: "limited", answer_coverage_status: calls === 1 ? "covered" : "partial",
+    sources: [], listings: [], degraded: ++calls > 1, generation_provider: "gemini-agent",
   }}));
   await page.goto("/login");
   await page.getByRole("button", { name: "Mở Trợ lý Trọ CTU" }).click();
   const input = page.getByPlaceholder("Tìm trọ hoặc hỏi quy định pháp luật...");
   await input.fill("Hợp đồng thuê trọ cần ghi gì?");
   await page.getByRole("button", { name: "Gửi câu hỏi" }).click();
-  await expect(page.getByText("Đã trả lời các ý được kiểm chứng; nguồn trích tuyển vẫn cần đối chiếu bản chính thức.")).toBeVisible();
-  await expect(page.getByText("Câu trả lời còn thiếu ý hoặc điều kiện áp dụng; hãy đọc phần giới hạn.")).toHaveCount(0);
+  await expect(page.getByText("Câu trả lời còn giới hạn; hãy đọc lưu ý và đối chiếu nguồn.")).toHaveCount(0);
   await input.fill("Tiền cọc cần điều kiện nào?");
   await page.getByRole("button", { name: "Gửi câu hỏi" }).click();
-  await expect(page.getByText("Câu trả lời còn thiếu ý hoặc điều kiện áp dụng; hãy đọc phần giới hạn.")).toBeVisible();
+  await expect(page.getByText("Câu trả lời còn giới hạn; hãy đọc lưu ý và đối chiếu nguồn.")).toBeVisible();
 });
 
 const source = { kind: "legal_document", rank: 1, title: "Văn bản kiểm thử", heading: "Điều 3", page_from: 4, page_to: 5, excerpt: "Trích đoạn kiểm thử, chỉ mở khi yêu cầu." };

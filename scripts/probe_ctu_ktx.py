@@ -16,6 +16,7 @@ from app.room_service.chatbot.schemas import ChatAskRequest
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--resume', action='store_true')
+    parser.add_argument('--question', action='append', help='Run only these KTX questions')
     args = parser.parse_args()
     engine = create_engine(settings.database_url)
     init_chatbot(engine)
@@ -27,7 +28,7 @@ def main():
         if previous['schema'] != settings.chatbot_legal_schema:
             raise ValueError('Cannot resume against another corpus')
         records = previous['results']
-    questions = [
+    questions = args.question or [
         'KTX CTU có wifi không và phí gửi xe máy bao nhiêu?',
         'Phí ở KTX khu A và khu B của CTU bao nhiêu một tháng?',
         'Tân sinh viên đăng ký KTX CTU như thế nào?',
@@ -43,6 +44,7 @@ def main():
             result = service.ask(ChatAskRequest(message=question))
             record = dict(question=question, answer=result.answer, no_answer=result.no_answer,
                 provider=result.generation_provider, latency_seconds=round(time.monotonic()-started, 2),
+                agent_trace=result.agent_trace,
                 sources=[dict(title=s.title, category=s.category, url=s.source_url) for s in result.sources])
             records.append(record)
             output.parent.mkdir(parents=True, exist_ok=True)

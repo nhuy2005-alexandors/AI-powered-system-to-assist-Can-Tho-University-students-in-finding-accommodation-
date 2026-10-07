@@ -27,7 +27,6 @@ QUESTION_RE = re.compile(r"^(\d+)\.\s+(.+)$")
 CATEGORY_RE = re.compile(r"`([a-z_]+)`")
 METRIC_NAMES = ("faithfulness", "answer_relevancy", "context_utilization")
 from quota_checkpoint import QuotaCoordinator, QuotaPause, bounded_scoring, checkpoint_pause
-from telemetry_summary import summarize_usage
 QUOTA = QuotaCoordinator()
 
 
@@ -116,10 +115,6 @@ def collect(report: dict, output: Path, limit: int | None, ids: list[int] | None
     if analysis_client is not None:QUOTA.attach(analysis_client)
     verification_client=getattr(service.generator,'verifier',None)
     if verification_client is not None and verification_client is not analysis_client:QUOTA.attach(verification_client)
-    for provider in getattr(service.generator, 'providers', []):
-        selection_client = getattr(provider, 'client', None)
-        if selection_client is not None and selection_client not in (analysis_client, verification_client):
-            QUOTA.attach(selection_client)
     if settings.chatbot_agents_enabled:
         from sqlalchemy import text
         import app.room_service.chatbot as chatbot_package
@@ -134,19 +129,12 @@ def collect(report: dict, output: Path, limit: int | None, ids: list[int] | None
             raise ValueError('Corpus changed; use a new evaluation output')
         report['corpus_manifest_sha256'] = manifest_sha
         configuration = {'agents_enabled':True,'legal_schema':settings.chatbot_legal_schema,
-            'question_analysis_model':settings.chatbot_question_analysis_model,
-            'answer_model':settings.ollama_model if settings.chatbot_legal_selection_provider == 'qwen' else (
-                settings.chatbot_legal_selection_model or
-                (settings.chatbot_answer_synthesis_model if settings.chatbot_legal_generation_mode == 'combined' else '') or settings.gemini_model),
-            'legal_selection_provider':settings.chatbot_legal_selection_provider,
-            'legal_generation_mode':settings.chatbot_legal_generation_mode,
-            'legal_selection_timeout_seconds':settings.chatbot_legal_selection_timeout_seconds,
+            'question_analysis_model':settings.chatbot_question_analysis_model,'answer_model':settings.ollama_model,
             'embedding_model':settings.chatbot_embedding_model,
             'analysis_provider_available':'gemini' if settings.configured_gemini_keys else 'rules-local',
-            'legal_answer_mode':('combined_selection_synthesis' if settings.chatbot_legal_generation_mode == 'combined' else
-                'source_select_then_synthesis' if settings.chatbot_answer_synthesis_enabled else 'source_select'),
+            'legal_answer_mode':'source_select_then_synthesis' if settings.chatbot_answer_synthesis_enabled else 'source_select',
             'answer_synthesis_enabled':settings.chatbot_answer_synthesis_enabled,
-            'answer_synthesis_model':getattr(getattr(getattr(service.generator, 'writer', None), 'client', None), 'model', None)}
+            'answer_synthesis_model':(settings.chatbot_answer_synthesis_model or settings.gemini_model) if settings.chatbot_answer_synthesis_enabled else None}
         if report.get('run_configuration') and report['run_configuration'] != configuration:
             raise ValueError('Provider configuration changed; use a new evaluation output')
         report['run_configuration'] = configuration
@@ -159,7 +147,7 @@ def collect(report: dict, output: Path, limit: int | None, ids: list[int] | None
             original = getattr(provider, method)
             def traced(*args, _original=original, _provider=provider, _method=method, **kwargs):
                 started = time.perf_counter()
-                call = {"provider": _provider.provider_name, "model": _provider.model, "method": _method, "request_kind": "workflow_wrapper"}
+                call = {"provider": _provider.provider_name, "model": _provider.model, "method": _method}
                 try:
                     result = _original(*args, **kwargs)
                     call["success"] = True
@@ -182,6 +170,31 @@ def collect(report: dict, output: Path, limit: int | None, ids: list[int] | None
                           f"{call.get('http_status', 'ok' if call.get('success') else call.get('error_type'))} "
                           f"{call['latency_ms']}ms", flush=True)
             setattr(provider, method, traced)
+    writer_client = getattr(getattr(service.generator, 'writer', None), 'client', None)
+    if writer_client is not None:
+        original_request = writer_client.request_json
+        def traced_request(prompt, schema, **kwargs):
+            started = time.perf_counter()
+            stage = 'answer_synthesis' if 'summary' in schema.get('properties', {}) else 'source_verification'
+            call = {'provider': 'gemini', 'model': writer_client.model, 'method': 'request_json', 'agent': stage}
+            try:
+                result = original_request(prompt, schema, **kwargs)
+                call.update(success=True, usage=result[1])
+                # Preserve the public-legal synthesis/check decision locally so
+                # rule rejections can be diagnosed against the actual output.
+                try:
+                    call['structured_decision']=json.loads(result[0])
+                except (ValueError,TypeError):
+                    pass
+                return result
+            except Exception as exc:
+                call.update(success=False, error_type=type(exc).__name__)
+                raise
+            finally:
+                call['latency_ms'] = round((time.perf_counter() - started) * 1000)
+                provider_calls.append(call)
+                print(f"  gemini/{writer_client.model} {stage}: {'ok' if call.get('success') else call.get('error_type')} {call['latency_ms']}ms", flush=True)
+        writer_client.request_json = traced_request
     prior = {case["id"]: case for case in report["cases"]}
     try:
         for case in report["cases"][:limit]:
@@ -208,10 +221,7 @@ def collect(report: dict, output: Path, limit: int | None, ids: list[int] | None
             print(f"Collecting {case['id']:02d}/{len(report['cases'])} {case['category']}", flush=True)
             provider_calls.clear()
             try:
-                from app.room_service.chatbot.request_telemetry import collect_gemini_calls
-                full_started = time.perf_counter()
-                with collect_gemini_calls(provider_calls.append):
-                    result = service.ask(ChatAskRequest(
+                result = service.ask(ChatAskRequest(
                     message=case["question"], conversation_history=history,
                     conversation_state=conversation_state,
                     include_evaluation_contexts=True,
@@ -230,7 +240,6 @@ def collect(report: dict, output: Path, limit: int | None, ids: list[int] | None
                     "generation_provider": data["generation_provider"],
                     "generation_model": data["generation_model"],
                     "latency_ms": data["latency_ms"],
-                    "full_service_latency_ms": round((time.perf_counter() - full_started) * 1000),
                     "provider_calls": list(provider_calls),
                     "agent_trace": data.get("agent_trace", []),
                     "corpus_schema": data.get("corpus_schema"),
@@ -260,9 +269,7 @@ def collect(report: dict, output: Path, limit: int | None, ids: list[int] | None
 def score(report: dict, output: Path, limit: int | None, judge_url: str, judge_model: str,
           selected_metrics: list[str], reset_selected_metrics: bool = False, ids: list[int] | None = None,
           score_abstentions: bool = False, judge_max_output_tokens: int = 2048,
-          judge_provider: str = "gemini", score_workers: int = 1) -> None:
-    if judge_provider != 'gemini' or not judge_model.startswith('gemini-'):
-        raise ValueError('Evaluation requires Gemini; Qwen/Ollama fallback disabled')
+          judge_provider: str = "ollama", score_workers: int = 1) -> None:
     import ragas
     import httpx
     from ragas.embeddings.base import BaseRagasEmbedding
@@ -283,6 +290,10 @@ def score(report: dict, output: Path, limit: int | None, judge_url: str, judge_m
 
         async def aembed_text(self, text: str, **kwargs) -> list[float]:
             return await asyncio.to_thread(self.embed_text, text, **kwargs)
+
+    from ollama_judge import OllamaRagasLLM
+    def local_judge():
+        return OllamaRagasLLM(judge_url, judge_model, judge_max_output_tokens, 300)
 
     class GeminiRagasLLM(InstructorBaseRagasLLM):
         def __init__(self, model: str):
@@ -311,7 +322,8 @@ def score(report: dict, output: Path, limit: int | None, judge_url: str, judge_m
                     if self.client._model_blocked_until - time.monotonic() > 60.5:
                         raise
                     time.sleep(min(60, max(1, self.client._model_blocked_until - time.monotonic() + .1)))
-            self.usage.append(usage)
+            self.usage.append({"prompt_eval_count": usage.get("promptTokenCount", 0),
+                               "eval_count": usage.get("candidatesTokenCount", 0) + usage.get("thoughtsTokenCount", 0)})
             parsed = response_model.model_validate_json(raw)
             self.judgements.append({"schema": response_model.__name__, "output": parsed.model_dump(mode="json")})
             return parsed
@@ -320,7 +332,7 @@ def score(report: dict, output: Path, limit: int | None, judge_url: str, judge_m
             import asyncio
             return await asyncio.to_thread(self.generate, prompt, response_model)
 
-    judge = GeminiRagasLLM(judge_model)
+    judge = GeminiRagasLLM(judge_model) if judge_provider == "gemini" else local_judge()
     embeddings = E5JudgeEmbeddings(os.getenv("CHATBOT_EMBEDDING_MODEL", "intfloat/multilingual-e5-small"))
     scorers = {
         "faithfulness": Faithfulness(llm=judge),
@@ -365,7 +377,7 @@ def score(report: dict, output: Path, limit: int | None, judge_url: str, judge_m
         local = threading.local()
         def score_task(case, name):
             if not hasattr(local, "judge"):
-                local.judge = GeminiRagasLLM(judge_model)
+                local.judge = GeminiRagasLLM(judge_model) if judge_provider == "gemini" else local_judge()
                 local.scorers = {
                     "faithfulness": Faithfulness(llm=local.judge),
                     "answer_relevancy": AnswerRelevancy(llm=local.judge, embeddings=embeddings, strictness=1),
@@ -388,7 +400,10 @@ def score(report: dict, output: Path, limit: int | None, judge_url: str, judge_m
             except Exception as exc:
                 error = f"{type(exc).__name__}: {exc}"[:500]
             usage = getattr(local.judge, "usage", [])[usage_start:]
-            return value, error, {"max_output_tokens": judge_max_output_tokens, **summarize_usage(usage)}, getattr(local.judge, "judgements", [])[judgement_start:]
+            return value, error, {"max_output_tokens": judge_max_output_tokens, "requests": len(usage),
+                "prompt_tokens": sum(item.get("prompt_eval_count") or 0 for item in usage),
+                "output_tokens": sum(item.get("eval_count") or 0 for item in usage),
+                "max_prompt_tokens": max((item.get("prompt_eval_count") or 0 for item in usage), default=0)}, getattr(local.judge, "judgements", [])[judgement_start:]
         tasks = []
         for case in report["cases"][:limit]:
                 if ids is not None and case["id"] not in ids:
@@ -463,7 +478,10 @@ def score(report: dict, output: Path, limit: int | None, judge_url: str, judge_m
             usage = getattr(judge, "usage", [])[usage_start:]
             case.setdefault("ragas_usage", {})[name] = {
                 "max_output_tokens": judge_max_output_tokens,
-                **summarize_usage(usage),
+                "requests": len(usage),
+                "prompt_tokens": sum(item.get("prompt_eval_count") or 0 for item in usage),
+                "output_tokens": sum(item.get("eval_count") or 0 for item in usage),
+                "max_prompt_tokens": max((item.get("prompt_eval_count") or 0 for item in usage), default=0),
             }
             summarize(report)
             save_report(output, report)
@@ -476,8 +494,8 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--phase", choices=("collect", "score", "all"), default="all")
     parser.add_argument("--judge-url", default=os.getenv("RAGAS_JUDGE_URL", "http://host.docker.internal:11434"))
-    parser.add_argument("--judge-model", default=os.getenv("RAGAS_JUDGE_MODEL", os.getenv('GEMINI_MODEL', 'gemini-3.5-flash-lite')))
-    parser.add_argument("--judge-provider", choices=("gemini",), default="gemini")
+    parser.add_argument("--judge-model", default=os.getenv("RAGAS_JUDGE_MODEL", "qwen3.5:9b"))
+    parser.add_argument("--judge-provider", choices=("ollama", "gemini"), default=os.getenv("RAGAS_JUDGE_PROVIDER", "ollama"))
     parser.add_argument("--score-workers", type=int, choices=range(1, 5), default=1)
     parser.add_argument("--judge-max-output-tokens", type=int, default=8192)
     parser.add_argument("--metrics", nargs="+", choices=METRIC_NAMES, default=list(METRIC_NAMES))

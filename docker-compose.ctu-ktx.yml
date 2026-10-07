@@ -1,13 +1,23 @@
-# Append after the serving Compose overrides. Existing listing corpus is reused.
+# Final local release: Gemini analysis/writing + Qwen evidence selection.
 services:
   api:
-    image: nckh-api:ctu-ktx-20261007
+    image: nckh-api:ctu-ktx-final-local
     environment:
-      CHATBOT_LEGAL_SCHEMA: legal_ctu_ktx_v1_20261007
-      CHATBOT_GRAPH_SCHEMA: graph_ctu_ktx_v1_20261007
+      CHATBOT_LEGAL_SCHEMA: legal_ctu_ktx_v2_20261007
+      CHATBOT_GRAPH_SCHEMA: graph_ctu_ktx_v2_20261007
+      CHATBOT_LISTING_SCHEMA: housing_graph_word_repair_v16
+      CHATBOT_GRAPH_ENABLED: "true"
+      CHATBOT_AGENTS_ENABLED: "true"
+      CHATBOT_ANSWER_SYNTHESIS_ENABLED: "true"
+      CHATBOT_LLM_PROVIDER: auto
   web:
-    image: nckh-web:ctu-ktx-20261007
+    image: nckh-web:ctu-ktx-final-local
   ragas-eval:
     environment:
-      CHATBOT_LEGAL_SCHEMA: legal_ctu_ktx_v1_20261007
-      CHATBOT_GRAPH_SCHEMA: graph_ctu_ktx_v1_20261007
+      CHATBOT_LEGAL_SCHEMA: legal_ctu_ktx_v2_20261007
+      CHATBOT_GRAPH_SCHEMA: graph_ctu_ktx_v2_20261007
+      CHATBOT_LISTING_SCHEMA: housing_graph_word_repair_v16
+      CHATBOT_GRAPH_ENABLED: "true"
+      CHATBOT_AGENTS_ENABLED: "true"
+      CHATBOT_ANSWER_SYNTHESIS_ENABLED: "true"
+      CHATBOT_LLM_PROVIDER: auto

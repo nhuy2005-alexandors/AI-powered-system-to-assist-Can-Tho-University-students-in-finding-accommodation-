@@ -1,6 +1,7 @@
 import logging
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
+from uuid import UUID
 from sqlalchemy.engine import Engine
 
 from ...config import settings
@@ -13,6 +14,7 @@ from .providers import (
     FallbackResponseGenerator,
     GeminiGenerator,
     GroundedTemplateGenerator,
+    OllamaQwenGenerator,
 )
 from .repo import ChatRepository
 from .schemas import (
@@ -20,6 +22,8 @@ from .schemas import (
     ChatAskResponse,
     ChatFeedbackCreate,
     ChatFeedbackOut,
+    ChatConversationList,
+    ChatConversationDetail,
 )
 from .service import ChatService
 
@@ -31,21 +35,20 @@ def init_chatbot(engine: Engine) -> None:
     global _service
     providers = []
     degraded_reasons: list[str] = []
-    if settings.chatbot_llm_provider == 'qwen' or (settings.chatbot_agents_enabled and settings.chatbot_legal_selection_provider != 'gemini'):
-        raise ValueError('This chatbot workflow requires Gemini; Qwen/Ollama and local LLM fallback are disabled')
-    gemini_selection = settings.chatbot_agents_enabled and settings.chatbot_legal_selection_provider == 'gemini'
-    combined = settings.chatbot_legal_generation_mode == 'combined'
-    if combined and not (gemini_selection and settings.chatbot_answer_synthesis_enabled):
-        raise ValueError('Combined legal generation requires Gemini selection and synthesis')
 
-    if gemini_selection:
-        from .gemini_selection import GeminiEvidenceSelector
-        selection_client = GeminiGenerator('', settings.chatbot_legal_selection_model or settings.gemini_model,
-            base_url=settings.gemini_base_url, api_keys=settings.configured_gemini_keys,
-            legal_timeout_seconds=settings.chatbot_legal_selection_timeout_seconds,
-            per_request_timeout_seconds=settings.chatbot_legal_selection_timeout_seconds,
-            min_request_interval_seconds=settings.gemini_min_request_interval_seconds)
-        providers.append(GeminiEvidenceSelector(selection_client))
+    if settings.chatbot_agents_enabled or settings.chatbot_llm_provider in ("auto", "qwen"):
+        providers.append(
+            OllamaQwenGenerator(
+                settings.ollama_base_url,
+                settings.ollama_model,
+                settings.chatbot_llm_timeout_seconds,
+                context_length=settings.ollama_context_length,
+                max_output_tokens=settings.chatbot_max_output_tokens,
+                keep_alive=settings.ollama_keep_alive,
+                legal_timeout_seconds=settings.chatbot_legal_timeout_seconds,
+                legal_answer_mode='source_select' if settings.chatbot_agents_enabled else 'synthesize',
+            )
+        )
 
     if not settings.chatbot_agents_enabled and settings.chatbot_llm_provider in ("auto", "gemini"):
         if settings.configured_gemini_keys:
@@ -69,8 +72,6 @@ def init_chatbot(engine: Engine) -> None:
 
     providers.sort(key=lambda provider: 0 if isinstance(provider, GeminiGenerator) else 1)
     generator = FallbackResponseGenerator(providers, GroundedTemplateGenerator(), initial_degraded_reasons=degraded_reasons)
-    if gemini_selection:
-        generator.listing_generator = FallbackResponseGenerator([], GroundedTemplateGenerator())
     analyzer = None
     if settings.chatbot_agents_enabled:
         from .agents import QuestionAnalysisAgent, QwenAnswerAgent
@@ -82,20 +83,13 @@ def init_chatbot(engine: Engine) -> None:
         analyzer = QuestionAnalysisAgent(analysis_client)
         if settings.chatbot_answer_synthesis_enabled:
             from .agent_workflow import GeminiAnswerSynthesisAgent, LegalAgentWorkflow
-            synthesis_model = settings.chatbot_answer_synthesis_model or settings.gemini_model
-            if combined:
-                synthesis_model = settings.chatbot_legal_selection_model or synthesis_model
             synthesis_client = GeminiGenerator("",
-                synthesis_model,
+                settings.chatbot_answer_synthesis_model or settings.gemini_model,
                 base_url=settings.gemini_base_url, api_keys=settings.configured_gemini_keys,
                 legal_timeout_seconds=settings.chatbot_answer_synthesis_timeout_seconds,
                 per_request_timeout_seconds=settings.chatbot_answer_synthesis_timeout_seconds,
                 min_request_interval_seconds=settings.gemini_min_request_interval_seconds)
-            if combined:
-                from .gemini_selection import GeminiCombinedWorkflow, GeminiCombinedWriter
-                generator = GeminiCombinedWorkflow(generator, GeminiCombinedWriter(synthesis_client), synthesis_client)
-            else:
-                generator = LegalAgentWorkflow(generator, GeminiAnswerSynthesisAgent(synthesis_client), synthesis_client)
+            generator = LegalAgentWorkflow(generator, GeminiAnswerSynthesisAgent(synthesis_client), synthesis_client)
         else:
             generator = QwenAnswerAgent(generator, verifier=analysis_client)
     _service = ChatService(
@@ -124,6 +118,12 @@ def get_service() -> ChatService:
 
 def warmup_chatbot() -> None:
     service = get_service()
+    for provider in service.generator.providers:
+        if isinstance(provider, OllamaQwenGenerator):
+            try:
+                provider.warmup(settings.chatbot_warmup_timeout_seconds)
+            except Exception:
+                logging.getLogger(__name__).warning("Chat model warmup unavailable")
     try:
         service.embedder.warmup()
     except Exception:
@@ -132,7 +132,7 @@ def warmup_chatbot() -> None:
 
 def close_chatbot() -> None:
     if _service:
-        for provider in _all_providers(_service):
+        for provider in _service.generator.providers:
             if hasattr(provider, "close"):
                 provider.close()
         clients = [getattr(_service.question_analyzer, 'client', None),
@@ -141,13 +141,6 @@ def close_chatbot() -> None:
         unique_clients = {id(client): client for client in clients if client is not None}
         for client in unique_clients.values():
             client.close()
-
-
-def _all_providers(service):
-    generator = getattr(service.generator, 'generator', service.generator)
-    listing = getattr(generator, 'listing_generator', None)
-    providers = [*service.generator.providers, *getattr(listing, 'providers', [])]
-    return list({id(provider): provider for provider in providers}.values())
 
 
 @router.post("/ask", response_model=ChatAskResponse)
@@ -159,14 +152,37 @@ def ask_chatbot(
     rate_limit(service.repo.engine, f"chat:{user.id}", 12)
     if body.include_evaluation_contexts and user.role != "admin":
         raise HTTPException(403, "Chỉ admin được lấy dữ liệu đánh giá")
-    result = service.ask(body)
-    if result.event_id:
-        with service.repo.engine.begin() as conn:
-            conn.execute(
-                text("UPDATE chatbot_events SET user_id=:uid WHERE id=:id"),
-                {"uid": user.id, "id": result.event_id},
-            )
-    return result
+    from .history import ask_with_history
+    return ask_with_history(service, user.id, body)
+
+
+@router.get("/conversations", response_model=ChatConversationList)
+def list_conversations(
+    user: UserOut = Depends(get_current_user), service: ChatService = Depends(get_service),
+    limit: int = Query(30, ge=1, le=100), offset: int = Query(0, ge=0),
+):
+    from .history import ChatHistoryStore
+    return ChatHistoryStore(service.repo.engine).conversations(user.id, limit, offset)
+
+
+@router.get("/conversations/{conversation_id}", response_model=ChatConversationDetail)
+def read_conversation(
+    conversation_id: UUID, user: UserOut = Depends(get_current_user),
+    service: ChatService = Depends(get_service), limit: int = Query(50, ge=1, le=100),
+    before_id: int | None = Query(None, gt=0),
+):
+    from .history import ChatHistoryStore
+    return ChatHistoryStore(service.repo.engine).conversation(user.id, conversation_id, limit, before_id)
+
+
+@router.delete("/conversations/{conversation_id}", status_code=204)
+def delete_conversation(
+    conversation_id: UUID, user: UserOut = Depends(get_current_user),
+    service: ChatService = Depends(get_service),
+):
+    from .history import ChatHistoryStore
+    ChatHistoryStore(service.repo.engine).delete(user.id, conversation_id)
+    return Response(status_code=204)
 
 
 @router.post("/feedback", response_model=ChatFeedbackOut, status_code=201)

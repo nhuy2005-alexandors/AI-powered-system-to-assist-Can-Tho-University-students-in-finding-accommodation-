@@ -28,7 +28,7 @@ class Settings(BaseSettings):
 
     ors_api_key: str = ""  # OpenRouteService — route time/geometry; rỗng = tắt routing
 
-    # Room-service AI. Gemini with a grounded template on provider failure.
+    # Room-service AI. `auto`: Gemini -> local -> grounded template.
     chatbot_embedding_model: str = "intfloat/multilingual-e5-small"
     chatbot_confidence_threshold: float = 0.65
     chatbot_max_results: int = 5
@@ -42,11 +42,7 @@ class Settings(BaseSettings):
     chatbot_answer_synthesis_enabled: bool = True
     chatbot_answer_synthesis_model: str = ""  # empty: use GEMINI_MODEL
     chatbot_answer_synthesis_timeout_seconds: float = Field(default=60, gt=0, le=180)
-    chatbot_legal_selection_provider: Literal["qwen", "gemini"] = "gemini"
-    chatbot_legal_selection_model: str = ""
-    chatbot_legal_selection_timeout_seconds: float = Field(default=60, gt=0, le=180)
-    chatbot_legal_generation_mode: Literal["separate", "combined"] = "separate"
-    chatbot_llm_provider: Literal["auto", "qwen", "gemini", "template"] = "gemini"
+    chatbot_llm_provider: Literal["auto", "qwen", "gemini", "template"] = "auto"
     chatbot_llm_timeout_seconds: float = 60.0
     chatbot_legal_timeout_seconds: float = Field(default=180.0, gt=0, le=300)
     chatbot_max_output_tokens: int = Field(default=1536, ge=128, le=4096)

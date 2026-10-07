@@ -1,0 +1,472 @@
+{
+  "schema": "legal_ctu_ktx_v2_20261007",
+  "records": [
+    {
+      "question": "Khi tìm phòng qua một nền tảng trực tuyến, tôi nên kiểm tra người đăng và nguồn tin như thế nào?",
+      "category": "ecommerce_platform",
+      "first_seconds": 95.018,
+      "repeat_seconds": 0.29,
+      "answer": "Khuyến nghị người thuê trọ xác minh người đăng và nguồn tin qua tài khoản, nội dung liên hệ, hình ảnh và mức giá trước khi chuyển tiền giao dịch [1] [2] [3] [4].\n\n- Khuyến nghị tìm kiếm số điện thoại của tài khoản đăng tin trên Google, Facebook hoặc các diễn đàn trực tuyến để xem phản hồi và lịch sử giao dịch trước đó [4].\n- Khuyến nghị kiểm tra tính xác thực của tài khoản đăng bài qua số điện thoại đã xác thực trên nền tảng và cảnh giác tài khoản mạo danh dùng tương tác ảo [1] [3].\n- Khuyến nghị tra cứu cụ thể số nhà, tên đường, phường, quận và hỏi thăm trực tiếp hàng xóm xung quanh địa chỉ thuê [4].\n- Nhấp vào Tìm bằng Google Ống kính để tra cứu trang web có hình ảnh đó hoặc ảnh tương tự nhằm phát hiện trường hợp sao chép ảnh từ nơi khác [2] [3].\n- Khuyến nghị so sánh giá với các tin đăng cùng loại trong khu vực và thận trọng nếu phòng có giá rẻ bất thường so với thị trường [1] [3] [4].\n- Khuyến nghị gặp trực tiếp chủ nhà, kiểm tra giấy tờ nhà cùng thẻ Căn cước hoặc Căn cước công dân và không vội chuyển tiền khi bị hối thúc đặt cọc giữ phòng [3] [4].\n\nCác tài liệu này là hướng dẫn và khuyến cáo giao dịch của nền tảng trực tuyến cùng cơ quan công an, không phải quy định pháp luật bắt buộc [1] [3] [4].\nViệc tài khoản đã xác thực số điện thoại hoặc kết quả tìm kiếm ảnh tương tự chỉ mang tính đối chiếu sơ bộ, không chứng minh chắc chắn quyền sở hữu hay quyền cho thuê phòng [1] [2].\n\nHướng dẫn/khuyến cáo của Trợ Giúp Chợ Tốt Nhà Tốt; không phải điều luật. Xác thực số điện thoại không xác minh quyền sở hữu hay quyền cho thuê. Chính sách riêng không bảo đảm mọi tin đều đúng và không xác lập nghĩa vụ giống nhau cho mọi nền tảng.\nHướng dẫn công cụ Google Lens, không phải điều luật. Kết quả ảnh tương tự là đầu mối để đối chiếu, không tự chứng minh tin đăng giả hoặc danh tính người cho thuê.\nHướng dẫn/khuyến cáo của Cổng Thông tin điện tử Bộ Công an bài Công an tỉnh Tuyên Quang; không phải điều luật. Tình huống gốc là đặt khách sạn tại Tuyên Quang. Áp dụng tham khảo cho chứng cứ giao dịch trực tuyến, không gọi là vụ thuê trọ CTU; không phải danh mục hồ sơ bắt buộc hoặc hướng dẫn soạn đơn tập thể.\nHướng dẫn/khuyến cáo của Trợ Giúp Chợ Tốt; không phải điều luật. Mẹo giao dịch, không phải điều luật. Không chứng minh hạn hoàn cọc cố định hoặc mức cọc bắt buộc; không thay thế xác minh người được ủy quyền cho thuê. Chỉ đọc phần kiểm tra, không bổ sung mẫu soạn hợp đồng.\n\nĐể áp dụng vào trường hợp của bạn:\n- Bạn đã liên hệ trực tiếp với người đăng tin và yêu cầu xem phòng thực tế chưa?\n- Người đăng tin có yêu cầu bạn chuyển khoản đặt cọc giữ chỗ trước khi gặp mặt không?\n\nThông tin tham khảo từ nguồn, cần đối chiếu điều kiện áp dụng và hiệu lực.",
+      "sources": [
+        {
+          "kind": "legal_document",
+          "listing_id": null,
+          "document_id": 24,
+          "chunk_id": 371,
+          "rank": 1,
+          "similarity_score": 0.704231,
+          "title": "Nhà Tốt bảo vệ người dùng như thế nào — Trợ Giúp Chợ Tốt Nhà Tốt",
+          "source": "legal_corpus",
+          "source_url": "https://trogiup.chotot.com/nguoi-mua/nha-tot-bao-ve-nguoi-dung-nhu-the-nao/",
+          "source_path": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s09-word.json",
+          "category": "ecommerce_platform",
+          "page_kind": "logical_document",
+          "page_from": 1,
+          "page_to": 1,
+          "heading": "Nhà Tốt bảo vệ người dùng như thế nào | Đoạn nguyên văn 75",
+          "excerpt": "Trong thời gian gần đây, Nền tảng Công nghệ Bất động sản Nhà Tốt nhận thấy tình trạng lừa đảo để trục lợi trên các nền tảng công nghệ ngày càng gia tăng và có xu hướng trở nên tinh vi. Hơn 10 năm đồng hành cùng người dùng Việt, Nhà Tốt luôn nỗ lực để tạo môi trường mua bán Bất Động Sản (BĐS) trực tuyến an toàn, tự do và hiệu quả. Bên cạnh việc tạo nên môi trường mua bán, giao dịch tự do, công bằng giữa Người mua và Người bán, thì Nhà Tốt luôn đặt sự an toàn của Người dùng lên hàng đầu. Vì vậy, về phía Nhà Tốt đã áp dụng nhiều biện pháp nhằm đảm bảo quyền lợi và gia tăng sự bảo vệ cho người dùng như sau:\n\n1. Xây dựng quy trình Kiểm duyệt tin, phát triển các tính năng hỗ trợ mua bán nhanh chóng an toàn\n\nXác thực số điện thoại cho mỗi tài khoản đăng tin: nhằm tăng cường tính bảo mật tài khoản và tính xác thực cho mỗi người dùng trên Nhà Tốt.\n\nLoại bỏ tin rác, tin trùng lặp: Giúp người mua tìm được sản phẩm nhanh hơn.\n\nLoại bỏ sản phẩm có giá thấp đáng ngờ: Các tin rao có giá quá rẻ thường đi kèm với chất lượng không đảm bảo và khả năng người bán lừa đảo.\n\n2. Hỗ trợ người dùng tức thời thông qua các kênh Chăm sóc Khách hàng\n\nKhi có vấn đề cần hỗ trợ, người dùng có thể liên hệ bộ phận Chăm sóc Khách hàng của Nhà Tốt qua các kênh sau:\n\nBáo tin/người dùng vi phạm: Tính năng “Báo cáo tin đăng” hiển thị bên dưới mỗi tin đăng giúp người dùng thông báo ngay các tin đăng/người dùng vi phạm để Nhà Tốt kiểm tra & xử lý kịp thời.\n\nChat trực tiếp tại đây. (Thời gian hỗ trợ từ 8h-12h và 13h-17h hàng ngày).\n\nĐường dây nóng: 19003003 (Thời gian hỗ trợ từ 08h-12h và 13h-17h từ thứ 2 đến thứ 6 hàng tuần).\n\nGửi email về [email protected].\n\nNhà Tốt cam kết hòm thư CSKH hoạt động 24/7 để tiếp nhận các thắc mắc của người dùng.\n\n3. Truyền thông và cảnh báo người dùng, hợp tác chặt chẽ với cơ qua…"
+        },
+        {
+          "kind": "legal_document",
+          "listing_id": null,
+          "document_id": 31,
+          "chunk_id": 463,
+          "rank": 2,
+          "similarity_score": 0.529564,
+          "title": "Google Lens: kiểm tra nguồn hình ảnh — Google Search Help",
+          "source": "legal_corpus",
+          "source_url": "https://support.google.com/websearch/answer/1325808?co=GENIE.Platform%3DDesktop&hl=vi",
+          "source_path": "docs/legal_word_focus3_corpus_v10_20261006/google-lens-word.json",
+          "category": "ecommerce_platform",
+          "page_kind": "logical_document",
+          "page_from": 1,
+          "page_to": 1,
+          "heading": "Google Lens — tìm ảnh và trang chứa ảnh tương tự",
+          "excerpt": "Trang web có hình ảnh đó hoặc có hình ảnh tương tự\n\nnhấp vào Tìm bằng Google Ống kính."
+        },
+        {
+          "kind": "legal_document",
+          "listing_id": null,
+          "document_id": 27,
+          "chunk_id": 381,
+          "rank": 3,
+          "similarity_score": 1.0,
+          "title": "Cảnh giác mạo danh Fanpage khách sạn nhà hàng đặt cọc trực tuyến dịp Lễ hội Thành Tuyên 2026 — Cổng Thông tin điện tử Bộ Công an bài Công an tỉnh Tuyên Quang",
+          "source": "legal_corpus",
+          "source_url": "https://bocongan.gov.vn/bai-viet/canh-giac-thu-doan-lua-dao-mao-danh-fanpage-khach-san-nha-hang-dat-coc-truc-tuyen-dip-le-hoi-thanh-tuyen-2026-1790041513",
+          "source_path": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s12-word.json",
+          "category": "criminal_law",
+          "page_kind": "logical_document",
+          "page_from": 1,
+          "page_to": 1,
+          "heading": "Cảnh giác mạo danh Fanpage khách sạn nhà hàng đặt cọc trực tuyến dịp Lễ hội Thành Tuyên 2026 | Đoạn nguyên văn 12",
+          "excerpt": "Để tạo lòng tin, chúng sao chép hình ảnh, logo, địa chỉ, số điện thoại, nội dung giới thiệu từ trang thật; sử dụng tương tác ảo, tài khoản giả để bình luận tích cực, đánh giá 5 sao. Một số fanpage còn chạy quảng cáo trả phí để tiếp cận người có nhu cầu du lịch.\n\nKhi khách liên hệ, các đối tượng tư vấn nhanh, đưa ra giá thấp hơn thị trường, kèm khuyến mãi “giới hạn” nhằm thúc ép chuyển tiền đặt cọc hoặc thanh toán trước để “giữ phòng”. Sau đó, chúng có thể gửi xác nhận đặt phòng giả, hoặc tiếp tục yêu cầu khách chuyển thêm tiền với lý do sai nội dung chuyển khoản, cần “kế toán xác nhận” để hoàn tiền. Sau nhiều lần nhận tiền, các đối tượng chặn liên lạc, chiếm đoạt toàn bộ số tiền. Nạn nhân thường chỉ phát hiện bị lừa khi đến nơi lưu trú, cơ sở dịch vụ nhưng không có thông tin đặt phòng nào được ghi nhận.\n\nCơ quan Công an khuyến cáo người dân và du khách cần nâng cao cảnh giác, thực hiện nghiêm túc các quy tắc xác minh thông tin trước khi thực hiện giao dịch chuyển tiền.\n\nKhi phát hiện các Fanpage có dấu hiệu giả mạo, lừa đảo, lập tức thực hiện thao tác \"Báo cáo\" (Report) trang đó với nền tảng Facebook, đồng thời lưu lại bằng chứng (hình ảnh tin nhắn, tài khoản ngân hàng, phiếu giao dịch).\n\nKhi nghi ngờ hoặc trở thành nạn nhân của các thủ đoạn lừa đảo trực tuyến, người dân cần nhanh chóng thu thập toàn bộ chứng cứ và báo ngay cho Cơ quan Công an nơi gần nhất để được hướng dẫn, tiếp nhận và xử lý kịp thời theo đúng quy định của pháp luật."
+        },
+        {
+          "kind": "legal_document",
+          "listing_id": null,
+          "document_id": 17,
+          "chunk_id": 360,
+          "rank": 4,
+          "similarity_score": 1.0,
+          "title": "Mẹo khi thuê phòng — Trợ Giúp Chợ Tốt",
+          "source": "legal_corpus",
+          "source_url": "https://trogiup.chotot.com/nguoi-mua/meo-khi-thue-phong/",
+          "source_path": "docs/legal_word_supplement_corpus_v8_20261005/supplement-s01-word.json",
+          "category": "housing_contract",
+          "page_kind": "logical_document",
+          "page_from": 1,
+          "page_to": 1,
+          "heading": "Mẹo khi thuê phòng | Đoạn nguyên văn 78",
+          "excerpt": "1. Kiểm tra độ uy tín của người cho thuê trên môi trường trực tuyến (Google, Facebook, diễn đàn, …)\n\nTìm kiếm số điện thoại và địa chỉ muốn thuê trên Google, Facebook, các diễn đàn trực tuyến, … và xem các thông tin giao dịch trước đó như đánh giá của khách hàng về địa chỉ thuê này, …\n\n2. Xác định địa điểm phòng muốn thuê và khảo sát mức giá chung\n\nTìm hiểu cụ thể địa chỉ muốn thuê gồm số nhà, tên đường, phường, quận.\n\nHỏi thăm trực tiếp hàng xóm xung quanh địa điểm muốn thuê và tham khảo ý kiến từ người thân, bạn bè hoặc tìm hiểu thông tin trên mạng về địa điểm này.\n\nMỗi khu vực sẽ có giá thuê khác nhau. Do đó, cần tìm hiểu mức giá chung theo từng khu vực trước khi thuê bằng cách so sánh với các tin đăng bất động sản cùng loại trên Chợ Tốt.\n\nThận trọng khi tìm được phòng ở trung tâm hoặc phòng tốt nhưng giá rẻ bất thường.\n\n3. Không đặt cọc nếu chưa xác định được chủ nhà\n\nYêu cầu gặp trực tiếp chủ nhà trước khi đặt cọc.\n\nYêu cầu chủ nhà cho xem giấy tờ nhà và thẻ Căn Cước/thẻ Căn Cước Công Dân để xác nhận quyền sở hữu của chủ nhà\n\nNên chủ động hỏi kỹ về giá phòng, giá điện nước, các chi phí khác (nếu có) và các điều kiện sinh hoạt khác trước khi đặt cọc.\n\n4. Phải đọc kỹ hợp đồng đặt cọc và hợp đồng thuê\n\nKhi làm hợp đồng thuê cần đọc kỹ các điều khoản ghi trên hợp đồng: địa chỉ phòng, số phòng, tiền phòng cố định trong bao lâu không thay đổi, số người thuê, tiền điện, tiền nước, tiền gửi xe, sử dụng Internet và các chi phí phát sinh khác (nếu có).\n\nLàm rõ các điều khoản về thời hạn hợp đồng và tiền đặt cọc trong trường hợp kết thúc hợp đồng trước hạn.\n\nLuôn giữ tối thiểu một bản chính biên nhận đặt cọc và hợp đồng thuê.\n\n5. Kiểm tra tình trạng phòng thuê trước khi đến ở\n\nKiểm tra tình trạng các thiết bị trong nhà và hệ thống đường điện, nước. Nếu có vấn đề hỏng hóc thì …"
+        }
+      ],
+      "agent_trace": [
+        {
+          "agent": "question_analysis",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash-high",
+          "status": "completed",
+          "plan": {
+            "search_queries": [
+              "kiểm tra thông tin người đăng phòng trọ trực tuyến",
+              "xác minh nguồn tin thuê nhà qua mạng",
+              "lưu ý kiểm tra tin đăng cho thuê phòng"
+            ],
+            "categories": [
+              "criminal_law",
+              "ecommerce_platform",
+              "housing_contract"
+            ],
+            "missing_information": [],
+            "as_of_date": null
+          },
+          "duration_ms": 3439
+        },
+        {
+          "agent": "legal_retrieval",
+          "provider": "hybrid",
+          "status": "completed",
+          "corpus_schema": "legal_ctu_ktx_v2_20261007",
+          "sources_found": 4,
+          "duration_ms": 14266
+        },
+        {
+          "stage": "graph_retrieval",
+          "domain": "legal",
+          "max_hops": 2,
+          "seed_nodes": [
+            "legal:24:S09:web-block:75",
+            "legal:31:google-lens:publisher-excerpts",
+            "legal:27:S12:web-block:12",
+            "legal:17:S01:web-block:78"
+          ],
+          "traversed_edges": 0,
+          "included_provisions": [],
+          "source_schema": "legal_ctu_ktx_v2_20261007"
+        },
+        {
+          "agent": "evidence_selection",
+          "provider": "qwen-local",
+          "model": "qwen3.5:9b",
+          "status": "complete",
+          "selected_ranks": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "duration_ms": 57934
+        },
+        {
+          "agent": "answer_synthesis",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash-high",
+          "status": "completed",
+          "repair": false,
+          "classification_annotations_updated": [],
+          "duration_ms": 9040
+        },
+        {
+          "agent": "source_verification",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash-high",
+          "status": "accepted",
+          "claim_verdicts": [
+            {
+              "claim_id": "summary",
+              "source_ids": [
+                1,
+                2,
+                3,
+                4
+              ],
+              "kind": "recommendation",
+              "supported": true,
+              "reason": "Tổng hợp đúng các khuyến cáo xác minh người đăng và nguồn tin qua tài khoản, hình ảnh, liên hệ và giá từ các nguồn được trích dẫn."
+            },
+            {
+              "claim_id": "steps:0",
+              "source_ids": [
+                4
+              ],
+              "kind": "recommendation",
+              "supported": true,
+              "reason": "Nguồn 4 hướng dẫn tìm số điện thoại, địa chỉ trên Google, Facebook, diễn đàn để xem đánh giá và thông tin giao dịch trước đó."
+            },
+            {
+              "claim_id": "steps:1",
+              "source_ids": [
+                1,
+                3
+              ],
+              "kind": "recommendation",
+              "supported": true,
+              "reason": "Nguồn 1 nêu tính năng xác thực SĐT tăng tính xác thực người dùng; nguồn 3 cảnh báo thủ đoạn dùng tương tác ảo, tài khoản giả mạo."
+            },
+            {
+              "claim_id": "steps:2",
+              "source_ids": [
+                4
+              ],
+              "kind": "recommendation",
+              "supported": true,
+              "reason": "Nguồn 4 hướng dẫn tìm hiểu cụ thể số nhà, tên đường, phường, quận và hỏi thăm trực tiếp hàng xóm quanh nơi muốn thuê."
+            },
+            {
+              "claim_id": "steps:3",
+              "source_ids": [
+                2,
+                3
+              ],
+              "kind": "procedure",
+              "supported": true,
+              "reason": "Nguồn 2 hướng dẫn thao tác nhấp Tìm bằng Google Ống kính để tra ảnh tương tự; nguồn 3 phản ánh thủ đoạn sao chép ảnh từ trang thật."
+            },
+            {
+              "claim_id": "steps:4",
+              "source_ids": [
+                1,
+                3,
+                4
+              ],
+              "kind": "recommendation",
+              "supported": true,
+              "reason": "Các nguồn khuyến nghị so sánh giá cùng loại trong khu vực và thận trọng/cảnh giác trước phòng có giá quá rẻ, thấp bất thường."
+            },
+            {
+              "claim_id": "steps:5",
+              "source_ids": [
+                3,
+                4
+              ],
+              "kind": "recommendation",
+              "supported": true,
+              "reason": "Nguồn 4 khuyên gặp trực tiếp, xem giấy tờ nhà và CCCD; nguồn 3 cảnh báo chiêu trò thúc ép chuyển tiền đặt cọc giữ phòng."
+            },
+            {
+              "claim_id": "limitations:0",
+              "source_ids": [
+                1,
+                3,
+                4
+              ],
+              "kind": "source_limit",
+              "supported": true,
+              "reason": "Phản ánh chính xác phạm vi tài liệu là hướng dẫn, mẹo giao dịch và cảnh báo của nền tảng/công an, không phải quy định pháp luật."
+            },
+            {
+              "claim_id": "limitations:1",
+              "source_ids": [
+                1,
+                2
+              ],
+              "kind": "source_limit",
+              "supported": true,
+              "reason": "Phù hợp với scope_warning của nguồn 1 và 2: xác thực SĐT hay kết quả ảnh không chứng minh quyền sở hữu hoặc quyền cho thuê."
+            }
+          ],
+          "duration_ms": 9932
+        },
+        {
+          "agent": "answer",
+          "provider": "gemini-agent",
+          "model": "gemini-3.8-flash-high",
+          "status": "complete",
+          "attempted_provider": "gemini-agent",
+          "attempted_model": "gemini-3.8-flash-high"
+        },
+        {
+          "agent": "citation_and_rule_checks",
+          "provider": "rules",
+          "status": "accepted"
+        }
+      ],
+      "full_answer": true,
+      "cache_reused": true,
+      "history_saved": true,
+      "owner_isolation": true,
+      "deletion": true
+    },
+    {
+      "question": "Phí ở KTX khu A và khu B của CTU bao nhiêu một tháng theo tài liệu CTU hiện có?",
+      "category": "student_housing",
+      "first_seconds": 77.11,
+      "repeat_seconds": 0.027,
+      "answer": "Phí ở Ký túc xá Khu A và Khu B của Trường Đại học Cần Thơ dao động từ 220.000 đồng đến 475.000 đồng một sinh viên trong một tháng tùy theo nhu cầu về chỗ ở [1].\n\n- Sinh viên thực hiện nộp khoản phí lưu trú này gộp theo từng học kỳ [1] [2].\n- Học kỳ 1 năm học 2026-2027 được tính là 3,5 tháng và mức phí ở trên chưa bao gồm chi phí điện nước phát sinh [2] [3].\n- Tiền điện và nước sinh hoạt sẽ do từng phòng nộp hàng tháng căn cứ theo khối lượng sử dụng thực tế [3].\n\nTài liệu hiện có chỉ nêu khung giá chung từ 220.000 đồng đến 475.000 đồng mà chưa liệt kê mức tiền chi tiết riêng cho từng loại phòng cụ thể giữa Khu A và Khu B [1].\n\nĐể áp dụng vào trường hợp của bạn:\n- Bạn muốn đăng ký loại phòng mấy người và có nhu cầu tự nấu ăn trong phòng hay không?\n\nThông tin tham khảo từ nguồn, cần đối chiếu điều kiện áp dụng và hiệu lực.",
+      "sources": [
+        {
+          "kind": "legal_document",
+          "listing_id": null,
+          "document_id": 44,
+          "chunk_id": 529,
+          "rank": 1,
+          "similarity_score": 0.997452,
+          "title": "Cơ sở vật chất, loại phòng và mức phí KTX Đại học Cần Thơ",
+          "source": "legal_corpus",
+          "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+          "source_path": "docs/ctu_ktx_corpus_20261007/ctu-ktx-facilities.json",
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": 1,
+          "page_to": 1,
+          "heading": "Thông tin KTX CTU — phần 1",
+          "excerpt": "Cở sở vật chất tại phòng ở KTX\nThí sinh/ Tân sinh viên khi trúng tuyển và xác nhận học tại ĐH Cần Thơ có nhu cầu đăng ký ở Ký túc xá vui lòng điền thông tin lại mẫu. Trung tâm sẽ liên hệ tư vấn chỗ ở khi có kết quả sắp chỗ.\nĐiền thông tin tại mẫu: https://forms.gle/K8F4Smtd44ez51PB9\nKý túc xá (KTX) Đại học Cần Thơ có 03 khu với sức chứa khoảng 8.780 sinh viên (SV). KTX có hàng rào bao quanh, có hệ thống camera an ninh, có lực lượng bảo vệ chuyên nghiệp đảm bảo ANTT, an toàn cho SV; Có hệ thống nhà giữ xe (miễn phí gửi xe đạp), căng tin, siêu thị mini, nhà ăn đảm bảo an toàn vệ sinh, thực phẩm đủ dinh dưỡng mức giá khác nhau cho SV lựa chọn.\nPhòng ở tại KTX được trang bị giường tầng, bàn học, tử cá nhân có ngăn riêng cho từng SV, có khu vực vệ sinh cá riêng cho từng phòng; hoặc loại giường bộ (mỗi SV có một bộ giường tủ riêng). Các phòng đều có trang bị mạng wifi tốc độ cao cho SV tìm kiếm tài liệu học tập và giải trí thư giãn.\nKý túc xá Khu A và Khu B tọa lạc tại Khu II (TP. Cần Thơ). Có mức giá từ 220.000đ đến 475.000đ/ SV/ tháng tùy theo nhu cầu về chỗ ở của SV. Sinh viên nộp phí theo học kỳ.\nCó loại phòng không được nấu ăn (SV được sử dụng ấm đun siêu tốc) loại 4 hoặc 8 SV/ phòng (có ở khu A lẫn khu B).\nPhòng ở khu B\nPhòng ở khu A (dãy A2)\nCó loại phòng được nấu ăn loại 3, 4, 5, 6 hoặc 8 sinh viên/ phòng, SV trang bị dụng cụ tự nấu ăn trong phòng (tập trung ở KTX khu A)\nLoại 3 người ở được nấu ăn (giường bộ)\nLoại 5, 6 người ở được nấu ăn (giường bộ)\nLoại 8 người ở được nấu ăn giường tầng\nKý túc xá Khu C (Cơ sở Hậu Giang) tọa lạc tại xã Hòa An, TP Cần Thơ với sức chưa khoảng 250 sinh viên.\nKý túc xá là nơi an toàn, thuận tiện cho sinh vên đến ăn ở, sinh hoạt và học tập tại trường ĐH Cần Thơ."
+        },
+        {
+          "kind": "legal_document",
+          "listing_id": null,
+          "document_id": 42,
+          "chunk_id": 482,
+          "rank": 2,
+          "similarity_score": 0.842611,
+          "title": "Hướng dẫn Tân sinh viên đăng ký ở Ký túc xá",
+          "source": "legal_corpus",
+          "source_url": "https://tansinhvien.ctu.edu.vn/sinh-hoat/huong-dan-tan-sinh-vien-dang-ky-o-ky-tuc-xa",
+          "source_path": "docs/ctu_ktx_corpus_20261007/ctu-new-students.json",
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": 1,
+          "page_to": 1,
+          "heading": "Thông tin KTX công bố bởi CTU",
+          "excerpt": "Hướng dẫn đăng ký ở Ký túc xá\nClick vào đây Xem phòng ở tại Ký túc xá (Tân sinh viên - Khóa 52)\n(Tân sinh viên có thể ghi nhận lại nhu cầu đăng ký theo liên kết trên)\n- Phòng ở tại Ký túc xá (KTX) ĐH Cần Thơ có sức chứa từ 03 đến 08 Sinh viên/ phòng. Tân sinh viên (TSV) đăng ký ở KTX, nộp phí ở theo học kỳ.\nPhí ở học kỳ 1 năm học 2026-2027 tính từ ngày 7 tháng 9 đến 18/12/2026\n(Tính theo học kỳ 3.5 tháng, chưa bao gồm phí điện nước)\n. Trường hợp, TSV nhận chỗ ở từ 14/8/2026 đến trước 7/9/2026 thì nộp thêm chệnh lệch phí nửa tháng.\n- Phòng ở có wifi riêng từng phòng.\n- SV ở KTX được miễn phí gửi xe đạp.\n- Phí gửi xe máy/ xe điện là 25.000đ/Sinh viên/ tháng nộp theo học kỳ.\n- Trong khuôn viên có căn tin, siêu thị mini phục vụ cho SV.\n- Có hợp đồng với công ty bảo vệ chuyên nghiệp, có hệ thống camera an ninh.\n* KTX là nơi an toàn, thuận lợi cho sinh viên ăn ở, sinh hoạt và học tập tại ĐH Cần Thơ.\n* Lưu ý:\n- Sinh viên có thể xin chuyển đổi chỗ nếu có chỗ ở khác thích hợp hơn có vị trí trống. Trường không hoàn phí ở KTX nếu trả chỗ trước hạn. Chỉ hoàn trả phí cho trường hợp SV trả chỗ ở trong vòng 07 ngày kể từ ngày duyệt chỗ ở qua Hệ thống Quản lý KTX (phải có lý do chính đáng).\n- Loại phòng\nkhông được nấu ăn\n, sinh viên chỉ được sử dụng ấm đun siêu tốc,\nkhông được sử dụng\ncác dụng cụ đa năng.\n- Đối với Cơ sở Hậu Giang chỉ bố trí cho sinh viên học năm thứ nhất và năm cuối; Cơ sở Sóc Trăng chỉ bố trí sinh viên học năm cuối.\n- Trong thời gian nghỉ Tết Nguyên Đán, sinh viên có nhu cầu ở lại phải đóng phí 02 tuần.\nHƯỚNG DẪN ĐĂNG KÝ Ở KÝ TÚC XÁ\n+ Tân sinh viên chưa có tài khoản đăng nhập Hệ thống Quản lý KTX, thực hiện đăng ký nhu cầu ở KTX Trường\nthực hiện điền thông tin vào mẫu\n+\nTải mẫu đơn\n(đối với trường hợp SV đăng ký trực tiếp tại Ký túc xá)\n+\nSịnh viên đã có tài khoản đă…"
+        },
+        {
+          "kind": "legal_document",
+          "listing_id": null,
+          "document_id": 41,
+          "chunk_id": 479,
+          "rank": 3,
+          "similarity_score": 0.826662,
+          "title": "Đăng ký ở Ký túc xá học kỳ 1 năm học 2026-2027",
+          "source": "legal_corpus",
+          "source_url": "https://ssc.ctu.edu.vn/thong-bao/226-dang-ky-o-ky-tuc-xa-hoc-ky-1-nam-hoc-2026-2027.html",
+          "source_path": "docs/ctu_ktx_corpus_20261007/ctu-2026-registration.json",
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": 1,
+          "page_to": 1,
+          "heading": "Thông tin KTX công bố bởi CTU",
+          "excerpt": "Đăng ký ở Ký túc xá học kỳ 1 năm học 2026-2027\n(Trích nội dung Thông báo số: 307 /TB-CTSV, ngày 21 tháng 7 năm 2026 về việc Đăng ký ở Ký túc xá học kỳ 1 năm học 2026-2027, tóm tắt)\nXem nội dung thông báo chi tiết tại đây.\nPhòng Công tác Sinh viên (CTSV) thông báo đến toàn thể sinh viên, học viên, học sinh đang ở nội trú tại Ký túc xá (KTX)\ngọi chung là SV\nthời gian đăng ký và thu phí ở KTX học kỳ 1 năm học 2026 – 2027 như sau:\n1. Thời gian ở KTX\nHọc kỳ 1 năm học 2026–2027: từ\n07/9/2026 đến 18/12/2026\n(3,5 tháng).\n2. Nộp phí ở KTX\nThời gian nộp: từ ngày\n04/8 – 07/8/2026\n, đóng cho cả kỳ.\nHình thức:\n-\nĐóng qua QRCode thông qua Hệ thống Quản lý KTX.\n-\nChuyển khoản qua HD Bank\n+ STK: 0077 0407 0013 608\n+ Người thụ hưởng: Đại học Cần Thơ\n+ Nội dung (cú pháp): Mã SV – Tên SV – SĐT – KTX\nNếu sau 2 ngày\n(ngày làm việc)\nchưa cập nhật, gửi biên lai về email:\nThis email address is being protected from spambots. You need JavaScript enabled to view it.\nđể được cập nhật.\n3. Phí điện nước, gửi xe tại KTX\nĐiện nước:\nPhòng nộp hàng tháng theo thực tế sử dụng.\nGửi xe:\nNộp phí tại Văn phòng KTX từ\n04/8 – 14/8/2026\n(xe đạp được cập nhật miễn phí)\n.\n4. Đăng ký ở KTX\nSinh viên đang ở cũ:\nchỉ cần nộp phí đúng thời gian trong thông báo, không đăng ký lại.\nSinh viên đăng ký ở mới:\nđăng ký qua Hệ thống Quản lý KTX, đăng ký qua email\nThis email address is being protected from spambots. You need JavaScript enabled to view it.\n, hoặc trực tiếp tại Văn phòng TT. PVSV.\nCó thể ghi nguyện vọng ở, đăng ký theo nhóm.\nTT. PVSV ưu tiên nhóm đủ số lượng phòng, nộp phí đúng hạn.\nSinh viên học hết chương trình đào tạo, chuẩn bị xét tốt nghiệp thì không cần phải nộp phí cũng như đăng ký ở tiếp, chủ động trả chỗ tránh việc chậm nhận được quyết định tốt nghiệp do còn ở KTX thì HTQL còn báo nợ.\n5. Chuyển đổi, trả…"
+        }
+      ],
+      "agent_trace": [
+        {
+          "agent": "question_analysis",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash-high",
+          "status": "completed",
+          "plan": {
+            "search_queries": [
+              "phí ký túc xá khu A khu B CTU",
+              "giá phòng ký túc xá Đại học Cần Thơ",
+              "lệ phí lưu trú ký túc xá CTU"
+            ],
+            "categories": [
+              "student_housing"
+            ],
+            "missing_information": [],
+            "as_of_date": null
+          },
+          "duration_ms": 2894
+        },
+        {
+          "agent": "legal_retrieval",
+          "provider": "hybrid",
+          "status": "completed",
+          "corpus_schema": "legal_ctu_ktx_v2_20261007",
+          "sources_found": 3,
+          "duration_ms": 157
+        },
+        {
+          "stage": "graph_retrieval",
+          "domain": "legal",
+          "max_hops": 2,
+          "seed_nodes": [
+            "legal:44:ctu-ktx-facilities:f881ae79b55c416a5f36",
+            "legal:42:ctu-new-students:064ec91f3dd209097444",
+            "legal:41:ctu-2026-registration:ebe2992af258d2e82271"
+          ],
+          "traversed_edges": 0,
+          "included_provisions": [],
+          "source_schema": "legal_ctu_ktx_v2_20261007"
+        },
+        {
+          "agent": "evidence_selection",
+          "provider": "qwen-local",
+          "model": "qwen3.5:9b",
+          "status": "complete",
+          "selected_ranks": [
+            1,
+            2,
+            3
+          ],
+          "duration_ms": 63123
+        },
+        {
+          "agent": "answer_synthesis",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash-high",
+          "status": "completed",
+          "repair": false,
+          "classification_annotations_updated": [],
+          "duration_ms": 5446
+        },
+        {
+          "agent": "source_verification",
+          "provider": "gemini",
+          "model": "gemini-3.8-flash-high",
+          "status": "accepted",
+          "claim_verdicts": [
+            {
+              "claim_id": "summary",
+              "source_ids": [
+                1
+              ],
+              "kind": "regulation",
+              "supported": true,
+              "reason": "Nguồn 1 xác nhận KTX Khu A và Khu B có mức giá từ 220.000đ đến 475.000đ/SV/tháng tùy theo nhu cầu về chỗ ở của sinh viên."
+            },
+            {
+              "claim_id": "steps:0",
+              "source_ids": [
+                1,
+                2
+              ],
+              "kind": "regulation",
+              "supported": true,
+              "reason": "Nguồn 1 và 2 đều nêu rõ sinh viên (hoặc tân sinh viên) nộp phí ở KTX theo học kỳ."
+            },
+            {
+              "claim_id": "steps:1",
+              "source_ids": [
+                2,
+                3
+              ],
+              "kind": "regulation",
+              "supported": true,
+              "reason": "Nguồn 2 và 3 xác nhận học kỳ 1 năm học 2026-2027 tính 3,5 tháng; nguồn 2 nêu rõ mức phí chưa bao gồm phí điện nước."
+            },
+            {
+              "claim_id": "steps:2",
+              "source_ids": [
+                3
+              ],
+              "kind": "regulation",
+              "supported": true,
+              "reason": "Nguồn 3 quy định rõ tiền điện nước do phòng nộp hàng tháng theo thực tế sử dụng."
+            },
+            {
+              "claim_id": "limitations:0",
+              "source_ids": [
+                1
+              ],
+              "kind": "source_limit",
+              "supported": true,
+              "reason": "Nguồn 1 chỉ nêu khung giá chung từ 220.000đ đến 475.000đ/SV/tháng mà không có bảng giá chi tiết cho từng loại phòng giữa Khu A và Khu B."
+            }
+          ],
+          "duration_ms": 5413
+        },
+        {
+          "agent": "answer",
+          "provider": "gemini-agent",
+          "model": "gemini-3.8-flash-high",
+          "status": "complete",
+          "attempted_provider": "gemini-agent",
+          "attempted_model": "gemini-3.8-flash-high"
+        },
+        {
+          "agent": "citation_and_rule_checks",
+          "provider": "rules",
+          "status": "accepted"
+        }
+      ],
+      "full_answer": true,
+      "cache_reused": true,
+      "history_saved": true,
+      "owner_isolation": true,
+      "deletion": true
+    }
+  ]
+}

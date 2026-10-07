@@ -1,5 +1,0 @@
-# Preserve the serving API image; apply only the dormitory routing fixes.
-FROM nckh-api:before-ctu-ktx-20261007
-COPY apps/api/app/room_service/chatbot/topics.py /app/app/room_service/chatbot/topics.py
-COPY scripts/patch_ctu_ktx_runtime.py /tmp/patch_ctu_ktx_runtime.py
-RUN python /tmp/patch_ctu_ktx_runtime.py /app/app/room_service/chatbot/legal_retrieval.py

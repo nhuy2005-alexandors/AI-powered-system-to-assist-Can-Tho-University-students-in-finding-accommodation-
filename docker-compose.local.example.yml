@@ -21,7 +21,7 @@ services:
       SMTP_PASSWORD: ""
       SMTP_FROM: no-reply@timtrosv.local
       WEB_PUBLIC_URL: http://localhost:3000
-      CHATBOT_LLM_PROVIDER: gemini
+      CHATBOT_LLM_PROVIDER: qwen
       CHATBOT_LLM_TIMEOUT_SECONDS: "60"
       OLLAMA_MODEL: qwen3.5:4b
       OLLAMA_CONTEXT_LENGTH: ${OLLAMA_CONTEXT_LENGTH:-8192}

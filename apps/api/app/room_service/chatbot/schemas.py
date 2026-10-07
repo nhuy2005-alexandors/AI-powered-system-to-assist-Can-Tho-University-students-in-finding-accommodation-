@@ -1,4 +1,6 @@
 from typing import Any, Literal
+from datetime import datetime
+from uuid import UUID
 
 from pydantic import BaseModel, Field, model_validator
 
@@ -35,7 +37,9 @@ class ChatConversationState(BaseModel):
 
 
 class ChatAskRequest(BaseModel):
-    """The API receives short client-side context but never persists chat content."""
+    """Authenticated turns may belong to a saved conversation."""
+
+    conversation_id: UUID | None = None
 
     message: str = Field(min_length=2, max_length=2000)
     filters: ChatFilters | None = None
@@ -113,12 +117,9 @@ class ChatFeedbackOut(BaseModel):
 
 
 class ChatAskResponse(BaseModel):
-    content_completeness: Literal['complete', 'partial', 'insufficient', 'not_evaluated'] = 'not_evaluated'
-    source_coverage_status: Literal['covered', 'partial', 'not_evaluated'] = 'not_evaluated'
-    answer_coverage_status: Literal['covered', 'partial', 'not_evaluated'] = 'not_evaluated'
-    provenance_status: Literal['limited', 'verified', 'not_evaluated'] = 'not_evaluated'
-    application_status: Literal['conditional', 'unresolved', 'not_evaluated'] = 'not_evaluated'
-    completion_reasons: list[str] = Field(default_factory=list)
+    conversation_id: UUID | None = None
+    turn_id: int | None = None
+    reused_answer: bool = False
     agent_trace: list[dict] = Field(default_factory=list)
     corpus_schema: str | None = None
     partial_answer: bool = False
@@ -129,7 +130,7 @@ class ChatAskResponse(BaseModel):
     intent: str
     confidence: float
     listings: list[ChatListing] = Field(default_factory=list, max_length=5)
-    sources: list[ChatSource] = Field(default_factory=list, max_length=8)
+    sources: list[ChatSource] = Field(default_factory=list, max_length=5)
     no_answer: bool = False
     degraded: bool = False
     degraded_reasons: list[str] = Field(default_factory=list)
@@ -140,3 +141,29 @@ class ChatAskResponse(BaseModel):
     event_id: int | None = None
     citation_accuracy: float = Field(default=0, ge=0, le=1)
     evaluation_contexts: list[ChatEvaluationContext] = Field(default_factory=list)
+
+
+class ChatConversationSummary(BaseModel):
+    id: UUID
+    title: str
+    updated_at: datetime
+    turn_count: int
+
+
+class ChatConversationList(BaseModel):
+    items: list[ChatConversationSummary]
+    has_more: bool
+
+
+class ChatSavedTurn(BaseModel):
+    id: int
+    question: str
+    response: ChatAskResponse
+    created_at: datetime
+
+
+class ChatConversationDetail(BaseModel):
+    id: UUID
+    title: str
+    turns: list[ChatSavedTurn]
+    has_more: bool

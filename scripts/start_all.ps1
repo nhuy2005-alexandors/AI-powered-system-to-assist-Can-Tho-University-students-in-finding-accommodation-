@@ -14,7 +14,7 @@ function Invoke-Compose {
     param([Parameter(Mandatory = $true)][string[]]$ComposeArgs)
 
     $releaseCompose = @('-f','docker-compose.yml')
-    foreach($file in @('docker-compose.override.yml','docker-compose.ragas.yml','docker-compose.legal-refresh.yml','docker-compose.graph-rag.yml','docker-compose.source-grounded.yml','docker-compose.word-legal.yml')){
+    foreach($file in @('docker-compose.override.yml','docker-compose.ragas.yml','docker-compose.legal-refresh.yml','docker-compose.graph-rag.yml','docker-compose.source-grounded.yml','docker-compose.word-legal.yml','docker-compose.ctu-ktx.yml')){
         if(Test-Path -LiteralPath $file){$releaseCompose += @('-f',$file)}
     }
     & docker compose @releaseCompose @ComposeArgs
@@ -49,6 +49,12 @@ try {
         throw "PostgreSQL did not become ready within 30 seconds"
     }
 
+    # Existing DB containers predate the history migration, including SkipBuild.
+    $historyMigration = Join-Path $projectRoot "infra\db\migrations\99_chat_history.sql"
+    Invoke-Compose -ComposeArgs @("cp", $historyMigration, "db:/docker-entrypoint-initdb.d/99-chat-history.sql")
+    $sharedMigration = Join-Path $projectRoot "infra\db\migrations\100_shared_answers_document_control.sql"
+    Invoke-Compose -ComposeArgs @("cp", $sharedMigration, "db:/docker-entrypoint-initdb.d/100-shared-answers-document-control.sql")
+
     $migrations = @(
         "90-chatbot.sql",
         "91-room-service-risk.sql",
@@ -58,7 +64,9 @@ try {
         "95-fr-delivery.sql",
         "96-reviews-sentiment.sql",
         "97-response-performance.sql",
-        "98-legal-quality.sql"
+        "98-legal-quality.sql",
+        "99-chat-history.sql",
+        "100-shared-answers-document-control.sql"
     )
     foreach ($migration in $migrations) {
         $sql = 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f "/docker-entrypoint-initdb.d/{0}"' -f $migration
@@ -80,7 +88,7 @@ try {
     }
 
     if ($IndexLegal) {
-        throw 'The active release is Word-only. Rebuild it with prepare_word_legal_corpus.py, index_legal_agent_corpus.py and index_graph_rag.py as documented; the old mixed OCR indexer is disabled here.'
+        throw 'The active release uses Word legal sources and CTU KTX data. See docs/CHATBOT.md for indexing; the old mixed OCR indexer is disabled here.'
     }
 
     $appArgs = @("up", "-d")

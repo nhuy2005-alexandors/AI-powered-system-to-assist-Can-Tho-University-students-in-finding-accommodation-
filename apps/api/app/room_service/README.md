@@ -2,7 +2,7 @@
 
 Backend services related to accommodation listings:
 
-- `chatbot/`: stateless hybrid chatbot (structured filters + database retrieval + optional LLM wording).
+- `chatbot/`: hybrid chatbot with user-owned history and saved-answer reuse. Architecture, operation and reports: [CHATBOT.md](../../../../docs/CHATBOT.md).
 - `risk/`: explainable cold-start risk scoring for listings.
 
 The roommate feature is intentionally not included because it is maintained by another team member.

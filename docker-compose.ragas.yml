@@ -11,7 +11,7 @@ services:
       CHATBOT_EMBEDDING_MODEL: ${CHATBOT_EMBEDDING_MODEL:-intfloat/multilingual-e5-small}
       HF_HOME: /models
       TRANSFORMERS_CACHE: /models/hub
-      CHATBOT_LLM_PROVIDER: ${CHATBOT_LLM_PROVIDER:-gemini}
+      CHATBOT_LLM_PROVIDER: ${CHATBOT_LLM_PROVIDER:-auto}
       CHATBOT_LEGAL_SCHEMA: ${CHATBOT_LEGAL_SCHEMA:-public}
       CHATBOT_AGENTS_ENABLED: ${CHATBOT_AGENTS_ENABLED:-false}
       CHATBOT_QUESTION_ANALYSIS_MODEL: ${CHATBOT_QUESTION_ANALYSIS_MODEL:-gemini-3.1-flash-lite}
@@ -19,10 +19,6 @@ services:
       CHATBOT_ANSWER_SYNTHESIS_ENABLED: ${CHATBOT_ANSWER_SYNTHESIS_ENABLED:-true}
       CHATBOT_ANSWER_SYNTHESIS_MODEL: ${CHATBOT_ANSWER_SYNTHESIS_MODEL:-}
       CHATBOT_ANSWER_SYNTHESIS_TIMEOUT_SECONDS: ${CHATBOT_ANSWER_SYNTHESIS_TIMEOUT_SECONDS:-60}
-      CHATBOT_LEGAL_SELECTION_PROVIDER: ${CHATBOT_LEGAL_SELECTION_PROVIDER:-gemini}
-      CHATBOT_LEGAL_SELECTION_MODEL: ${CHATBOT_LEGAL_SELECTION_MODEL:-}
-      CHATBOT_LEGAL_SELECTION_TIMEOUT_SECONDS: ${CHATBOT_LEGAL_SELECTION_TIMEOUT_SECONDS:-60}
-      CHATBOT_LEGAL_GENERATION_MODE: ${CHATBOT_LEGAL_GENERATION_MODE:-separate}
       CHATBOT_LLM_TIMEOUT_SECONDS: ${CHATBOT_LLM_TIMEOUT_SECONDS:-60}
       CHATBOT_LEGAL_TIMEOUT_SECONDS: ${CHATBOT_LEGAL_TIMEOUT_SECONDS:-180}
       CHATBOT_MAX_OUTPUT_TOKENS: ${CHATBOT_MAX_OUTPUT_TOKENS:-1536}
@@ -36,8 +32,8 @@ services:
       GEMINI_FALLBACK_MODEL: ${GEMINI_FALLBACK_MODEL:-gemini-3.1-flash-lite}
       GEMINI_MIN_REQUEST_INTERVAL_SECONDS: ${GEMINI_MIN_REQUEST_INTERVAL_SECONDS:-5}
       GEMINI_BASE_URL: ${GEMINI_DOCKER_BASE_URL:-${GEMINI_BASE_URL:-https://generativelanguage.googleapis.com/v1beta}}
-      RAGAS_JUDGE_MODEL: ${RAGAS_JUDGE_MODEL:-gemini-3.8-flash-high}
-      RAGAS_JUDGE_PROVIDER: ${RAGAS_JUDGE_PROVIDER:-gemini}
+      RAGAS_JUDGE_MODEL: ${RAGAS_JUDGE_MODEL:-qwen3.5:9b}
+      RAGAS_JUDGE_PROVIDER: ${RAGAS_JUDGE_PROVIDER:-ollama}
       RAGAS_JUDGE_URL: http://host.docker.internal:11434
       GIT_PYTHON_REFRESH: quiet
       PYTHONPATH: /workspace/apps/api:/eval
@@ -48,7 +44,7 @@ services:
       - ./scripts:/workspace/scripts:ro
       - ./infra/db/migrations:/workspace/infra/db/migrations:ro
       - ./Data:/data:ro
-      - ./docs/LEGAL_QUESTION_BANK.md:/question_bank.md:ro
+      - ./eval/datasets/legal_question_bank.txt:/question_bank.md:ro
       - ./docker-compose.yml:/workspace/docker-compose.yml:ro
       - ./docker-compose.override.yml:/workspace/docker-compose.override.yml:ro
       - ./docker-compose.ragas.yml:/workspace/docker-compose.ragas.yml:ro

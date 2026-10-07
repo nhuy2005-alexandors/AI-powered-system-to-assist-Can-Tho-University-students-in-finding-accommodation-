@@ -58,7 +58,7 @@ CHECKED_BASIS={
 
 def main():
     original=ROOT/'eval/datasets/external_legal_20261004/answers.json'
-    manuscript=ROOT/'CTU_LEGAL_REVIEW_36.md'
+    manuscript=ROOT/'eval/datasets/legal_reference_point_review.txt'
     refs=json.loads(original.read_text(encoding='utf-8'))['cases']
     by_order={i+1:c for i,c in enumerate(refs)}
     notes=json.loads((original.parent/'review_20261006.json').read_text(encoding='utf-8'))

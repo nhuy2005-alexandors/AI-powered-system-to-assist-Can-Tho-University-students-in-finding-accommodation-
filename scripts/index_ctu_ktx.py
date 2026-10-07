@@ -37,13 +37,15 @@ def snapshot(conn, schema):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--schema', default='legal_ctu_ktx_v1_20261007')
-    parser.add_argument('--graph-schema', default='graph_ctu_ktx_v1_20261007')
-    parser.add_argument('--base-schema', default=settings.chatbot_legal_schema)
-    parser.add_argument('--base-graph-schema', default=settings.chatbot_graph_schema)
-    parser.add_argument('--listing-schema', default=settings.chatbot_listing_schema)
+    parser.add_argument('--schema', default='legal_ctu_ktx_v2_20261007')
+    parser.add_argument('--graph-schema', default='graph_ctu_ktx_v2_20261007')
+    # Keep the already indexed legal/guidance supplements when adding KTX.
+    # Serving settings point at the target after activation, not its base.
+    parser.add_argument('--base-schema', default='legal_word_repair_v16_20261006')
+    parser.add_argument('--base-graph-schema', default='graph_rag_word_repair_v16')
+    parser.add_argument('--listing-schema', default='housing_graph_word_repair_v16')
     parser.add_argument('--corpus', type=Path, default=ROOT / 'docs/ctu_ktx_corpus_20261007')
-    parser.add_argument('--report', type=Path, default=ROOT / 'eval/reports/ctu_ktx_index_20261007.json')
+    parser.add_argument('--report', type=Path, default=ROOT / 'eval/reports/ctu_ktx_v2_index_20261007.json')
     args = parser.parse_args()
     target, graph = legal_schema(args.schema), graph_schema(args.graph_schema)
     base, base_graph = legal_schema(args.base_schema), graph_schema(args.base_graph_schema)
@@ -69,6 +71,10 @@ def main():
                 # Explicit columns also support older serving releases.
                 columns = list(conn.execute(text("SELECT column_name FROM information_schema.columns WHERE table_schema=:s AND table_name=:t AND is_generated='NEVER' ORDER BY ordinal_position"),
                     {'s': base, 't': table}).scalars())
+                if table == 'legal_documents' and 'admin_enabled' in columns:
+                    # The additive admin migration may predate this new release.
+                    # Preserve suspended sources when cloning the base corpus.
+                    conn.execute(text(f'ALTER TABLE {target}.legal_documents ADD COLUMN IF NOT EXISTS admin_enabled BOOLEAN NOT NULL DEFAULT true'))
                 names = ','.join('"' + c + '"' for c in columns)
                 conn.execute(text(f'INSERT INTO {target}.{table} ({names}) SELECT {names} FROM {base}.{table}'))
             for sequence, table in (('document_id', 'legal_documents'), ('chunk_id', 'legal_chunks')):
@@ -137,12 +143,15 @@ def main():
                         {'s': origin, 't': destination, 'r': relation, 'e': json.dumps(dict(manifest_sha256=release_hash, document_id=row['document_id'], provision_id=row['provision_id']))})
         counts = dict(conn.execute(text(f"SELECT count(*) AS chunks,count(c.embedding_vector) AS vectors,count(DISTINCT d.id) AS documents FROM {target}.legal_chunks c JOIN {target}.legal_documents d ON d.id=c.document_id WHERE d.category='student_housing' AND d.status='ready' ")).mappings().one())
         assert counts['documents'] == len(manifest['documents']) and counts['chunks'] == counts['vectors'] > 0
+        total = dict(conn.execute(text(f"SELECT count(*) AS chunks,count(c.embedding_vector) AS vectors,count(DISTINCT d.id) AS documents FROM {target}.legal_chunks c JOIN {target}.legal_documents d ON d.id=c.document_id WHERE d.status='ready'")).mappings().one())
+        assert total['chunks'] == total['vectors'], 'Every serving chunk needs a real embedding'
+        categories = [dict(r) for r in conn.execute(text(f'SELECT d.category,count(DISTINCT d.id) AS documents,count(c.id) AS chunks FROM {target}.legal_documents d JOIN {target}.legal_chunks c ON c.document_id=d.id WHERE d.status=\'ready\' GROUP BY d.category ORDER BY d.category')).mappings()]
         after = snapshot(conn, base)
         assert before == after, 'Serving corpus changed while indexing'
         conn.execute(text("UPDATE public.legal_corpus_releases SET status='validated' WHERE schema_name=:s AND status='staging'"), {'s': target})
     GraphChatRepository(engine, target, listing, graph)
     report = dict(base_schema=base, legal_schema=target, graph_schema=graph, listing_schema=listing,
-        ktx=counts, indexed=indexed, source_before=before, source_after=after, base_unchanged=before == after,
+        ktx=counts, total=total, categories=categories, indexed=indexed, source_before=before, source_after=after, base_unchanged=before == after,
         manifest_sha256=release_hash, activation='validated; apply docker-compose.ctu-ktx.yml')
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

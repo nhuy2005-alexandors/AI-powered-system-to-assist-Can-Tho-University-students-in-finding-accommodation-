@@ -1,8 +1,0 @@
-[
-  {"id":1001,"category":"electricity","question":"Ba sinh viên thuê chung phòng trọ thì tiền điện được kê khai số người và phân bổ định mức thế nào?"},
-  {"id":1002,"category":"water","question":"Chủ trọ thu tiền nước theo đầu người mỗi tháng. Tôi nên hỏi rõ mức khoán, số người, kỳ thu và những khoản đã bao gồm thế nào?"},
-  {"id":1003,"category":"residence","question":"Sinh viên chuyển sang phòng trọ khác cần chuẩn bị giấy tờ và nộp đăng ký tạm trú ở đâu?"},
-  {"id":1004,"category":"fire_safety","question":"Nhà trọ nhiều phòng phải đáp ứng yêu cầu PCCC nào, và cần biết số tầng, diện tích, công năng gì để xác định quy định áp dụng?"},
-  {"id":1005,"category":"scam_prevention","question":"Tin cho thuê phòng yêu cầu bấm liên kết lạ rồi chuyển cọc ngay. Tôi nên kiểm tra liên kết, người nhận tiền và dấu hiệu thúc ép ra sao?"},
-  {"id":1006,"category":"scam_prevention","question":"Sau khi nghi bị lừa tiền đặt cọc phòng trọ, tôi cần giữ tin nhắn, chứng từ chuyển tiền và thông tin người nhận nào để báo công an?"}
-]
