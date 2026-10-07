@@ -1,9 +1,29 @@
 # Bàn giao chức năng gợi ý phòng trọ
 
-Người tổng hợp nhánh và người làm frontend đọc file này sau khi merge.
+**Đây là tài liệu bàn giao chính. Người tổng hợp nhánh và người làm frontend bắt đầu tại đây; không cần đọc lần lượt tất cả file Markdown.**
 Nhánh bàn giao: `codex/goi-y-phong-tro`, tạo từ `feature/update-local`. Ghi nhận ngày 07/10/2026.
 
 Người nhận nhánh muốn biết cần migrate gì và có phải embed lại không: đọc mục **4.0** trước, rồi chọn cách chạy ở 4.1 hoặc 4.2.
+
+### Đọc phần nào?
+
+- **Người tổng hợp backend:** mục 2 → 4 → checklist mục 6.
+- **Người làm frontend:** mục 5 → checklist mục 6.
+- **Muốn biết ý nghĩa hai collection MongoDB:** mục 3.
+
+Các tài liệu phụ được giữ để tra cứu khi cần:
+
+| File | Vai trò |
+| --- | --- |
+| `apps/api/app/room_service/recommendation/README.md` | Giới thiệu module, lệnh chạy nhanh và dẫn đến file bàn giao này |
+| [Recommendation_Behavior.md](Recommendation_Behavior.md) | Chi tiết cách cập nhật vector từ hành vi và kiểm thử |
+| [recommendation_performance.md](../../eval/reports/recommendation_performance.md) | Số đo tối ưu, cách chạy benchmark và hạn chế về độ phù hợp |
+
+### Trạng thái để bàn giao
+
+Backend gợi ý đã chạy trên môi trường local, đã tối ưu và đạt **66 kiểm thử**. API rerank đo sau restart mất khoảng **26 giây** ở lượt đầu; ba lượt có cache mất **70–90 ms** qua HTTP. Cache hết hạn sau 5 phút; nhu cầu mới vẫn có thể chậm. Chất lượng gần đúng theo văn bản chưa bảo đảm đúng trường/khoảng cách.
+
+**Merge đưa code vào nhánh chung; để chạy trên máy nhận vẫn phải cài dependencies/model, cấu hình database/JWT, áp dụng migration cần thiết và có dữ liệu phòng/vector.** Checklist mục 6 dùng để xác nhận sau khi merge, vì môi trường và các nhánh khác chưa được kiểm tra chung tại máy nhận. Frontend do nhóm tích hợp theo mục 5. Riêng đợt tối ưu mới không thêm migration và không yêu cầu embed lại phòng.
 
 ## 1. Chức năng hiện tại
 
@@ -28,7 +48,7 @@ Frontend cần làm form nhu cầu, danh sách “Dành cho bạn”, mở chi t
 
 Ví dụ: phòng `1310`, “Phòng trọ 1.6tr/tháng, có máy lạnh, ưu tiên sinh viên”, giá `1600000` ở cả API gợi ý và API chi tiết.
 
-52 ms là thời gian xử lý API báo ở lần gọi đó, không phải thời gian tải toàn bộ trang. Kết quả xác nhận luồng API; độ phù hợp của gợi ý và tốc độ rerank cần đánh giá thêm.
+52 ms là thời gian xử lý API báo ở lần kiểm tra ban đầu, không phải thời gian tải toàn bộ trang. Lần kiểm tra sau tối ưu ghi nhận cosine 97 ms trong API, rerank và cache có số đo ở phần đầu và báo cáo hiệu năng. Các số đo này xác nhận luồng hoạt động; chưa thay thế đánh giá độ phù hợp trên bộ nhãn độc lập.
 
 ## 2. Merge code và chuyển dữ liệu
 
@@ -443,7 +463,7 @@ Cần tập nhu cầu/phòng có nhãn để đánh giá Precision@10/NDCG@10. �
 | `behavior.py` | Trọng số, chuẩn hóa, trộn vector |
 | `auth.py` | Tài khoản JWT thành user_id |
 
-Kiểm thử nằm ở `apps/api/tests/test_recommendation_behavior.py` và `test_recommendation_mongo.py`. Đã chạy lại cả hai bộ khi chuẩn bị commit nhánh bàn giao ngày 07/10/2026: 58 kiểm thử đạt, gồm các kiểm thử MongoDB thật trong database tạm riêng. Lệnh kiểm thử và chi tiết thuật toán: [Recommendation_Behavior.md](Recommendation_Behavior.md). Người nhận cần kiểm tra lại cấu hình và dữ liệu trên môi trường sau merge.
+Kiểm thử nằm ở `apps/api/tests/test_recommendation_behavior.py`, `test_recommendation_mongo.py` và `test_recommendation_models.py`. Lần chạy sau tối ưu ngày 07/10/2026: **66 kiểm thử đạt**, gồm kiểm thử MongoDB thật trong database tạm riêng và kiểm thử cache/gắn điểm rerank. Lệnh chạy đủ ba bộ có trong [báo cáo hiệu năng](../../eval/reports/recommendation_performance.md); chi tiết thuật toán ở [Recommendation_Behavior.md](Recommendation_Behavior.md). Người nhận cần kiểm tra lại cấu hình và dữ liệu trên môi trường sau merge.
 
 ### Nhận nhánh bàn giao
 

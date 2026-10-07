@@ -4,7 +4,7 @@ Module dùng E5 để biểu diễn nhu cầu, cosine để tìm phòng và BGE 
 
 ## Tài liệu bàn giao
 
-Đọc [Recommendation_Handoff.md](../../../../../docs/tech_specs/Recommendation_Handoff.md) để biết:
+**Người nhận nhánh chỉ cần bắt đầu bằng [Recommendation_Handoff.md](../../../../../docs/tech_specs/Recommendation_Handoff.md).** Đây là tài liệu bàn giao chính, đã có hướng dẫn đọc riêng cho người tổng hợp backend và người làm frontend:
 
 - Cài đặt và cấu hình sau khi merge.
 - Ý nghĩa từng trường trong hai collection MongoDB.
