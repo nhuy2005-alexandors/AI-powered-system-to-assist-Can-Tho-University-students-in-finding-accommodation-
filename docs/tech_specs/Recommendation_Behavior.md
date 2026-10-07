@@ -81,9 +81,9 @@ Script local chạy không có tự reload. Sau khi sửa code, dừng API bằn
 
 ## Rerank
 
-`rerank=true` lấy 50 ứng viên theo vector đã cá nhân hóa, sau đó BGE xếp lại dựa trên nhu cầu dạng chữ và quận. Hành vi tác động tập ứng viên; điểm BGE chưa trộn thêm điểm hành vi. Response có thông báo phạm vi này khi hồ sơ đã có ảnh hưởng hành vi. Kiểm tra thay đổi theo hành vi với `rerank=false` trước.
+`rerank=true` lấy tối đa 20 ứng viên theo vector đã cá nhân hóa, sau đó BGE xếp lại dựa trên nhu cầu dạng chữ và quận. BGE đang giới hạn 384 token mỗi cặp và batch 4 trên CPU. Hành vi tác động tập ứng viên; điểm BGE chưa trộn thêm điểm hành vi. Giảm ứng viên/độ dài giúp giảm lượng tính toán nhưng có thể bỏ phòng phù hợp hoặc cắt nội dung; batch 4 cần đo RAM/tốc độ trên máy chạy. Đây là cấu hình thử nghiệm, chưa có benchmark sau thay đổi. Response có thông báo phạm vi này khi hồ sơ đã có ảnh hưởng hành vi. Kiểm tra thay đổi theo hành vi với `rerank=false` trước.
 
-Việc xác nhận rerank chạy không thay thế đánh giá chất lượng hoặc tốc độ. Lần thử trước trong cuộc hội thoại mất khoảng 42.8 giây và vẫn đưa tin nhắc các trường khác lên cao. Giao diện Dành cho bạn và các sự kiện trên website là bước tích hợp tiếp theo.
+Việc xác nhận rerank chạy không thay thế đánh giá chất lượng hoặc tốc độ. Các lần chạy trước thay đổi này mất khoảng 42,8–129 giây trên CPU và vẫn đưa tin nhắc các trường khác lên cao. Giao diện Dành cho bạn và các sự kiện trên website là bước tích hợp tiếp theo.
 
 ## Kiểm thử
 

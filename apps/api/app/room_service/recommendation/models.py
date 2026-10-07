@@ -9,6 +9,9 @@ from .behavior import VECTOR_DIMENSIONS
 
 EMBEDDING_MODEL = "intfloat/multilingual-e5-small"
 RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
+RERANKER_CANDIDATE_COUNT = 20
+RERANK_MAX_LENGTH = 384
+RERANK_BATCH_SIZE = 4
 
 
 def room_text(row: dict) -> str:
@@ -79,15 +82,18 @@ class LocalModels:
 
                 if self.reranker is None:
                     self.reranker = CrossEncoder(
-                        RERANKER_MODEL, device="cpu", max_length=512
+                        RERANKER_MODEL, device="cpu", max_length=RERANK_MAX_LENGTH
                     )
                 pairs = [(query, room_text(row)) for row in rows]
                 truncated = sum(
-                    len(self.reranker.tokenizer(a, b, truncation=False)["input_ids"]) > 512
+                    len(self.reranker.tokenizer(a, b, truncation=False)["input_ids"])
+                    > RERANK_MAX_LENGTH
                     for a, b in pairs
                 )
                 scores = self.reranker.predict(
-                    pairs, batch_size=2, activation_fct=torch.nn.Identity()
+                    pairs,
+                    batch_size=RERANK_BATCH_SIZE,
+                    activation_fct=torch.nn.Identity(),
                 )
                 if len(scores) != len(rows) or not all(
                     math.isfinite(float(score)) for score in scores

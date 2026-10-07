@@ -425,7 +425,7 @@ Nếu tìm kiếm `/listings` rỗng nhưng gợi ý có phòng, đối chiếu 
 
 ## 7. Việc còn lại và bản đồ code
 
-Rerank đã chạy nhưng từng ghi nhận khoảng 42,8–129 giây trên CPU. Dùng `rerank=false` khi nối giao diện ban đầu; đánh giá trước khi bật mặc định. Rerank lấy 50 ứng viên theo vector cá nhân hóa rồi xếp lại bằng nhu cầu dạng chữ; chưa trộn điểm hành vi riêng vào bước BGE.
+Rerank trước đây từng ghi nhận khoảng 42,8–129 giây trên CPU. Đã giảm cấu hình từ 50 xuống tối đa 20 ứng viên, từ 512 xuống 384 token và tăng batch từ 2 lên 4 để thử giảm thời gian. Chưa có benchmark mới hoặc đánh giá chất lượng sau đổi; lượng ứng viên/nội dung thấp hơn có thể bỏ phòng phù hợp, batch lớn có thể tốn RAM hơn. Đo thời gian tải model và các lượt chạy ấm riêng, so sánh cùng nhu cầu với `rerank=false`, `rerank=true` trước khi bật mặc định. Hành vi ảnh hưởng tập ứng viên; BGE xếp lại theo nhu cầu dạng chữ, chưa cộng điểm hành vi riêng vào BGE.
 
 `rerank` là tham số của request API. Khi frontend luôn gọi `rerank=true`, backend tự chạy BGE cho mỗi lần lấy gợi ý; người dùng không cần một nút bật/tắt. Hiện API mặc định `false`, nên request bỏ tham số này chỉ xếp theo cosine. Có thể đổi mặc định hoặc cấu hình lời gọi frontend khi nhóm chốt tốc độ và chất lượng.
 

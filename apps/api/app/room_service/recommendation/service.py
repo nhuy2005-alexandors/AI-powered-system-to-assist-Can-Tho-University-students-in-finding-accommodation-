@@ -11,7 +11,13 @@ from .behavior import (
     VECTOR_DIMENSIONS,
     build_behavior_profile,
 )
-from .models import EMBEDDING_MODEL, RERANKER_MODEL, LocalModels
+from .models import (
+    EMBEDDING_MODEL,
+    RERANKER_CANDIDATE_COUNT,
+    RERANK_MAX_LENGTH,
+    RERANKER_MODEL,
+    LocalModels,
+)
 from .schemas import Preferences, RecommendationItem, RecommendationsOut
 
 
@@ -31,7 +37,7 @@ class RecommendationService:
                 vector,
                 preferences,
                 EMBEDDING_MODEL,
-                max(50, top_k) if rerank else top_k,
+                max(RERANKER_CANDIDATE_COUNT, top_k) if rerank else top_k,
                 excluded or [],
             )
         except SQLAlchemyError:
@@ -49,7 +55,7 @@ class RecommendationService:
             rows, truncated = self.models.rerank(preferences, rows)
             if truncated:
                 warnings.append(
-                    f"Reranker cắt bớt nội dung của {truncated} cặp vượt 512 token."
+                    f"Reranker cắt bớt nội dung của {truncated} cặp vượt {RERANK_MAX_LENGTH} token."
                 )
         if not rows:
             warnings.append("Không có phòng có embedding tương thích thỏa điều kiện đã chọn.")
