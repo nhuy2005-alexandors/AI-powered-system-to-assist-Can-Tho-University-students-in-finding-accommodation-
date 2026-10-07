@@ -1,0 +1,18 @@
+# Local development only. Compass/Python connect through localhost:27018.
+name: nckh-recommendation-local
+services:
+  mongo:
+    image: mongo:8.0
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:27018:27017"
+    volumes:
+      - recommendation_mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "quit(db.adminCommand({ping: 1}).ok ? 0 : 1)"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+volumes:
+  recommendation_mongo_data:

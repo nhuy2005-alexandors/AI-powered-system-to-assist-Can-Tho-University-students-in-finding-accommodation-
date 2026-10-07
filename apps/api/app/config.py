@@ -38,5 +38,11 @@ class Settings(BaseSettings):
     risk_auto_assess: bool = True
     risk_auto_assess_limit: int = 1000
 
+    # Leave empty to share the listing catalog with the main API.
+    recommendation_database_url: str = ""
+    recommendation_mongo_uri: str = ""
+    recommendation_mongo_database: str = "nckh"
+    recommendation_auth_source: Literal["disabled", "postgres"] = "disabled"
+
 
 settings = Settings()

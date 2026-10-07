@@ -67,15 +67,27 @@
 
 | Method | Path | Mô tả | Auth |
 |---|---|---|---|
-| POST | `/recommend/quiz` | Nộp onboarding quiz → tạo preference_vector | ✓ |
-| GET | `/recommend/for-you` | Top-10 gợi ý (cold-start fallback popularity) | ✓ |
-| GET | `/recommend/popular` | Top-10 phổ biến (guest dùng được) | 🌐 |
-| POST | `/recommend/feedback` | Ghi implicit feedback (view/bookmark/click) | ✓ |
+| POST | `/recommend/preview` | Gợi ý từ nhu cầu, không lưu hồ sơ; có `top_k` và `rerank` | 🌐 |
+| PUT | `/recommend/preferences` | Lưu nhu cầu và khởi tạo lại vector sở thích | ✓ |
+| GET | `/recommend/preferences` | Đọc hồ sơ cùng phiên bản và mức ảnh hưởng hành vi | ✓ |
+| GET | `/recommend/for-you` | Gợi ý dùng vector đã cá nhân hóa; `top_k=10`, `rerank=false` mặc định | ✓ |
+| POST | `/recommend/interactions` | Ghi view/save/contact/not_interested và cập nhật hồ sơ từ hành vi | ✓ |
+
+API local độc lập chạy bằng `scripts/run_recommendation_api.py --with-auth` dùng cổng `8001` và PostgreSQL handoff. Trong API chính, cần cấu hình nguồn xác thực recommendation là `postgres`.
+
+`PUT /recommend/preferences` nhận `needs`, `max_price` (VND), `district` (tên chính xác hoặc null). Tài khoản chưa có nhu cầu nhận 404 khi gọi for-you. Lượt xem chỉ được dùng để cập nhật sở thích khi `duration_ms >= 5000`; gửi lặp hành động trên cùng phòng không nhân trọng số.
 
 ```jsonc
-// POST /recommend/feedback
-{ "listing_id": 1, "type": "bookmark", "duration_ms": 4200 }
+// POST /recommend/interactions
+{ "listing_id": 1, "type": "save", "duration_ms": null }
+// 201: đã ghi sự kiện; kiểm tra các trường learning để xác nhận cập nhật
+{ "event_id": "...", "received_at": "2026-10-07T00:00:00Z",
+  "profile_updated": true, "learning_status": "updated",
+  "event_learning_reason": "eligible", "profile_version": 2,
+  "behavior_listing_count": 1, "learning_warning": null }
 ```
+
+Chi tiết thuật toán, xử lý đồng thời, trạng thái learning và cách kiểm tra: [Recommendation_Behavior](../tech_specs/Recommendation_Behavior.md).
 
 ---
 
@@ -167,6 +179,7 @@
 ---
 
 ## Phụ lục: trạng thái hiện thực
-- ✅ Đã code: `/health`, `/health/deps`, `/crawler/*`, `/listings` (search/filter/sort/nearby/detail).
-- ⬜ Chưa code (Sprint 1-4): auth, recommend, matching, chat, risk, admin.
-- Khi code, dùng FastAPI auto-docs tại `/docs` (OpenAPI) làm nguồn chính thức; file này là hợp đồng thiết kế.
+
+- Các route auth, listings và recommendation đã được tích hợp vào `app.main`.
+- Dùng `/docs` (OpenAPI) của API đang chạy để đối chiếu route và schema hiện tại.
+- Bàn giao chức năng gợi ý: [Recommendation_Handoff.md](../tech_specs/Recommendation_Handoff.md).

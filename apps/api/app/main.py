@@ -14,6 +14,10 @@ from .room_service import chatbot_router, init_chatbot, init_risk, risk_router
 from .room_service.risk.repo import RiskRepository
 from .room_service.risk.service import RiskService
 from .reports import init_reports, reports_router
+from .room_service.recommendation.router import (
+    router as recommendation_router, init_recommendation, close_recommendation,
+    bind_postgres_auth,
+)
 
 log = logging.getLogger("app.main")
 
@@ -26,6 +30,7 @@ init_auth_deps(AuthRepo(engine))
 init_chatbot(engine)
 init_risk(engine)
 init_reports(engine)
+init_recommendation(engine)
 
 
 @asynccontextmanager
@@ -39,6 +44,7 @@ async def lifespan(app: FastAPI):
         scheduler.shutdown(wait=False)
     engine.dispose()
     redis_client.close()
+    close_recommendation()
 
 
 app = FastAPI(title="NCKH API", version="0.1.0", lifespan=lifespan)
@@ -47,6 +53,9 @@ app.include_router(auth_router)
 app.include_router(chatbot_router)
 app.include_router(risk_router)
 app.include_router(reports_router)
+app.include_router(recommendation_router)
+if settings.recommendation_auth_source == "postgres":
+    bind_postgres_auth(app)
 
 
 @app.get("/health")
