@@ -35,4 +35,4 @@ Mongo local dùng `localhost:27018`, database `nckh_recommendation_dev` khi chư
 
 Mỗi phòng đóng góp hành động hợp lệ mạnh nhất; gửi lặp không nhân trọng số. Sửa nhu cầu đặt lại học hành vi. `not_interested` loại phòng theo lịch sử tài khoản.
 
-Rerank mặc định tắt vì các lần chạy CPU còn chậm. Hành vi ảnh hưởng tập ứng viên; BGE xếp lại theo nhu cầu dạng chữ. Chất lượng và tốc độ cần đánh giá trước khi bật mặc định.
+Rerank mặc định tắt vì lượt chưa có cache trên CPU còn chậm. Khi frontend gọi `rerank=true`, backend tự rerank. Hành vi ảnh hưởng tập ứng viên; BGE xếp lại theo nhu cầu dạng chữ. Đã tối ưu gom lô theo độ dài và cache điểm, giữ 50 ứng viên/512 token. Xem [kết quả đo, giới hạn và cách chạy lại](../../../../../eval/reports/recommendation_performance.md). Lần tối ưu này không cần migration hay embed lại phòng.

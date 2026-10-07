@@ -1,0 +1,835 @@
+{
+  "created_at": "2026-10-07T03:11:47.369217+00:00",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "torch": "2.5.1+cpu",
+  "embedding_model": "intfloat/multilingual-e5-small",
+  "reranker_model": "BAAI/bge-reranker-v2-m3",
+  "dataset": {
+    "listings": 789,
+    "embedded": 788
+  },
+  "offline": true,
+  "runs": [
+    {
+      "case": 1,
+      "preferences": {
+        "needs": "Phòng có máy lạnh, nhà vệ sinh riêng, gần Đại học Cần Thơ",
+        "max_price": 3000000,
+        "district": null
+      },
+      "variant": "baseline",
+      "repeat": 1,
+      "candidates": 50,
+      "max_length": 512,
+      "batch_size": 2,
+      "threads": 8,
+      "truncated_pairs": 0,
+      "embed_ms": 2592,
+      "retrieval_ms": 45,
+      "rerank_ms": 45851,
+      "eligible_count": 542,
+      "top10": [
+        {
+          "listing_id": 1154,
+          "title": "Cho thuê phòng trọ mới xây gần Đại Học Tây Đô",
+          "price": 900000,
+          "cosine_rank": 6,
+          "score": 4.884069442749023
+        },
+        {
+          "listing_id": 1015,
+          "title": "Phòng trọ 2tr2 có máy lạnh gần ĐH Cần Thơ",
+          "price": 2200000,
+          "cosine_rank": 33,
+          "score": 4.813843727111816
+        },
+        {
+          "listing_id": 1345,
+          "title": "Phòng trọ mới gần ĐH Nam Cần Thơ, có máy lạnh",
+          "price": 2490000,
+          "cosine_rank": 9,
+          "score": 4.679887294769287
+        },
+        {
+          "listing_id": 1322,
+          "title": "Phòng trọ máy lạnh khu cán bộ giảng viên gần ĐH Cần Thơ",
+          "price": 2600000,
+          "cosine_rank": 3,
+          "score": 4.6182427406311035
+        },
+        {
+          "listing_id": 947,
+          "title": "Phòng trọ máy lạnh gác đúc gần ĐH Nam Cần Thơ",
+          "price": 1990000,
+          "cosine_rank": 7,
+          "score": 4.3518595695495605
+        },
+        {
+          "listing_id": 957,
+          "title": "Phòng trọ có máy lạnh, tủ lạnh gần ĐHFPT - ĐHNCT",
+          "price": 2300000,
+          "cosine_rank": 36,
+          "score": 4.323182106018066
+        },
+        {
+          "listing_id": 1506,
+          "title": "Phòng trọ An Bình, Ninh Kiều, Cần Thơ - Máy lạnh, tủ lạnh, giường",
+          "price": 2500000,
+          "cosine_rank": 10,
+          "score": 4.238054275512695
+        },
+        {
+          "listing_id": 1579,
+          "title": "Phòng trọ gần ĐH Tây Đô, sẵn máy lạnh",
+          "price": 2200000,
+          "cosine_rank": 16,
+          "score": 4.16913366317749
+        },
+        {
+          "listing_id": 1089,
+          "title": "Phòng trọ máy lạnh, tủ lạnh, máy giặt đường NVL gần ĐHYD, ĐHCT",
+          "price": 2800000,
+          "cosine_rank": 42,
+          "score": 3.9149577617645264
+        },
+        {
+          "listing_id": 869,
+          "title": "Phòng trọ mới xây gần ĐH Nam Cần Thơ, 2 triệu/tháng",
+          "price": 2000000,
+          "cosine_rank": 8,
+          "score": 3.824368953704834
+        }
+      ]
+    },
+    {
+      "case": 1,
+      "preferences": {
+        "needs": "Phòng có máy lạnh, nhà vệ sinh riêng, gần Đại học Cần Thơ",
+        "max_price": 3000000,
+        "district": null
+      },
+      "variant": "sorted_batch2",
+      "repeat": 1,
+      "candidates": 50,
+      "max_length": 512,
+      "batch_size": 2,
+      "threads": 8,
+      "truncated_pairs": 0,
+      "embed_ms": 2592,
+      "retrieval_ms": 45,
+      "rerank_ms": 23515,
+      "eligible_count": 542,
+      "top10": [
+        {
+          "listing_id": 1154,
+          "title": "Cho thuê phòng trọ mới xây gần Đại Học Tây Đô",
+          "price": 900000,
+          "cosine_rank": 6,
+          "score": 4.884069442749023
+        },
+        {
+          "listing_id": 1015,
+          "title": "Phòng trọ 2tr2 có máy lạnh gần ĐH Cần Thơ",
+          "price": 2200000,
+          "cosine_rank": 33,
+          "score": 4.813843727111816
+        },
+        {
+          "listing_id": 1345,
+          "title": "Phòng trọ mới gần ĐH Nam Cần Thơ, có máy lạnh",
+          "price": 2490000,
+          "cosine_rank": 9,
+          "score": 4.679887771606445
+        },
+        {
+          "listing_id": 1322,
+          "title": "Phòng trọ máy lạnh khu cán bộ giảng viên gần ĐH Cần Thơ",
+          "price": 2600000,
+          "cosine_rank": 3,
+          "score": 4.618245601654053
+        },
+        {
+          "listing_id": 947,
+          "title": "Phòng trọ máy lạnh gác đúc gần ĐH Nam Cần Thơ",
+          "price": 1990000,
+          "cosine_rank": 7,
+          "score": 4.351860046386719
+        },
+        {
+          "listing_id": 957,
+          "title": "Phòng trọ có máy lạnh, tủ lạnh gần ĐHFPT - ĐHNCT",
+          "price": 2300000,
+          "cosine_rank": 36,
+          "score": 4.32318115234375
+        },
+        {
+          "listing_id": 1506,
+          "title": "Phòng trọ An Bình, Ninh Kiều, Cần Thơ - Máy lạnh, tủ lạnh, giường",
+          "price": 2500000,
+          "cosine_rank": 10,
+          "score": 4.238054275512695
+        },
+        {
+          "listing_id": 1579,
+          "title": "Phòng trọ gần ĐH Tây Đô, sẵn máy lạnh",
+          "price": 2200000,
+          "cosine_rank": 16,
+          "score": 4.169132709503174
+        },
+        {
+          "listing_id": 1089,
+          "title": "Phòng trọ máy lạnh, tủ lạnh, máy giặt đường NVL gần ĐHYD, ĐHCT",
+          "price": 2800000,
+          "cosine_rank": 42,
+          "score": 3.9149558544158936
+        },
+        {
+          "listing_id": 869,
+          "title": "Phòng trọ mới xây gần ĐH Nam Cần Thơ, 2 triệu/tháng",
+          "price": 2000000,
+          "cosine_rank": 8,
+          "score": 3.8243696689605713
+        }
+      ]
+    },
+    {
+      "case": 1,
+      "preferences": {
+        "needs": "Phòng có máy lạnh, nhà vệ sinh riêng, gần Đại học Cần Thơ",
+        "max_price": 3000000,
+        "district": null
+      },
+      "variant": "sorted_batch4",
+      "repeat": 1,
+      "candidates": 50,
+      "max_length": 512,
+      "batch_size": 4,
+      "threads": 8,
+      "truncated_pairs": 0,
+      "embed_ms": 2592,
+      "retrieval_ms": 45,
+      "rerank_ms": 24207,
+      "eligible_count": 542,
+      "top10": [
+        {
+          "listing_id": 1154,
+          "title": "Cho thuê phòng trọ mới xây gần Đại Học Tây Đô",
+          "price": 900000,
+          "cosine_rank": 6,
+          "score": 4.884068489074707
+        },
+        {
+          "listing_id": 1015,
+          "title": "Phòng trọ 2tr2 có máy lạnh gần ĐH Cần Thơ",
+          "price": 2200000,
+          "cosine_rank": 33,
+          "score": 4.813843727111816
+        },
+        {
+          "listing_id": 1345,
+          "title": "Phòng trọ mới gần ĐH Nam Cần Thơ, có máy lạnh",
+          "price": 2490000,
+          "cosine_rank": 9,
+          "score": 4.679887294769287
+        },
+        {
+          "listing_id": 1322,
+          "title": "Phòng trọ máy lạnh khu cán bộ giảng viên gần ĐH Cần Thơ",
+          "price": 2600000,
+          "cosine_rank": 3,
+          "score": 4.61824369430542
+        },
+        {
+          "listing_id": 947,
+          "title": "Phòng trọ máy lạnh gác đúc gần ĐH Nam Cần Thơ",
+          "price": 1990000,
+          "cosine_rank": 7,
+          "score": 4.351861000061035
+        },
+        {
+          "listing_id": 957,
+          "title": "Phòng trọ có máy lạnh, tủ lạnh gần ĐHFPT - ĐHNCT",
+          "price": 2300000,
+          "cosine_rank": 36,
+          "score": 4.323182582855225
+        },
+        {
+          "listing_id": 1506,
+          "title": "Phòng trọ An Bình, Ninh Kiều, Cần Thơ - Máy lạnh, tủ lạnh, giường",
+          "price": 2500000,
+          "cosine_rank": 10,
+          "score": 4.238053321838379
+        },
+        {
+          "listing_id": 1579,
+          "title": "Phòng trọ gần ĐH Tây Đô, sẵn máy lạnh",
+          "price": 2200000,
+          "cosine_rank": 16,
+          "score": 4.169131278991699
+        },
+        {
+          "listing_id": 1089,
+          "title": "Phòng trọ máy lạnh, tủ lạnh, máy giặt đường NVL gần ĐHYD, ĐHCT",
+          "price": 2800000,
+          "cosine_rank": 42,
+          "score": 3.914963722229004
+        },
+        {
+          "listing_id": 869,
+          "title": "Phòng trọ mới xây gần ĐH Nam Cần Thơ, 2 triệu/tháng",
+          "price": 2000000,
+          "cosine_rank": 8,
+          "score": 3.8243696689605713
+        }
+      ]
+    },
+    {
+      "case": 2,
+      "preferences": {
+        "needs": "Phòng trọ có gác, chỗ nấu ăn riêng, phù hợp sinh viên",
+        "max_price": 2000000,
+        "district": null
+      },
+      "variant": "baseline",
+      "repeat": 1,
+      "candidates": 50,
+      "max_length": 512,
+      "batch_size": 2,
+      "threads": 8,
+      "truncated_pairs": 0,
+      "embed_ms": 207,
+      "retrieval_ms": 29,
+      "rerank_ms": 25432,
+      "eligible_count": 246,
+      "top10": [
+        {
+          "listing_id": 1334,
+          "title": "PHÒNG TRỌ SINH VIÊN",
+          "price": 2000000,
+          "cosine_rank": 22,
+          "score": 1.7137190103530884
+        },
+        {
+          "listing_id": 985,
+          "title": "Phòng trọ có gác Ninh Kiều Cần Thơ - Giá tốt, nhận gia đình!",
+          "price": 2000000,
+          "cosine_rank": 37,
+          "score": 1.1914995908737183
+        },
+        {
+          "listing_id": 883,
+          "title": "Phòng trọ sinh viên gần Đại học Cần Thơ, trung tâm Cần Thơ",
+          "price": 1500000,
+          "cosine_rank": 26,
+          "score": 1.0204403400421143
+        },
+        {
+          "listing_id": 1195,
+          "title": "Cho thuê phòng trọ sinh viên gác đúc mới đẹp, Bờ Kè, gần BV Nhi Đồng,",
+          "price": 2000000,
+          "cosine_rank": 1,
+          "score": 0.9141263365745544
+        },
+        {
+          "listing_id": 1481,
+          "title": "Phòng trọ 1.5tr/tháng gần ĐH Cần Thơ, có gác, giờ tự do",
+          "price": 1500000,
+          "cosine_rank": 5,
+          "score": 0.8798108100891113
+        },
+        {
+          "listing_id": 1597,
+          "title": "CHO THUÊ PHÒNG TRỌ GIÁ SINH VIÊN TẠI P. BÌNH THỦY, TP. CẦN THƠ",
+          "price": 1600000,
+          "cosine_rank": 46,
+          "score": 0.06113031506538391
+        },
+        {
+          "listing_id": 814,
+          "title": "Cho sv thuê phòng mới 16m2 cách ĐHYD, ĐHCT 2km",
+          "price": 750000,
+          "cosine_rank": 3,
+          "score": -0.12078161537647247
+        },
+        {
+          "listing_id": 1154,
+          "title": "Cho thuê phòng trọ mới xây gần Đại Học Tây Đô",
+          "price": 900000,
+          "cosine_rank": 29,
+          "score": -0.12204533815383911
+        },
+        {
+          "listing_id": 1244,
+          "title": "Phòng trọ nữ Thanh Xuân, Cần Thơ, có gác, mặt tiền",
+          "price": 1700000,
+          "cosine_rank": 40,
+          "score": -0.26422926783561707
+        },
+        {
+          "listing_id": 894,
+          "title": "Phòng trọ có gác, 1.6M/tháng, Cái Răng, Cần Thơ",
+          "price": 1600000,
+          "cosine_rank": 4,
+          "score": -0.2773585915565491
+        }
+      ]
+    },
+    {
+      "case": 2,
+      "preferences": {
+        "needs": "Phòng trọ có gác, chỗ nấu ăn riêng, phù hợp sinh viên",
+        "max_price": 2000000,
+        "district": null
+      },
+      "variant": "sorted_batch2",
+      "repeat": 1,
+      "candidates": 50,
+      "max_length": 512,
+      "batch_size": 2,
+      "threads": 8,
+      "truncated_pairs": 0,
+      "embed_ms": 207,
+      "retrieval_ms": 29,
+      "rerank_ms": 22256,
+      "eligible_count": 246,
+      "top10": [
+        {
+          "listing_id": 1334,
+          "title": "PHÒNG TRỌ SINH VIÊN",
+          "price": 2000000,
+          "cosine_rank": 22,
+          "score": 1.713719129562378
+        },
+        {
+          "listing_id": 985,
+          "title": "Phòng trọ có gác Ninh Kiều Cần Thơ - Giá tốt, nhận gia đình!",
+          "price": 2000000,
+          "cosine_rank": 37,
+          "score": 1.1914986371994019
+        },
+        {
+          "listing_id": 883,
+          "title": "Phòng trọ sinh viên gần Đại học Cần Thơ, trung tâm Cần Thơ",
+          "price": 1500000,
+          "cosine_rank": 26,
+          "score": 1.0204393863677979
+        },
+        {
+          "listing_id": 1195,
+          "title": "Cho thuê phòng trọ sinh viên gác đúc mới đẹp, Bờ Kè, gần BV Nhi Đồng,",
+          "price": 2000000,
+          "cosine_rank": 1,
+          "score": 0.9141256809234619
+        },
+        {
+          "listing_id": 1481,
+          "title": "Phòng trọ 1.5tr/tháng gần ĐH Cần Thơ, có gác, giờ tự do",
+          "price": 1500000,
+          "cosine_rank": 5,
+          "score": 0.8798108100891113
+        },
+        {
+          "listing_id": 1597,
+          "title": "CHO THUÊ PHÒNG TRỌ GIÁ SINH VIÊN TẠI P. BÌNH THỦY, TP. CẦN THƠ",
+          "price": 1600000,
+          "cosine_rank": 46,
+          "score": 0.0611300989985466
+        },
+        {
+          "listing_id": 814,
+          "title": "Cho sv thuê phòng mới 16m2 cách ĐHYD, ĐHCT 2km",
+          "price": 750000,
+          "cosine_rank": 3,
+          "score": -0.12078191339969635
+        },
+        {
+          "listing_id": 1154,
+          "title": "Cho thuê phòng trọ mới xây gần Đại Học Tây Đô",
+          "price": 900000,
+          "cosine_rank": 29,
+          "score": -0.12204533815383911
+        },
+        {
+          "listing_id": 1244,
+          "title": "Phòng trọ nữ Thanh Xuân, Cần Thơ, có gác, mặt tiền",
+          "price": 1700000,
+          "cosine_rank": 40,
+          "score": -0.26422926783561707
+        },
+        {
+          "listing_id": 894,
+          "title": "Phòng trọ có gác, 1.6M/tháng, Cái Răng, Cần Thơ",
+          "price": 1600000,
+          "cosine_rank": 4,
+          "score": -0.27735766768455505
+        }
+      ]
+    },
+    {
+      "case": 2,
+      "preferences": {
+        "needs": "Phòng trọ có gác, chỗ nấu ăn riêng, phù hợp sinh viên",
+        "max_price": 2000000,
+        "district": null
+      },
+      "variant": "sorted_batch4",
+      "repeat": 1,
+      "candidates": 50,
+      "max_length": 512,
+      "batch_size": 4,
+      "threads": 8,
+      "truncated_pairs": 0,
+      "embed_ms": 207,
+      "retrieval_ms": 29,
+      "rerank_ms": 21558,
+      "eligible_count": 246,
+      "top10": [
+        {
+          "listing_id": 1334,
+          "title": "PHÒNG TRỌ SINH VIÊN",
+          "price": 2000000,
+          "cosine_rank": 22,
+          "score": 1.7137190103530884
+        },
+        {
+          "listing_id": 985,
+          "title": "Phòng trọ có gác Ninh Kiều Cần Thơ - Giá tốt, nhận gia đình!",
+          "price": 2000000,
+          "cosine_rank": 37,
+          "score": 1.191498875617981
+        },
+        {
+          "listing_id": 883,
+          "title": "Phòng trọ sinh viên gần Đại học Cần Thơ, trung tâm Cần Thơ",
+          "price": 1500000,
+          "cosine_rank": 26,
+          "score": 1.0204401016235352
+        },
+        {
+          "listing_id": 1195,
+          "title": "Cho thuê phòng trọ sinh viên gác đúc mới đẹp, Bờ Kè, gần BV Nhi Đồng,",
+          "price": 2000000,
+          "cosine_rank": 1,
+          "score": 0.9141254425048828
+        },
+        {
+          "listing_id": 1481,
+          "title": "Phòng trọ 1.5tr/tháng gần ĐH Cần Thơ, có gác, giờ tự do",
+          "price": 1500000,
+          "cosine_rank": 5,
+          "score": 0.8798122406005859
+        },
+        {
+          "listing_id": 1597,
+          "title": "CHO THUÊ PHÒNG TRỌ GIÁ SINH VIÊN TẠI P. BÌNH THỦY, TP. CẦN THƠ",
+          "price": 1600000,
+          "cosine_rank": 46,
+          "score": 0.061129406094551086
+        },
+        {
+          "listing_id": 814,
+          "title": "Cho sv thuê phòng mới 16m2 cách ĐHYD, ĐHCT 2km",
+          "price": 750000,
+          "cosine_rank": 3,
+          "score": -0.12078401446342468
+        },
+        {
+          "listing_id": 1154,
+          "title": "Cho thuê phòng trọ mới xây gần Đại Học Tây Đô",
+          "price": 900000,
+          "cosine_rank": 29,
+          "score": -0.12204563617706299
+        },
+        {
+          "listing_id": 1244,
+          "title": "Phòng trọ nữ Thanh Xuân, Cần Thơ, có gác, mặt tiền",
+          "price": 1700000,
+          "cosine_rank": 40,
+          "score": -0.2642301321029663
+        },
+        {
+          "listing_id": 894,
+          "title": "Phòng trọ có gác, 1.6M/tháng, Cái Răng, Cần Thơ",
+          "price": 1600000,
+          "cosine_rank": 4,
+          "score": -0.2773575782775879
+        }
+      ]
+    },
+    {
+      "case": 3,
+      "preferences": {
+        "needs": "Phòng có nội thất, máy lạnh, chỗ để xe",
+        "max_price": 3000000,
+        "district": "Quận Ninh Kiều"
+      },
+      "variant": "baseline",
+      "repeat": 1,
+      "candidates": 50,
+      "max_length": 512,
+      "batch_size": 2,
+      "threads": 8,
+      "truncated_pairs": 0,
+      "embed_ms": 83,
+      "retrieval_ms": 32,
+      "rerank_ms": 26154,
+      "eligible_count": 317,
+      "top10": [
+        {
+          "listing_id": 1331,
+          "title": "cho thuê phòng trọ có gác, máy lạnh",
+          "price": 2500000,
+          "cosine_rank": 40,
+          "score": 3.411573648452759
+        },
+        {
+          "listing_id": 957,
+          "title": "Phòng trọ có máy lạnh, tủ lạnh gần ĐHFPT - ĐHNCT",
+          "price": 2300000,
+          "cosine_rank": 18,
+          "score": 3.380645513534546
+        },
+        {
+          "listing_id": 1094,
+          "title": "Phòng trọ có máy lạnh, nội thất, giá từ 1tr8, Hẻm 3 Tháng 2",
+          "price": 1800000,
+          "cosine_rank": 6,
+          "score": 3.2093095779418945
+        },
+        {
+          "listing_id": 1390,
+          "title": "Phòng trọ 20m² tại Quận Ninh Kiều",
+          "price": 2500000,
+          "cosine_rank": 47,
+          "score": 3.1361289024353027
+        },
+        {
+          "listing_id": 1077,
+          "title": "Phòng full nội thất đường Hoàng Quốc Việt, Cần Thơ",
+          "price": 2600000,
+          "cosine_rank": 23,
+          "score": 3.0789592266082764
+        },
+        {
+          "listing_id": 941,
+          "title": "Phòng trọ full nội thất cách DHCT 900m - 3tr",
+          "price": 3000000,
+          "cosine_rank": 3,
+          "score": 3.0774474143981934
+        },
+        {
+          "listing_id": 1448,
+          "title": "Phòng trọ full nội thất 2tr2 gần DHCT, Cần Thơ",
+          "price": 2200000,
+          "cosine_rank": 10,
+          "score": 3.002368927001953
+        },
+        {
+          "listing_id": 850,
+          "title": "Phòng trọ full nội thất hẻm 233 Nguyễn Văn Cừ, Cần Thơ",
+          "price": 3000000,
+          "cosine_rank": 28,
+          "score": 2.997022867202759
+        },
+        {
+          "listing_id": 1344,
+          "title": "Phòng trọ mới xây gần ĐHFPT, NCT - 2.5 triệu",
+          "price": 2500000,
+          "cosine_rank": 26,
+          "score": 2.984809160232544
+        },
+        {
+          "listing_id": 1334,
+          "title": "PHÒNG TRỌ SINH VIÊN",
+          "price": 2000000,
+          "cosine_rank": 16,
+          "score": 2.8521103858947754
+        }
+      ]
+    },
+    {
+      "case": 3,
+      "preferences": {
+        "needs": "Phòng có nội thất, máy lạnh, chỗ để xe",
+        "max_price": 3000000,
+        "district": "Quận Ninh Kiều"
+      },
+      "variant": "sorted_batch2",
+      "repeat": 1,
+      "candidates": 50,
+      "max_length": 512,
+      "batch_size": 2,
+      "threads": 8,
+      "truncated_pairs": 0,
+      "embed_ms": 83,
+      "retrieval_ms": 32,
+      "rerank_ms": 22992,
+      "eligible_count": 317,
+      "top10": [
+        {
+          "listing_id": 1331,
+          "title": "cho thuê phòng trọ có gác, máy lạnh",
+          "price": 2500000,
+          "cosine_rank": 40,
+          "score": 3.411573886871338
+        },
+        {
+          "listing_id": 957,
+          "title": "Phòng trọ có máy lạnh, tủ lạnh gần ĐHFPT - ĐHNCT",
+          "price": 2300000,
+          "cosine_rank": 18,
+          "score": 3.380645513534546
+        },
+        {
+          "listing_id": 1094,
+          "title": "Phòng trọ có máy lạnh, nội thất, giá từ 1tr8, Hẻm 3 Tháng 2",
+          "price": 1800000,
+          "cosine_rank": 6,
+          "score": 3.209311008453369
+        },
+        {
+          "listing_id": 1390,
+          "title": "Phòng trọ 20m² tại Quận Ninh Kiều",
+          "price": 2500000,
+          "cosine_rank": 47,
+          "score": 3.1361289024353027
+        },
+        {
+          "listing_id": 1077,
+          "title": "Phòng full nội thất đường Hoàng Quốc Việt, Cần Thơ",
+          "price": 2600000,
+          "cosine_rank": 23,
+          "score": 3.0789589881896973
+        },
+        {
+          "listing_id": 941,
+          "title": "Phòng trọ full nội thất cách DHCT 900m - 3tr",
+          "price": 3000000,
+          "cosine_rank": 3,
+          "score": 3.0774500370025635
+        },
+        {
+          "listing_id": 1448,
+          "title": "Phòng trọ full nội thất 2tr2 gần DHCT, Cần Thơ",
+          "price": 2200000,
+          "cosine_rank": 10,
+          "score": 3.002368927001953
+        },
+        {
+          "listing_id": 850,
+          "title": "Phòng trọ full nội thất hẻm 233 Nguyễn Văn Cừ, Cần Thơ",
+          "price": 3000000,
+          "cosine_rank": 28,
+          "score": 2.997023344039917
+        },
+        {
+          "listing_id": 1344,
+          "title": "Phòng trọ mới xây gần ĐHFPT, NCT - 2.5 triệu",
+          "price": 2500000,
+          "cosine_rank": 26,
+          "score": 2.984809160232544
+        },
+        {
+          "listing_id": 1334,
+          "title": "PHÒNG TRỌ SINH VIÊN",
+          "price": 2000000,
+          "cosine_rank": 16,
+          "score": 2.8521108627319336
+        }
+      ]
+    },
+    {
+      "case": 3,
+      "preferences": {
+        "needs": "Phòng có nội thất, máy lạnh, chỗ để xe",
+        "max_price": 3000000,
+        "district": "Quận Ninh Kiều"
+      },
+      "variant": "sorted_batch4",
+      "repeat": 1,
+      "candidates": 50,
+      "max_length": 512,
+      "batch_size": 4,
+      "threads": 8,
+      "truncated_pairs": 0,
+      "embed_ms": 83,
+      "retrieval_ms": 32,
+      "rerank_ms": 22536,
+      "eligible_count": 317,
+      "top10": [
+        {
+          "listing_id": 1331,
+          "title": "cho thuê phòng trọ có gác, máy lạnh",
+          "price": 2500000,
+          "cosine_rank": 40,
+          "score": 3.4115724563598633
+        },
+        {
+          "listing_id": 957,
+          "title": "Phòng trọ có máy lạnh, tủ lạnh gần ĐHFPT - ĐHNCT",
+          "price": 2300000,
+          "cosine_rank": 18,
+          "score": 3.380645513534546
+        },
+        {
+          "listing_id": 1094,
+          "title": "Phòng trọ có máy lạnh, nội thất, giá từ 1tr8, Hẻm 3 Tháng 2",
+          "price": 1800000,
+          "cosine_rank": 6,
+          "score": 3.2093100547790527
+        },
+        {
+          "listing_id": 1390,
+          "title": "Phòng trọ 20m² tại Quận Ninh Kiều",
+          "price": 2500000,
+          "cosine_rank": 47,
+          "score": 3.1361289024353027
+        },
+        {
+          "listing_id": 1077,
+          "title": "Phòng full nội thất đường Hoàng Quốc Việt, Cần Thơ",
+          "price": 2600000,
+          "cosine_rank": 23,
+          "score": 3.078958511352539
+        },
+        {
+          "listing_id": 941,
+          "title": "Phòng trọ full nội thất cách DHCT 900m - 3tr",
+          "price": 3000000,
+          "cosine_rank": 3,
+          "score": 3.0774483680725098
+        },
+        {
+          "listing_id": 1448,
+          "title": "Phòng trọ full nội thất 2tr2 gần DHCT, Cần Thơ",
+          "price": 2200000,
+          "cosine_rank": 10,
+          "score": 3.002371311187744
+        },
+        {
+          "listing_id": 850,
+          "title": "Phòng trọ full nội thất hẻm 233 Nguyễn Văn Cừ, Cần Thơ",
+          "price": 3000000,
+          "cosine_rank": 28,
+          "score": 2.9970240592956543
+        },
+        {
+          "listing_id": 1344,
+          "title": "Phòng trọ mới xây gần ĐHFPT, NCT - 2.5 triệu",
+          "price": 2500000,
+          "cosine_rank": 26,
+          "score": 2.9848086833953857
+        },
+        {
+          "listing_id": 1334,
+          "title": "PHÒNG TRỌ SINH VIÊN",
+          "price": 2000000,
+          "cosine_rank": 16,
+          "score": 2.852109909057617
+        }
+      ]
+    }
+  ],
+  "scope": "Sequential local CPU microbenchmark. No human relevance labels; top-10 overlap is stability, not accuracy. Model load measured separately. No response cache.",
+  "reranker_load_ms": 1609
+}

@@ -425,7 +425,9 @@ Nếu tìm kiếm `/listings` rỗng nhưng gợi ý có phòng, đối chiếu 
 
 ## 7. Việc còn lại và bản đồ code
 
-Rerank trước đây từng ghi nhận khoảng 42,8–129 giây trên CPU. Đã giảm cấu hình từ 50 xuống tối đa 20 ứng viên, từ 512 xuống 384 token và tăng batch từ 2 lên 4 để thử giảm thời gian. Chưa có benchmark mới hoặc đánh giá chất lượng sau đổi; lượng ứng viên/nội dung thấp hơn có thể bỏ phòng phù hợp, batch lớn có thể tốn RAM hơn. Đo thời gian tải model và các lượt chạy ấm riêng, so sánh cùng nhu cầu với `rerank=false`, `rerank=true` trước khi bật mặc định. Hành vi ảnh hưởng tập ứng viên; BGE xếp lại theo nhu cầu dạng chữ, chưa cộng điểm hành vi riêng vào BGE.
+Đã đo CPU trên ba nhu cầu thực tế và kiểm tra API sau khởi động lại; xem [báo cáo và cách chạy lại](../../eval/reports/recommendation_performance.md). Cấu hình cuối giữ 50 ứng viên, 512 token, batch 2. Gom các cặp theo độ dài giảm padding, cache điểm trong RAM giúp lượt xem lại không phải chấm toàn bộ phòng. Bản thử 20 ứng viên/384 token đã bỏ vì mất kết quả có thứ hạng cao. Hành vi ảnh hưởng tập ứng viên; BGE xếp lại theo nhu cầu dạng chữ, chưa cộng điểm hành vi riêng vào BGE.
+
+Cache chứa tối đa 1.024 điểm trong 5 phút cho mỗi worker, không ghi PostgreSQL/MongoDB. Khóa chứa dấu vân tay của model, giới hạn token, nhu cầu/quận và văn bản phòng. Đổi nhu cầu/nội dung phòng sẽ tính lại; giá, danh sách loại trừ và hồ sơ vẫn được đọc mới cho từng request. Không cần migration mới hoặc embed lại phòng cho lần tối ưu này. Máy khác vẫn cần cài dependencies và có model E5/BGE. Restart mất cache; nhu cầu mới, cache hết hạn hoặc nhiều người dùng khác nhau vẫn có thể chờ hàng chục giây trên CPU. Không chạy nhiều worker giữ model khi máy thiếu RAM.
 
 `rerank` là tham số của request API. Khi frontend luôn gọi `rerank=true`, backend tự chạy BGE cho mỗi lần lấy gợi ý; người dùng không cần một nút bật/tắt. Hiện API mặc định `false`, nên request bỏ tham số này chỉ xếp theo cosine. Có thể đổi mặc định hoặc cấu hình lời gọi frontend khi nhóm chốt tốc độ và chất lượng.
 

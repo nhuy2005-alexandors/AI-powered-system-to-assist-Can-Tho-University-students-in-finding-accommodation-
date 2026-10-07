@@ -1,0 +1,380 @@
+{
+  "created_at": "2026-10-07T03:09:58.567822+00:00",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "torch": "2.5.1+cpu",
+  "embedding_model": "intfloat/multilingual-e5-small",
+  "reranker_model": "BAAI/bge-reranker-v2-m3",
+  "dataset": {
+    "listings": 789,
+    "embedded": 788
+  },
+  "offline": true,
+  "runs": [
+    {
+      "case": 1,
+      "preferences": {
+        "needs": "Phòng có máy lạnh, nhà vệ sinh riêng, gần Đại học Cần Thơ",
+        "max_price": 3000000,
+        "district": null
+      },
+      "variant": "baseline",
+      "repeat": 1,
+      "candidates": 50,
+      "max_length": 512,
+      "batch_size": 2,
+      "threads": 8,
+      "truncated_pairs": 0,
+      "embed_ms": 1252,
+      "retrieval_ms": 67,
+      "rerank_ms": 27840,
+      "eligible_count": 542,
+      "top10": [
+        {
+          "listing_id": 1154,
+          "title": "Cho thuê phòng trọ mới xây gần Đại Học Tây Đô",
+          "price": 900000,
+          "cosine_rank": 6,
+          "score": 4.884069442749023
+        },
+        {
+          "listing_id": 1015,
+          "title": "Phòng trọ 2tr2 có máy lạnh gần ĐH Cần Thơ",
+          "price": 2200000,
+          "cosine_rank": 33,
+          "score": 4.813843727111816
+        },
+        {
+          "listing_id": 1345,
+          "title": "Phòng trọ mới gần ĐH Nam Cần Thơ, có máy lạnh",
+          "price": 2490000,
+          "cosine_rank": 9,
+          "score": 4.679887294769287
+        },
+        {
+          "listing_id": 1322,
+          "title": "Phòng trọ máy lạnh khu cán bộ giảng viên gần ĐH Cần Thơ",
+          "price": 2600000,
+          "cosine_rank": 3,
+          "score": 4.6182427406311035
+        },
+        {
+          "listing_id": 947,
+          "title": "Phòng trọ máy lạnh gác đúc gần ĐH Nam Cần Thơ",
+          "price": 1990000,
+          "cosine_rank": 7,
+          "score": 4.3518595695495605
+        },
+        {
+          "listing_id": 957,
+          "title": "Phòng trọ có máy lạnh, tủ lạnh gần ĐHFPT - ĐHNCT",
+          "price": 2300000,
+          "cosine_rank": 36,
+          "score": 4.323182106018066
+        },
+        {
+          "listing_id": 1506,
+          "title": "Phòng trọ An Bình, Ninh Kiều, Cần Thơ - Máy lạnh, tủ lạnh, giường",
+          "price": 2500000,
+          "cosine_rank": 10,
+          "score": 4.238054275512695
+        },
+        {
+          "listing_id": 1579,
+          "title": "Phòng trọ gần ĐH Tây Đô, sẵn máy lạnh",
+          "price": 2200000,
+          "cosine_rank": 16,
+          "score": 4.16913366317749
+        },
+        {
+          "listing_id": 1089,
+          "title": "Phòng trọ máy lạnh, tủ lạnh, máy giặt đường NVL gần ĐHYD, ĐHCT",
+          "price": 2800000,
+          "cosine_rank": 42,
+          "score": 3.9149577617645264
+        },
+        {
+          "listing_id": 869,
+          "title": "Phòng trọ mới xây gần ĐH Nam Cần Thơ, 2 triệu/tháng",
+          "price": 2000000,
+          "cosine_rank": 8,
+          "score": 3.824368953704834
+        }
+      ]
+    },
+    {
+      "case": 1,
+      "preferences": {
+        "needs": "Phòng có máy lạnh, nhà vệ sinh riêng, gần Đại học Cần Thơ",
+        "max_price": 3000000,
+        "district": null
+      },
+      "variant": "initial_tuning",
+      "repeat": 1,
+      "candidates": 20,
+      "max_length": 384,
+      "batch_size": 4,
+      "threads": 8,
+      "truncated_pairs": 3,
+      "embed_ms": 1252,
+      "retrieval_ms": 67,
+      "rerank_ms": 12287,
+      "eligible_count": 542,
+      "top10": [
+        {
+          "listing_id": 1154,
+          "title": "Cho thuê phòng trọ mới xây gần Đại Học Tây Đô",
+          "price": 900000,
+          "cosine_rank": 6,
+          "score": 4.884068489074707
+        },
+        {
+          "listing_id": 1345,
+          "title": "Phòng trọ mới gần ĐH Nam Cần Thơ, có máy lạnh",
+          "price": 2490000,
+          "cosine_rank": 9,
+          "score": 4.679886341094971
+        },
+        {
+          "listing_id": 1322,
+          "title": "Phòng trọ máy lạnh khu cán bộ giảng viên gần ĐH Cần Thơ",
+          "price": 2600000,
+          "cosine_rank": 3,
+          "score": 4.618245601654053
+        },
+        {
+          "listing_id": 947,
+          "title": "Phòng trọ máy lạnh gác đúc gần ĐH Nam Cần Thơ",
+          "price": 1990000,
+          "cosine_rank": 7,
+          "score": 4.351858139038086
+        },
+        {
+          "listing_id": 1506,
+          "title": "Phòng trọ An Bình, Ninh Kiều, Cần Thơ - Máy lạnh, tủ lạnh, giường",
+          "price": 2500000,
+          "cosine_rank": 10,
+          "score": 4.2380523681640625
+        },
+        {
+          "listing_id": 1579,
+          "title": "Phòng trọ gần ĐH Tây Đô, sẵn máy lạnh",
+          "price": 2200000,
+          "cosine_rank": 16,
+          "score": 4.169131278991699
+        },
+        {
+          "listing_id": 869,
+          "title": "Phòng trọ mới xây gần ĐH Nam Cần Thơ, 2 triệu/tháng",
+          "price": 2000000,
+          "cosine_rank": 8,
+          "score": 3.8243696689605713
+        },
+        {
+          "listing_id": 1570,
+          "title": "Phòng trọ mới máy lạnh 2.3 triệu/tháng gần ĐH Cần Thơ",
+          "price": 2300000,
+          "cosine_rank": 5,
+          "score": 3.786491632461548
+        },
+        {
+          "listing_id": 1072,
+          "title": "Nhà trọ gần ĐH FPT, Nam Cần Thơ, có máy lạnh",
+          "price": 2000000,
+          "cosine_rank": 17,
+          "score": 3.6064209938049316
+        },
+        {
+          "listing_id": 1119,
+          "title": "💥 Cho Thuê Nhà Trọ Mới Có Máy Lạnh gần Đại Học Tây Đô ở được 3 người",
+          "price": 2500000,
+          "cosine_rank": 20,
+          "score": 3.1731414794921875
+        }
+      ]
+    },
+    {
+      "case": 1,
+      "preferences": {
+        "needs": "Phòng có máy lạnh, nhà vệ sinh riêng, gần Đại học Cần Thơ",
+        "max_price": 3000000,
+        "district": null
+      },
+      "variant": "four_threads",
+      "repeat": 1,
+      "candidates": 20,
+      "max_length": 384,
+      "batch_size": 4,
+      "threads": 4,
+      "truncated_pairs": 3,
+      "embed_ms": 1252,
+      "retrieval_ms": 67,
+      "rerank_ms": 14551,
+      "eligible_count": 542,
+      "top10": [
+        {
+          "listing_id": 1154,
+          "title": "Cho thuê phòng trọ mới xây gần Đại Học Tây Đô",
+          "price": 900000,
+          "cosine_rank": 6,
+          "score": 4.884069442749023
+        },
+        {
+          "listing_id": 1345,
+          "title": "Phòng trọ mới gần ĐH Nam Cần Thơ, có máy lạnh",
+          "price": 2490000,
+          "cosine_rank": 9,
+          "score": 4.679886817932129
+        },
+        {
+          "listing_id": 1322,
+          "title": "Phòng trọ máy lạnh khu cán bộ giảng viên gần ĐH Cần Thơ",
+          "price": 2600000,
+          "cosine_rank": 3,
+          "score": 4.6182451248168945
+        },
+        {
+          "listing_id": 947,
+          "title": "Phòng trọ máy lạnh gác đúc gần ĐH Nam Cần Thơ",
+          "price": 1990000,
+          "cosine_rank": 7,
+          "score": 4.351858139038086
+        },
+        {
+          "listing_id": 1506,
+          "title": "Phòng trọ An Bình, Ninh Kiều, Cần Thơ - Máy lạnh, tủ lạnh, giường",
+          "price": 2500000,
+          "cosine_rank": 10,
+          "score": 4.238054275512695
+        },
+        {
+          "listing_id": 1579,
+          "title": "Phòng trọ gần ĐH Tây Đô, sẵn máy lạnh",
+          "price": 2200000,
+          "cosine_rank": 16,
+          "score": 4.169133186340332
+        },
+        {
+          "listing_id": 869,
+          "title": "Phòng trọ mới xây gần ĐH Nam Cần Thơ, 2 triệu/tháng",
+          "price": 2000000,
+          "cosine_rank": 8,
+          "score": 3.8243703842163086
+        },
+        {
+          "listing_id": 1570,
+          "title": "Phòng trọ mới máy lạnh 2.3 triệu/tháng gần ĐH Cần Thơ",
+          "price": 2300000,
+          "cosine_rank": 5,
+          "score": 3.7864925861358643
+        },
+        {
+          "listing_id": 1072,
+          "title": "Nhà trọ gần ĐH FPT, Nam Cần Thơ, có máy lạnh",
+          "price": 2000000,
+          "cosine_rank": 17,
+          "score": 3.606421947479248
+        },
+        {
+          "listing_id": 1119,
+          "title": "💥 Cho Thuê Nhà Trọ Mới Có Máy Lạnh gần Đại Học Tây Đô ở được 3 người",
+          "price": 2500000,
+          "cosine_rank": 20,
+          "score": 3.1731414794921875
+        }
+      ]
+    },
+    {
+      "case": 1,
+      "preferences": {
+        "needs": "Phòng có máy lạnh, nhà vệ sinh riêng, gần Đại học Cần Thơ",
+        "max_price": 3000000,
+        "district": null
+      },
+      "variant": "full_length",
+      "repeat": 1,
+      "candidates": 20,
+      "max_length": 512,
+      "batch_size": 2,
+      "threads": 4,
+      "truncated_pairs": 0,
+      "embed_ms": 1252,
+      "retrieval_ms": 67,
+      "rerank_ms": 17697,
+      "eligible_count": 542,
+      "top10": [
+        {
+          "listing_id": 1154,
+          "title": "Cho thuê phòng trọ mới xây gần Đại Học Tây Đô",
+          "price": 900000,
+          "cosine_rank": 6,
+          "score": 4.884068489074707
+        },
+        {
+          "listing_id": 1345,
+          "title": "Phòng trọ mới gần ĐH Nam Cần Thơ, có máy lạnh",
+          "price": 2490000,
+          "cosine_rank": 9,
+          "score": 4.6798858642578125
+        },
+        {
+          "listing_id": 1322,
+          "title": "Phòng trọ máy lạnh khu cán bộ giảng viên gần ĐH Cần Thơ",
+          "price": 2600000,
+          "cosine_rank": 3,
+          "score": 4.61824369430542
+        },
+        {
+          "listing_id": 947,
+          "title": "Phòng trọ máy lạnh gác đúc gần ĐH Nam Cần Thơ",
+          "price": 1990000,
+          "cosine_rank": 7,
+          "score": 4.351860046386719
+        },
+        {
+          "listing_id": 1506,
+          "title": "Phòng trọ An Bình, Ninh Kiều, Cần Thơ - Máy lạnh, tủ lạnh, giường",
+          "price": 2500000,
+          "cosine_rank": 10,
+          "score": 4.238055229187012
+        },
+        {
+          "listing_id": 1579,
+          "title": "Phòng trọ gần ĐH Tây Đô, sẵn máy lạnh",
+          "price": 2200000,
+          "cosine_rank": 16,
+          "score": 4.16913366317749
+        },
+        {
+          "listing_id": 869,
+          "title": "Phòng trọ mới xây gần ĐH Nam Cần Thơ, 2 triệu/tháng",
+          "price": 2000000,
+          "cosine_rank": 8,
+          "score": 3.824369192123413
+        },
+        {
+          "listing_id": 1570,
+          "title": "Phòng trọ mới máy lạnh 2.3 triệu/tháng gần ĐH Cần Thơ",
+          "price": 2300000,
+          "cosine_rank": 5,
+          "score": 3.7864911556243896
+        },
+        {
+          "listing_id": 1072,
+          "title": "Nhà trọ gần ĐH FPT, Nam Cần Thơ, có máy lạnh",
+          "price": 2000000,
+          "cosine_rank": 17,
+          "score": 3.606422185897827
+        },
+        {
+          "listing_id": 1119,
+          "title": "💥 Cho Thuê Nhà Trọ Mới Có Máy Lạnh gần Đại Học Tây Đô ở được 3 người",
+          "price": 2500000,
+          "cosine_rank": 20,
+          "score": 3.17314076423645
+        }
+      ]
+    }
+  ],
+  "scope": "Sequential local CPU microbenchmark. No human relevance labels; top-10 overlap is stability, not accuracy. Model load measured separately. No response cache.",
+  "reranker_load_ms": 765
+}

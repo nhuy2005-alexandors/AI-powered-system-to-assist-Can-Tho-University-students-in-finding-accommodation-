@@ -1,0 +1,91 @@
+{
+  "health_status": 200,
+  "preferences_status": 200,
+  "cosine_status": 200,
+  "cosine_elapsed_ms": 97,
+  "cosine_http_ms": 118,
+  "returned": 10,
+  "eligible_count": 542,
+  "detail_matches": 10,
+  "profile_version": 3,
+  "measured_at": "2026-10-07T03:16:33.977165+00:00",
+  "rerank_runs": [
+    {
+      "run": "first_request_model_not_loaded",
+      "status": 200,
+      "http_ms": 26019,
+      "elapsed_ms": 25991,
+      "retrieved_count": 50,
+      "listing_ids": [
+        1154,
+        1015,
+        1345,
+        1322,
+        947,
+        957,
+        1506,
+        1089,
+        869,
+        1570
+      ]
+    },
+    {
+      "run": "score_cache_hit_1",
+      "status": 200,
+      "http_ms": 78,
+      "elapsed_ms": 43,
+      "retrieved_count": 50,
+      "listing_ids": [
+        1154,
+        1015,
+        1345,
+        1322,
+        947,
+        957,
+        1506,
+        1089,
+        869,
+        1570
+      ]
+    },
+    {
+      "run": "score_cache_hit_2",
+      "status": 200,
+      "http_ms": 70,
+      "elapsed_ms": 38,
+      "retrieved_count": 50,
+      "listing_ids": [
+        1154,
+        1015,
+        1345,
+        1322,
+        947,
+        957,
+        1506,
+        1089,
+        869,
+        1570
+      ]
+    },
+    {
+      "run": "score_cache_hit_3",
+      "status": 200,
+      "http_ms": 90,
+      "elapsed_ms": 65,
+      "retrieved_count": 50,
+      "listing_ids": [
+        1154,
+        1015,
+        1345,
+        1322,
+        947,
+        957,
+        1506,
+        1089,
+        869,
+        1570
+      ]
+    }
+  ],
+  "profile_version_after": 3
+}

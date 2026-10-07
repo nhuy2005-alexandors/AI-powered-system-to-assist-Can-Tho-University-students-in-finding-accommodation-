@@ -81,9 +81,11 @@ Script local chạy không có tự reload. Sau khi sửa code, dừng API bằn
 
 ## Rerank
 
-`rerank=true` lấy tối đa 20 ứng viên theo vector đã cá nhân hóa, sau đó BGE xếp lại dựa trên nhu cầu dạng chữ và quận. BGE đang giới hạn 384 token mỗi cặp và batch 4 trên CPU. Hành vi tác động tập ứng viên; điểm BGE chưa trộn thêm điểm hành vi. Giảm ứng viên/độ dài giúp giảm lượng tính toán nhưng có thể bỏ phòng phù hợp hoặc cắt nội dung; batch 4 cần đo RAM/tốc độ trên máy chạy. Đây là cấu hình thử nghiệm, chưa có benchmark sau thay đổi. Response có thông báo phạm vi này khi hồ sơ đã có ảnh hưởng hành vi. Kiểm tra thay đổi theo hành vi với `rerank=false` trước.
+`rerank=true` lấy tối đa 50 ứng viên theo vector đã cá nhân hóa, sau đó BGE xếp lại dựa trên nhu cầu dạng chữ và quận. BGE giới hạn 512 token mỗi cặp, batch 2 trên CPU. Hành vi tác động tập ứng viên; điểm BGE chưa trộn thêm điểm hành vi. Response có thông báo phạm vi này khi hồ sơ đã có ảnh hưởng hành vi. Kiểm tra thay đổi theo hành vi với `rerank=false` trước.
 
-Việc xác nhận rerank chạy không thay thế đánh giá chất lượng hoặc tốc độ. Các lần chạy trước thay đổi này mất khoảng 42,8–129 giây trên CPU và vẫn đưa tin nhắc các trường khác lên cao. Giao diện Dành cho bạn và các sự kiện trên website là bước tích hợp tiếp theo.
+Các cặp được gom theo độ dài trước khi chạy BGE để giảm padding; điểm sau đó gắn lại đúng phòng. Cache trong RAM giữ tối đa 1.024 điểm trong 5 phút, khóa theo model, giới hạn token, nhu cầu/quận và toàn bộ văn bản phòng dùng để chấm điểm. Cache không lưu response hay vector sở thích; mỗi request vẫn đọc hồ sơ và lọc SQL mới. Sửa nội dung phòng/nhu cầu làm đổi khóa; khởi động lại API xóa cache. Các worker có cache riêng.
+
+Cấu hình thử nghiệm 20 ứng viên/384 token đã được bỏ sau khi đo vì làm mất phòng có thứ hạng cao trong tập 50 ứng viên. Xem [báo cáo đo CPU và rà soát độ phù hợp](../../eval/reports/recommendation_performance.md). Tối ưu hiệu năng không giải quyết việc BGE nhầm tên trường; chưa có đánh giá trên người dùng thật. Giao diện Dành cho bạn và các sự kiện trên website là bước tích hợp tiếp theo.
 
 ## Kiểm thử
 

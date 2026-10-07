@@ -2,6 +2,8 @@
 
 Notebook + script đo metric cho báo cáo nghiệm thu (THS2026-66).
 
+Đo rerank CPU và kiểm tra API gợi ý trên dataset thật: [báo cáo ngày 07/10/2026](reports/recommendation_performance.md). Báo cáo tách thời gian suy luận mới/cache và ghi các hạn chế về độ phù hợp; chưa thay thế bộ nhãn Precision@10/NDCG@10.
+
 ## Cấu trúc
 ```
 eval/

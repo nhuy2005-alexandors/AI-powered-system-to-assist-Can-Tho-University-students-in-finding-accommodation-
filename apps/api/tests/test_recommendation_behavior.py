@@ -579,7 +579,7 @@ def test_reranking_requires_explicit_opt_in_after_behavior_learning(make_service
     reranked = service.for_you(USER_ID, top_k=2, rerank=True)
     assert reranked.reranker_model == RERANKER_MODEL
     assert len(service.models.rerank_calls) == 1
-    assert service.listings.search_calls[-1]["limit"] == 20
+    assert service.listings.search_calls[-1]["limit"] == 50
     assert len(reranked.warnings) > len(ordinary.warnings)
     assert [item.listing_id for item in reranked.items] == list(reversed([item.listing_id for item in ordinary.items]))
 
