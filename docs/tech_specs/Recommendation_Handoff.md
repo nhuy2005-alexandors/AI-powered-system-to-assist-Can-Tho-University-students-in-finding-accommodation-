@@ -1,7 +1,7 @@
 # Bàn giao chức năng gợi ý phòng trọ
 
 **Đây là tài liệu bàn giao chính. Người tổng hợp nhánh và người làm frontend bắt đầu tại đây; không cần đọc lần lượt tất cả file Markdown.**
-Nhánh bàn giao: `codex/goi-y-phong-tro`, tạo từ `feature/update-local`. Ghi nhận ngày 07/10/2026.
+Nhánh bàn giao: `goi-y-phong-tro`, tạo từ `feature/update-local`. Ghi nhận ngày 07/10/2026.
 
 Người nhận nhánh muốn biết cần migrate gì và có phải embed lại không: đọc mục **4.0** trước, rồi chọn cách chạy ở 4.1 hoặc 4.2.
 
@@ -467,6 +467,6 @@ Kiểm thử nằm ở `apps/api/tests/test_recommendation_behavior.py`, `test_r
 
 ### Nhận nhánh bàn giao
 
-Người tổng hợp nhận nhánh `codex/goi-y-phong-tro` trên GitHub và đọc mục 4.0 để áp dụng thay đổi dữ liệu. Nhánh kế thừa code từ `feature/update-local`; khi so sánh riêng phần gợi ý, dùng nhánh đó làm mốc. Sau khi tổng hợp các nhánh, kiểm tra theo mục 6.
+Người tổng hợp nhận nhánh `goi-y-phong-tro` trên GitHub và đọc mục 4.0 để áp dụng thay đổi dữ liệu. Nhánh kế thừa code từ `feature/update-local`; khi so sánh riêng phần gợi ý, dùng nhánh đó làm mốc. Sau khi tổng hợp các nhánh, kiểm tra theo mục 6.
 
 Source và tài liệu đi theo Git; bản backup PostgreSQL chứa vector và dữ liệu MongoDB được bàn giao riêng nếu nhóm cần dùng lại. Không đưa .env, token, mật khẩu, model cache, archive database hoặc môi trường Python vào commit.
