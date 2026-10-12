@@ -6,9 +6,10 @@
 - Spec: docs/specs/open-mobility-migration.md
 - Release: isolate and push map/mobility lane on `codex/open-mobility-handoff`, base `59a039518175eae12d1158365e74124d9a7451ce`.
 - Handoff: docs/handoffs/open-mobility-merge.md
+- Services: docs/handoffs/external-services.md; private env bundle outside Git at D:/Dev/Data/NCKH/mobility-service-handoff-20261012/.
 - Gate: docs/.codex-gate.json
 - Historical accepted: source-tree P4 catalog789 read-only/API/UI and bounded P5 live WALK/BICYCLE/POI/geocode/tiles (2026-10-12). Private receipts do not certify this extracted integration or a later merge.
-- Current candidate: Python 492 passed; Playwright 38 passed; Next production build passed. Independent release review and exact staged-diff checks pending. No live-provider request or DB write authorized by this packaging phase; no main merge.
+- Source release: commit 9e732ffcedc6ffc9e558eaae57e11500cea9435f pushed on codex/open-mobility-handoff; reviewer ACCEPT and gate 3/3 PASS. Service env files and private ZIP exported/validated; documentation cross-check/review precedes the follow-up push. No new provider/DB probe in that update.
 - Protected: original dirty checkout, crawler/contact/PII/export changes, dataset, secrets and production volumes.
 
 ## Verified done

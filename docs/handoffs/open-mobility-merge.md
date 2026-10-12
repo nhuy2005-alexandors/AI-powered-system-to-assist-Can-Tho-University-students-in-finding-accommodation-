@@ -36,6 +36,8 @@ Conftest chặn mạng/DB mặc định. Validator UGC là dependency tùy chọ
 
 ## Cấu hình không có bí mật
 
+URL, file key riêng và lệnh khởi động: [external-services.md](external-services.md).
+
 Backend đọc biến môi trường (hoặc `.env` riêng, không commit):
 
 ```ini
