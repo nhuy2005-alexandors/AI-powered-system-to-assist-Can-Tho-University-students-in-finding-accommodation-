@@ -1,0 +1,7 @@
+{"id":"housing_01","dataset_version":"feature-smoke-v1","question":"Tìm phòng trọ dưới 2 triệu gần Đại học Cần Thơ","category":"housing"}
+{"id":"housing_02","dataset_version":"feature-smoke-v1","question":"Có phòng trọ ở Ninh Kiều có máy lạnh không?","category":"housing"}
+{"id":"dorm_01","dataset_version":"feature-smoke-v1","question":"Sinh viên Đại học Cần Thơ đăng ký ký túc xá như thế nào?","category":"dormitory"}
+{"id":"legal_01","dataset_version":"feature-smoke-v1","question":"Trước khi đặt cọc thuê trọ cần kiểm tra những gì?","category":"legal"}
+{"id":"legal_02","dataset_version":"feature-smoke-v1","question":"Chủ trọ không trả tiền cọc thì sinh viên nên làm gì?","category":"legal"}
+{"id":"legal_03","dataset_version":"feature-smoke-v1","question":"Chủ nhà thu tiền điện phòng trọ theo quy định nào?","category":"legal"}
+{"id":"scope_01","dataset_version":"feature-smoke-v1","question":"Bạn hướng dẫn tôi sửa điện thoại được không?","category":"out_of_scope"}

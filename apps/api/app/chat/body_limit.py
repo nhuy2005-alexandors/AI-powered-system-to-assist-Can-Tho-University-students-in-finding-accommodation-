@@ -32,10 +32,12 @@ class ChatUploadLimit:
         self.app = app
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        if scope["type"] != "http" or scope["method"] != "POST" or not _UPLOAD_PATH.match(scope["path"]):
+        is_catalog = scope["type"] == "http" and scope["path"].startswith("/admin/ktx/years") and scope["method"] in {"POST", "PUT"}
+        is_upload = scope["type"] == "http" and scope["method"] == "POST" and (_UPLOAD_PATH.match(scope["path"]) or scope["path"] == "/admin/ktx/images")
+        if not (is_catalog or is_upload):
             await self.app(scope, receive, send)
             return
-        limit = max_upload_bytes()
+        limit = 2 * 1024 * 1024 if is_catalog else (8 * 1024 * 1024 + _OVERHEAD if scope["path"] == "/admin/ktx/images" else max_upload_bytes())
         for k, v in scope.get("headers", []):
             if k == b"content-length":
                 try:
@@ -72,7 +74,7 @@ class ChatUploadLimit:
 
 
 async def _reject(send: Send) -> None:
-    body = '{"detail":"Ảnh quá lớn"}'.encode()
+    body = '{"detail":"Dữ liệu gửi lên quá lớn"}'.encode()
     await send({"type": "http.response.start", "status": 413,
                 "headers": [(b"content-type", b"application/json"),
                             (b"content-length", str(len(body)).encode())]})

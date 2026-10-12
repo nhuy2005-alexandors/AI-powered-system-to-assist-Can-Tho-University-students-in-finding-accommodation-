@@ -48,6 +48,8 @@ def answer_key(body: ChatAskRequest) -> tuple[str, bool]:
 
 
 def reusable(result: ChatAskResponse) -> bool:
+    if result.intent == "ktx_question":
+        return bool(result.sources) and not result.no_answer and not result.degraded
     if result.generation_provider in {"template", "legal-insufficient", "rule"}:
         return False
     if result.intent == "legal_question":
@@ -136,9 +138,15 @@ class ChatHistoryStore:
                 revision = tuple(conn.execute(text(
                     f"SELECT count(*), max(updated_at), max(last_seen) FROM {schema}.aggregated_listings"
                 )).one())
+            listing_revision = tuple(conn.execute(text(
+                f"SELECT count(*), max(updated_at), max(last_seen) FROM {repo.listing_schema}.aggregated_listings"
+            )).one())
+            ktx_revision = None
+            if conn.execute(text("SELECT to_regclass('public.ctu_ktx_catalog')")).scalar():
+                ktx_revision = conn.execute(text("SELECT content_sha256 FROM public.ctu_ktx_catalog WHERE id=1")).scalar()
         config = {key: value for key, value in settings.model_dump().items()
-                  if key.startswith("chatbot_") or key in {"gemini_model", "gemini_fallback_model", "ollama_model"}}
-        return digest({"pipeline": "gemini-qwen-shared-v3", "schema": schema, "config": config, "revision": revision,
+                  if key.startswith("chatbot_") or key in {"gemini_model", "gemini_fallback_model", "gemini_base_url", "ollama_model"}}
+        return digest({"pipeline": "feature-ktx-admin-v6", "schema": schema, "config": config, "revision": revision, "ktx_revision": ktx_revision, "listing_revision": listing_revision,
                        "day": datetime.now(ZoneInfo('Asia/Ho_Chi_Minh')).date().isoformat()})
 
     def cached(self, user_id, key, scope):

@@ -60,6 +60,7 @@ class Settings(BaseSettings):
 
     # Key THẬT chỉ đặt trong .env. Nhiều key = xoay vòng khi một key hết quota.
     gemini_api_key: str = ""
+    gemini_proxy_api_key: SecretStr = SecretStr("")
     gemini_api_key_1: SecretStr = SecretStr("")
     gemini_api_key_2: SecretStr = SecretStr("")
     gemini_api_key_3: SecretStr = SecretStr("")
@@ -70,6 +71,10 @@ class Settings(BaseSettings):
 
     @property
     def configured_gemini_keys(self) -> list[str]:
+        # Proxy credentials must not rotate with direct Google credentials.
+        proxy_key = self.gemini_proxy_api_key.get_secret_value().strip()
+        if proxy_key:
+            return [proxy_key]
         # key mới nhất trước; giữ tương thích GEMINI_API_KEY đơn
         values = [self.gemini_api_key_3.get_secret_value(), self.gemini_api_key_2.get_secret_value(),
                   self.gemini_api_key_1.get_secret_value(), self.gemini_api_key]

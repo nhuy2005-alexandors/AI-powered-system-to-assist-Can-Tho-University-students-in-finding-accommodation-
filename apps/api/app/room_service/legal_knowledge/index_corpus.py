@@ -39,6 +39,18 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _matches_checksum(path: Path, expected: str) -> bool:
+    """Git on Windows may convert LF/CRLF; accept only that byte-level variation.
+
+    The bundled manifest contains hashes from both platforms. Do not regenerate
+    those hashes or ignore content changes merely to make an import succeed.
+    """
+    raw = path.read_bytes()
+    lf = raw.replace(b"\r\n", b"\n")
+    return any(hashlib.sha256(payload).hexdigest() == expected
+               for payload in (raw, lf, lf.replace(b"\n", b"\r\n")))
+
+
 def _schema_ddl(schema: str) -> str:
     """Bảng corpus riêng: cùng cột public.legal_* (mig 100) + cột điều khoản mà repo đọc khi schema != public.
 
@@ -97,6 +109,10 @@ def index_corpus(engine, corpus: Path, schema: str, embedder, prune: bool = Fals
         raise SystemExit("Corpus phục vụ phải ở schema legal_* riêng — public chỉ là khung")
     manifest_path = corpus / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    # Validate the entire bundle before changing the database or embedding it.
+    for entry in manifest["documents"]:
+        if not _matches_checksum(corpus / entry["file"], entry["sha256"]):
+            raise SystemExit(f"sai checksum: {entry['file']} — file corpus bị sửa tay?")
     with engine.begin() as conn:
         conn.exec_driver_sql(_schema_ddl(schema))
     repo = LegalKnowledgeRepository(engine, schema)
@@ -104,8 +120,6 @@ def index_corpus(engine, corpus: Path, schema: str, embedder, prune: bool = Fals
     indexed, skipped = [], []
     for entry in manifest["documents"]:
         path = corpus / entry["file"]
-        if _sha(path) != entry["sha256"]:
-            raise SystemExit(f"sai checksum: {entry['file']} — file corpus bị sửa tay?")
         source_path = f"chatbot_corpus/{entry['file']}"
         if repo.current_hash(source_path) == entry["sha256"]:
             skipped.append(entry["id"])

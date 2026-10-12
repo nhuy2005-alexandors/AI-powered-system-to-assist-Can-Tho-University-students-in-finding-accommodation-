@@ -14,6 +14,8 @@ import {
 import type { GeoJSONSource } from "maplibre-gl";
 import type { Feature, FeatureCollection, LineString, Point } from "geojson";
 import "maplibre-gl/dist/maplibre-gl.css";
+import Link from "next/link";
+import { ktxDirectionsUrl, type KtxDormitory } from "@/lib/ktx";
 import type { PoiOut } from "@/lib/api";
 import { CAMPUSES, CAMPUS_MARKER_LABELS } from "@/lib/campus";
 import { isLocationPrecise } from "@/lib/format";
@@ -25,20 +27,6 @@ import type { ListingWithCoords } from "./MapScreen";
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/liberty";
 const MAX_ZOOM = 18;
 
-
-// Màu chấm theo risk_level — hôm nay mọi tin 'unknown' (xanh như mockup 03); khi module rủi ro của
-// nhóm ghi risk_score, bản đồ tự đổi màu mà không phải sửa lại file này.
-const RISK_COLOR = [
-  "match",
-  ["get", "risk"],
-  "suspicious",
-  "#dc2626",
-  "caution",
-  "#d97706",
-  "safe",
-  "#16a34a",
-  "#1069bd",
-] as const;
 
 // Vòng bán kính tìm kiếm: đa giác 64 đỉnh xấp xỉ trên mặt phẳng địa phương (sai số < 0,5% ở 5 km).
 function circleLine(lat: number, lng: number, radiusM: number): Feature<LineString> {
@@ -53,6 +41,8 @@ function circleLine(lat: number, lng: number, radiusM: number): Feature<LineStri
 
 export default function MapCanvas({
   items,
+  dormitories,
+  initialDormitory,
   campus,
   radius,
   selected,
@@ -63,6 +53,8 @@ export default function MapCanvas({
   onPickGroup,
 }: {
   items: ListingWithCoords[];
+  dormitories: KtxDormitory[];
+  initialDormitory: "A" | "B" | null;
   campus: number;
   radius: number;
   selected: ListingWithCoords | null;
@@ -73,6 +65,11 @@ export default function MapCanvas({
   onPickGroup: (ids: number[]) => void;
 }) {
   const mapRef = useRef<MapRef>(null);
+  const [dormitoryPopup, setDormitoryPopup] = useState<KtxDormitory | null>(null);
+  const initialArea = dormitories.find(area => area.id === initialDormitory);
+  useEffect(() => {
+    if (dormitoryPopup && !dormitories.some(area => area.id === dormitoryPopup.id)) setDormitoryPopup(null);
+  }, [dormitories, dormitoryPopup]);
   const [cursor, setCursor] = useState<string>("");
   const [poiPopup, setPoiPopup] = useState<PoiOut | null>(null);
   const center = CAMPUSES[1]; // tâm tìm kiếm cố định = khu II, khớp map/page.tsx
@@ -87,7 +84,7 @@ export default function MapCanvas({
       features: ls.map((l) => ({
         type: "Feature",
         geometry: { type: "Point", coordinates: [l.lng, l.lat] },
-        properties: { id: l.id, risk: l.risk_level },
+        properties: { id: l.id },
       })),
     });
     return [toFc(items.filter(isLocationPrecise)), toFc(items.filter((l) => !isLocationPrecise(l)))];
@@ -171,7 +168,7 @@ export default function MapCanvas({
     <MapGL
       ref={mapRef}
       mapStyle={MAP_STYLE}
-      initialViewState={{ latitude: center[0], longitude: center[1], zoom: 13.3 }}
+      initialViewState={{ latitude: initialArea?.location.lat ?? center[0], longitude: initialArea?.location.lng ?? center[1], zoom: initialArea ? 16 : 13.3 }}
       maxZoom={MAX_ZOOM}
       style={{ width: "100%", height: "100%" }}
       interactiveLayerIds={["clusters-precise", "points-precise", "clusters-approx", "points-approx", "poi-points"]}
@@ -181,6 +178,12 @@ export default function MapCanvas({
       onClick={handleClick}
     >
       <NavigationControl position="bottom-right" showCompass={false} />
+      {dormitories.map(area => <Marker key={area.id} latitude={area.location.lat} longitude={area.location.lng} anchor="bottom">
+        <button type="button" aria-label={"Xem " + area.name} onClick={event => { event.stopPropagation(); setDormitoryPopup(area); }} className="whitespace-nowrap rounded-lg border-2 border-white bg-teal-700 px-3 py-2 text-xs font-bold text-white shadow-lg">KTX {area.id}</button>
+      </Marker>)}
+      {dormitoryPopup && <Popup latitude={dormitoryPopup.location.lat} longitude={dormitoryPopup.location.lng} anchor="bottom" offset={42} onClose={() => setDormitoryPopup(null)} closeOnClick={false}>
+        <div className="max-w-[240px] text-sm"><p className="font-semibold">{dormitoryPopup.name}</p><p className="mt-1 text-xs">{dormitoryPopup.location.label}. Điểm đại diện, chưa xác nhận vị trí từng phòng hoặc cổng vào.</p><p className="mt-1 text-xs">Chưa có số chỗ trống trực tiếp.</p><Link href={"/ktx#khu-" + dormitoryPopup.id.toLowerCase()} className="mt-2 block text-primary underline">Giới thiệu KTX →</Link><a href={ktxDirectionsUrl(dormitoryPopup)} target="_blank" rel="noreferrer" className="mt-1 inline-block text-primary underline">Chỉ đường ↗</a></div>
+      </Popup>}
 
       {/* Vòng bán kính tìm kiếm — nét đứt xanh theo mockup */}
       <Source id="radius" type="geojson" data={radiusGeo}>
@@ -312,7 +315,7 @@ export default function MapCanvas({
           filter={["!", ["has", "point_count"]]}
           paint={{
             "circle-radius": 7.5,
-            "circle-color": RISK_COLOR as never,
+            "circle-color": "#1069bd",
             "circle-stroke-width": 3,
             "circle-stroke-color": "#ffffff",
           }}
@@ -359,3 +362,4 @@ export default function MapCanvas({
     </MapGL>
   );
 }
+

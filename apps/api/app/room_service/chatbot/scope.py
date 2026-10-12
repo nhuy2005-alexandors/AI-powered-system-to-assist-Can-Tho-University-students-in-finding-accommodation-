@@ -24,7 +24,7 @@ _VIOLENCE = (
 # "đang/bị/vừa cháy …" — KHÔNG khớp "phòng cháy chữa cháy" (câu hỏi pháp lý) hay "đang chạy xe"
 _FIRE = (
     re.compile(r"\b(?:dang|bi|vua)\s+chay\s+(?:nha|tro|phong|day|dien|lon|to)\b"),
-    re.compile(r"\b(?:nha|phong|tro|day dien|ca day)\s+(?:dang|bi|vua)\s+chay\b"),
+    re.compile(r"\b(?:nha|phong|tro|ktx|ky tuc xa|ki tuc xa|day dien|ca day)\s+(?:dang|bi|vua)\s+chay\b"),
     re.compile(r"\bdang\s+hoa hoan\b"),
 )
 _MEDICAL = re.compile(r"\b(?:cap cuu|ngo doc|bi dien giat|bat tinh|ngung tho|ngat xiu)\b")

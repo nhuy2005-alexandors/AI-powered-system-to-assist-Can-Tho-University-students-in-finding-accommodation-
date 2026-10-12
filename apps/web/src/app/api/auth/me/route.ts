@@ -8,5 +8,5 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const user = await getCurrentUser(true);
   if (!user) return NextResponse.json({ detail: "Chưa đăng nhập" }, { status: 401 });
-  return NextResponse.json({ id: user.id, name: user.name, email: user.email });
+  return NextResponse.json({ id: user.id, name: user.name, email: user.email, role: user.role });
 }

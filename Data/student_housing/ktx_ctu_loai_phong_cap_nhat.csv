@@ -1,0 +1,28 @@
+﻿Loại phòng,Có gì,Sức chứa,Đơn giá (VND)
+A,Phòng khu A,4 người,285000
+A2,phòng 2 người,2 người,550000
+A3,"phòng 3 người được nấu ăn, giường bộ",3 người,967000
+A4,"phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy",4 người,285000
+A5,"phòng 5 người, giường bộ, nấu ăn",5 người,588000
+A6,"phòng 6 người, giường bộ, nấu ăn",6 người,395000
+A62,"phòng 6 người, giường tầng, nấu ăn",6 người,395000
+A8,"phòng 8 người, giường bộ, nấu ăn",8 người,375000
+BCH25,"Phòng dành cho học viên cao học, nghiên cứu sinh, không được nấu ăn",6 người,415000
+PA225,"Phòng được nấu ăn, giường tầng",2/4 người,550000
+PA325,"Phòng được nấu ăn, giường tầng",3 người,967000
+PA425,"Phòng được nấu ăn, giường tầng",4 người,285000
+PA525,"Phòng được nấu ăn, giường tầng",5 người,588000
+PA625,"Phòng được nấu ăn, giường tầng",6 người,395000
+PA825,"Phòng được nấu ăn, giường tầng",8 người,375000
+PB225,"Phòng được phép nấu ăn, giường bộ",2 người,702500
+PB325,"Phòng được nấu ăn, giường bộ",3 người,475000
+PB425,"Phòng được nấu ăn, giường tầng",4/8 người,730000
+PB525,"Phòng được nấu ăn, giường bộ",5 người,435000
+PB625,"Phòng được nấu ăn, giường bộ",6 người,415000
+PT025,"Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng",8 người,220000
+PT225,"Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",2 người,890000
+PT325,"Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",3 người,600000
+PT425,"Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",4 người,455000
+PT525,"Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",5 người,355000
+PT625,"Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",6 người,295000
+PT725,"Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",7 người,255000

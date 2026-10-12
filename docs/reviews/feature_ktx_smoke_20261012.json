@@ -1,0 +1,257 @@
+{
+  "created_at": "2026-10-12T05:10:21.562442+00:00",
+  "run_kind": "feature_integration_smoke_not_ragas",
+  "legal_schema": "legal_ctu_v1",
+  "model": "gemini-3.8-flash-high",
+  "proxy_key_configured": true,
+  "key_count": 1,
+  "cases": [
+    {
+      "question": "KTX A4 có tiện nghi gì, sức chứa và giá bao nhiêu?",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\nDanh mục loại phòng chưa xác nhận số chỗ trống hiện tại; cần kiểm tra với văn phòng KTX.",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Danh mục loại phòng do người dùng cập nhật",
+          "source": "ctu_ktx_catalog",
+          "source_url": null,
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "editorial_guidance",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_structured",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 5830,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ]
+    },
+    {
+      "question": "GPS KTX CTU khu A và khu B ở đâu?",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- Ký túc xá khu A: 10.0338798, 105.7702172 — Văn phòng phục vụ sinh viên KTX khu A. Điểm đại diện từ OpenStreetMap; chưa xác nhận cổng vào hoặc vị trí từng phòng. [1]\n- Ký túc xá khu B: 10.0301622, 105.7642123 — Điểm đại diện KTX khu B. Điểm đại diện từ OpenStreetMap; chưa xác nhận cổng vào hoặc vị trí từng phòng. [2]\nBạn có thể mở vị trí và chỉ đường trên trang KTX của hệ thống.",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Văn phòng phục vụ sinh viên KTX khu A · OpenStreetMap",
+          "source": "ctu_ktx_catalog",
+          "source_url": "https://www.openstreetmap.org/way/89864434",
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "Ký túc xá khu A: 10.0338798, 105.7702172 — Văn phòng phục vụ sinh viên KTX khu A. Điểm đại diện từ OpenStreetMap; chưa xác nhận cổng vào hoặc vị trí từng phòng."
+        },
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 2,
+          "similarity_score": 1.0,
+          "title": "Điểm đại diện KTX khu B · OpenStreetMap",
+          "source": "ctu_ktx_catalog",
+          "source_url": "https://www.openstreetmap.org/way/168528554",
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "Ký túc xá khu B: 10.0301622, 105.7642123 — Điểm đại diện KTX khu B. Điểm đại diện từ OpenStreetMap; chưa xác nhận cổng vào hoặc vị trí từng phòng."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_structured",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 24,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "Ký túc xá khu A: 10.0338798, 105.7702172 — Văn phòng phục vụ sinh viên KTX khu A. Điểm đại diện từ OpenStreetMap; chưa xác nhận cổng vào hoặc vị trí từng phòng."
+        },
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 2,
+          "content": "Ký túc xá khu B: 10.0301622, 105.7642123 — Điểm đại diện KTX khu B. Điểm đại diện từ OpenStreetMap; chưa xác nhận cổng vào hoặc vị trí từng phòng."
+        }
+      ]
+    },
+    {
+      "question": "KTX A4 còn chỗ trống không?",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- Danh mục loại phòng, hình ảnh và tọa độ khu KTX không xác nhận số chỗ còn trống. Phải xem tình trạng trên Hệ thống Quản lý KTX hoặc liên hệ văn phòng để xác nhận tại thời điểm đăng ký. [1]\n- Email KTX: ktx@ctu.edu.vn. Văn phòng khu A: 0292 3872 178; khu B: 0292 3872 275, theo thông báo 2026–2027. Một biểu mẫu cũ ghi số khu A khác; ưu tiên số trong thông báo mới. [1]",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Thông báo 307/TB-CTSV · HKI 2026–2027",
+          "source": "ctu_ktx_catalog",
+          "source_url": "https://ssc.ctu.edu.vn/images/upload/thong_bao/072026_tb_dk1_2627.pdf",
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "Danh mục loại phòng, hình ảnh và tọa độ khu KTX không xác nhận số chỗ còn trống. Phải xem tình trạng trên Hệ thống Quản lý KTX hoặc liên hệ văn phòng để xác nhận tại thời điểm đăng ký.\n\nEmail KTX: ktx@ctu.edu.vn. Văn phòng khu A: 0292 3872 178; khu B: 0292 3872 275, theo thông báo 2026–2027. Một biểu mẫu cũ ghi số khu A khác; ưu tiên số trong thông báo mới."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_structured",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 20,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "Danh mục loại phòng, hình ảnh và tọa độ khu KTX không xác nhận số chỗ còn trống. Phải xem tình trạng trên Hệ thống Quản lý KTX hoặc liên hệ văn phòng để xác nhận tại thời điểm đăng ký.\n\nEmail KTX: ktx@ctu.edu.vn. Văn phòng khu A: 0292 3872 178; khu B: 0292 3872 275, theo thông báo 2026–2027. Một biểu mẫu cũ ghi số khu A khác; ưu tiên số trong thông báo mới."
+        }
+      ]
+    },
+    {
+      "question": "KTX có được đưa người ngoài hoặc người thân ở qua đêm không?",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "Các điều/mục liên quan trong bản nội quy CTU đã lưu:\n- Điều 2. Một số quy định chung | Khoản 5\n5. Khi phụ huynh hoặc người thân đến thăm có nhu cầu lưu lại qua đêm, SV phải \nđăng ký với Văn phòng TT. PVSV hoặc Tổ Bảo vệ KTX, sẽ được bố trí ở khu vực riêng. [1]\n- Điều 6. Công tác giữ gìn an ninh trật tự | Khoản 2\n2. Nghiêm cấm các hành vi sau: \n- Tham gia biểu tình, tự ý tụ tập đông người; Kích động, lôi kéo người khác biểu \ntình, viết truyền đơn, áp-phích trái pháp luật; \n- Chứa chấp, buôn bán vũ khí, chất nổ và hàng cấm theo quy định của nhà nước;\n\n- Tàng trữ, lưu hành, truy cập, sử dụng sản phẩm văn hóa đồi trụy hoặc tham gia \ncác hoạt động mê tín dị đoan, hoạt động tôn giáo trái phép; \n- Buôn bán, vận chuyển, tàng trữ, sử dụng và lôi kéo người khác sử dụng ma túy; \n- Tổ chức hoặc tham gia đánh bạc, mại dâm dưới mọi hình thức; \n- Chứa chấp, che giấu hàng lậu, tội phạm; \n- Đánh nhau, tổ chức hoặc tham gia đánh nhau gây mất ANTT; \n- Lấy cắp tài sản, chứa chấp, tiêu thụ tài sản do người khác lấy cắp mà có; \n- Đưa người ngoài vào KTX, gây ảnh hưởng xấu đến ANTT. [1]\n- Điều 2. Một số quy định chung | Khoản 4\n4. Phí KTX nộp theo học kỳ (vào đầu mỗi học kỳ). Quá thời gian quy định, nếu SV \nkhông nộp phí KTX, xem như SV không có nhu cầu ở, hệ thống sẽ hủy bỏ chỗ ở SV đã bố \ntrí. SV trả chỗ trước thời hạn sẽ không được hoàn phí KTX. [1]\nĐây là trích đoạn nguồn công khai đã lưu; cần đối chiếu văn phòng KTX nếu có quy định mới hơn.",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Nội quy KTX · bản công khai CTU",
+          "source": "ctu_ktx_catalog",
+          "source_url": "https://ssc.ctu.edu.vn/images/upload/Noiquy_KTX_trich_092025.pdf",
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "Điều 2. Một số quy định chung | Khoản 5\n5. Khi phụ huynh hoặc người thân đến thăm có nhu cầu lưu lại qua đêm, SV phải \nđăng ký với Văn phòng TT. PVSV hoặc Tổ Bảo vệ KTX, sẽ được bố trí ở khu vực riêng.\n\nĐiều 6. Công tác giữ gìn an ninh trật tự | Khoản 2\n2. Nghiêm cấm các hành vi sau: \n- Tham gia biểu tình, tự ý tụ tập đông người; Kích động, lôi kéo người khác biểu \ntình, viết truyền đơn, áp-phích trái pháp luật; \n- Chứa chấp, buôn bán vũ khí, chất nổ và hàng cấm theo quy định của nhà nước;\n\n- Tàng trữ, lưu hành, truy cập, sử dụng sản phẩm văn hóa đồi trụy hoặc tham gia \ncác hoạt động mê tín dị đoan, hoạt động tôn giáo trái phép; \n- Buôn bán, vận chuyển, tàng trữ, sử dụng và lôi kéo người khác sử dụng ma túy; \n- Tổ chức hoặc tham gia đánh bạc, mại dâm dưới mọi hình thức; \n- Chứa chấp, che giấu hàng lậu, tội phạm; \n- Đánh nhau, tổ chức hoặc tham gia đánh nhau gây mất ANTT; \n- Lấy cắp tài sản, chứa chấp, tiêu thụ tài sản do người khác lấy cắp mà có; \n- Đưa người ngoài vào KTX, gây ảnh hưởng xấu đến ANTT.\n\nĐiều 2. Một số quy định chung | Khoản 4\n4. Phí KTX nộp theo học kỳ (vào đầu mỗi học kỳ). Quá thời gian quy định, nếu SV \nkhông nộp phí KTX, xem như SV không có nhu cầu ở, hệ thống sẽ hủy bỏ chỗ ở SV đã bố \ntrí. SV trả chỗ trước thời hạn sẽ không được hoàn phí KTX."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_hybrid",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 36,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "Điều 2. Một số quy định chung | Khoản 5\n5. Khi phụ huynh hoặc người thân đến thăm có nhu cầu lưu lại qua đêm, SV phải \nđăng ký với Văn phòng TT. PVSV hoặc Tổ Bảo vệ KTX, sẽ được bố trí ở khu vực riêng.\n\nĐiều 6. Công tác giữ gìn an ninh trật tự | Khoản 2\n2. Nghiêm cấm các hành vi sau: \n- Tham gia biểu tình, tự ý tụ tập đông người; Kích động, lôi kéo người khác biểu \ntình, viết truyền đơn, áp-phích trái pháp luật; \n- Chứa chấp, buôn bán vũ khí, chất nổ và hàng cấm theo quy định của nhà nước;\n\n- Tàng trữ, lưu hành, truy cập, sử dụng sản phẩm văn hóa đồi trụy hoặc tham gia \ncác hoạt động mê tín dị đoan, hoạt động tôn giáo trái phép; \n- Buôn bán, vận chuyển, tàng trữ, sử dụng và lôi kéo người khác sử dụng ma túy; \n- Tổ chức hoặc tham gia đánh bạc, mại dâm dưới mọi hình thức; \n- Chứa chấp, che giấu hàng lậu, tội phạm; \n- Đánh nhau, tổ chức hoặc tham gia đánh nhau gây mất ANTT; \n- Lấy cắp tài sản, chứa chấp, tiêu thụ tài sản do người khác lấy cắp mà có; \n- Đưa người ngoài vào KTX, gây ảnh hưởng xấu đến ANTT.\n\nĐiều 2. Một số quy định chung | Khoản 4\n4. Phí KTX nộp theo học kỳ (vào đầu mỗi học kỳ). Quá thời gian quy định, nếu SV \nkhông nộp phí KTX, xem như SV không có nhu cầu ở, hệ thống sẽ hủy bỏ chỗ ở SV đã bố \ntrí. SV trả chỗ trước thời hạn sẽ không được hoàn phí KTX."
+        }
+      ]
+    }
+  ],
+  "catalog": {
+    "records": 107,
+    "vectors": 107,
+    "dimensions": 384
+  },
+  "proxy_structured_generation_ok": true
+}

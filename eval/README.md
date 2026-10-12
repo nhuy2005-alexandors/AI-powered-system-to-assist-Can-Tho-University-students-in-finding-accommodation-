@@ -2,10 +2,15 @@
 
 Notebook + script đo metric cho báo cáo nghiệm thu (THS2026-66).
 
+Review/Reports và khung RAGAS chuyển từ PHUC: xem
+[hướng dẫn tích hợp](../docs/FEEDBACK_EVALUATION_PORT.md). Runner chatbot dùng
+`/chatbot/ask`; giữ nguyên notebook recommendation/matching của feature.
+Các ngưỡng bên dưới là mục tiêu, chưa phải kết quả đo đạt được.
+
 ## Cấu trúc
 ```
 eval/
-├── data/            # ground-truth: listings, scam labels, user-mock, Q&A test
+├── data/            # ground-truth: listings, user-mock, Q&A test
 ├── notebooks/       # notebook eval từng module
 └── metrics.py       # hàm metric dùng chung (P@K, NDCG, ILS)
 ```
@@ -17,7 +22,6 @@ eval/
 | `01_recommendation_eval.ipynb` | Recommendation (sinh từ `tools/build_nb01.py`, gọi `recommend_lib.py`) | Precision@10, NDCG@10, ILS | ≥0.6 / ≥0.65 / ≤0.7 |
 | `02_dedup_eval.ipynb` | Dedup | recall, false-merge | ≥90% / ≤5% |
 | `03_geocoding_eval.ipynb` | Geocoding | %confidence≥medium, sai >1km | ≥80% / 0 trên 50 mẫu |
-| `04_risk_eval.ipynb` | Risk | recall scam | ≥85% |
 | `05_rag_eval.ipynb` | Chatbot RAG | Faithfulness, AnsRel (RAGAS) | ≥0.7 / ≥0.75 |
 | `06_roommate_eval.ipynb` | Matching (ghép bạn ở) | pool theo tầng lọc · cosine vs Gower · harmonic vs cộng · ablation · độ nhạy τ · độ phủ theo N (mô phỏng) · Stable Roommates · Gini exposure · P@3/NDCG@3/Wilcoxon (chấm làm mù 1–5) | P@3 thuật toán > ngẫu nhiên, Wilcoxon p < 0,05 |
 
@@ -26,7 +30,6 @@ eval/
 | File | Mô tả | Kích thước tối thiểu |
 |---|---|---|
 | `data/listings_groundtruth.json` | Listing đã verify thủ công | 100 |
-| `data/scam_labels.csv` | Tin gán nhãn scam/clean | 100 (≥30 scam) |
 | `data/dup_pairs.csv` | Cặp trùng/không trùng | 200 cặp |
 | `data/user_mock.json` | User-mock + relevance phòng | 30 user |
 | `data/qa_test.json` | Câu hỏi + answer kỳ vọng | 50 Q&A |

@@ -1,0 +1,33 @@
+name: nckh
+services:
+  ktx-evaluation:
+    profiles: ["evaluation"]
+    build:
+      context: .
+      dockerfile: eval/Dockerfile.ktx-feature
+    image: nckh-ktx-ragas:local
+    working_dir: /workspace
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-nckh}:${POSTGRES_PASSWORD:-nckh}@db:5432/${POSTGRES_DB:-nckh}
+      CHATBOT_LEGAL_SCHEMA: ${CHATBOT_LEGAL_SCHEMA:-legal_ctu_v1}
+      CHATBOT_LISTING_SCHEMA: public
+      CHATBOT_AGENTS_ENABLED: "false"
+      CHATBOT_GRAPH_ENABLED: "false"
+      CHATBOT_LLM_PROVIDER: gemini
+      CHATBOT_WARMUP_ENABLED: "false"
+      CHATBOT_MAX_OUTPUT_TOKENS: "1536"
+      GEMINI_PROXY_API_KEY: ${GEMINI_PROXY_API_KEY:-}
+      GEMINI_BASE_URL: ${GEMINI_DOCKER_BASE_URL:-http://host.docker.internal:8317/v1beta}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.8-flash-high}
+      GEMINI_MIN_REQUEST_INTERVAL_SECONDS: "2"
+      RAGAS_JUDGE_PROVIDER: gemini
+      HF_HOME: /models
+      HF_HUB_OFFLINE: "1"
+      OMP_NUM_THREADS: "2"
+      PYTHONPATH: /workspace/apps/api:/eval
+    volumes:
+      - .:/workspace:ro
+      - ./eval:/eval
+      - models:/models:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

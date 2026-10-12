@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getListing, getListingContact, type ApiError, type ContactOut } from "@/lib/api";
+import { getListing, getListingContact, getListingReviews, type ApiError, type ContactOut } from "@/lib/api";
 import { getCurrentUser } from "@/lib/current-user";
-import { formatArea, formatDistance, formatPrice, isLocationPrecise, riskBadge } from "@/lib/format";
+import { formatArea, formatDistance, formatPrice, isLocationPrecise } from "@/lib/format";
 import ContactBox from "./ContactBox";
 import MiniMap from "./MiniMap";
 import DeleteListingButton from "./DeleteListingButton";
+import ReviewSection from "./ReviewSection";
+import ReportButton from "./ReportButton";
 
 export const dynamic = "force-dynamic";
 
@@ -27,10 +29,11 @@ export default async function ListingDetailPage({
   // liên hệ lỗi không được làm hỏng cả trang chi tiết
   const contact: ContactOut | null = await getListingContact(params.id).catch(() => null);
   const user = await getCurrentUser();
+  const reviews = await getListingReviews(params.id).catch(() => null);
+  const canGiveFeedback = user?.id !== listing.posted_by && !["hidden", "expired"].includes(listing.status);
   // chỉ admin quản lý tin (ADR-024): ẩn được mọi tin; sửa chỉ tin nhập tay (tin crawl/khảo sát do pipeline ghi đè)
   const isAdmin = user?.role === "admin";
   const canEdit = isAdmin && listing.source === "user";
-  const badge = riskBadge(listing.risk_level);
 
   return (
     <main className="min-h-screen bg-slate-50 p-4 sm:p-8">
@@ -60,11 +63,6 @@ export default async function ListingDetailPage({
 
           <div className="mt-4 flex items-start justify-between gap-3">
             <h1 className="text-2xl font-bold text-slate-800">{listing.title}</h1>
-            <span
-              className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${badge.className}`}
-            >
-              {badge.label}
-            </span>
           </div>
 
           <p className="mt-2 text-xl font-semibold text-emerald-700">
@@ -94,6 +92,14 @@ export default async function ListingDetailPage({
           )}
 
           <ContactBox contact={contact} />
+          {listing.status === "flagged" && (
+            <p className="mt-4 rounded-lg bg-amber-50 p-3 text-sm text-amber-900">
+              Tin đã được quản trị viên gắn cảnh báo. Hãy kiểm chứng thông tin trước khi giao dịch.
+            </p>
+          )}
+          <div className="mt-4">
+            <ReportButton listingId={listing.id} loggedIn={!!user} canReport={canGiveFeedback} />
+          </div>
 
           {/* nhắc đúng lúc sắp liên hệ/đặt cọc — đầy đủ ở /cam-nang (thay cho badge "AI cảnh báo rủi ro") */}
           <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
@@ -138,6 +144,11 @@ export default async function ListingDetailPage({
             </div>
           )}
         </div>
+        {reviews ? (
+          <ReviewSection listingId={listing.id} initialData={reviews} loggedIn={!!user} canReview={canGiveFeedback} />
+        ) : (
+          <p className="mt-6 text-sm text-slate-500">Chưa tải được đánh giá. Vui lòng thử lại sau.</p>
+        )}
       </div>
     </main>
   );

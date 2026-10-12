@@ -8,6 +8,7 @@ import ChatNavLink from "./ChatNavLink";
 const NAV = [
   { href: "/", label: "Tìm trọ" },
   { href: "/map", label: "Bản đồ" },
+  { href: "/ktx", label: "Ký túc xá" },
   { href: "/goi-y", label: "Gợi ý" },
   { href: "/cam-nang", label: "Cẩm nang" },
 ];
@@ -91,7 +92,7 @@ export default function SiteHeader() {
         ) : null}
         {me && me.role === "admin" && (
           <Link
-            href="/quan-ly/nha-tro"
+            href="/admin"
             className="hidden text-[15px] font-medium text-ink-soft transition hover:text-primary lg:block"
           >
             Quản lý

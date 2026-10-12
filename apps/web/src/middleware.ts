@@ -4,7 +4,7 @@ import { ACCESS_COOKIE, REFRESH_COOKIE } from "@/lib/config";
 // Gate nhẹ theo sự tồn tại của cookie (không verify chữ ký ở đây — page tự
 // gọi /me để xác thực thật). Middleware chỉ điều hướng UX: chặn vào trang cần
 // login khi thiếu token, và đẩy user đã login khỏi trang login/register.
-const PROTECTED = ["/me", "/dashboard", "/listings/new", "/quan-ly", "/chat", "/roommate"];
+const PROTECTED = ["/me", "/dashboard", "/listings/new", "/quan-ly", "/admin", "/chat", "/roommate"];
 const AUTH_PAGES = ["/login", "/register"];
 
 // Route dynamic /listings/[id]/edit không match được bằng startsWith cố định
@@ -64,6 +64,7 @@ export const config = {
     "/register",
     "/listings/new",
     "/quan-ly/:path*",
+    "/admin/:path*",
     "/listings/:id/edit",
     "/chat/:path*",
     // Thiếu dòng này thì middleware KHÔNG chạy cho /roommate và cả PROTECTED ở

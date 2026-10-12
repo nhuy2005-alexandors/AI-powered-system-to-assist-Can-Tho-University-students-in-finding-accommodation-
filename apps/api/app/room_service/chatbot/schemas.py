@@ -78,7 +78,7 @@ class ChatListing(BaseModel):
 
 
 class ChatSource(BaseModel):
-    kind: Literal["listing", "legal_document"] = "listing"
+    kind: Literal["listing", "legal_document", "dormitory"] = "listing"
     listing_id: int | None = None
     document_id: int | None = None
     chunk_id: int | None = None
@@ -97,7 +97,7 @@ class ChatSource(BaseModel):
 
 
 class ChatEvaluationContext(BaseModel):
-    kind: Literal["listing", "legal_document"] = "listing"
+    kind: Literal["listing", "legal_document", "dormitory"] = "listing"
     listing_id: int | None = None
     chunk_id: int | None = None
     rank: int

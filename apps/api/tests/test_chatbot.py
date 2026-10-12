@@ -146,9 +146,10 @@ def test_short_follow_up_uses_only_latest_client_side_user_context():
     assert rewritten == "Tìm phòng ở Ninh Kiều. Yêu cầu tiếp theo: Còn phòng nào rẻ hơn?"
 
 
-def test_evaluation_context_is_opt_in_and_unevaluated_risk_is_unknown():
+def test_evaluation_context_is_opt_in_and_legacy_risk_is_ignored():
     service = ChatService(
-        FakeRepo([_listing()]), DeterministicFakeEmbedder(), GroundedTemplateGenerator()
+        FakeRepo([dict(_listing(), risk_score=0.9, risk_evaluated_at="2026-10-12")]),
+        DeterministicFakeEmbedder(), GroundedTemplateGenerator()
     )
     result = service.ask(
         ChatAskRequest(message="Tìm phòng trọ gần CTU", include_evaluation_contexts=True)

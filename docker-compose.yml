@@ -40,7 +40,7 @@ services:
       ACCESS_TOKEN_TTL_MIN: ${ACCESS_TOKEN_TTL_MIN:-15}
       REFRESH_TOKEN_TTL_DAYS: ${REFRESH_TOKEN_TTL_DAYS:-30}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
-      CRAWLER_ENABLED: ${CRAWLER_ENABLED:-true}
+      CRAWLER_ENABLED: ${CRAWLER_ENABLED:-false}
       ORS_API_KEY: ${ORS_API_KEY:-}
       GOOGLE_PLACES_API_KEY: ${GOOGLE_PLACES_API_KEY:-}
       MEDIA_DIR: /app/media
@@ -56,13 +56,15 @@ services:
       # Ollama chạy trên máy host (`ollama serve`), không trong compose: cần GPU/Metal của host
       OLLAMA_BASE_URL: ${OLLAMA_DOCKER_BASE_URL:-http://host.docker.internal:11434}
       OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:7b-instruct}
+      GEMINI_PROXY_API_KEY: ${GEMINI_PROXY_API_KEY:-}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
       GEMINI_API_KEY_1: ${GEMINI_API_KEY_1:-}
       GEMINI_API_KEY_2: ${GEMINI_API_KEY_2:-}
       GEMINI_API_KEY_3: ${GEMINI_API_KEY_3:-}
       GEMINI_MODEL: ${GEMINI_MODEL:-gemini-3.5-flash-lite}
       GEMINI_FALLBACK_MODEL: ${GEMINI_FALLBACK_MODEL:-gemini-3.1-flash-lite}
-      GEMINI_BASE_URL: ${GEMINI_BASE_URL:-https://generativelanguage.googleapis.com/v1beta}
+      GEMINI_BASE_URL: ${GEMINI_DOCKER_BASE_URL:-${GEMINI_BASE_URL:-https://generativelanguage.googleapis.com/v1beta}}
+      GEMINI_MIN_REQUEST_INTERVAL_SECONDS: ${GEMINI_MIN_REQUEST_INTERVAL_SECONDS:-5}
     ports:
       - "8000:8000"
     volumes:
@@ -84,6 +86,8 @@ services:
 
   web:
     build: ./apps/web
+    volumes:
+      - ./docs/reviews:/app/public/reviews:ro
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000
       API_INTERNAL_URL: http://api:8000
@@ -97,6 +101,29 @@ services:
       - "3000:3000"
     depends_on:
       - api
+
+  ktx-indexer:
+    profiles: ["tools"]
+    build:
+      context: ./apps/api
+      args:
+        INSTALL_ML: "true"
+    image: nckh-ktx-indexer:local
+    working_dir: /workspace
+    command: ["python", "/workspace/scripts/index_ctu_ktx_catalog.py", "--allow-model-download", "--report", "/reports/ktx_catalog_index_report.json"]
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-nckh}:${POSTGRES_PASSWORD:-nckh}@db:5432/${POSTGRES_DB:-nckh}
+      HF_HOME: /models
+      OMP_NUM_THREADS: "2"
+      CRAWLER_ENABLED: "false"
+      PYTHONPATH: /workspace/apps/api
+    volumes:
+      - .:/workspace:ro
+      - ./docs:/reports
+      - models:/models
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   pgdata:

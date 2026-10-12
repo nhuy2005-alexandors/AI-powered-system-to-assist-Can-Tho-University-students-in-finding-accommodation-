@@ -1,0 +1,615 @@
+{
+  "created_at": "2026-10-12T05:16:27.071938+00:00",
+  "run_kind": "feature_comparison_service_integration_not_ragas",
+  "pipeline": "ChatService.ask with evaluation contexts, real DB/E5, no history/cache",
+  "cases": [
+    {
+      "id": "budget_under_1m",
+      "question": "Ngân sách dưới 1 triệu đồng mỗi tháng thì nên chọn KTX CTU hay nhà trọ? So sánh hai lựa chọn và đưa ví dụ từ dữ liệu đang có.",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- KTX CTU · PT025 · khu chưa xác nhận · sức chứa 8 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng. Giá 220.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · PT725 · khu chưa xác nhận · sức chứa 7 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng. Giá 255.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · A · khu A · sức chứa 4 người. Phòng khu A. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\nĐang hiển thị 5/27 loại khớp; xem đầy đủ và lọc thêm trên trang KTX.\nNgân sách theo tháng không cùng kỳ tính với đơn giá đang có; chưa thể lọc theo ngân sách này hoặc kết luận mức phí tháng.\nDanh mục loại phòng chưa xác nhận số chỗ trống hiện tại; cần kiểm tra với văn phòng KTX.",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Danh mục loại phòng do người dùng cập nhật",
+          "source": "ctu_ktx_catalog",
+          "source_url": null,
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "editorial_guidance",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "KTX CTU · PT025 · khu chưa xác nhận · sức chứa 8 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng. Giá 220.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PT725 · khu chưa xác nhận · sức chứa 7 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng. Giá 255.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A · khu A · sức chứa 4 người. Phòng khu A. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_structured",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 6149,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "KTX CTU · PT025 · khu chưa xác nhận · sức chứa 8 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng. Giá 220.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PT725 · khu chưa xác nhận · sức chứa 7 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng. Giá 255.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A · khu A · sức chứa 4 người. Phòng khu A. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "checks": {
+        "has_ktx_evidence": true,
+        "has_housing_evidence": false,
+        "has_answer": true,
+        "not_degraded": true
+      },
+      "both_sides_grounded": false,
+      "wall_seconds": 6.15,
+      "manual_review": {
+        "verdict": "Chưa đạt",
+        "note": "Chỉ liệt kê loại phòng KTX, không lấy tin nhà trọ và không đưa kết luận so sánh. Có ghi rõ chưa xác nhận kỳ tính phí KTX."
+      }
+    },
+    {
+      "id": "all_costs",
+      "question": "Em có tổng cộng 1 triệu/tháng gồm tiền ở, điện, nước, wifi và gửi xe. KTX hay nhà trọ phù hợp hơn? Khoản nào chưa có dữ liệu thì nói rõ.",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- Gửi xe: Xe đạp được miễn phí gửi xe. Trang hướng dẫn tân sinh viên 2026–2027 công bố xe máy/xe điện 25.000 đồng/sinh viên/tháng, nộp theo học kỳ. [1]\n- Phí ở và đơn vị giá: Trang cơ sở vật chất CTU công bố khoảng 220.000–475.000 đồng/sinh viên/tháng, chưa gồm điện nước, đóng theo học kỳ. Trang không ghi ngày áp dụng. Phiếu đăng ký năm 2025 có phí/người/học kỳ 3,5 tháng. Các đơn giá trong danh mục người dùng cập nhật chưa xác nhận kỳ tính; không khẳng định là giá/tháng hay mức thu hiện hành. [2]\n- Điện nước: Sinh viên nộp phí điện, nước hàng tháng theo lượng sử dụng thực tế của phòng; phí ở chưa bao gồm điện nước. [3]\n- Wi-Fi và tiện ích: Phòng ở có Wi-Fi riêng từng phòng. Trong khuôn viên có căn tin, siêu thị mini; trang giới thiệu còn nêu nhà xe và khu vực giặt sấy. [1]",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Hướng dẫn tân sinh viên đăng ký KTX · 2026–2027",
+          "source": "ctu_ktx_catalog",
+          "source_url": "https://tansinhvien.ctu.edu.vn/sinh-hoat/huong-dan-tan-sinh-vien-dang-ky-o-ky-tuc-xa",
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "Xe đạp được miễn phí gửi xe. Trang hướng dẫn tân sinh viên 2026–2027 công bố xe máy/xe điện 25.000 đồng/sinh viên/tháng, nộp theo học kỳ.\n\nPhòng ở có Wi-Fi riêng từng phòng. Trong khuôn viên có căn tin, siêu thị mini; trang giới thiệu còn nêu nhà xe và khu vực giặt sấy."
+        },
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 2,
+          "similarity_score": 1.0,
+          "title": "Cơ sở vật chất KTX · Trung tâm Phục vụ Sinh viên",
+          "source": "ctu_ktx_catalog",
+          "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "Trang cơ sở vật chất CTU công bố khoảng 220.000–475.000 đồng/sinh viên/tháng, chưa gồm điện nước, đóng theo học kỳ. Trang không ghi ngày áp dụng. Phiếu đăng ký năm 2025 có phí/người/học kỳ 3,5 tháng. Các đơn giá trong danh mục người dùng cập nhật chưa xác nhận kỳ tính; không khẳng định là giá/tháng hay mức thu hiện hành."
+        },
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 3,
+          "similarity_score": 1.0,
+          "title": "Thông báo 307/TB-CTSV · HKI 2026–2027",
+          "source": "ctu_ktx_catalog",
+          "source_url": "https://ssc.ctu.edu.vn/images/upload/thong_bao/072026_tb_dk1_2627.pdf",
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "Sinh viên nộp phí điện, nước hàng tháng theo lượng sử dụng thực tế của phòng; phí ở chưa bao gồm điện nước."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_hybrid",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 41,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "Xe đạp được miễn phí gửi xe. Trang hướng dẫn tân sinh viên 2026–2027 công bố xe máy/xe điện 25.000 đồng/sinh viên/tháng, nộp theo học kỳ.\n\nPhòng ở có Wi-Fi riêng từng phòng. Trong khuôn viên có căn tin, siêu thị mini; trang giới thiệu còn nêu nhà xe và khu vực giặt sấy."
+        },
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 2,
+          "content": "Trang cơ sở vật chất CTU công bố khoảng 220.000–475.000 đồng/sinh viên/tháng, chưa gồm điện nước, đóng theo học kỳ. Trang không ghi ngày áp dụng. Phiếu đăng ký năm 2025 có phí/người/học kỳ 3,5 tháng. Các đơn giá trong danh mục người dùng cập nhật chưa xác nhận kỳ tính; không khẳng định là giá/tháng hay mức thu hiện hành."
+        },
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 3,
+          "content": "Sinh viên nộp phí điện, nước hàng tháng theo lượng sử dụng thực tế của phòng; phí ở chưa bao gồm điện nước."
+        }
+      ],
+      "checks": {
+        "has_ktx_evidence": true,
+        "has_housing_evidence": false,
+        "has_answer": true,
+        "not_degraded": true
+      },
+      "both_sides_grounded": false,
+      "wall_seconds": 0.04,
+      "manual_review": {
+        "verdict": "Chưa đạt",
+        "note": "Có nêu điện nước và gửi xe KTX, nhưng thiếu chi phí nhà trọ; chưa đánh giá ngân sách tổng 1 triệu. Không được coi Wi-Fi là miễn phí chỉ vì phòng có Wi-Fi."
+      }
+    },
+    {
+      "id": "cooking_private_bathroom",
+      "question": "Dưới 1 triệu/tháng, em muốn tự nấu ăn và có nhà vệ sinh riêng. Nên chọn KTX hay nhà trọ? Có lựa chọn nào đáp ứng được không?",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · A8 · khu A · sức chứa 8 người. phòng 8 người, giường bộ, nấu ăn. Giá 375.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · PA825 · khu chưa xác nhận · sức chứa 8 người. Phòng được nấu ăn, giường tầng. Giá 375.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · A6 · khu A · sức chứa 6 người. phòng 6 người, giường bộ, nấu ăn. Giá 395.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\nĐang hiển thị 5/17 loại khớp; xem đầy đủ và lọc thêm trên trang KTX.\nNgân sách theo tháng không cùng kỳ tính với đơn giá đang có; chưa thể lọc theo ngân sách này hoặc kết luận mức phí tháng.\nDanh mục loại phòng chưa xác nhận số chỗ trống hiện tại; cần kiểm tra với văn phòng KTX.",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Danh mục loại phòng do người dùng cập nhật",
+          "source": "ctu_ktx_catalog",
+          "source_url": null,
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "editorial_guidance",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A8 · khu A · sức chứa 8 người. phòng 8 người, giường bộ, nấu ăn. Giá 375.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PA825 · khu chưa xác nhận · sức chứa 8 người. Phòng được nấu ăn, giường tầng. Giá 375.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A6 · khu A · sức chứa 6 người. phòng 6 người, giường bộ, nấu ăn. Giá 395.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_structured",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 30,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A8 · khu A · sức chứa 8 người. phòng 8 người, giường bộ, nấu ăn. Giá 375.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PA825 · khu chưa xác nhận · sức chứa 8 người. Phòng được nấu ăn, giường tầng. Giá 375.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A6 · khu A · sức chứa 6 người. phòng 6 người, giường bộ, nấu ăn. Giá 395.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "checks": {
+        "has_ktx_evidence": true,
+        "has_housing_evidence": false,
+        "has_answer": true,
+        "not_degraded": true
+      },
+      "both_sides_grounded": false,
+      "wall_seconds": 0.03,
+      "manual_review": {
+        "verdict": "Chưa đạt",
+        "note": "Có lọc nấu ăn nhưng liệt kê A4 có nhà vệ sinh tập thể, chưa xử lý điều kiện nhà vệ sinh riêng và thiếu ví dụ nhà trọ."
+      }
+    },
+    {
+      "id": "group_four",
+      "question": "Nhóm em 4 người, mỗi người dưới 1 triệu/tháng. So sánh ở KTX A4 với thuê chung nhà trọ, ghi rõ giá theo người hay theo phòng và kỳ tính giá.",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\nNgân sách theo tháng không cùng kỳ tính với đơn giá đang có; chưa thể lọc theo ngân sách này hoặc kết luận mức phí tháng.\nDanh mục loại phòng chưa xác nhận số chỗ trống hiện tại; cần kiểm tra với văn phòng KTX.",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Danh mục loại phòng do người dùng cập nhật",
+          "source": "ctu_ktx_catalog",
+          "source_url": null,
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "editorial_guidance",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_structured",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 28,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "checks": {
+        "has_ktx_evidence": true,
+        "has_housing_evidence": false,
+        "has_answer": true,
+        "not_degraded": true
+      },
+      "both_sides_grounded": false,
+      "wall_seconds": 0.03,
+      "manual_review": {
+        "verdict": "Chưa đạt",
+        "note": "Chỉ trả thông tin A4; thiếu ví dụ thuê chung nhà trọ và phép tính theo người. Không thể đổi phí KTX sang tháng khi kỳ tính chưa xác nhận."
+      }
+    },
+    {
+      "id": "privacy",
+      "question": "Em muốn ở một mình, yên tĩnh và riêng tư, ngân sách dưới 1 triệu/tháng. So sánh KTX và nhà trọ rồi tư vấn phương án phù hợp.",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- KTX CTU · PT025 · khu chưa xác nhận · sức chứa 8 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng. Giá 220.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · PT725 · khu chưa xác nhận · sức chứa 7 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng. Giá 255.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · A · khu A · sức chứa 4 người. Phòng khu A. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\nĐang hiển thị 5/27 loại khớp; xem đầy đủ và lọc thêm trên trang KTX.\nNgân sách theo tháng không cùng kỳ tính với đơn giá đang có; chưa thể lọc theo ngân sách này hoặc kết luận mức phí tháng.\nDanh mục loại phòng chưa xác nhận số chỗ trống hiện tại; cần kiểm tra với văn phòng KTX.",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Danh mục loại phòng do người dùng cập nhật",
+          "source": "ctu_ktx_catalog",
+          "source_url": null,
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "editorial_guidance",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "KTX CTU · PT025 · khu chưa xác nhận · sức chứa 8 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng. Giá 220.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PT725 · khu chưa xác nhận · sức chứa 7 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng. Giá 255.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A · khu A · sức chứa 4 người. Phòng khu A. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_structured",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 30,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "KTX CTU · PT025 · khu chưa xác nhận · sức chứa 8 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng. Giá 220.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PT725 · khu chưa xác nhận · sức chứa 7 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng. Giá 255.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A · khu A · sức chứa 4 người. Phòng khu A. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "checks": {
+        "has_ktx_evidence": true,
+        "has_housing_evidence": false,
+        "has_answer": true,
+        "not_degraded": true
+      },
+      "both_sides_grounded": false,
+      "wall_seconds": 0.03,
+      "manual_review": {
+        "verdict": "Chưa đạt",
+        "note": "Người dùng muốn ở một mình nhưng trả danh sách KTX 4–8 người; không nhận diện xung đột nhu cầu hoặc so sánh nhà trọ."
+      }
+    },
+    {
+      "id": "safety",
+      "question": "KTX CTU và nhà trọ dưới 1 triệu thì bên nào an toàn hơn? Có đủ bằng chứng để kết luận không, và cần kiểm tra gì trước khi chọn?",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- KTX CTU · PT025 · khu chưa xác nhận · sức chứa 8 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng. Giá 220.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · PT725 · khu chưa xác nhận · sức chứa 7 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng. Giá 255.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · A · khu A · sức chứa 4 người. Phòng khu A. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\n- KTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng. [1]\nĐang hiển thị 5/27 loại khớp; xem đầy đủ và lọc thêm trên trang KTX.\nDanh mục loại phòng chưa xác nhận số chỗ trống hiện tại; cần kiểm tra với văn phòng KTX.",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Danh mục loại phòng do người dùng cập nhật",
+          "source": "ctu_ktx_catalog",
+          "source_url": null,
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "editorial_guidance",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "KTX CTU · PT025 · khu chưa xác nhận · sức chứa 8 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng. Giá 220.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PT725 · khu chưa xác nhận · sức chứa 7 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng. Giá 255.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A · khu A · sức chứa 4 người. Phòng khu A. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_structured",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 27,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "KTX CTU · PT025 · khu chưa xác nhận · sức chứa 8 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng. Giá 220.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PT725 · khu chưa xác nhận · sức chứa 7 người. Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng. Giá 255.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A · khu A · sức chứa 4 người. Phòng khu A. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · A4 · khu A · sức chứa 4 người. phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng.\n\nKTX CTU · PA425 · khu chưa xác nhận · sức chứa 4 người. Phòng được nấu ăn, giường tầng. Giá 285.000 đồng/người · chưa xác nhận kỳ tính giá. Đơn giá/người theo danh mục cập nhật; chưa xác nhận kỳ tính giá và thời hạn áp dụng."
+        }
+      ],
+      "checks": {
+        "has_ktx_evidence": true,
+        "has_housing_evidence": false,
+        "has_answer": true,
+        "not_degraded": true
+      },
+      "both_sides_grounded": false,
+      "wall_seconds": 0.03,
+      "manual_review": {
+        "verdict": "Chưa đạt",
+        "note": "Trả danh sách phòng thay vì phân tích bằng chứng an toàn, giới hạn dữ liệu và các bước kiểm tra."
+      }
+    },
+    {
+      "id": "distance",
+      "question": "Em học ở khu II CTU, ngân sách dưới 1 triệu/tháng. So sánh vị trí KTX khu A/B với nhà trọ gần trường trong dữ liệu hiện có.",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- Ký túc xá khu A: 10.0338798, 105.7702172 — Văn phòng phục vụ sinh viên KTX khu A. Điểm đại diện từ OpenStreetMap; chưa xác nhận cổng vào hoặc vị trí từng phòng. [1]\nBạn có thể mở vị trí và chỉ đường trên trang KTX của hệ thống.",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Văn phòng phục vụ sinh viên KTX khu A · OpenStreetMap",
+          "source": "ctu_ktx_catalog",
+          "source_url": "https://www.openstreetmap.org/way/89864434",
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "Ký túc xá khu A: 10.0338798, 105.7702172 — Văn phòng phục vụ sinh viên KTX khu A. Điểm đại diện từ OpenStreetMap; chưa xác nhận cổng vào hoặc vị trí từng phòng."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_structured",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 24,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "Ký túc xá khu A: 10.0338798, 105.7702172 — Văn phòng phục vụ sinh viên KTX khu A. Điểm đại diện từ OpenStreetMap; chưa xác nhận cổng vào hoặc vị trí từng phòng."
+        }
+      ],
+      "checks": {
+        "has_ktx_evidence": true,
+        "has_housing_evidence": false,
+        "has_answer": true,
+        "not_degraded": true
+      },
+      "both_sides_grounded": false,
+      "wall_seconds": 0.02,
+      "manual_review": {
+        "verdict": "Chưa đạt",
+        "note": "Chỉ trả tọa độ khu A, bỏ khu B trong cách viết A/B và không truy xuất vị trí nhà trọ để so sánh. Không có thời gian đi lại đã xác minh."
+      }
+    },
+    {
+      "id": "availability",
+      "question": "Nếu muốn chuyển vào ngay tuần này, dưới 1 triệu/tháng nên chọn KTX hay nhà trọ? Chỗ nào chắc chắn còn phòng?",
+      "conversation_id": null,
+      "turn_id": null,
+      "reused_answer": false,
+      "agent_trace": [],
+      "corpus_schema": null,
+      "partial_answer": false,
+      "conversation_state": null,
+      "applied_filters": null,
+      "citation_applicable": true,
+      "answer": "- Danh mục loại phòng, hình ảnh và tọa độ khu KTX không xác nhận số chỗ còn trống. Phải xem tình trạng trên Hệ thống Quản lý KTX hoặc liên hệ văn phòng để xác nhận tại thời điểm đăng ký. [1]\n- Email KTX: ktx@ctu.edu.vn. Văn phòng khu A: 0292 3872 178; khu B: 0292 3872 275, theo thông báo 2026–2027. Một biểu mẫu cũ ghi số khu A khác; ưu tiên số trong thông báo mới. [1]",
+      "intent": "ktx_question",
+      "confidence": 0.96,
+      "listings": [],
+      "sources": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "document_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "similarity_score": 1.0,
+          "title": "Thông báo 307/TB-CTSV · HKI 2026–2027",
+          "source": "ctu_ktx_catalog",
+          "source_url": "https://ssc.ctu.edu.vn/images/upload/thong_bao/072026_tb_dk1_2627.pdf",
+          "source_path": null,
+          "category": "student_housing",
+          "page_kind": "web_excerpt",
+          "page_from": null,
+          "page_to": null,
+          "heading": "Danh mục KTX · cập nhật 2026-10-12",
+          "excerpt": "Danh mục loại phòng, hình ảnh và tọa độ khu KTX không xác nhận số chỗ còn trống. Phải xem tình trạng trên Hệ thống Quản lý KTX hoặc liên hệ văn phòng để xác nhận tại thời điểm đăng ký.\n\nEmail KTX: ktx@ctu.edu.vn. Văn phòng khu A: 0292 3872 178; khu B: 0292 3872 275, theo thông báo 2026–2027. Một biểu mẫu cũ ghi số khu A khác; ưu tiên số trong thông báo mới."
+        }
+      ],
+      "no_answer": false,
+      "degraded": false,
+      "degraded_reasons": [],
+      "retrieval_mode": "ktx_structured",
+      "generation_provider": "structured_ktx",
+      "generation_model": null,
+      "latency_ms": 25,
+      "event_id": null,
+      "citation_accuracy": 1.0,
+      "evaluation_contexts": [
+        {
+          "kind": "dormitory",
+          "listing_id": null,
+          "chunk_id": null,
+          "rank": 1,
+          "content": "Danh mục loại phòng, hình ảnh và tọa độ khu KTX không xác nhận số chỗ còn trống. Phải xem tình trạng trên Hệ thống Quản lý KTX hoặc liên hệ văn phòng để xác nhận tại thời điểm đăng ký.\n\nEmail KTX: ktx@ctu.edu.vn. Văn phòng khu A: 0292 3872 178; khu B: 0292 3872 275, theo thông báo 2026–2027. Một biểu mẫu cũ ghi số khu A khác; ưu tiên số trong thông báo mới."
+        }
+      ],
+      "checks": {
+        "has_ktx_evidence": true,
+        "has_housing_evidence": false,
+        "has_answer": true,
+        "not_degraded": true
+      },
+      "both_sides_grounded": false,
+      "wall_seconds": 0.03,
+      "manual_review": {
+        "verdict": "Chưa đạt",
+        "note": "Đúng khi không khẳng định KTX còn chỗ, nhưng bỏ phần nhà trọ và chưa đưa hướng lựa chọn có điều kiện. Tin trong DB không xác nhận chỗ trống hiện tại."
+      }
+    }
+  ],
+  "database": {
+    "name": "nckh_feature",
+    "listings": 87
+  },
+  "cheap_listing_counts": {
+    "under_1m": 3,
+    "up_to_1m": 4
+  },
+  "summary": {
+    "total": 8,
+    "completed": 8,
+    "both_sides_grounded": 0
+  },
+  "review_summary": {
+    "both_sides_with_evidence": "0/8",
+    "comparison_requirement_met": 0,
+    "root_cause": "ChatService.ask routes KTX questions to answer_ktx before housing retrieval. answer_ktx only reads KTX evidence and returns immediately.",
+    "scope": "Real ChatService pipeline, real DB and E5; auth, rate limit, history and cache bypassed. No RAGAS scoring, no frontend interaction test.",
+    "data_caveats": "87 stored housing rows, 48 publicly eligible, 3 with price<1,000,000 and 4 with price<=1,000,000. Includes original demo rows; prices/availability must be checked with source. No conversion of unconfirmed KTX fee periods.",
+    "recommended_fix": "Add a comparison intent that retrieves KTX and eligible housing together; normalize known units, distinguish total budget vs rent, enforce user criteria, cite both sides and state missing/current information.",
+    "implementation_changed": false
+  }
+}

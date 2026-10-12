@@ -1,4 +1,5 @@
-import { getNearby, type ApiError, type ListingOut } from "@/lib/api";
+import { getKtxCatalog, getNearby, type ApiError, type ListingOut } from "@/lib/api";
+import type { KtxDormitory } from "@/lib/ktx";
 import SiteHeader from "../SiteHeader";
 import MapScreen from "./MapScreen";
 
@@ -15,7 +16,7 @@ const HOUSING_VALUES = ["phong_tro", "nha_mini"];
 export default async function MapPage({
   searchParams,
 }: {
-  searchParams: { radius?: string; housing?: string; focus?: string; campus?: string };
+  searchParams: { radius?: string; housing?: string; focus?: string; campus?: string; dormitory?: string };
 }) {
   const parsed = Number(searchParams.radius);
   const radius = Number.isFinite(parsed)
@@ -24,6 +25,10 @@ export default async function MapPage({
   const housing = HOUSING_VALUES.includes(searchParams.housing ?? "") ? searchParams.housing! : "";
   const campus = ["0", "1", "2"].includes(searchParams.campus ?? "") ? Number(searchParams.campus) : 1;
 
+  const initialDormitory = ["A", "B"].includes(searchParams.dormitory ?? "") ? searchParams.dormitory as "A" | "B" : null;
+  let dormitories: KtxDormitory[] = [];
+  let dormitoryError: string | null = null;
+  const dormitoryLoad = getKtxCatalog().then(data => { dormitories = data.dormitories; }).catch(() => { dormitoryError = "Chưa tải được vị trí KTX. Vui lòng thử lại sau."; });
   let items: ListingOut[] = [];
   let errorMessage: string | null = null;
   try {
@@ -38,11 +43,16 @@ export default async function MapPage({
     errorMessage = (e as ApiError).detail ?? "Không thể tải danh sách tin lân cận";
   }
 
+  await dormitoryLoad;
+
   return (
     <div className="flex h-screen flex-col bg-paper">
       <SiteHeader />
       <MapScreen
         items={items}
+        dormitories={dormitories}
+        dormitoryError={dormitoryError}
+        initialDormitory={initialDormitory}
         radius={radius}
         housing={housing}
         error={errorMessage}

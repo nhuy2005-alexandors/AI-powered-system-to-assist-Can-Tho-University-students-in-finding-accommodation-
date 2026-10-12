@@ -20,19 +20,6 @@ class SortBy(str, Enum):
     quality = "quality"
 
 
-def risk_level(score: float | None) -> str:
-    """risk_score → nhãn badge (FR-7.2). ✅ safe / ⚠️ caution / 🔴 suspicious."""
-    # ponytail: risk engine chưa build (team làm sau) → score=0 mặc định = CHƯA đánh giá,
-    # không phải "an toàn". Bỏ guard này khi risk detection ghi score thật.
-    if not score:
-        return "unknown"
-    if score < 0.3:
-        return "safe"
-    if score < 0.6:
-        return "caution"
-    return "suspicious"
-
-
 def freshness_label(last_seen: datetime | None, now: datetime | None = None) -> str:
     """last_seen → 'cập nhật X giờ/ngày trước' (FR-2.8)."""
     if last_seen is None:
@@ -66,6 +53,8 @@ class SearchParams(BaseModel):
 
 class ListingOut(BaseModel):
     id: int
+    posted_by: int | None = None
+    status: str = "active"
     title: str
     price: int | None = None
     area: float | None = None
@@ -78,6 +67,7 @@ class ListingOut(BaseModel):
     images: list[str] = Field(default_factory=list)
     source: str
     source_url: str | None = None
+    # Legacy response fields remain neutral while Risk Detection is deferred.
     risk_score: float | None = None
     risk_level: str = "unknown"
     geocode_confidence: str | None = None

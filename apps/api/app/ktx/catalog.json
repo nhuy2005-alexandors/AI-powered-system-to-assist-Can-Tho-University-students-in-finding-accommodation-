@@ -1,0 +1,873 @@
+{
+  "version": "ktx-2026-user-catalog-seed",
+  "updated_at": "2026-10-12",
+  "email": "ktx@ctu.edu.vn",
+  "address": "Khu II, Đại học Cần Thơ, đường 3/2, phường Ninh Kiều, Cần Thơ",
+  "registration_url": "https://tansinhvien.ctu.edu.vn/sinh-hoat/huong-dan-tan-sinh-vien-dang-ky-o-ky-tuc-xa",
+  "sources": [
+    {
+      "id": "submitted",
+      "title": "Danh mục phòng KTX năm 2026 · bạn cung cấp",
+      "url": null,
+      "year": 2026,
+      "note": "27 loại phòng từ bảng bạn cung cấp. Đơn giá tính theo người cho học kỳ 3,5 tháng (2026); vui lòng xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "facilities",
+      "title": "Cơ sở vật chất KTX · Trung tâm Phục vụ Sinh viên",
+      "url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "year": null,
+      "note": "Trang giới thiệu không ghi ngày áp dụng biểu phí."
+    },
+    {
+      "id": "intro",
+      "title": "Giới thiệu KTX Đại học Cần Thơ",
+      "url": "https://ssc.ctu.edu.vn/hoat/213-ktx25.html",
+      "year": null,
+      "note": "Quy mô theo bài giới thiệu."
+    },
+    {
+      "id": "registration",
+      "title": "Thông báo 307/TB-CTSV · HKI 2026–2027",
+      "url": "https://ssc.ctu.edu.vn/images/upload/thong_bao/072026_tb_dk1_2627.pdf",
+      "year": 2026,
+      "note": "Ban hành 21/07/2026."
+    },
+    {
+      "id": "new_students",
+      "title": "Hướng dẫn tân sinh viên đăng ký KTX · 2026–2027",
+      "url": "https://tansinhvien.ctu.edu.vn/sinh-hoat/huong-dan-tan-sinh-vien-dang-ky-o-ky-tuc-xa",
+      "year": 2026,
+      "note": "Học kỳ I 2026–2027."
+    },
+    {
+      "id": "rules",
+      "title": "Nội quy KTX · bản công khai CTU",
+      "url": "https://ssc.ctu.edu.vn/images/upload/Noiquy_KTX_trich_092025.pdf",
+      "year": null,
+      "note": "Bản trích nội quy được CTU công bố."
+    }
+  ],
+  "dormitories": [
+    {
+      "id": "A",
+      "name": "Ký túc xá khu A",
+      "capacity": 4000,
+      "description": "Nhiều lựa chọn sức chứa; có loại phòng được nấu ăn, giường bộ và giường tầng.",
+      "buildings": "2 dãy 5 tầng · 12 dãy 2 tầng · 15 dãy 1 tầng",
+      "phone": "0292 3872 178",
+      "location": {
+        "lat": 10.0338798,
+        "lng": 105.7702172,
+        "source_url": "https://www.openstreetmap.org/way/89864434",
+        "source_name": "OpenStreetMap contributors · ODbL 1.0",
+        "osm_type": "way",
+        "osm_id": 89864434,
+        "precision": "representative",
+        "verified_at": "2026-10-12",
+        "label": "Văn phòng phục vụ sinh viên KTX khu A"
+      },
+      "cover": "/images/ktx/khu-a.jpg"
+    },
+    {
+      "id": "B",
+      "name": "Ký túc xá khu B",
+      "capacity": 4500,
+      "description": "8 dãy nhà 5 tầng; quy mô và vị trí theo thông tin giới thiệu KTX của CTU.",
+      "buildings": "8 dãy 5 tầng · thiết kế 78 phòng/dãy",
+      "phone": "0292 3872 275",
+      "location": {
+        "lat": 10.0301622,
+        "lng": 105.7642123,
+        "source_url": "https://www.openstreetmap.org/way/168528554",
+        "source_name": "OpenStreetMap contributors · ODbL 1.0",
+        "osm_type": "way",
+        "osm_id": 168528554,
+        "precision": "representative",
+        "verified_at": "2026-10-12",
+        "label": "Điểm đại diện KTX khu B"
+      },
+      "cover": "/images/ktx/khu-b.jpg"
+    }
+  ],
+  "room_types": [
+    {
+      "id": "submitted-a",
+      "code": "A",
+      "area_ids": [
+        "A"
+      ],
+      "capacities": [
+        4
+      ],
+      "capacity_label": "4 người",
+      "cooking_allowed": null,
+      "bed_type": "unknown",
+      "bathroom": null,
+      "description": "Phòng khu A",
+      "price": 285000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-a2",
+      "code": "A2",
+      "area_ids": [
+        "A"
+      ],
+      "capacities": [
+        2
+      ],
+      "capacity_label": "2 người",
+      "cooking_allowed": null,
+      "bed_type": "unknown",
+      "bathroom": null,
+      "description": "phòng 2 người",
+      "price": 550000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-a3",
+      "code": "A3",
+      "area_ids": [
+        "A"
+      ],
+      "capacities": [
+        3
+      ],
+      "capacity_label": "3 người",
+      "cooking_allowed": true,
+      "bed_type": "single",
+      "bathroom": null,
+      "description": "phòng 3 người được nấu ăn, giường bộ",
+      "price": 967000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-a4",
+      "code": "A4",
+      "area_ids": [
+        "A"
+      ],
+      "capacities": [
+        4
+      ],
+      "capacity_label": "4 người",
+      "cooking_allowed": true,
+      "bed_type": "bunk",
+      "bathroom": "Nhà vệ sinh tập thể trong khuôn viên dãy",
+      "description": "phòng được phép nấu ăn, giường tầng, nhà vệ sinh tập thể an toàn trong khuôn viên dãy",
+      "price": 285000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-a5",
+      "code": "A5",
+      "area_ids": [
+        "A"
+      ],
+      "capacities": [
+        5
+      ],
+      "capacity_label": "5 người",
+      "cooking_allowed": true,
+      "bed_type": "single",
+      "bathroom": null,
+      "description": "phòng 5 người, giường bộ, nấu ăn",
+      "price": 588000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-a6",
+      "code": "A6",
+      "area_ids": [
+        "A"
+      ],
+      "capacities": [
+        6
+      ],
+      "capacity_label": "6 người",
+      "cooking_allowed": true,
+      "bed_type": "single",
+      "bathroom": null,
+      "description": "phòng 6 người, giường bộ, nấu ăn",
+      "price": 395000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-a62",
+      "code": "A62",
+      "area_ids": [
+        "A"
+      ],
+      "capacities": [
+        6
+      ],
+      "capacity_label": "6 người",
+      "cooking_allowed": true,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "phòng 6 người, giường tầng, nấu ăn",
+      "price": 395000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-a8",
+      "code": "A8",
+      "area_ids": [
+        "A"
+      ],
+      "capacities": [
+        8
+      ],
+      "capacity_label": "8 người",
+      "cooking_allowed": true,
+      "bed_type": "single",
+      "bathroom": null,
+      "description": "phòng 8 người, giường bộ, nấu ăn",
+      "price": 375000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-bch25",
+      "code": "BCH25",
+      "area_ids": [],
+      "capacities": [
+        6
+      ],
+      "capacity_label": "6 người",
+      "cooking_allowed": false,
+      "bed_type": "unknown",
+      "bathroom": null,
+      "description": "Phòng dành cho học viên cao học, nghiên cứu sinh, không được nấu ăn",
+      "price": 415000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pa225",
+      "code": "PA225",
+      "area_ids": [],
+      "capacities": [
+        2,
+        4
+      ],
+      "capacity_label": "2/4 người",
+      "cooking_allowed": true,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng được nấu ăn, giường tầng",
+      "price": 550000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pa325",
+      "code": "PA325",
+      "area_ids": [],
+      "capacities": [
+        3
+      ],
+      "capacity_label": "3 người",
+      "cooking_allowed": true,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng được nấu ăn, giường tầng",
+      "price": 967000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pa425",
+      "code": "PA425",
+      "area_ids": [],
+      "capacities": [
+        4
+      ],
+      "capacity_label": "4 người",
+      "cooking_allowed": true,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng được nấu ăn, giường tầng",
+      "price": 285000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pa525",
+      "code": "PA525",
+      "area_ids": [],
+      "capacities": [
+        5
+      ],
+      "capacity_label": "5 người",
+      "cooking_allowed": true,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng được nấu ăn, giường tầng",
+      "price": 588000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pa625",
+      "code": "PA625",
+      "area_ids": [],
+      "capacities": [
+        6
+      ],
+      "capacity_label": "6 người",
+      "cooking_allowed": true,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng được nấu ăn, giường tầng",
+      "price": 395000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pa825",
+      "code": "PA825",
+      "area_ids": [],
+      "capacities": [
+        8
+      ],
+      "capacity_label": "8 người",
+      "cooking_allowed": true,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng được nấu ăn, giường tầng",
+      "price": 375000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pb225",
+      "code": "PB225",
+      "area_ids": [],
+      "capacities": [
+        2
+      ],
+      "capacity_label": "2 người",
+      "cooking_allowed": true,
+      "bed_type": "single",
+      "bathroom": null,
+      "description": "Phòng được phép nấu ăn, giường bộ",
+      "price": 702500,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pb325",
+      "code": "PB325",
+      "area_ids": [],
+      "capacities": [
+        3
+      ],
+      "capacity_label": "3 người",
+      "cooking_allowed": true,
+      "bed_type": "single",
+      "bathroom": null,
+      "description": "Phòng được nấu ăn, giường bộ",
+      "price": 475000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pb425",
+      "code": "PB425",
+      "area_ids": [],
+      "capacities": [
+        4,
+        8
+      ],
+      "capacity_label": "4/8 người",
+      "cooking_allowed": true,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng được nấu ăn, giường tầng",
+      "price": 730000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pb525",
+      "code": "PB525",
+      "area_ids": [],
+      "capacities": [
+        5
+      ],
+      "capacity_label": "5 người",
+      "cooking_allowed": true,
+      "bed_type": "single",
+      "bathroom": null,
+      "description": "Phòng được nấu ăn, giường bộ",
+      "price": 435000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pb625",
+      "code": "PB625",
+      "area_ids": [],
+      "capacities": [
+        6
+      ],
+      "capacity_label": "6 người",
+      "cooking_allowed": true,
+      "bed_type": "single",
+      "bathroom": null,
+      "description": "Phòng được nấu ăn, giường bộ",
+      "price": 415000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pt025",
+      "code": "PT025",
+      "area_ids": [],
+      "capacities": [
+        8
+      ],
+      "capacity_label": "8 người",
+      "cooking_allowed": false,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, giường tầng",
+      "price": 220000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pt225",
+      "code": "PT225",
+      "area_ids": [],
+      "capacities": [
+        2
+      ],
+      "capacity_label": "2 người",
+      "cooking_allowed": false,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",
+      "price": 890000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pt325",
+      "code": "PT325",
+      "area_ids": [],
+      "capacities": [
+        3
+      ],
+      "capacity_label": "3 người",
+      "cooking_allowed": false,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",
+      "price": 600000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pt425",
+      "code": "PT425",
+      "area_ids": [],
+      "capacities": [
+        4
+      ],
+      "capacity_label": "4 người",
+      "cooking_allowed": false,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",
+      "price": 455000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pt525",
+      "code": "PT525",
+      "area_ids": [],
+      "capacities": [
+        5
+      ],
+      "capacity_label": "5 người",
+      "cooking_allowed": false,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",
+      "price": 355000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pt625",
+      "code": "PT625",
+      "area_ids": [],
+      "capacities": [
+        6
+      ],
+      "capacity_label": "6 người",
+      "cooking_allowed": false,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",
+      "price": 295000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    },
+    {
+      "id": "submitted-pt725",
+      "code": "PT725",
+      "area_ids": [],
+      "capacities": [
+        7
+      ],
+      "capacity_label": "7 người",
+      "cooking_allowed": false,
+      "bed_type": "bunk",
+      "bathroom": null,
+      "description": "Phòng không được nấu ăn, được sử dụng ấm đun siêu tốc, ít người, giường tầng",
+      "price": 255000,
+      "price_period": "semester_3_5_months",
+      "source_id": "submitted",
+      "notes": "Giá theo bảng phòng bạn cung cấp cho năm 2026; xác nhận mức thu và chỗ trống với văn phòng KTX."
+    }
+  ],
+  "facts": [
+    {
+      "id": "location",
+      "title": "Vị trí",
+      "content": "KTX khu A và khu B nằm trong Khu II, Đại học Cần Thơ, đường 3/2, phường Ninh Kiều, thành phố Cần Thơ.",
+      "source_id": "facilities",
+      "tags": [
+        "location",
+        "overview"
+      ]
+    },
+    {
+      "id": "capacity-a",
+      "title": "Quy mô khu A",
+      "content": "Khu A có khả năng bố trí khoảng 4.000 sinh viên; gồm 2 dãy 5 tầng, 12 dãy 2 tầng và 15 dãy 1 tầng theo trang giới thiệu CTU.",
+      "source_id": "intro",
+      "tags": [
+        "overview",
+        "area_a"
+      ]
+    },
+    {
+      "id": "capacity-b",
+      "title": "Quy mô khu B",
+      "content": "Khu B gồm 8 dãy 5 tầng; mỗi dãy được thiết kế 78 phòng, tối đa 8 sinh viên/phòng. Tổng sức chứa được công bố khoảng 4.500 sinh viên.",
+      "source_id": "intro",
+      "tags": [
+        "overview",
+        "area_b"
+      ]
+    },
+    {
+      "id": "cooking",
+      "title": "Nấu ăn và loại giường",
+      "content": "Danh mục bạn cung cấp ghi A3, A4, A5, A6, A62, A8 cùng nhóm PA/PB được nấu ăn; nhóm PT không được nấu ăn nhưng được dùng ấm đun siêu tốc. A và A2 chưa ghi rõ. Mã PA/PB/PT là mã loại phòng, chưa xác nhận thuộc khu A hay B.",
+      "source_id": "submitted",
+      "tags": [
+        "cooking",
+        "bed",
+        "overview"
+      ]
+    },
+    {
+      "id": "fees",
+      "title": "Phí ở và đơn vị giá",
+      "content": "Theo danh mục 27 loại phòng bạn cung cấp cho năm 2026, đơn giá từ 220.000 đến 967.000 đồng/người/học kỳ 3,5 tháng. Chưa gồm điện nước; cần xác nhận mức thu và chỗ trống tại thời điểm đăng ký với văn phòng KTX.",
+      "source_id": "submitted",
+      "tags": [
+        "price"
+      ]
+    },
+    {
+      "id": "utilities",
+      "title": "Điện nước",
+      "content": "Sinh viên nộp phí điện, nước hàng tháng theo lượng sử dụng thực tế của phòng; phí ở chưa bao gồm điện nước.",
+      "source_id": "registration",
+      "tags": [
+        "utilities",
+        "price"
+      ]
+    },
+    {
+      "id": "wifi",
+      "title": "Wi-Fi và tiện ích",
+      "content": "Phòng ở có Wi-Fi riêng từng phòng. Trong khuôn viên có căn tin, siêu thị mini; trang giới thiệu còn nêu nhà xe và khu vực giặt sấy.",
+      "source_id": "new_students",
+      "tags": [
+        "wifi",
+        "amenities",
+        "overview"
+      ]
+    },
+    {
+      "id": "security",
+      "title": "An ninh",
+      "content": "KTX có hàng rào, hệ thống camera an ninh và bảo vệ chuyên nghiệp. Nội quy yêu cầu sinh viên tự bảo quản tư trang cá nhân.",
+      "source_id": "facilities",
+      "tags": [
+        "security",
+        "amenities"
+      ]
+    },
+    {
+      "id": "parking",
+      "title": "Gửi xe",
+      "content": "Xe đạp được miễn phí gửi xe. Trang hướng dẫn tân sinh viên 2026–2027 công bố xe máy/xe điện 25.000 đồng/sinh viên/tháng, nộp theo học kỳ.",
+      "source_id": "new_students",
+      "tags": [
+        "parking",
+        "price"
+      ]
+    },
+    {
+      "id": "semester",
+      "title": "Thời gian HKI 2026–2027",
+      "content": "HKI năm học 2026–2027 ở từ 07/09/2026 đến 18/12/2026, tính 3,5 tháng. Các mốc đăng ký/thu phí tập trung tháng 8 trong thông báo đã qua; sinh viên mới có nhu cầu cần liên hệ KTX để xác nhận.",
+      "source_id": "registration",
+      "tags": [
+        "semester",
+        "registration"
+      ]
+    },
+    {
+      "id": "registration",
+      "title": "Đăng ký ở",
+      "content": "Sinh viên đăng ký mới qua Hệ thống Quản lý KTX bằng tài khoản sinh viên, email ktx@ctu.edu.vn hoặc trực tiếp tại Văn phòng Trung tâm Phục vụ Sinh viên. Có thể ghi nguyện vọng và đăng ký nhóm; ưu tiên nhóm đủ số người bằng sức chứa phòng. Kết quả phụ thuộc sắp xếp chỗ của KTX.",
+      "source_id": "registration",
+      "tags": [
+        "registration"
+      ]
+    },
+    {
+      "id": "new-students",
+      "title": "Tân sinh viên",
+      "content": "Tân sinh viên chưa có tài khoản hệ thống có thể điền mẫu nhu cầu ở được liên kết trên trang hướng dẫn chính thức. Sinh viên có tài khoản làm theo hướng dẫn đăng ký KTX qua hệ thống.",
+      "source_id": "new_students",
+      "tags": [
+        "registration"
+      ]
+    },
+    {
+      "id": "refund",
+      "title": "Chuyển chỗ, trả chỗ và hoàn phí",
+      "content": "Sinh viên có thể xin chuyển chỗ theo hướng dẫn và chỗ phù hợp còn trống. Trả chỗ trước hạn không được hoàn phí, ngoại lệ trả trong vòng 7 ngày từ ngày được duyệt chỗ qua hệ thống và có lý do chính đáng. Cần đối chiếu quy định với văn phòng trước khi trả chỗ.",
+      "source_id": "registration",
+      "tags": [
+        "refund",
+        "registration"
+      ]
+    },
+    {
+      "id": "contact",
+      "title": "Liên hệ",
+      "content": "Email KTX: ktx@ctu.edu.vn. Văn phòng khu A: 0292 3872 178; khu B: 0292 3872 275, theo thông báo 2026–2027. Một biểu mẫu cũ ghi số khu A khác; ưu tiên số trong thông báo mới.",
+      "source_id": "registration",
+      "tags": [
+        "contact"
+      ]
+    },
+    {
+      "id": "quiet",
+      "title": "Giờ nghỉ và sinh hoạt",
+      "content": "Nội quy công khai yêu cầu không gây ồn trong giờ nghỉ 12:00–13:00 và 23:00–05:00; không hút thuốc ở phòng/khu công cộng, không tổ chức uống rượu bia; chỉ được nấu ăn tại dãy khu A được thiết kế cho phép.",
+      "source_id": "rules",
+      "tags": [
+        "rules"
+      ]
+    },
+    {
+      "id": "availability",
+      "title": "Chỗ còn trống",
+      "content": "Danh mục loại phòng, hình ảnh và tọa độ khu KTX không xác nhận số chỗ còn trống. Phải xem tình trạng trên Hệ thống Quản lý KTX hoặc liên hệ văn phòng để xác nhận tại thời điểm đăng ký.",
+      "source_id": "registration",
+      "tags": [
+        "availability"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "src": "/images/ktx/khu-a.jpg",
+      "alt": "Ký túc xá khu A",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/Gioithieu/1a.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/213-ktx25.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "8b72cc6100a56883d56e68f5733b9c32343faafb4f3d8096b961d53c6aed3169",
+      "bytes": 69497
+    },
+    {
+      "src": "/images/ktx/khu-b.jpg",
+      "alt": "Ký túc xá khu B",
+      "dormitory_id": "B",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/Gioithieu/1b.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/213-ktx25.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "667e0beddd7ab39434fdf89636029896280747fb402e06e2ab95c994ea8b914e",
+      "bytes": 54555
+    },
+    {
+      "src": "/images/ktx/phong-b-1.jpg",
+      "alt": "Phòng ở khu B — ảnh 1",
+      "dormitory_id": "B",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/B_1.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "fc038822685060fa4cef56e9aa356df6ca1771f3a5dac52944a55989cef07507",
+      "bytes": 624278
+    },
+    {
+      "src": "/images/ktx/phong-b-2.jpg",
+      "alt": "Phòng ở khu B — ảnh 2",
+      "dormitory_id": "B",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/B_2.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "647d93ca64a22bd2707da377c5a248bb331d9eff8665e15927cfd9c914c47ea7",
+      "bytes": 478842
+    },
+    {
+      "src": "/images/ktx/phong-b-3.jpg",
+      "alt": "Phòng ở khu B — ảnh 3",
+      "dormitory_id": "B",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/B_3.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "a8d6551affdb2175e3c23f060f5ac5b28f059b5def4dd013de630214cf86b98d",
+      "bytes": 517929
+    },
+    {
+      "src": "/images/ktx/phong-a2-1.jpg",
+      "alt": "Phòng ở khu A, dãy A2 — ảnh 1",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/AC_1.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "2b461373cfbcc064847cab7cae8245d7a8ec398c8b4eabfd73c5ce9aa86298d8",
+      "bytes": 410247
+    },
+    {
+      "src": "/images/ktx/phong-a2-2.jpg",
+      "alt": "Phòng ở khu A, dãy A2 — ảnh 2",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/AC_2.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "6f9c80e7c6c451b29b736c895a074c839b2e945b9f25da949a4065b3c3e46ffb",
+      "bytes": 386661
+    },
+    {
+      "src": "/images/ktx/phong-3-nguoi-1.jpg",
+      "alt": "Phòng được nấu ăn, giường bộ, 3 người — ảnh 1",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A3_1.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "3368a6ed45607ffa75c304ff6d79e7c3d7eb1ec6b33b5b30f542e8614936c331",
+      "bytes": 655359
+    },
+    {
+      "src": "/images/ktx/phong-3-nguoi-2.jpg",
+      "alt": "Phòng được nấu ăn, giường bộ, 3 người — ảnh 2",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A3_2.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "5e09768d2b6db026c74f880650822434d653a8e663c2aa6dc0808e5109385142",
+      "bytes": 703503
+    },
+    {
+      "src": "/images/ktx/phong-5-6-nguoi-1.jpg",
+      "alt": "Phòng được nấu ăn, giường bộ, 5–6 người — ảnh 1",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A6_1.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "5503612cc3d5f9ae70c284d3163458393ca79128a31e6aef75e8538d63a7f8bd",
+      "bytes": 384442
+    },
+    {
+      "src": "/images/ktx/phong-5-6-nguoi-2.jpg",
+      "alt": "Phòng được nấu ăn, giường bộ, 5–6 người — ảnh 2",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A6_2.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "0cd03182ea3dca2b28b19d13d0c7a0c792c22abd7ab3bc71f75a0df85ede7200",
+      "bytes": 387266
+    },
+    {
+      "src": "/images/ktx/phong-5-6-nguoi-3.jpg",
+      "alt": "Phòng được nấu ăn, giường bộ, 5–6 người — ảnh 3",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A6_3.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "fd148a40021202633bab192b9c407802439217d3e7bca88c948231078c5a9126",
+      "bytes": 292103
+    },
+    {
+      "src": "/images/ktx/phong-8-nguoi-1.jpg",
+      "alt": "Phòng được nấu ăn, giường tầng, 8 người — ảnh 1",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A8_1.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "1f563f02e8526ab444856c14bcc0597f688ee9c8a7fd9010a435db1adfbfdb5a",
+      "bytes": 362367
+    },
+    {
+      "src": "/images/ktx/phong-8-nguoi-2.jpg",
+      "alt": "Phòng được nấu ăn, giường tầng, 8 người — ảnh 2",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A8_2.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "23d283da4e2c9267de79cdad9aff734dae6691fe6036ce61e46fee8dcc2f342a",
+      "bytes": 439112
+    }
+  ],
+  "academic_year": "2026-2027"
+}

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 
 type Source = {
-  kind: "listing" | "legal_document";
+  kind: "listing" | "legal_document" | "dormitory";
   listing_id: number | null;
   document_id: number | null;
   chunk_id: number | null;
@@ -497,7 +497,7 @@ export default function ChatbotWidget() {
                       : "max-w-full rounded-2xl rounded-bl-md border border-blue-50 bg-white px-4 py-3 text-sm leading-6 text-slate-700 shadow-sm"
                   }
                 >
-                  {turn.role === "assistant" ? <ChatbotAnswer content={turn.content} sources={turn.sources} /> : turn.content}
+                  {turn.role === "assistant" ? <><ChatbotAnswer content={turn.content} sources={turn.sources} />{turn.sources?.some(source => source.kind === "dormitory") && <Link href="/ktx" className="mt-3 inline-flex rounded-xl bg-blue-50 px-3 py-2 font-semibold text-[#005baa]">Xem loại phòng và bản đồ KTX →</Link>}</> : turn.content}
                 </div>
                 {turn.reusedAnswer && <p className="mt-1 px-2 text-[11px] text-slate-500">Đã dùng lại câu trả lời đã lưu.</p>}
                 {turn.degraded && (

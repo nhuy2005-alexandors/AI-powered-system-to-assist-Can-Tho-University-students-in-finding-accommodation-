@@ -19,6 +19,10 @@ from .recommend import init_recommend, recommend_router
 from .room_service import chatbot_router, init_chatbot
 from .room_service.chatbot.router import close_chatbot, warmup_chatbot
 from .room_service.legal_knowledge.admin import router as documents_admin_router
+from .reports import init_reports, reports_router
+from .reviews import init_reviews, reviews_router
+from .ktx.router import init_ktx, router as ktx_router
+from .ktx.admin import router as ktx_admin_router, public_media_router as ktx_media_router
 
 log = logging.getLogger("app.main")
 
@@ -35,6 +39,9 @@ chat_hub = ChatHub(settings.redis_url)
 init_chat(engine, chat_hub)
 init_matching(engine, chat_hub)
 init_chatbot(engine)
+init_reports(engine)
+init_reviews(engine)
+init_ktx(engine)
 
 
 @asynccontextmanager
@@ -71,6 +78,11 @@ app.include_router(matching_router)
 app.include_router(chat_router)
 app.include_router(chatbot_router)
 app.include_router(documents_admin_router)
+app.include_router(reports_router)
+app.include_router(reviews_router)
+app.include_router(ktx_router)
+app.include_router(ktx_admin_router)
+app.include_router(ktx_media_router)
 
 
 @app.get("/health")

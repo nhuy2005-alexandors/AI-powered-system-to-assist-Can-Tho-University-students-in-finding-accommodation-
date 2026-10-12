@@ -1,0 +1,56 @@
+[
+  {
+    "id": "ctu_2025",
+    "title": "Phiếu đăng ký KTX khóa mới · tài liệu CTU 2025",
+    "url": "https://tansinhvien.ctu.edu.vn/images/upload/Tansinhvien_K51/KTX/2025_Phieu_DK_KTX_TSV_F2.pdf",
+    "file": "Data/student_housing/sources/ctu_2025.pdf",
+    "bytes": 457370,
+    "sha256": "766a457ee4f54771c28ce410caebb392f9856d21fa21e1f98d675d4f4ce5251d",
+    "downloaded_at": "2026-10-12"
+  },
+  {
+    "id": "facilities",
+    "title": "Cơ sở vật chất KTX · Trung tâm Phục vụ Sinh viên",
+    "url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+    "file": "Data/student_housing/sources/facilities.html",
+    "bytes": 21057,
+    "sha256": "8fee716e892a49dc460b7ba8a85cb0bf126c2ab3fc2c6fffc7c8984729973677",
+    "downloaded_at": "2026-10-12"
+  },
+  {
+    "id": "intro",
+    "title": "Giới thiệu KTX Đại học Cần Thơ",
+    "url": "https://ssc.ctu.edu.vn/hoat/213-ktx25.html",
+    "file": "Data/student_housing/sources/intro.html",
+    "bytes": 24160,
+    "sha256": "18772edbaeca4a63d0da4ea4fafdf3c3b483eabd5c05fa71eb69c7ce5f3fad6a",
+    "downloaded_at": "2026-10-12"
+  },
+  {
+    "id": "registration",
+    "title": "Thông báo 307/TB-CTSV · HKI 2026–2027",
+    "url": "https://ssc.ctu.edu.vn/images/upload/thong_bao/072026_tb_dk1_2627.pdf",
+    "file": "Data/student_housing/sources/registration.pdf",
+    "bytes": 748231,
+    "sha256": "cd5b6c89995582d9fe07952dbb48e90caefcf1086fe65a1d5c26c3630c235e2f",
+    "downloaded_at": "2026-10-12"
+  },
+  {
+    "id": "new_students",
+    "title": "Hướng dẫn tân sinh viên đăng ký KTX · 2026–2027",
+    "url": "https://tansinhvien.ctu.edu.vn/sinh-hoat/huong-dan-tan-sinh-vien-dang-ky-o-ky-tuc-xa",
+    "file": "Data/student_housing/sources/new_students.html",
+    "bytes": 16779,
+    "sha256": "dff83b4286fdb55bf3151658041dc3745145c4d0bf932c789f1c0ba50af2e491",
+    "downloaded_at": "2026-10-12"
+  },
+  {
+    "id": "rules",
+    "title": "Nội quy KTX · bản công khai CTU",
+    "url": "https://ssc.ctu.edu.vn/images/upload/Noiquy_KTX_trich_092025.pdf",
+    "file": "Data/student_housing/sources/rules.pdf",
+    "bytes": 196387,
+    "sha256": "a58a8b7e2cc39d5d92e3c8cb6a956468d1e1158f96440fa19325b1273f7b8976",
+    "downloaded_at": "2026-10-12"
+  }
+]

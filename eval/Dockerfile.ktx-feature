@@ -1,0 +1,4 @@
+FROM nckh-api:latest
+COPY eval/requirements-ragas.txt /tmp/requirements-ragas.txt
+RUN pip install --no-cache-dir -r /tmp/requirements-ragas.txt
+ENTRYPOINT ["python", "/eval/question_bank_ragas.py"]

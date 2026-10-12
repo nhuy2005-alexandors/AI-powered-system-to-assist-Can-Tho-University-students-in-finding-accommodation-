@@ -226,7 +226,7 @@ class ChatRepository:
         sql = text(
             "SELECT id, title, price, area, address, district, description, parsed_amenities, "
             "distance_to_ctu, route_time_campus, source, source_url, quality_score, "
-            "freshness_score, risk_score, risk_evaluated_at, listing_type, first_seen, last_seen, updated_at, "
+            "freshness_score, listing_type, first_seen, last_seen, updated_at, "
             f"{vector_sql} AS vector_score FROM {self.listing_schema}.aggregated_listings "
             f"WHERE {' AND '.join(clauses)} ORDER BY {order_sql} LIMIT :candidate_limit"
         )
@@ -238,12 +238,6 @@ class ChatRepository:
             vector_score = float(item.get("vector_score") or 0.0)
             quality = max(0.0, min(1.0, float(item.get("quality_score") or 0.0)))
             freshness = max(0.0, min(1.0, float(item.get("freshness_score") or 0.0)))
-            # Unknown risk is neutral, never treated as safer than an evaluated listing.
-            safety = (
-                0.5
-                if item.get("risk_evaluated_at") is None
-                else 1.0 - max(0.0, min(1.0, float(item.get("risk_score") or 0.0)))
-            )
             distance = item.get("distance_to_ctu")
             proximity = (
                 1.0 / (1.0 + max(0.0, float(distance)) / 2000)
@@ -252,15 +246,15 @@ class ChatRepository:
             )
             preference, reasons = _preference_score(filters, item)
 
+            # Normalize the remaining weights after deferring Risk Detection.
             if vector is None:
                 final_score = (
                     0.45 * bm25_score
                     + 0.22 * preference
                     + 0.14 * quality
                     + 0.10 * freshness
-                    + 0.06 * safety
                     + 0.03 * proximity
-                )
+                ) / 0.94
             else:
                 final_score = (
                     0.35 * vector_score
@@ -268,9 +262,8 @@ class ChatRepository:
                     + 0.15 * preference
                     + 0.10 * quality
                     + 0.08 * freshness
-                    + 0.05 * safety
                     + 0.02 * proximity
-                )
+                ) / 0.95
             if vector_score >= 0.6:
                 reasons.insert(0, "Khớp ngữ nghĩa")
             if bm25_score >= 0.5:

@@ -1,5 +1,5 @@
 // Nhóm tiện ích — key khớp apps/api/app/pois/categories.py (đổi nhóm thì đổi cả hai nơi).
-// Màu chọn để phân biệt với chấm tin trọ (xanh dương) và màu rủi ro đỏ/vàng/xanh lá trên marker.
+// Màu chọn để phân biệt với chấm tin trọ màu xanh dương trên bản đồ.
 export const POI_CATEGORIES: { key: string; label: string; color: string }[] = [
   { key: "cho", label: "Chợ", color: "#c2410c" },
   { key: "sieu_thi", label: "Siêu thị, tiện lợi", color: "#0f766e" },

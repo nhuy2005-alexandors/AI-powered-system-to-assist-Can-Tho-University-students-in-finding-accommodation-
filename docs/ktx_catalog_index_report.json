@@ -1,0 +1,13 @@
+{
+  "version": "ctu-ktx-2026-10-12",
+  "rooms": 43,
+  "images": 14,
+  "dormitories": 2,
+  "facts": 16,
+  "newly_embedded": 107,
+  "embedding_model": "intfloat/multilingual-e5-small",
+  "dimensions": 384,
+  "sha256": "d7233a843195929dc5f0020d334e53b3e28313c1df67fa17f88bca1bf1914137",
+  "records": 107,
+  "vectors": 107
+}

@@ -1,0 +1,99 @@
+{
+  "finalized_at_utc": "2026-10-11T20:27:57.029237+00:00",
+  "container": "ctu-ktx-ragas-20261012",
+  "exit_code": 0,
+  "status": "finished",
+  "summary": {
+    "questions": 48,
+    "completed": 48,
+    "errors": 0,
+    "with_contexts": 48,
+    "no_answer": 19,
+    "partial_answer": 18,
+    "degraded": 19,
+    "vector_retrieval": 42,
+    "category_source_match": 48,
+    "category_source_evaluated": 48,
+    "citation_format_accuracy_mean": 1.0,
+    "latency_p50_ms": 5438.5,
+    "latency_p95_ms": 12795,
+    "ragas": {
+      "faithfulness": {
+        "mean": 0.7124,
+        "scored": 48
+      },
+      "answer_relevancy": {
+        "mean": 0.7914,
+        "scored": 48
+      },
+      "context_utilization": {
+        "mean": 0.8826,
+        "scored": 48
+      }
+    },
+    "context_recall": "N/A: no independent reference answers",
+    "answer_correctness": "N/A: no independent reference answers"
+  },
+  "errors": {},
+  "generation_identity": {
+    "pipeline_sha256": "1a69d2063ee979a8d3128ec6d371d39b3c8680a8bd406f7cf2cc7f496c384cfd",
+    "legal_schema": "legal_ctu_ktx_v2_20261007",
+    "listing_schema": "public",
+    "graph_enabled": false,
+    "agents_enabled": false,
+    "answer_provider": "gemini",
+    "answer_model": "gemini-3.8-flash-high",
+    "fallback_model": "gemini-3.1-flash-lite",
+    "endpoint": "http://host.docker.internal:8317/v1beta",
+    "embedding_model": "intfloat/multilingual-e5-small",
+    "legal_revision": "86845f6886d700943eb6aabea96461ac",
+    "ktx_revision": "d7233a843195929dc5f0020d334e53b3e28313c1df67fa17f88bca1bf1914137"
+  },
+  "judge": {
+    "library": "ragas",
+    "version": "0.3.9",
+    "model": "gemini-3.8-flash-high",
+    "provider": "gemini",
+    "score_workers": 2,
+    "models_by_metric": {
+      "faithfulness": "gemini-3.8-flash-high",
+      "answer_relevancy": "gemini-3.8-flash-high",
+      "context_utilization": "gemini-3.8-flash-high"
+    },
+    "embedding_model": "intfloat/multilingual-e5-small",
+    "endpoint": "http://host.docker.internal:8317/v1beta",
+    "answer_relevancy_strictness": 1,
+    "context_limit": 5,
+    "max_output_tokens": 8192,
+    "temperature": 0,
+    "judge_request_timeout_seconds": 180,
+    "context_char_limit": null,
+    "score_abstentions": true,
+    "context_policy": "all generation evidence; native model may still truncate its token window"
+  },
+  "artifacts": {
+    "eval\\reports\\legal_ktx_proxy_ragas_20261012.json": "690909997345ecd35106ea2676ff9519b299338c8d5cfec9b4a13f159088ea45",
+    "docs\\reviews\\legal_ktx_proxy_20261012.md": "2cb4b16dcfddced776685c2b601eb507ce3b6e0b5804d7016643ec0c675b3032",
+    "docs\\reviews\\legal_ktx_proxy_20261012.html": "129ca0caa4f78900e1f9966fb2245178b85df7b80a197fc647083f21d2b79727"
+  },
+  "metric_retry": {
+    "case_id": 25,
+    "metric": "faithfulness",
+    "resolved": true,
+    "history_retained": true
+  },
+  "regression": {
+    "passed": 34,
+    "files": [
+      "test_gemini_upgrade.py",
+      "test_ktx_catalog.py"
+    ]
+  },
+  "source_sha256": {
+    "eval\\question_bank_ragas.py": "16a05388d958c96d3be3ccc83d20d4862601449d815cc6c42e1a73a6e196bc01",
+    "eval\\render_legal_ktx_review.py": "5edb07529d4b0c6610cb43b8a49fc9a4de020201899d1e72337d813464384958",
+    "eval\\datasets\\chatbot_question_bank.txt": "1947835833990aa0a0b5a937aaae668dddd29a24b61db789475de7d1a70e75bb",
+    "docker-compose.ktx-eval.yml": "6a7b547c0617231912bef9ecba9fbc7699cb7f5c2b700a5d56373a1c634170dd",
+    "docker-compose.ktx-preview.yml": "33c783bcd4b889c3c05814361c676f5e279cb608dec353954ed8a445cdfb6111"
+  }
+}

@@ -7,14 +7,13 @@ from .schemas import (
     SearchParams,
     SortBy,
     freshness_label,
-    risk_level,
 )
 
 # cột select chung; geom → tách lat/lng qua ST_X/ST_Y
 _COLS = (
-    "id, title, price, area, address, district, description, "
+    "id, title, price, area, address, district, description, posted_by, status::text AS status, "
     "ST_Y(geom) AS lat, ST_X(geom) AS lng, distance_to_ctu, images, "
-    "source, source_url, risk_score, geocode_confidence, freshness_score, "
+    "source, source_url, geocode_confidence, freshness_score, "
     "quality_score, last_seen, route_time_campus, listing_type, offer_kind, location_precise"
 )
 
@@ -84,7 +83,6 @@ def build_filters(p: SearchParams) -> tuple[str, dict]:
 def _to_out(row) -> ListingOut:
     d = dict(row)
     d["images"] = d.get("images") or []
-    d["risk_level"] = risk_level(d.get("risk_score"))
     d["freshness_label"] = freshness_label(d.get("last_seen"))
     return ListingOut(**d)
 

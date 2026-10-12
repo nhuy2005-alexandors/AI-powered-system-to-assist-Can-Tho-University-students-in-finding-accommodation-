@@ -1,11 +1,13 @@
 """Admin control of the active chatbot corpus; all writes are audited."""
 import json
+import hashlib
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 from sqlalchemy import text
 
 from ...auth import require_admin
+from ...config import settings
 from ..chatbot.router import get_service
 from .storage import legal_sql
 
@@ -54,6 +56,49 @@ def list_documents(q: str = Query("", max_length=200), status: str | None = Quer
         ), params).mappings().all()
     return {"corpus_schema": schema, "items": [dict(row) for row in rows], "total": total,
             "has_more": offset + len(rows) < total}
+
+
+@router.get("/evaluation-manifest")
+def evaluation_manifest(admin=Depends(require_admin), service=Depends(get_service)):
+    """Fingerprint current evidence and model settings without returning private content."""
+    schema = service.repo.legal_schema
+    with service.repo.engine.connect() as conn:
+        fingerprints = {}
+        counts = {}
+        for table in ("legal_documents", "legal_chunks", "aggregated_listings"):
+            row = conn.execute(legal_sql(
+                "SELECT count(*) AS total, md5(COALESCE(string_agg("
+                "md5(to_jsonb(t)::text), '' ORDER BY t.id), '')) AS fingerprint "
+                f"FROM {service.repo.listing_schema + '.' + table if table == 'aggregated_listings' else table} t", schema)).mappings().one()
+            fingerprints[table] = row["fingerprint"]
+            counts[table] = row["total"]
+        release = conn.execute(text(
+            "SELECT manifest_sha256, status FROM public.legal_corpus_releases "
+            "WHERE schema_name=:schema"), {"schema": schema}).mappings().first()
+        if settings.chatbot_graph_enabled:
+            for table in ("release", "nodes", "edges"):
+                fingerprints["graph_" + table] = conn.execute(text(
+                    "SELECT md5(COALESCE(string_agg(md5(to_jsonb(t)::text), '' "
+                    "ORDER BY to_jsonb(t)::text), '')) "
+                    f"FROM {settings.chatbot_graph_schema}.{table} t"
+                )).scalar_one()
+    return {
+        "corpus_schema": schema,
+        "listing_schema": service.repo.listing_schema,
+        "corpus_snapshot_sha256": hashlib.sha256(json.dumps(fingerprints, sort_keys=True).encode()).hexdigest(),
+        "release": dict(release) if release else None,
+        "counts": counts,
+        "settings": {name: value for name, value in settings.model_dump().items()
+                     if name.startswith("chatbot_") or name in ("ollama_context_length", "ollama_keep_alive")},
+        "models": {
+            "provider": settings.chatbot_llm_provider,
+            "qwen": settings.ollama_model,
+            "gemini": settings.gemini_model,
+            "embedding": settings.chatbot_embedding_model,
+            "analysis": settings.chatbot_question_analysis_model,
+            "synthesis": settings.chatbot_answer_synthesis_model,
+        },
+    }
 
 
 @router.get("/{document_id}")

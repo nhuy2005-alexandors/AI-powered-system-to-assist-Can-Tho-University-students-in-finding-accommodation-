@@ -263,7 +263,6 @@ def _grounded_prompt(question: str, listings: Sequence[dict]) -> str:
                 "amenities": item.get("parsed_amenities") or {},
                 "distance_to_ctu_m": item.get("distance_to_ctu"),
                 "route_time_campus_minutes": item.get("route_time_campus"),
-                "risk_score": item.get("risk_score"),
                 "source": item.get("source"),
                 "graph_relations": [
                     {"relation": fact["relation"], "entity": fact["target"],

@@ -2,7 +2,9 @@
 
 Repo **không chứa database** — Postgres nằm trong Docker volume `pgdata`, đã gitignore.
 `docker compose up -d --build` chạy các init script trong `infra/db/Dockerfile` để tạo
-cấu trúc, và (từ nay) nạp luôn dữ liệu mẫu.
+cấu trúc và nạp **87 tin** (5 mẫu + 82 cào) khi volume mới. Cào tự động mặc định tắt.
+
+Bản đang chạy ngày 12/10/2026 dùng DB riêng `nckh_feature`, giữ DB cũ. Không chạy lại COPY seed trên DB đã có 87 tin. Chi tiết: `docs/FEATURE_KTX_INTEGRATION_20261012.md`.
 
 Có 3 nguồn dữ liệu, dùng tuỳ mục đích:
 
@@ -22,7 +24,7 @@ Dùng cho: máy mới, onboard thành viên, demo, chạy test.
 ## 2. Seed dữ liệu crawl thật — `seed/aggregated_listings_seed.sql`
 
 Dump 82 tin crawl thật từ phongtro123 / mogi / tromoi (đã qua bộ làm sạch, 81 tin có toạ độ,
-44 tin phòng-trọ-sạch). Không chứa bảng `users`. Nạp thủ công:
+44 tin phòng-trọ-sạch). Không chứa bảng `users`. Docker đã tự nạp khi volume mới; lệnh sau chỉ dùng khi DB chưa có 82 dòng này (thay tên DB theo cấu hình):
 
 ```bash
 docker compose exec -T db psql -U nckh -d nckh < infra/db/seed/aggregated_listings_seed.sql

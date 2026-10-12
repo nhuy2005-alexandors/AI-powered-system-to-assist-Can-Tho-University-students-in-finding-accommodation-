@@ -47,7 +47,15 @@ def rewrite_query(message: str, history: list[ChatHistoryMessage | dict]) -> str
                 if parse_query(content).intent == "legal_question":
                     return f"Câu hỏi pháp lý trước: {content}. Câu hỏi tiếp theo: {message}"
                 break
-    if parse_query(message).intent in {"out_of_scope", "legal_question"}:
+    intent = parse_query(message).intent
+    # A short cooking follow-up inherits KTX context; unrelated requests do not.
+    latest_user = next((item.content if isinstance(item, ChatHistoryMessage) else item.get("content", "")
+        for item in reversed(history) if (item.role if isinstance(item, ChatHistoryMessage) else item.get("role")) == "user"), "")
+    cooking_followup = (intent == "out_of_scope" and len(message.split()) <= 10
+        and re.match(r"^(con|vay|the|neu)\b", normalize_text(message))
+        and "nau an" in normalize_text(message)
+        and re.search(r"\b(?:ktx|ky tuc xa)\b", normalize_text(latest_user)))
+    if intent in {"out_of_scope", "legal_question"} and not cooking_followup:
         return message
     normalized = message.strip().lower()
     is_follow_up = len(normalized.split()) <= 8 or any(
@@ -68,17 +76,6 @@ def rewrite_query(message: str, history: list[ChatHistoryMessage | dict]) -> str
     if not previous_users:
         return message
     return f"{' . '.join(previous_users[-5:])}. Yêu cầu tiếp theo: {message}"
-
-
-def _risk_level(item: dict) -> str:
-    if item.get("risk_evaluated_at") is None:
-        return "unknown"
-    score = float(item.get("risk_score") or 0.0)
-    if score < 0.3:
-        return "safe"
-    if score < 0.6:
-        return "caution"
-    return "suspicious"
 
 
 def _citation_accuracy(answer: str, listings: list[dict]) -> float:
@@ -402,6 +399,17 @@ class ChatService:
         # Khẩn cấp xét trên tin nhắn GỐC: câu đã nối ngữ cảnh có thể mang chữ "đe doạ" từ lượt cũ khiến mọi câu sau thành khẩn cấp
         if parsed.intent == "emergency" and not emergency_kind(normalize_text(body.message)):
             parsed = parse_query(body.message)
+        # Emergency handling keeps priority over dormitory catalogue answers.
+        if parsed.intent != "emergency":
+            from ...ktx.advice import answer_advice
+            if parsed.intent not in {"out_of_scope", "out_of_area"}:
+                advice = answer_advice(query, body, self.repo, self.embedder, started)
+                if advice is not None:
+                    return advice
+            from ...ktx.chat import answer_ktx
+            ktx_answer = answer_ktx(query, body, self.repo, self.embedder, started)
+            if ktx_answer is not None:
+                return ktx_answer
         if parsed.intent == "legal_question":
             return self._ask_legal(query, body, started)
         # Parse each turn separately so a newer budget replaces the older budget.
@@ -567,12 +575,6 @@ class ChatService:
                 bm25_score=float(item.get("bm25_score") or 0.0),
                 rank=item["rank"],
                 match_reasons=item.get("match_reasons") or [],
-                risk_score=(
-                    float(item.get("risk_score") or 0.0)
-                    if item.get("risk_evaluated_at") is not None
-                    else None
-                ),
-                risk_level=_risk_level(item),
             )
             for item in listings
         ]

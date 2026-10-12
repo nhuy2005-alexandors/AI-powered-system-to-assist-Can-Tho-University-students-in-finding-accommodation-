@@ -4,6 +4,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { ktxDirectionsUrl, type KtxDormitory } from "@/lib/ktx";
 import type { ContactOut, ListingOut, PoiOut, PoiSummary } from "@/lib/api";
 import { formatPhone, formatPrice, isLocationPrecise, listingTags, sourceName } from "@/lib/format";
 import { formatMeters, POI_CATEGORIES } from "@/lib/pois";
@@ -38,6 +39,9 @@ async function getJson<T>(url: string): Promise<T> {
 
 export default function MapScreen({
   items,
+  dormitories,
+  dormitoryError,
+  initialDormitory,
   radius,
   housing,
   error,
@@ -45,6 +49,9 @@ export default function MapScreen({
   initialCampus = 1,
 }: {
   items: ListingOut[];
+  dormitories: KtxDormitory[];
+  dormitoryError: string | null;
+  initialDormitory: "A" | "B" | null;
   radius: number;
   housing: string;
   error: string | null;
@@ -54,6 +61,7 @@ export default function MapScreen({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [campus, setCampus] = useState(initialCampus); // mặc định khu II (FR-M.3)
+  const [showDormitories, setShowDormitories] = useState(true);
   const [radiusDraft, setRadiusDraft] = useState(radius);
   const [selected, setSelected] = useState<ListingWithCoords | null>(null);
   const [route, setRoute] = useState<[number, number][] | null>(null);
@@ -176,6 +184,7 @@ export default function MapScreen({
   function navigate(nextRadius: number, nextHousing: string) {
     const qs = new URLSearchParams({ radius: String(nextRadius) });
     if (nextHousing) qs.set("housing", nextHousing);
+    if (initialDormitory) qs.set("dormitory", initialDormitory);
     startTransition(() => router.replace(`/map?${qs.toString()}`, { scroll: false }));
   }
 
@@ -236,6 +245,10 @@ export default function MapScreen({
               </span>
             </label>
           )}
+
+          <label className="mt-3 flex cursor-pointer items-center gap-2 text-[13px] text-teal-800"><input type="checkbox" checked={showDormitories} onChange={e => setShowDormitories(e.target.checked)} className="accent-teal-700" />Hiện KTX khu A và B</label>
+          {dormitoryError && <p className="mt-2 text-xs text-amber-700">{dormitoryError}</p>}
+          {showDormitories && dormitories.length > 0 && <div className="mt-2 grid gap-2">{dormitories.map(area => <div key={area.id} className="rounded-lg border border-teal-100 bg-teal-50 p-2 text-xs"><Link href={"/ktx#khu-" + area.id.toLowerCase()} className="font-semibold text-teal-900">{area.name} →</Link><p className="mt-1 text-teal-800">Điểm đại diện · chưa xác nhận chỗ trống</p><a href={ktxDirectionsUrl(area)} target="_blank" rel="noreferrer" className="mt-1 inline-block text-primary underline">Chỉ đường ↗</a></div>)}</div>}
 
           <div className="mt-3 flex gap-1.5" role="group" aria-label="Loại chỗ ở">
             {HOUSING_TABS.map((tab) => (
@@ -349,6 +362,8 @@ export default function MapScreen({
       <div className="relative h-[52vh] min-h-0 lg:h-auto">
         <MapCanvas
           items={withCoords}
+          dormitories={showDormitories ? dormitories : []}
+          initialDormitory={initialDormitory}
           campus={campus}
           radius={radius}
           selected={selected}

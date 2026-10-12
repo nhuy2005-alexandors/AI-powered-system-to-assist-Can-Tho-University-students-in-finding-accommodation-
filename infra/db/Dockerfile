@@ -40,6 +40,12 @@ COPY migrations/98_listing_audit.sql /docker-entrypoint-initdb.d/98-listing-audi
 COPY migrations/99_location_precise.sql /docker-entrypoint-initdb.d/98b-location-precise.sql
 # chatbot: kho pháp lý/KTX, lịch sử hội thoại, cache câu trả lời (ADR-023). Tên 98c để chạy TRƯỚC 99-test-db.sh
 COPY migrations/100_chatbot.sql /docker-entrypoint-initdb.d/98c-chatbot.sql
+COPY migrations/101_reports_moderation.sql /docker-entrypoint-initdb.d/98d-reports-moderation.sql
+COPY migrations/102_reviews_sentiment.sql /docker-entrypoint-initdb.d/98e-reviews-sentiment.sql
+COPY migrations/103_ctu_dormitories.sql /docker-entrypoint-initdb.d/98f-ctu-dormitories.sql
+COPY migrations/104_ktx_admin.sql /docker-entrypoint-initdb.d/98fa-ktx-admin.sql
+# 82 tin goc + 5 tin mau da tao boi 80_seeds.sql = 87; khong nap bo 789 tin.
+COPY seed/aggregated_listings_seed.sql /docker-entrypoint-initdb.d/98g-feature-listings.sql
 # DB riêng cho pytest (nckh_test) — chạy SAU mọi migration, áp lại đúng các file trên
 COPY create_test_db.sh /docker-entrypoint-initdb.d/99-test-db.sh
 COPY create_test_db.sh /usr/local/bin/create_test_db.sh

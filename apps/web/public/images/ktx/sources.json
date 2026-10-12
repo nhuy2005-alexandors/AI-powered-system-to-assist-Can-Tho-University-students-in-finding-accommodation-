@@ -1,0 +1,145 @@
+{
+  "retrieved_at": "2026-10-11T19:41:09.682748+00:00",
+  "images": [
+    {
+      "src": "/images/ktx/khu-a.jpg",
+      "alt": "Ký túc xá khu A",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/Gioithieu/1a.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/213-ktx25.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "8b72cc6100a56883d56e68f5733b9c32343faafb4f3d8096b961d53c6aed3169",
+      "bytes": 69497
+    },
+    {
+      "src": "/images/ktx/khu-b.jpg",
+      "alt": "Ký túc xá khu B",
+      "dormitory_id": "B",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/Gioithieu/1b.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/213-ktx25.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "667e0beddd7ab39434fdf89636029896280747fb402e06e2ab95c994ea8b914e",
+      "bytes": 54555
+    },
+    {
+      "src": "/images/ktx/phong-b-1.jpg",
+      "alt": "Phòng ở khu B — ảnh 1",
+      "dormitory_id": "B",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/B_1.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "fc038822685060fa4cef56e9aa356df6ca1771f3a5dac52944a55989cef07507",
+      "bytes": 624278
+    },
+    {
+      "src": "/images/ktx/phong-b-2.jpg",
+      "alt": "Phòng ở khu B — ảnh 2",
+      "dormitory_id": "B",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/B_2.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "647d93ca64a22bd2707da377c5a248bb331d9eff8665e15927cfd9c914c47ea7",
+      "bytes": 478842
+    },
+    {
+      "src": "/images/ktx/phong-b-3.jpg",
+      "alt": "Phòng ở khu B — ảnh 3",
+      "dormitory_id": "B",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/B_3.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "a8d6551affdb2175e3c23f060f5ac5b28f059b5def4dd013de630214cf86b98d",
+      "bytes": 517929
+    },
+    {
+      "src": "/images/ktx/phong-a2-1.jpg",
+      "alt": "Phòng ở khu A, dãy A2 — ảnh 1",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/AC_1.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "2b461373cfbcc064847cab7cae8245d7a8ec398c8b4eabfd73c5ce9aa86298d8",
+      "bytes": 410247
+    },
+    {
+      "src": "/images/ktx/phong-a2-2.jpg",
+      "alt": "Phòng ở khu A, dãy A2 — ảnh 2",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/AC_2.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "6f9c80e7c6c451b29b736c895a074c839b2e945b9f25da949a4065b3c3e46ffb",
+      "bytes": 386661
+    },
+    {
+      "src": "/images/ktx/phong-3-nguoi-1.jpg",
+      "alt": "Phòng được nấu ăn, giường bộ, 3 người — ảnh 1",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A3_1.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "3368a6ed45607ffa75c304ff6d79e7c3d7eb1ec6b33b5b30f542e8614936c331",
+      "bytes": 655359
+    },
+    {
+      "src": "/images/ktx/phong-3-nguoi-2.jpg",
+      "alt": "Phòng được nấu ăn, giường bộ, 3 người — ảnh 2",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A3_2.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "5e09768d2b6db026c74f880650822434d653a8e663c2aa6dc0808e5109385142",
+      "bytes": 703503
+    },
+    {
+      "src": "/images/ktx/phong-5-6-nguoi-1.jpg",
+      "alt": "Phòng được nấu ăn, giường bộ, 5–6 người — ảnh 1",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A6_1.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "5503612cc3d5f9ae70c284d3163458393ca79128a31e6aef75e8538d63a7f8bd",
+      "bytes": 384442
+    },
+    {
+      "src": "/images/ktx/phong-5-6-nguoi-2.jpg",
+      "alt": "Phòng được nấu ăn, giường bộ, 5–6 người — ảnh 2",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A6_2.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "0cd03182ea3dca2b28b19d13d0c7a0c792c22abd7ab3bc71f75a0df85ede7200",
+      "bytes": 387266
+    },
+    {
+      "src": "/images/ktx/phong-5-6-nguoi-3.jpg",
+      "alt": "Phòng được nấu ăn, giường bộ, 5–6 người — ảnh 3",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A6_3.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "fd148a40021202633bab192b9c407802439217d3e7bca88c948231078c5a9126",
+      "bytes": 292103
+    },
+    {
+      "src": "/images/ktx/phong-8-nguoi-1.jpg",
+      "alt": "Phòng được nấu ăn, giường tầng, 8 người — ảnh 1",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A8_1.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "1f563f02e8526ab444856c14bcc0597f688ee9c8a7fd9010a435db1adfbfdb5a",
+      "bytes": 362367
+    },
+    {
+      "src": "/images/ktx/phong-8-nguoi-2.jpg",
+      "alt": "Phòng được nấu ăn, giường tầng, 8 người — ảnh 2",
+      "dormitory_id": "A",
+      "original_url": "https://ssc.ctu.edu.vn/images/upload/slideshow_right/A8_2.jpg",
+      "source_url": "https://ssc.ctu.edu.vn/hoat/160-cs1.html",
+      "credit": "Đại học Cần Thơ / Trung tâm Phục vụ Sinh viên",
+      "sha256": "23d283da4e2c9267de79cdad9aff734dae6691fe6036ce61e46fee8dcc2f342a",
+      "bytes": 439112
+    }
+  ]
+}

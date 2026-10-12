@@ -1,0 +1,298 @@
+<!-- Nút mở chatbot -->
+<div id="chat-toggle-btn" onclick="toggleChat()">
+  <img src="https://tansinhvien.ctu.edu.vn/images/upload/bot.png">
+</div>
+
+<!-- Khung chatbot -->
+<div id="chatbot-container">
+  <div id="chat-header">
+    <span>Can Tho University</span>
+    <div>
+      <button onclick="expandChat()">⛶</button>
+      <button onclick="toggleChat()">✖</button>
+    </div>
+  </div>
+
+  <iframe
+    src="https://aibot.vnpttiengiang.vn/chat-frame/245e62c9-72de-4f98-a099-e4a5f60204d5/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMGNkZDFkNTktMTI1Yi00OTNlLTk3NDctYjJjMDlhYWY3ZmQ4IiwicGVybWlzc2lvbnMiOlsiRklMRV9NQU5BR0VSIiwiQk9UX1RFTVBMQVRFX01BTkFHRVIiLCJCT1RfTUFOQUdFUiJdLCJ0eXBlIjoiaW50ZWdyYXRpb24ifQ.Qr3PrU-QHHRZJKey_-t3wBltxiOoVsvIDyuvGGhmNws">
+  </iframe>
+</div>
+
+<style>
+#chat-header span {
+  font-family: Roboto, sans-serif;
+  font-weight: bold;
+}
+
+/* Nút chat */
+#chat-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  z-index: 999999;
+}
+
+#chat-toggle-btn img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Khung chat */
+#chatbot-container {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 350px;
+  height: 500px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 999999;
+}
+
+/* Header */
+#chat-header {
+  background: #005baa;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#chat-header button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* iframe */
+#chatbot-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Fullscreen desktop */
+.fullscreen {
+  width: 75vw !important;
+  height: 75vh !important;
+  bottom: 10% !important;
+  right: 10% !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .fullscreen {
+    width: 350px !important;
+    height: 500px !important;
+    bottom: 90px !important;
+    right: 20px !important;
+  }
+
+  /* Ẩn nút phóng to */
+  #chat-header button:first-child {
+    display: none;
+  }
+}
+@keyframes shake {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+#chat-toggle-btn img {
+  animation: shake 2s infinite;
+}
+
+</style>
+
+<script>
+function toggleChat() {
+  const chat = document.getElementById("chatbot-container");
+
+  if (chat.style.display === "flex") {
+    chat.style.display = "none";
+  } else {
+    chat.style.display = "flex";
+  }
+}
+
+function expandChat() {
+  // Không cho phóng to trên mobile
+  if (window.innerWidth <= 768) return;
+
+  const chat = document.getElementById("chatbot-container");
+  chat.classList.toggle("fullscreen");
+}
+
+// Tự động mở chatbot trên desktop
+window.addEventListener("load", function() {
+  if (window.innerWidth <= 768) return; // mobile thì không mở
+
+  const chat = document.getElementById("chatbot-container");
+  if (chat) {
+    chat.style.display = "flex";
+  }
+});
+</script>
+<!DOCTYPE html>
+<html dir="ltr" lang="vi-vn">
+<head>
+    <base href="https://tansinhvien.ctu.edu.vn/sinh-hoat/huong-dan-tan-sinh-vien-dang-ky-o-ky-tuc-xa" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="Truong Tan Khai" />
+	<meta name="generator" content="Joomla! - Open Source Content Management" />
+	<title>Hướng dẫn Tân sinh viên đăng ký ở Ký túc xá</title>
+	<link href="/templates/ctu_template/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+	<script type="application/json" class="joomla-script-options new">{"csrf.token":"ee74ec9313447a20202cb81ba2e2cedc","system.paths":{"root":"","base":""}}</script>
+	<script src="/media/system/js/mootools-core.js?4168eedc8b4d2dabf60d19c564134792" type="text/javascript"></script>
+	<script src="/media/system/js/core.js?4168eedc8b4d2dabf60d19c564134792" type="text/javascript"></script>
+	<script src="/media/system/js/mootools-more.js?4168eedc8b4d2dabf60d19c564134792" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="/templates/system/css/system.css" />
+    <link rel="stylesheet" href="/templates/system/css/general.css" />
+
+    <!-- Created by Artisteer v4.1.0.59861 -->
+    
+    
+    <meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
+
+    <!--[if lt IE 9]><script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <link rel="stylesheet" href="/templates/ctu_template/css/template.css" media="screen">
+    <!--[if lte IE 7]><link rel="stylesheet" href="/templates/ctu_template/css/template.ie7.css" media="screen" /><![endif]-->
+    <link rel="stylesheet" href="/templates/ctu_template/css/template.responsive.css" media="all">
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <script>if ('undefined' != typeof jQuery) document._artxJQueryBackup = jQuery;</script>
+    <script src="/templates/ctu_template/jquery.js"></script>
+    <script>jQuery.noConflict();</script>
+
+    <script src="/templates/ctu_template/script.js"></script>
+        <script>if (document._artxJQueryBackup) jQuery = document._artxJQueryBackup;</script>
+    <script src="/templates/ctu_template/script.responsive.js"></script>
+</head>
+<body>
+
+<div id="art-main">
+    <div class="art-sheet clearfix">
+<header class="art-header">
+
+<div class="custom"  >
+	<p><img src="/images/upload/banner/banner-tsv.png" alt="" /></p></div>
+
+
+    <div class="art-shapes">
+
+            </div>
+<h1 class="art-headline" data-left="46.42%">
+    <a href="/"></a>
+</h1>
+
+
+
+
+                
+                    
+</header>
+<nav class="art-nav">
+    
+<ul class="art-hmenu"><li class="item-101"><a href="/">Trang chủ</a></li><li class="item-132"><a href="https://htql.ctu.edu.vn" target="_blank">Hệ thống tích hợp</a></li><li class="item-126"><a href="https://www.ctu.edu.vn/dao-tao/ctdt-dai-hoc.html" target="_blank">Chương trình đào tạo</a></li><li class="item-127"><a href="https://ssc.ctu.edu.vn/" target="_blank">TT. Phục vụ sinh viên</a></li><li class="item-133"><a href="https://dsa.ctu.edu.vn/" target="_blank">Phòng Công tác Sinh viên</a></li><li class="item-112"><a href="https://yu.ctu.edu.vn" target="_blank">Công tác Đoàn-Hội</a></li><li class="item-138"><a href="https://helpdesk.ctu.edu.vn" target="_blank">Hỗ trợ sử dụng mạng</a></li></ul> 
+    </nav>
+<div class="art-layout-wrapper">
+                <div class="art-content-layout">
+                    <div class="art-content-layout-row">
+                                                <div class="art-layout-cell art-content">
+<div class="art-content-layout"><div class="art-content-layout-row"><div class="art-layout-cell" style="width: 50%;"><article class="art-post"><div class="art-postcontent clearfix"><div class="custom"  >
+	<div style="border: 1px solid #ccc; padding: 10px;">
+<p style="margin-top: 3pt; margin-bottom: 3pt;"><a href="https://tuyensinh.ctu.edu.vn/chuong-trinh-dai-tra/177-thong-tin/1121-thong-bao-tuyen-chon-vao-chuong-trinh-tien-tien-va-chuong-trinh-chat-luong-cao-theo-phuong-thuc-5.html"><span style="color: #ff0000;"><strong><img style="margin: -20px 0px 0px 3px;" src="/images/upload/yelp-star-animation.gif" width="22" height="17" />Thông báo tuyển chọn vào chương trình tiên tiến, chất lượng cao (theo phương thức 5) </strong></span></a></p>
+<p style="margin-top: 3pt; margin-bottom: 3pt;"><span style="color: #ff0000;"><span style="color: #0000ff;"><a href="/images/upload/TSV_K52/Thongbao/30-7-2026_KH_SHNAM_26signedsignedsignedsigned.pdf"> <span style="color: #0000ff;">-&gt; Kế hoạch sinh hoạt đầu năm, đầu khóa học </span><strong><img src="https://tuyensinh.ctu.edu.vn/images/upload/new.gif" /></strong></a><br /></span></span></p>
+<p style="margin-top: 3pt; margin-bottom: 3pt;"><span style="color: #ff0000;"><span style="color: #0000ff;">-&gt; </span></span><span style="color: #0000ff;"><a style="color: #0000ff;" href="/tong-hop-cac-hoc-bong-tai-tro-danh-cho-tan-sinh-vien">Tổng hợp học bổng tài trợ dành cho Tân sinh viên</a> (thêm 2 HB mới)<a href="/images/upload/TSV_K52/Thongbao/30-7-2026_KH_SHNAM_26signedsignedsignedsigned.pdf"><strong><img src="https://tuyensinh.ctu.edu.vn/images/upload/new.gif" /></strong></a></span></p>
+<p style="margin-top: 3pt; margin-bottom: 3pt;"><span style="color: #0000ff;"><strong>-&gt; </strong><a style="color: #0000ff;" href="https://drive.google.com/drive/folders/1VlXzBOLTbjxqVomewJ02NAVIx8Kn2f1m">Ảnh check-in Tân sinh viên Khóa 52</a></span></p>
+</div></div></div></article></div><div class="art-layout-cell" style="width: 50%;"><article class="art-post"><div class="art-postcontent clearfix"><div class="custom"  >
+	<div style="border: 1px solid #ccc; padding: 7px;"><span style="color: #003366;"><strong>Liên hệ hỗ trợ: </strong></span>
+<p style="line-height: 200%; margin-top: 0; margin-bottom: 0;">+ Phòng Đào tạo: 02923.508.703 - 02923.508.704</p>
+<p style="line-height: 200%; margin-top: 0; margin-bottom: 0;">                           - 02923.872.728</p>
+<p style="line-height: 200%; margin-top: 0; margin-bottom: 0;">(tuyển sinh, học tập, giấy báo trúng tuyển, V-SAT)</p>
+<p style="line-height: 200%; margin-top: 0; margin-bottom: 0;"><span style="font-family: Arial; font-size: small;">+ Phòng Công tác Sinh viên: 0292.3872 177</span></p>
+<p style="line-height: 200%; margin-top: 0; margin-bottom: 0;"><span style="font-family: Arial; font-size: small;">(chế độ chính sách, hồ sơ, học bổng, bảo hiểm)</span></p>
+<p style="line-height: 200%; margin-top: 0; margin-bottom: 0;"><span style="font-family: Arial; font-size: small;">+ Đoàn Thanh niên trường : 0292. 3830 309</span> </p>
+<p style="line-height: 200%; margin-top: 0; margin-bottom: 0;">(công tác đoàn, hội)</p>
+<p style="line-height: 200%; margin-top: 0; margin-bottom: 0;">+ TT. Đánh giá năng lực ngoại ngữ:  0292. 3872 295</p>
+<p style="line-height: 200%; margin-top: 0; margin-bottom: 0;">(kiểm tra ngoại ngữ đầu khóa)</p>
+</div></div></div></article></div></div></div><article class="art-post art-messages"><div class="art-postcontent clearfix"><div id="system-message-container">
+	</div>
+</div></article><div class="item-page"><article class="art-post"><div class="art-postmetadataheader"><h2 class="art-postheader"><a href="/sinh-hoat/huong-dan-tan-sinh-vien-dang-ky-o-ky-tuc-xa">Hướng dẫn đăng ký ở Ký túc xá</a></h2></div><div class="art-postcontent clearfix"><div class="art-article"><p style="text-align: center;"><span style="font-size: 14pt; color: #0000ff;"><a style="color: #0000ff;" href="https://ssc.ctu.edu.vn/hoat/160-cs1.html">Click vào đây Xem phòng ở tại Ký túc xá (Tân sinh viên - Khóa 52)</a></span></p>
+<p style="text-align: center;"><span style="font-size: 14pt;"><em>(Tân sinh viên có thể ghi nhận lại nhu cầu đăng ký theo liên kết trên)</em></span></p>
+<p style="text-align: center;"><span style="text-decoration: underline; font-size: 12pt;"> </span></p>
+<p><span style="color: #0000ff; font-family: arial, helvetica, sans-serif;"><video style="display: block; margin-left: auto; margin-right: auto;" controls="controls" width="330" height="165">
+<source src="https://tuyensinh.ctu.edu.vn/images/upload/KTX/Clip-Gii-thiu-KTX.mp4" type="video/mp4" /></video></span></p>
+<p>- Phòng ở tại Ký túc xá (KTX) ĐH Cần Thơ có sức chứa từ 03 đến 08 Sinh viên/ phòng. Tân sinh viên (TSV) đăng ký ở KTX, nộp phí ở theo học kỳ. <span style="color: #000000;">Phí ở học kỳ 1 năm học 2026-2027 tính từ ngày 7 tháng 9 đến 18/12/2026 <em>(Tính theo học kỳ 3.5 tháng, chưa bao gồm phí điện nước)</em>. Trường hợp, TSV nhận chỗ ở từ 14/8/2026 đến trước 7/9/2026 thì nộp thêm chệnh lệch phí nửa tháng.</span></p>
+<p><img src="/images/upload/Tansinhvien_K51/KTX/standee_KTX.png" alt="" width="100%" height="100%" /></p>
+<p>- Phòng ở có wifi riêng từng phòng.</p>
+<p>- SV ở KTX được miễn phí gửi xe đạp.</p>
+<p>- Phí gửi xe máy/ xe điện là 25.000đ/Sinh viên/ tháng nộp theo học kỳ.</p>
+<p>- Trong khuôn viên có căn tin, siêu thị mini phục vụ cho SV.</p>
+<p>- Có hợp đồng với công ty bảo vệ chuyên nghiệp, có hệ thống camera an ninh.</p>
+<p><span style="color: #0000ff;"><strong>* KTX là nơi an toàn, thuận lợi cho sinh viên ăn ở, sinh hoạt và học tập tại ĐH Cần Thơ.</strong></span></p>
+<p><span style="color: #ff0000;"><strong><em>* Lưu ý:</em></strong></span></p>
+<p>- Sinh viên có thể xin chuyển đổi chỗ nếu có chỗ ở khác thích hợp hơn có vị trí trống. Trường không hoàn phí ở KTX nếu trả chỗ trước hạn. Chỉ hoàn trả phí cho trường hợp SV trả chỗ ở trong vòng 07 ngày kể từ ngày duyệt chỗ ở qua Hệ thống Quản lý KTX (phải có lý do chính đáng).</p>
+<p>- Loại phòng <strong>không được nấu ăn</strong>, sinh viên chỉ được sử dụng ấm đun siêu tốc, <strong>không được sử dụng</strong> các dụng cụ đa năng.</p>
+<p>- Đối với Cơ sở Hậu Giang chỉ bố trí cho sinh viên học năm thứ nhất và năm cuối; Cơ sở Sóc Trăng chỉ bố trí sinh viên học năm cuối.</p>
+<p>- Trong thời gian nghỉ Tết Nguyên Đán, sinh viên có nhu cầu ở lại phải đóng phí 02 tuần.</p>
+<p style="text-align: center;"><span style="color: #ff0000;"><strong>HƯỚNG DẪN ĐĂNG KÝ Ở KÝ TÚC XÁ</strong></span></p>
+<p>+ Tân sinh viên chưa có tài khoản đăng nhập Hệ thống Quản lý KTX, thực hiện đăng ký nhu cầu ở KTX Trường <span style="text-decoration: underline;"><span style="color: #0000ff;"><a style="color: #0000ff; text-decoration: underline;" href="https://forms.gle/K8F4Smtd44ez51PB9"><strong>thực hiện điền thông tin vào mẫu</strong>  </a></span></span></p>
+<p><em>+ </em><span style="color: #0000ff;"><a style="color: #0000ff;" href="/images/upload/Tansinhvien_K51/KTX/2025_Phieu_DK_KTX_TSV_F2.pdf">Tải mẫu đơn</a></span><em><span style="color: #0000ff;"> </span>(đối với trường hợp SV đăng ký trực tiếp tại Ký túc xá)</em></p>
+<p><em>+</em> Sịnh viên đã có tài khoản đăng nhập Hệ thống quản lý của Trường<em> (</em><span style="color: #0000ff;"><a style="color: #0000ff;" href="/images/upload/Tansinhvien_K50/BieuMau/DS_KDDK_O_KTX.pdf">Xem hướng dẫn đăng ký ở Ký túc xá</a></span>)</p>
+<p style="text-align: center;"> </p></div></div></article></div><div class="art-content-layout"><div class="art-content-layout-row"><div class="art-layout-cell" style="width: 100%;"></div></div></div>
+
+
+                        </div>
+                        <div class="art-layout-cell art-sidebar2">
+<div class="art-block clearfix"><div class="art-blockheader"><h3 class="t">Ký túc xá ĐHCT</h3></div><div class="art-blockcontent"><div class="custom"  >
+	<p align="center"><video controls="controls" width="250" height="150">
+  <source src="https://tuyensinh.ctu.edu.vn/images/upload/KTX/Clip-Gii-thiu-KTX.mp4" type="video/mp4" />
+  Trình duyệt của bạn không hỗ trợ HTML5 video.</video></p></div></div></div><div class="art-block clearfix"><div class="art-blockheader"><h3 class="t">Hướng dẫn sử dụng dịch vụ và ứng dụng trên mạng Trường</h3></div><div class="art-blockcontent"><div class="custom"  >
+	<p align="center"><video controls="controls" width="250" height="125">
+<source src="/images/upload/DichVuMang.mp4" type="video/mp4" /></video></p>
+<p align="center"> </p>
+<p align="center"> </p></div></div></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<footer class="art-footer">
+    <!-- begin nostyle -->
+<div class="art-nostyle">
+<!-- begin nostyle content -->
+
+
+<div class="custom"  >
+	<p><span style="font-size: 9pt; font-family: Arial; background: white; padding: 2px 5px; border-radius: 4px;">Cập nhật: Phòng Công tác Sinh viên</span></p></div>
+<!-- end nostyle content -->
+</div>
+<!-- end nostyle -->
+</footer>
+
+    </div>
+    <p class="art-page-footer">
+        <span id="art-footnote-links"></span>
+    </p>
+</div>
+
+
+
+</body>
+</html>
