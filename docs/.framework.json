@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 2,
+  "profile": "strict",
+  "canonicalFile": "AGENTS.md",
+  "adapters": [
+    "CLAUDE.md"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "places": [
+    {
+      "id": "place-near-1",
+      "displayName": {"text": "Synthetic Grocery", "languageCode": "en"},
+      "location": {"latitude": 10.001, "longitude": 105.0},
+      "types": ["supermarket", "grocery_store", "store"],
+      "attributions": [
+        {"provider": "Synthetic Maps Contributor", "providerUri": "https://maps.example.test/contributor"}
+      ],
+      "nationalPhoneNumber": "+84 000 000 000",
+      "reviews": [{"text": "Synthetic private review"}]
+    },
+    {
+      "id": "place-outside-1",
+      "displayName": {"text": "Synthetic Hospital", "languageCode": "en"},
+      "location": {"latitude": 10.006, "longitude": 105.0},
+      "types": ["hospital", "health"],
+      "attributions": []
+    }
+  ]
+}

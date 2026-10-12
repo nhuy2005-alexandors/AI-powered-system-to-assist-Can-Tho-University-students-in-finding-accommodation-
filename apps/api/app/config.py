@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import SecretStr
 
 
 class Settings(BaseSettings):
@@ -18,6 +19,12 @@ class Settings(BaseSettings):
     google_client_id: str = ""  # bắt buộc khi dùng Google login
 
     ors_api_key: str = ""  # OpenRouteService — route time/geometry; rỗng = tắt routing
+
+    # Internal mobility lane. No live Google request is enabled by this foundation.
+    mobility_enabled: bool = False
+    mobility_database_url: SecretStr = SecretStr("")  # independent read-only catalog target
+    google_live_enabled: bool = False
+    google_server_api_key: SecretStr = SecretStr("")
 
 
 settings = Settings()

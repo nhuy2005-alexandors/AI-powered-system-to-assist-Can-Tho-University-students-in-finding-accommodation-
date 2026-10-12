@@ -1,0 +1,44 @@
+{
+  "CatalogListing": {
+    "id": 1, "title": "Synthetic student studio", "source": "chotot", "source_id": "fixture-1",
+    "source_url": null, "source_contact_url": null, "price": 2000000, "area": null,
+    "address": null, "district": null, "description": "Synthetic description", "images": [],
+    "housing_type": "studio", "offer_kind": "rental", "description_state": "PARTIAL",
+    "description_completeness": "UNKNOWN", "description_is_partial": true,
+    "unit_type_uncertain": null, "offer_context_uncertain": null, "mixed_use_possible": null,
+    "lease_transfer_terms_verified": null, "parsed_amenities": {"wifi": true, "parking": null},
+    "position": {"lat": 10.03, "lng": 105.76, "precision": "APPROXIMATE", "source": "synthetic", "verified_at": null}
+  },
+  "CatalogPage": {"items": [], "total": 789, "page": 9, "size": 100},
+  "Campus": {
+    "id": "khu_ii", "name": "Khu II", "lat": 10.0322, "lng": 105.7683,
+    "coordinate_version": "fixture-v1", "verification_status": "PROVISIONAL"
+  },
+  "NearbyRequest": {"listing_id": 1, "radius_m": 1000, "categories": ["police"]},
+  "LocationWarning": {
+    "code": "APPROXIMATE_LOCATION", "severity": "CAUTION", "message": "Synthetic approximate location",
+    "evidence_source": "synthetic", "scope": "listing", "observed_at": "2026-10-04T01:00:00+00:00"
+  },
+  "Place": {
+    "provider_place_id": "fixture-place-1", "name": "Synthetic pharmacy", "category": "pharmacy",
+    "lat": 10.03, "lng": 105.76, "straight_line_distance_m": 120.5, "attribution": ["Synthetic fixture"]
+  },
+  "RouteRequest": {
+    "listing_id": 1, "campus_id": "khu_ii", "requested_mode": "BUS",
+    "departure_time": "2026-10-04T08:00:00+07:00", "direction": "LISTING_TO_CAMPUS"
+  },
+  "RouteResult": {
+    "listing_id": 1, "campus_id": "khu_ii", "provider": "google", "requested_mode": "BUS",
+    "effective_mode": null, "direction": "LISTING_TO_CAMPUS", "status": "NO_ROUTE",
+    "duration_seconds": null, "distance_meters": null, "polyline": null,
+    "observed_at": "2026-10-04T01:00:00+00:00", "coordinate_version": "fixture-v1",
+    "evidence_kind": "SYNTHETIC_FIXTURE", "warnings": [],
+    "attribution": [], "provider_profile": null
+  },
+  "NearbyResult": {
+    "listing_id": 1, "radius_m": 1000, "categories": ["police"], "provider": "google",
+    "status": "EMPTY", "evidence_kind": "SYNTHETIC_FIXTURE", "items": [],
+    "queried_at": "2026-10-04T01:00:00+00:00", "center_precision": "APPROXIMATE",
+    "coverage": "PARTIAL", "truncated": false
+  }
+}

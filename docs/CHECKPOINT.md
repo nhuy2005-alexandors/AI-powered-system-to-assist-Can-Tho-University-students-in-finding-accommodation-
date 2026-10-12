@@ -1,5 +1,30 @@
 # Checkpoint — Trọ CTU
 
+## Current objective
+
+- Tier: strict
+- Spec: docs/specs/open-mobility-migration.md
+- Release: isolate and push map/mobility lane on `codex/open-mobility-handoff`, base `59a039518175eae12d1158365e74124d9a7451ce`.
+- Handoff: docs/handoffs/open-mobility-merge.md
+- Gate: docs/.codex-gate.json
+- Historical accepted: source-tree P4 catalog789 read-only/API/UI and bounded P5 live WALK/BICYCLE/POI/geocode/tiles (2026-10-12). Private receipts do not certify this extracted integration or a later merge.
+- Current candidate: Python 492 passed; Playwright 38 passed; Next production build passed. Independent release review and exact staged-diff checks pending. No live-provider request or DB write authorized by this packaging phase; no main merge.
+- Protected: original dirty checkout, crawler/contact/PII/export changes, dataset, secrets and production volumes.
+
+## Verified done
+
+- Extracted map candidate: root observed 492 Python tests, 38 browser tests and Next production build pass. Release remediation added three key-isolation tests: RED 2 failed/1 passed; GREEN pilot suite 22 passed.
+- Source-tree P4/P5 historical acceptance is preserved in the handoff. Current release gate/review will be bound separately.
+
+## Observed but unverified
+
+- Release candidate and future merge have not rerun catalog Docker/provider live acceptance. No full-repository health claim.
+- Archived catalog gate requires author-local runtime, exact pins and private receipt; `docs/.codex-gate.json` verifies the source release offline.
+
+## Historical baseline below
+
+The following ledger is inherited from base HEAD, not a current production-health statement. See the handoff above for this lane.
+
 _Cập nhật: 2026-07-27_
 
 > Nguồn suy trạng thái: `task.md` (stigmergy board), git log, cấu trúc `apps/api/app/` + `apps/web/src/app/`.

@@ -8,6 +8,9 @@ from .config import settings
 from .crawler import ListingRepo, build_scheduler, run_source
 from .listings import init_listings, listings_router
 from .auth import AuthRepo, auth_router, init_auth, init_auth_deps
+from .mobility.router import install_mobility
+from .mobility.providers.open_config import OpenMobilitySettings
+from .mobility.providers.demo_policy import build_demo_live_settings
 
 # psycopg3 sync engine; pre_ping avoids stale conns after db restart
 engine = create_engine(settings.database_url, pool_pre_ping=True)
@@ -15,6 +18,27 @@ redis_client = redis.from_url(settings.redis_url, decode_responses=True)
 init_listings(engine)
 init_auth(engine)
 init_auth_deps(AuthRepo(engine))
+
+if settings.mobility_enabled and OpenMobilitySettings().live_enabled:
+    open_mobility_settings = build_demo_live_settings(
+        enabled=settings.mobility_enabled,
+        live_enabled=True,
+        ors_api_key=OpenMobilitySettings().ors_api_key,
+    )
+else:
+    open_mobility_settings = OpenMobilitySettings(enabled=settings.mobility_enabled)
+
+# Independent read-only target; missing configuration never reuses production DB.
+mobility_engine = None
+mobility_catalog = None
+if open_mobility_settings.enabled and settings.mobility_database_url.get_secret_value():
+    from .mobility.catalog_repo import CatalogRepo
+    mobility_engine = create_engine(
+        settings.mobility_database_url.get_secret_value(), pool_pre_ping=True,
+        connect_args={"connect_timeout": 2},
+        execution_options={"postgresql_readonly": True},
+    )
+    mobility_catalog = CatalogRepo(mobility_engine)
 
 
 @asynccontextmanager
@@ -27,12 +51,20 @@ async def lifespan(app: FastAPI):
     if scheduler:
         scheduler.shutdown(wait=False)
     engine.dispose()
+    if mobility_engine is not None:
+        mobility_engine.dispose()
     redis_client.close()
 
 
 app = FastAPI(title="NCKH API", version="0.1.0", lifespan=lifespan)
 app.include_router(listings_router)
 app.include_router(auth_router)
+install_mobility(
+    app,
+    catalog=mobility_catalog,
+    enabled=open_mobility_settings.enabled,
+    open_settings=open_mobility_settings,
+)
 
 
 @app.get("/health")

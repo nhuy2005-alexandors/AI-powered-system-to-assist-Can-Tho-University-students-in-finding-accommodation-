@@ -1,0 +1,25 @@
+{
+  "checks": [
+    {
+      "name": "map_release_python_offline",
+      "executable": "node",
+      "args": ["-e", "const fs=require('node:fs'),p=require('node:path'),{spawnSync}=require('node:child_process');const keep=new Set(['PATH','SYSTEMROOT','WINDIR','TEMP','TMP','COMSPEC','PATHEXT','USERPROFILE','LOCALAPPDATA','APPDATA']);const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>keep.has(k.toUpperCase())));Object.assign(env,{PYTHONPATH:process.cwd(),PYTHONIOENCODING:'utf-8',PYTHONDONTWRITEBYTECODE:'1',MOBILITY_ENABLED:'false',MOBILITY_LIVE_ENABLED:'false',GOOGLE_MAPS_ENABLED:'false',GOOGLE_LIVE_ENABLED:'false'});const dir='apps/api/tests';const files=fs.readdirSync(dir).filter(f=>/^test_mobility.*\\.py$/.test(f)||/^test_open_mobility.*\\.py$/.test(f)||f==='test_routing_legacy_contract.py').sort().map(f=>p.join(dir,f));const r=spawnSync('python',['-m','pytest',...files,'-q','--tb=short','-p','no:cacheprovider'],{env,stdio:'inherit',timeout:150000});process.exit(r.error||r.status===null?1:r.status);"],
+      "cwd": ".",
+      "timeout": 180000
+    },
+    {
+      "name": "map_release_browser_offline",
+      "executable": "node",
+      "args": ["-e", "const {spawnSync}=require('node:child_process');const keep=new Set(['PATH','SYSTEMROOT','WINDIR','TEMP','TMP','COMSPEC','PATHEXT','USERPROFILE','LOCALAPPDATA','APPDATA']);const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>keep.has(k.toUpperCase())));Object.assign(env,{NEXT_TELEMETRY_DISABLED:'1',GOOGLE_MAPS_ENABLED:'false',GOOGLE_LIVE_ENABLED:'false',MOBILITY_LIVE_ENABLED:'false',P2UI_WEB_MOBILITY_ENABLED:'true',P2UI_WEB_TILES_ENABLED:'false'});const r=spawnSync(process.execPath,['node_modules/@playwright/test/cli.js','test','--config=playwright.mobility.config.ts'],{env,stdio:'inherit',timeout:225000});process.exit(r.error||r.status===null?1:r.status);"],
+      "cwd": "apps/web",
+      "timeout": 240000
+    },
+    {
+      "name": "map_release_web_build",
+      "executable": "node",
+      "args": ["-e", "const {spawnSync}=require('node:child_process');const keep=new Set(['PATH','SYSTEMROOT','WINDIR','TEMP','TMP','COMSPEC','PATHEXT','USERPROFILE','LOCALAPPDATA','APPDATA']);const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>keep.has(k.toUpperCase())));Object.assign(env,{NEXT_TELEMETRY_DISABLED:'1',GOOGLE_MAPS_ENABLED:'false',GOOGLE_LIVE_ENABLED:'false',MOBILITY_ENABLED:'true',MOBILITY_LIVE_ENABLED:'false',MOBILITY_TILES_ENABLED:'false'});const r=spawnSync(process.execPath,['node_modules/next/dist/bin/next','build'],{env,stdio:'inherit',timeout:180000});process.exit(r.error||r.status===null?1:r.status);"],
+      "cwd": "apps/web",
+      "timeout": 210000
+    }
+  ]
+}

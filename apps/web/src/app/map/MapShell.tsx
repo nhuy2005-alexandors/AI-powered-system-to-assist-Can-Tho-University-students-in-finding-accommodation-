@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 import { type ListingOut } from "@/lib/api";
+import { normalizeMapSearch, sortMapListingsByPrice } from "@/lib/map-ui";
 import { CAMPUS_LABELS } from "./campuses";
 import MapView from "./MapView";
 import ResultList from "./ResultList";
@@ -17,14 +18,6 @@ const SORT_OPTIONS = [
 type SortValue = (typeof SORT_OPTIONS)[number]["value"];
 
 const RADIUS_CHIPS = [1000, 3000, 5000, 10000];
-
-function norm(s: string): string {
-  // Bỏ dấu để "duong 3/2" khớp "Đường 3/2" — sidebar filter chạy client-side, không gọi API.
-  return s
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase();
-}
 
 export default function MapShell({
   items,
@@ -45,21 +38,23 @@ export default function MapShell({
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const visible = useMemo(() => {
-    const q = norm(query.trim());
+    const q = normalizeMapSearch(query.trim());
     const filtered = q
       ? items.filter(
-          (l) => norm(l.title).includes(q) || norm(l.address ?? "").includes(q),
+          (l) =>
+            normalizeMapSearch(l.title).includes(q) ||
+            normalizeMapSearch(l.address).includes(q),
         )
       : items;
+
+    if (sort === "price_asc" || sort === "price_desc") {
+      return sortMapListingsByPrice(filtered, sort);
+    }
 
     const big = Number.POSITIVE_INFINITY;
     const copy = [...filtered];
     copy.sort((a, b) => {
       switch (sort) {
-        case "price_asc":
-          return (a.price ?? big) - (b.price ?? big);
-        case "price_desc":
-          return (b.price ?? -1) - (a.price ?? -1);
         case "quality":
           return (b.quality_score ?? 0) - (a.quality_score ?? 0);
         default:

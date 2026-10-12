@@ -96,7 +96,7 @@ export type ListingOut = {
   freshness_label: string;
   quality_score: number | null;
   last_seen: string | null;
-  route_time_campus: number[] | null; // [khuI, khuII, khuIII] phút, null = chưa route
+  route_time_campus: Array<number | null> | null; // [khuI, khuII, khuIII] phút; each campus may be unroutable
 };
 
 export type SearchResult = {
@@ -151,7 +151,7 @@ export function getNearby(lat: number, lng: number, radius: number): Promise<Lis
   return apiFetch<ListingOut[]>(`/listings/nearby${buildQuery({ lat, lng, radius })}`);
 }
 
-// campus: 0=khu I, 1=khu II, 2=khu III. Trả polyline [lat,lng] campus→tin (FR-M.8).
+// campus: 0=khu I, 1=khu II, 2=khu III. Trả polyline [lat,lng] tin→campus (FR-M.8).
 export function getListingRoute(id: number | string, campus: number): Promise<number[][]> {
   return apiFetch<number[][]>(`/listings/${id}/route${buildQuery({ campus })}`);
 }
