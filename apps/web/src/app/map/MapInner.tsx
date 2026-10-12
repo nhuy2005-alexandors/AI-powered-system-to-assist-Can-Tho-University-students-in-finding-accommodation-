@@ -16,39 +16,18 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { ListingOut } from "@/lib/api";
 import { formatPrice } from "@/lib/format";
+import {
+  createCampusIcon,
+  createHousingIcon,
+  focusSelectedPosition,
+  observeMapResize,
+} from "@/lib/map-ui";
 import { CAMPUSES } from "./campuses";
 import type { MapViewProps } from "./MapView";
 
-// Pin dạng giọt nước như POI Google Maps. Dùng divIcon (không CircleMarker) vì
-// markercluster chỉ gộp được L.Marker.
-function pinIcon(color: string, size: number, ring: boolean) {
-  const h = Math.round(size * 1.3);
-  return L.divIcon({
-    className: "",
-    html: `<svg width="${size}" height="${h}" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 0C5.4 0 0 5.4 0 12c0 8.4 12 20 12 20s12-11.6 12-20C24 5.4 18.6 0 12 0z"
-        fill="${color}" stroke="${ring ? "#ffffff" : "rgba(0,0,0,.15)"}" stroke-width="${ring ? 2.5 : 1}"/>
-      <circle cx="12" cy="12" r="4.2" fill="#ffffff"/>
-    </svg>`,
-    iconSize: [size, h],
-    iconAnchor: [size / 2, h],
-    popupAnchor: [0, -h + 4],
-  });
-}
-
-const PIN = pinIcon("#e11d48", 22, false);
-const PIN_SELECTED = pinIcon("#0f766e", 32, true);
-
-// Sao vàng cho campus CTU — mốc tham chiếu, phân biệt rõ với pin tin trọ.
-const CAMPUS_ICON = L.divIcon({
-  className: "",
-  html: `<svg width="26" height="26" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="11" fill="#1d4ed8" stroke="#ffffff" stroke-width="2"/>
-    <path d="M12 6l1.8 3.9 4.2.5-3.1 2.9.8 4.2L12 15.4 8.3 17.5l.8-4.2L6 10.4l4.2-.5z" fill="#fde047"/>
-  </svg>`,
-  iconSize: [26, 26],
-  iconAnchor: [13, 13],
-});
+const PIN = createHousingIcon(L, false);
+const PIN_SELECTED = createHousingIcon(L, true);
+const CAMPUS_ICON = createCampusIcon(L);
 
 // Bay tới tin được chọn (từ panel trái hoặc từ map) — giữ zoom hiện tại nếu đã đủ gần.
 function FlyToSelected({
@@ -58,8 +37,7 @@ function FlyToSelected({
 }) {
   const map = useMap();
   useEffect(() => {
-    if (!target) return;
-    map.flyTo(target, Math.max(map.getZoom(), 16), { duration: 0.6 });
+    focusSelectedPosition(map, target);
   }, [target, map]);
   return null;
 }
@@ -68,12 +46,7 @@ function FlyToSelected({
 // gọi invalidateSize sau transition, nếu không map bị xám nửa bên.
 function ResizeOnLayout() {
   const map = useMap();
-  useEffect(() => {
-    const el = map.getContainer();
-    const ro = new ResizeObserver(() => map.invalidateSize());
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [map]);
+  useEffect(() => observeMapResize(map), [map]);
   return null;
 }
 

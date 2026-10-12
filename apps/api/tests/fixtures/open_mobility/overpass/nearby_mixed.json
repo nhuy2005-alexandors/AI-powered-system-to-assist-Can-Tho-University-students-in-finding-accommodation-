@@ -1,0 +1,87 @@
+{
+  "version": 0.6,
+  "generator": "SYNTHETIC_FIXTURE",
+  "elements": [
+    {
+      "type": "node",
+      "id": 2,
+      "lat": 10.0004,
+      "lon": 105.0,
+      "tags": {
+        "highway": "bus_stop",
+        "name": "Synthetic Bus Stop",
+        "phone": "+1-555-0100",
+        "email": "private@example.test",
+        "operator": "Synthetic Operator",
+        "description": "secret notes"
+      }
+    },
+    {
+      "type": "relation",
+      "id": 4,
+      "center": {"lat": 10.0005, "lon": 105.0},
+      "tags": {"amenity": "police", "name": "Synthetic Police Office"}
+    },
+    {
+      "type": "relation",
+      "id": 3,
+      "center": {"lat": 10.0003, "lon": 105.0},
+      "tags": {"amenity": "clinic", "name": "Synthetic Clinic"}
+    },
+    {
+      "type": "way",
+      "id": 1,
+      "center": {"lat": 10.0002, "lon": 105.0},
+      "tags": {"amenity": "pharmacy", "name": "Synthetic Pharmacy"}
+    },
+    {
+      "type": "node",
+      "id": 1,
+      "lat": 10.0001,
+      "lon": 105.0,
+      "tags": {"shop": "supermarket", "name": "Synthetic Grocery"}
+    },
+    {
+      "type": "node",
+      "id": 9,
+      "lat": 10.0001,
+      "lon": 105.0,
+      "tags": {
+        "shop": "supermarket",
+        "amenity": "pharmacy",
+        "name": "Synthetic Grocery"
+      }
+    },
+    {
+      "type": "node",
+      "id": 1,
+      "lat": 10.0001,
+      "lon": 105.0,
+      "tags": {"shop": "supermarket", "name": "Synthetic Grocery"}
+    },
+    {
+      "type": "node",
+      "id": 6,
+      "lat": 10.0006,
+      "lon": 105.0,
+      "tags": {"public_transport": "platform", "name": "Generic Platform"}
+    },
+    {
+      "type": "way",
+      "id": 7,
+      "center": {"lat": 10.0007, "lon": 105.0},
+      "tags": {
+        "public_transport": "platform",
+        "railway": "platform",
+        "name": "Rail Platform"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8,
+      "lat": 10.01,
+      "lon": 105.0,
+      "tags": {"shop": "convenience", "name": "Outside Radius"}
+    }
+  ]
+}

@@ -120,7 +120,7 @@ async def get_route_geometry(
     campus: int = Query(1, ge=0, le=2),
     repo: ListingQueryRepo = Depends(get_repo),
 ):
-    """Polyline route thật campus→tin (FR-M.8), fetch on-demand khi user click 1 tin.
+    """Polyline route thật tin→campus (FR-M.8), fetch on-demand khi user click 1 tin.
 
     campus: 0=khu I, 1=khu II (mặc định), 2=khu III.
     """
@@ -130,7 +130,7 @@ async def get_route_geometry(
     if not settings.ors_api_key:
         raise HTTPException(503, "Routing chưa cấu hình (ORS_API_KEY)")
     try:
-        return await route_geometry(CAMPUSES[campus], (item.lat, item.lng))
+        return await route_geometry((item.lat, item.lng), CAMPUSES[campus])
     except Exception as exc:  # noqa: BLE001 — lỗi ORS → 502, không lộ trace
         raise HTTPException(502, f"Không lấy được route: {exc}") from exc
 

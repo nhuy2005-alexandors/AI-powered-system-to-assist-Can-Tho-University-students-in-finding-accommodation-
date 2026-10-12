@@ -1,0 +1,74 @@
+{
+  "checks": [
+    {
+      "name": "mobility_disabled_map_browser",
+      "executable": "node",
+      "args": [
+        "-e",
+        "const {spawnSync}=require('node:child_process');const allowed=new Set(['PATH','SYSTEMROOT','WINDIR','TEMP','TMP','COMSPEC','PATHEXT','LOCALAPPDATA','USERPROFILE','APPDATA']);const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>allowed.has(k.toUpperCase())));Object.assign(env,{NEXT_TELEMETRY_DISABLED:'1',GOOGLE_MAPS_ENABLED:'false',GOOGLE_LIVE_ENABLED:'false',MOBILITY_LIVE_ENABLED:'false',MOBILITY_ROUTING_PROVIDER:'disabled',MOBILITY_PLACES_PROVIDER:'disabled',MOBILITY_GEOCODER_PROVIDER:'disabled',P2UI_TEST_MAP_DISABLED:'false',P2UI_TEST_LOCAL_TILES:'false',P2UI_WEB_MOBILITY_ENABLED:'true',P2UI_WEB_TILES_ENABLED:'false',P2UI_WEB_TILE_URL:'',P2UI_WEB_TILE_ATTRIBUTION:'',P2UI_WEB_ALLOWED_TILE_ORIGIN:''});env.P2UI_TEST_MAP_DISABLED='true';env.P2UI_WEB_MOBILITY_ENABLED='false';const r=spawnSync(process.execPath,['node_modules/@playwright/test/cli.js','test','--config=playwright.mobility.config.ts','--grep','disabled mobility map shows local-only'],{env,stdio:'inherit',timeout:105000,killSignal:'SIGKILL'});process.exit(r.error||r.status===null?1:r.status);"
+      ],
+      "cwd": "apps/web",
+      "timeout": 120000
+    },
+    {
+      "name": "mobility_local_tile_browser",
+      "executable": "node",
+      "args": [
+        "-e",
+        "const {spawnSync}=require('node:child_process');const allowed=new Set(['PATH','SYSTEMROOT','WINDIR','TEMP','TMP','COMSPEC','PATHEXT','LOCALAPPDATA','USERPROFILE','APPDATA']);const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>allowed.has(k.toUpperCase())));Object.assign(env,{NEXT_TELEMETRY_DISABLED:'1',GOOGLE_MAPS_ENABLED:'false',GOOGLE_LIVE_ENABLED:'false',MOBILITY_LIVE_ENABLED:'false',MOBILITY_ROUTING_PROVIDER:'disabled',MOBILITY_PLACES_PROVIDER:'disabled',MOBILITY_GEOCODER_PROVIDER:'disabled',P2UI_TEST_MAP_DISABLED:'false',P2UI_TEST_LOCAL_TILES:'false',P2UI_WEB_MOBILITY_ENABLED:'true',P2UI_WEB_TILES_ENABLED:'false',P2UI_WEB_TILE_URL:'',P2UI_WEB_TILE_ATTRIBUTION:'',P2UI_WEB_ALLOWED_TILE_ORIGIN:''});env.P2UI_TEST_LOCAL_TILES='true';env.P2UI_WEB_TILES_ENABLED='true';env.P2UI_WEB_TILE_URL='https://127.0.0.1:3031/__p2ui_local_tile__/{z}/{x}/{y}.png';env.P2UI_WEB_TILE_ATTRIBUTION='Synthetic local tile fixture';env.P2UI_WEB_ALLOWED_TILE_ORIGIN='https://127.0.0.1:3031';const r=spawnSync(process.execPath,['node_modules/@playwright/test/cli.js','test','--config=playwright.mobility.config.ts','--grep','tile failure leaves|configured local test tile'],{env,stdio:'inherit',timeout:165000,killSignal:'SIGKILL'});process.exit(r.error||r.status===null?1:r.status);"
+      ],
+      "cwd": "apps/web",
+      "timeout": 180000
+    },
+    {
+      "name": "p3_mobility_and_acceptance_offline",
+      "executable": "node",
+      "args": [
+        "-e",
+        "const fs=require('node:fs'),path=require('node:path'),{spawnSync}=require('node:child_process');const root=process.cwd(),cwd=fs.mkdtempSync(path.join(root,'.superpowers/sdd/2026-10-05-open-mobility-agent-plan/p1-gate-cwd-'));const allowed=new Set(['PATH','SYSTEMROOT','WINDIR','TEMP','TMP','COMSPEC','PATHEXT']);const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>allowed.has(k.toUpperCase())));Object.assign(env,{PYTHONPATH:root,PYTHONIOENCODING:'utf-8',PYTHONDONTWRITEBYTECODE:'1',DATABASE_URL:'postgresql+psycopg://offline:offline@127.0.0.1:5432/offline',MOBILITY_ENABLED:'false',MOBILITY_LIVE_ENABLED:'false',GOOGLE_LIVE_ENABLED:'false',GOOGLE_MAPS_ENABLED:'false',GOOGLE_MAPS_API_KEY:'',GOOGLE_ROUTES_API_KEY:'',GOOGLE_PLACES_API_KEY:'',MOBILITY_ROUTING_PROVIDER:'disabled',MOBILITY_PLACES_PROVIDER:'disabled',MOBILITY_GEOCODER_PROVIDER:'disabled',MOBILITY_ORS_API_KEY:'',MOBILITY_ORS_BASE_URL:'',MOBILITY_OVERPASS_URL:'',MOBILITY_NOMINATIM_URL:'',MOBILITY_TILES_ENABLED:'false',MOBILITY_TILE_URL:'',MOBILITY_ALLOWED_TILE_ORIGIN:'',MOBILITY_TILE_ATTRIBUTION:'',ORS_API_KEY:''});const files=['test_mobility_catalog_acceptance_guard.py','test_mobility_provider_policy.py','test_mobility_contracts.py','test_mobility_catalog.py','test_mobility_routes.py','test_mobility_places.py','test_mobility_warnings.py','test_mobility_api.py','test_routing_legacy_contract.py','test_mobility_ors.py','test_mobility_overpass.py','test_mobility_geocoder.py'].map(f=>path.join(root,'apps/api/tests',f));const r=spawnSync('D:/Dev/SDKs/Python/python.exe',['-m','pytest',...files,'-q','--tb=line','-p','no:cacheprovider'],{cwd,env,stdio:'inherit',timeout:105000,killSignal:'SIGKILL'});let cleanupFailed=false;try{fs.rmdirSync(cwd);}catch{cleanupFailed=true;}process.exit(r.error||r.status===null||cleanupFailed?1:r.status);"
+      ],
+      "cwd": ".",
+      "timeout": 120000
+    },
+    {
+      "name": "p3_catalog_browser_harness_syntax",
+      "executable": "node",
+      "args": [
+        "--check",
+        "apps/web/e2e/mobility-catalog-acceptance.cjs"
+      ],
+      "cwd": ".",
+      "timeout": 30000
+    },
+    {
+      "name": "mobility_open_and_regression_browser",
+      "executable": "node",
+      "args": [
+        "-e",
+        "const {spawnSync}=require('node:child_process');const allowed=new Set(['PATH','SYSTEMROOT','WINDIR','TEMP','TMP','COMSPEC','PATHEXT','LOCALAPPDATA','USERPROFILE','APPDATA']);const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>allowed.has(k.toUpperCase())));Object.assign(env,{NEXT_TELEMETRY_DISABLED:'1',GOOGLE_MAPS_ENABLED:'false',GOOGLE_LIVE_ENABLED:'false',MOBILITY_LIVE_ENABLED:'false',MOBILITY_ROUTING_PROVIDER:'disabled',MOBILITY_PLACES_PROVIDER:'disabled',MOBILITY_GEOCODER_PROVIDER:'disabled',P2UI_TEST_MAP_DISABLED:'false',P2UI_TEST_LOCAL_TILES:'false',P2UI_WEB_MOBILITY_ENABLED:'true',P2UI_WEB_TILES_ENABLED:'false',P2UI_WEB_TILE_URL:'',P2UI_WEB_TILE_ATTRIBUTION:'',P2UI_WEB_ALLOWED_TILE_ORIGIN:''});const r=spawnSync(process.execPath,[\"node_modules/@playwright/test/cli.js\",\"test\",\"--config=playwright.mobility.config.ts\"],{env,stdio:'inherit',timeout:225000,killSignal:'SIGKILL'});process.exit(r.error||r.status===null?1:r.status);"
+      ],
+      "cwd": "apps/web",
+      "timeout": 240000
+    },
+    {
+      "name": "mobility_web_build",
+      "executable": "node",
+      "args": [
+        "-e",
+        "const {spawnSync}=require('node:child_process');const allowed=new Set(['PATH','SYSTEMROOT','WINDIR','TEMP','TMP','COMSPEC','PATHEXT','LOCALAPPDATA','USERPROFILE','APPDATA']);const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>allowed.has(k.toUpperCase())));Object.assign(env,{NEXT_TELEMETRY_DISABLED:'1',GOOGLE_MAPS_ENABLED:'false',GOOGLE_LIVE_ENABLED:'false',MOBILITY_LIVE_ENABLED:'false',MOBILITY_ROUTING_PROVIDER:'disabled',MOBILITY_PLACES_PROVIDER:'disabled',MOBILITY_GEOCODER_PROVIDER:'disabled',P2UI_TEST_MAP_DISABLED:'false',P2UI_TEST_LOCAL_TILES:'false',P2UI_WEB_MOBILITY_ENABLED:'true',P2UI_WEB_TILES_ENABLED:'false',P2UI_WEB_TILE_URL:'',P2UI_WEB_TILE_ATTRIBUTION:'',P2UI_WEB_ALLOWED_TILE_ORIGIN:''});const r=spawnSync(process.execPath,[\"node_modules/next/dist/bin/next\",\"build\"],{env,stdio:'inherit',timeout:165000,killSignal:'SIGKILL'});process.exit(r.error||r.status===null?1:r.status);"
+      ],
+      "cwd": "apps/web",
+      "timeout": 180000
+    },
+    {
+      "name": "catalog789_real_acceptance_receipt",
+      "executable": "node",
+      "args": [
+        "-e",
+        "const fs=require('node:fs'),path=require('node:path'),{spawnSync}=require('node:child_process');const root=process.cwd(),cwd=fs.mkdtempSync(path.join(root,'.superpowers/sdd/2026-10-05-open-mobility-agent-plan/p1-gate-cwd-'));const allowed=new Set(['PATH','SYSTEMROOT','WINDIR','TEMP','TMP','COMSPEC','PATHEXT']);const env=Object.fromEntries(Object.entries(process.env).filter(([k])=>allowed.has(k.toUpperCase())));Object.assign(env,{PYTHONPATH:root,PYTHONIOENCODING:'utf-8',PYTHONDONTWRITEBYTECODE:'1',DATABASE_URL:'postgresql+psycopg://offline:offline@127.0.0.1:5432/offline',MOBILITY_ENABLED:'false',MOBILITY_LIVE_ENABLED:'false',GOOGLE_LIVE_ENABLED:'false',GOOGLE_MAPS_ENABLED:'false',GOOGLE_MAPS_API_KEY:'',GOOGLE_ROUTES_API_KEY:'',GOOGLE_PLACES_API_KEY:'',MOBILITY_ROUTING_PROVIDER:'disabled',MOBILITY_PLACES_PROVIDER:'disabled',MOBILITY_GEOCODER_PROVIDER:'disabled',MOBILITY_ORS_API_KEY:'',MOBILITY_ORS_BASE_URL:'',MOBILITY_OVERPASS_URL:'',MOBILITY_NOMINATIM_URL:'',MOBILITY_TILES_ENABLED:'false',MOBILITY_TILE_URL:'',MOBILITY_ALLOWED_TILE_ORIGIN:'',MOBILITY_TILE_ATTRIBUTION:'',ORS_API_KEY:''});const files=['test_mobility_catalog_acceptance_guard.py','test_mobility_provider_policy.py','test_mobility_contracts.py','test_mobility_catalog.py','test_mobility_routes.py','test_mobility_places.py','test_mobility_warnings.py','test_mobility_api.py','test_routing_legacy_contract.py','test_mobility_ors.py','test_mobility_overpass.py','test_mobility_geocoder.py'].map(f=>path.join(root,'apps/api/tests',f));const r=spawnSync('D:/Dev/SDKs/Python/python.exe',[path.join(root,'scripts/mobility_catalog_acceptance.py'),'verify-receipt','--runtime-dir','D:/Dev/Data/NCKH/mobility-catalog-acceptance-20261004-01'],{cwd,env,stdio:'inherit',timeout:105000,killSignal:'SIGKILL'});let cleanupFailed=false;try{fs.rmdirSync(cwd);}catch{cleanupFailed=true;}process.exit(r.error||r.status===null||cleanupFailed?1:r.status);"
+      ],
+      "cwd": ".",
+      "timeout": 120000
+    }
+  ]
+}

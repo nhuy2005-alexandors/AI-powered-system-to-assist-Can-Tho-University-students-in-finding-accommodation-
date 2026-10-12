@@ -77,7 +77,7 @@ class ListingOut(BaseModel):
     freshness_label: str = ""
     quality_score: float | None = None
     last_seen: datetime | None = None
-    route_time_campus: list[float] | None = None  # [khuI, khuII, khuIII] phút, None = chưa route
+    route_time_campus: list[float | None] | None = None  # [khuI, khuII, khuIII] phút; each campus may be unroutable
 
 
 class SearchResult(BaseModel):

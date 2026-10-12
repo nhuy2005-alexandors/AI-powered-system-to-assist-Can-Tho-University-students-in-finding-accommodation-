@@ -14,7 +14,7 @@ CAMPUSES: list[tuple[float, float]] = [
 ]
 
 _BASE = "https://api.openrouteservice.org/v2"
-_PROFILE = "driving-car"  # ponytail: xấp xỉ xe máy, đủ để rank; đổi khi cần chính xác tuyệt đối
+_PROFILE = "driving-car"  # ORS driving-car is not a motorcycle routing profile.
 
 
 def _matrix_body(points: list[tuple[float, float]]) -> dict:

@@ -1,0 +1,27 @@
+{
+  "routes": [
+    {
+      "duration": "372s",
+      "distanceMeters": 4567,
+      "polyline": {
+        "encodedPolyline": "_p~iF~ps|U_ulLnnqC_mqNvxq`@"
+      },
+      "legs": [
+        {
+          "steps": [
+            {"travelMode": "WALK"},
+            {
+              "travelMode": "TRANSIT",
+              "transitDetails": {
+                "transitLine": {
+                  "vehicle": {"type": "BUS"}
+                }
+              }
+            },
+            {"travelMode": "WALK"}
+          ]
+        }
+      ]
+    }
+  ]
+}

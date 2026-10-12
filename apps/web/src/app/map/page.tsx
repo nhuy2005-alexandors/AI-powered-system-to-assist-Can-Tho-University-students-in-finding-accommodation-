@@ -1,38 +1,26 @@
-import { getNearby, type ApiError, type ListingOut } from "@/lib/api";
-import MapShell from "./MapShell";
+import type { MobilityMapConfig } from "@/lib/config";
+import { mobilityMapConfig } from "@/lib/config";
+import MobilityWorkspace from "@/components/mobility/MobilityWorkspace";
 
 export const dynamic = "force-dynamic";
 
-// Toạ độ ĐH Cần Thơ (khu II) — mặc định tâm tìm kiếm khi không có query.
-// Khớp CAMPUSES[1] trong campuses.ts / apps/api/app/listings/routing.py:10.
-const CTU_LAT = 10.0322;
-const CTU_LNG = 105.7683;
-const DEFAULT_RADIUS = 3000;
-
-export default async function MapPage({
-  searchParams,
-}: {
-  searchParams: { lat?: string; lng?: string; radius?: string };
-}) {
-  const lat = searchParams.lat ? Number(searchParams.lat) : CTU_LAT;
-  const lng = searchParams.lng ? Number(searchParams.lng) : CTU_LNG;
-  const radius = searchParams.radius ? Number(searchParams.radius) : DEFAULT_RADIUS;
-
-  let items: ListingOut[];
-  let errorMessage: string | null = null;
-  try {
-    items = await getNearby(lat, lng, radius);
-  } catch (e) {
-    errorMessage = (e as ApiError).detail ?? "Không thể tải danh sách tin lân cận";
-    items = [];
+export default function MapPage() {
+  if (process.env.MOBILITY_ENABLED === "true") {
+    const mapConfig: MobilityMapConfig = mobilityMapConfig();
+    return <MobilityWorkspace mapConfig={mapConfig} />;
   }
 
   return (
-    <MapShell
-      items={items}
-      center={[lat, lng]}
-      radius={radius}
-      errorMessage={errorMessage}
-    />
+    <main
+      data-testid="mobility-map-unavailable"
+      className="grid min-h-[50vh] place-items-center bg-slate-50 px-6 text-center text-slate-800"
+    >
+      <section className="max-w-lg rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
+        <h1 className="text-2xl font-semibold">Bản đồ di chuyển hiện chưa khả dụng</h1>
+        <p className="mt-3 text-sm text-slate-600">
+          Danh sách chỗ ở và bản đồ chưa được bật trong môi trường này.
+        </p>
+      </section>
+    </main>
   );
 }

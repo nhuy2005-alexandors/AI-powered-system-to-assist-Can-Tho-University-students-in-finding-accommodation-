@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import type { ListingOut } from "@/lib/api";
 import { formatArea, formatPrice, riskBadge } from "@/lib/format";
+import { scrollMapSelection } from "@/lib/map-ui";
 
 // Panel kết quả bên trái (vai trò như cột kết quả của Google Maps): mỗi tin là 1 hàng
 // bấm được → chọn tin, map bay tới pin tương ứng + vẽ đường tới campus.
@@ -22,11 +23,7 @@ export default function ResultList({
 
   // Chọn tin từ map → cuộn hàng tương ứng vào tầm nhìn (2 chiều map ↔ list).
   useEffect(() => {
-    if (selectedId == null || !listRef.current) return;
-    const row = listRef.current.querySelector<HTMLElement>(
-      `[data-listing-id="${selectedId}"]`,
-    );
-    row?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    scrollMapSelection(listRef.current, selectedId);
   }, [selectedId]);
 
   if (items.length === 0) {
